@@ -1,0 +1,187 @@
+{
+  "IN2023": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "oem unlock"
+        }
+      }
+    },
+    "patch" : [
+      { "command" : "flash dtbo dtbo.img" },
+      { "command" : "flash vbmeta vbmeta.img" },
+      { "command" : "flash recovery recovery.img" }
+    ],
+    "rom" : { "command" : "sideload rom.zip" },
+    "folder" : [
+      {
+        "name": "rom.zip",
+        "path" : "assets/sources/instantnoodlep/e-1.14-r-20230815320614-stable-instantnoodlep.zip"
+      },
+      {
+        "name": "recovery.img",
+        "path" : "assets/sources/instantnoodlep/recovery-e-1.14-r-20230815320614-stable-instantnoodlep.img"
+      },
+      {
+        "name": "vbmeta.img",
+        "path" : "assets/sources/instantnoodlep/vbmeta.img"
+      },
+      {
+        "name": "dtbo.img",
+        "path" : "assets/sources/instantnoodlep/dtbo.img"
+      }
+    ]
+  },
+  "Teracube_2e": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "flashing unlock"
+        },
+        "lock": {
+          "command" : "flashing lock"
+        }
+      }
+    },
+    "patch": [
+      { "command" : "erase:userdata"},
+      { "command" : "flash boot_a boot.img" },
+      { "command" : "flash dtbo_a dtbo.img" },
+      { "command" : "flash vbmeta_a vbmeta.img" },
+      { "command" : "flash vbmeta_system_a vbmeta_system.img" },
+      { "command" : "flash vbmeta_vendor_a vbmeta_vendor.img" },
+      { "command" : "flash super super.img" },
+      { "command" : "flash lk lk.img" },
+      { "command" : "flash logo logo.bin" },
+      { "command" : "flash preloader_a preloader_emerald.bin" },
+      { "command" : "flash tee_a tee.img" },
+      { "command" : "flash gz_a gz.img" },
+      { "command" : "flash sspm_a sspm.img" },
+      { "command" : "flash scp_a scp.img" },
+      { "command" : "flash spmfw_a spmfw.img" },
+      { "command" : "flash md1img_a md1img.img --set-active=a" },
+      { "command" : "reboot bootloader" }
+    ],
+    "folder" : {
+      "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip",
+      "name": "Teracube_2e installer",
+      "unzip": true
+    }
+  },
+  "Pixel 4a": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "flashing unlock"
+        },
+        "lock": {
+          "command" : "flashing lock"
+        }
+      }
+    },
+    "recovery" : { "command" : "flash boot recovery.img" },
+    "rom" : { "command" : "sideload rom.zip" },
+    "folder" : [
+      {
+        "path" : "assets/sources/sunfish/recovery-e-1.14-r-20230815320614-stable-sunfish.img",
+        "name": "recovery.img"
+      },
+      {
+        "path" : "assets/sources/sunfish/e-1.14-r-20230815320614-stable-sunfish.zip",
+        "name": "rom.zip"
+      }
+    ]
+  },
+  "Pixel 4a (5G)": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "flashing unlock"
+        },
+        "lock": {
+          "command" : "flashing lock"
+        }
+      }
+    },
+    "recovery" : {
+      "command" : "flash vendor_boot recovery.img"
+    },
+    "rom" : { "command" : "sideload rom.zip" },
+    "folder" : [
+      {
+        "name": "recovery.img",
+        "path" : "assets/sources/bramble/---.img"
+      },
+      {
+        "name": "boot.img",
+        "path" : "assets/sources/bramble/vbmeta.img"
+      },
+      {
+        "name": "boot.img",
+        "path" : "assets/sources/bramble/dtbo.img"
+      },
+      {
+        "path" : "assets/sources/bramble/--.zip",
+        "name": "rom.zip"
+      }
+    ]
+  },
+  "Pixel 4": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "flashing unlock"
+        }
+      }
+    },
+    "recovery" : {
+      "command" : "flash boot recovery.img"
+    },
+    "rom": {
+      "command" : "sideload rom.zip"
+    },
+    "folder" : [
+      {
+        "name": "recovery.img",
+        "path" : "assets/sources/flame/recovery-e-1.14-s-20230819321663-dev-flame.img"
+      },
+      {
+        "name": "rom.zip",
+        "path" : "assets/sources/flame/e-1.14-s-20230819321663-dev-flame.zip"
+      }
+    ]
+  },
+  "HD1901": {
+    "oem": {
+      "unlocked" : {
+        "unlock": {
+          "command" : "oem unlock"
+        }
+      }
+    },
+    "patch" : [
+      { "command" : "flash dtbo dtbo.img" },
+      { "command" : "flash vbmeta vbmeta.img" },
+      { "command" : "flash recovery recovery.img" }
+    ],
+    "rom" : { "command" : "sideload rom.zip" },
+    "folder" : [
+      {
+        "name": "vbmeta.img",
+        "path" : "assets/sources/hotdogb/vbmeta.img"
+      },
+      {
+        "name": "dtbo.img",
+        "path" : "assets/sources/hotdogb/dtbo.img"
+      },
+      {
+        "name": "rom.zip",
+        "path" : "assets/sources/hotdogb/e-1.14-s-20230819321663-dev-hotdogb.zip"
+      },
+      {
+        "name": "recovery.img",
+        "path" : "assets/sources/hotdogb/recovery-e-1.14-s-20230816320616-stable-hotdogb.img"
+      }
+    ]
+  }
+}

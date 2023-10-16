@@ -1,0 +1,32 @@
+{
+  "unlock" : [
+    { "command" : "flashing unlock", "var": "unlocked" }
+  ],
+  "patch": [
+    { "command" : "flash boot recovery.img" }
+  ],
+  "rom": {
+    "command" : "sideload rom.zip"
+  },
+  "key": [
+    { "command" : "erase avb_custom_key" },
+    { "command" : "flash avb_custom_key pkmd_pixel.bin"}
+  ],
+  "lock" : [
+    {"command" : "flashing lock", "var": "unlocked"}
+  ],
+  "folder": [
+    {
+      "name": "recovery.img",
+      "path" : "assets/sources/coral/recovery-e-1.14-s-20230818321663-dev-coral.img"
+    },
+    {
+      "name": "rom.zip",
+      "path" : "assets/sources/coral/e-1.14-s-20230818321663-dev-coral.zip"
+    },
+    {
+      "name": "pkmd_pixel.bin",
+      "path" : "assets/sources/coral/pkmd_pixel.bin"
+    }
+  ]
+}
