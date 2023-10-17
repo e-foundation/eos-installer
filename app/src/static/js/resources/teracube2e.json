@@ -1,0 +1,70 @@
+{
+  "steps": [
+    {
+      "mode": "bootloader",
+      "command": "flashing unlock unlocked",
+      "instruction": "unlock bootloader"
+    },
+    {
+      "command": "erase userdata"
+    },
+    {
+      "command": "flash boot_a boot.img"
+    },
+    {
+      "command": "flash dtbo_a dtbo.img"
+    },
+    {
+      "command": "flash vbmeta_a vbmeta.img"
+    },
+    {
+      "command": "flash vbmeta_system_a vbmeta_system.img"
+    },
+    {
+      "command": "flash vbmeta_vendor_a vbmeta_vendor.img"
+    },
+    {
+      "command": "flash super super.img"
+    },
+    {
+      "command": "flash lk lk.img"
+    },
+    {
+      "command": "flash logo logo.bin"
+    },
+    {
+      "command": "flash preloader_a preloader_emerald.bin"
+    },
+    {
+      "command": "flash tee_a tee.img"
+    },
+    {
+      "command": "flash gz_a gz.img"
+    },
+    {
+      "command": "flash sspm_a sspm.img"
+    },
+    {
+      "command": "flash scp_a scp.img"
+    },
+    {
+      "command": "flash spmfw_a spmfw.img"
+    },
+    {
+      "command": "flash md1img_a md1img.img"
+    },
+    {
+      "_command": "--set-active=a",
+      "caution": "this command is not working"
+    },
+    {
+      "instruction": "e should be installed",
+      "command": "reboot"
+    }
+  ],
+  "folder": {
+    "path": "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip",
+    "name": "Teracube_2e installer",
+    "unzip": true
+  }
+}

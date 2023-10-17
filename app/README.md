@@ -1,4 +1,4 @@
-[last updated : 2023-10-13 ]
+[last updated : 2023-10-17 ]
 
 `app` folder contains the source of the application.
 
@@ -38,13 +38,12 @@ Since the deviceName may not be the same in fastboot (Android), we need at least
 
 ## Doctrine
 
-my-class are for css class
-camelCase are for variable
-$variableName are for DOM Nodes
-MAJUSCULE are for global constant
-
-object.manager.js are for class directing subClass or vue. It's just my arbitrary concept to mark a class as "directive" in the process
-object.class.js are for class used by object.manager.js where functions should have a single responsibility
+- my-class are for css class
+- camelCase are for variable
+- $variableName are for DOM Nodes
+- MAJUSCULE are for global constant
+- object.manager.js are for class directing subClass or vue. It's just my arbitrary concept to mark a class as "directive" in the process
+- object.class.js are for class used by object.manager.js where functions should have a single responsibility
 
 Please respect ♥ 
 
@@ -133,9 +132,9 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
         "path" : "assets/sources/coral/pkmd_pixel.bin"
       },
       {
-      "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip", 
-      "name": "Teracube_2e installer",
-      "unzip": true 
+        "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip", 
+        "name": "Teracube_2e installer",
+        "unzip": true 
       },
     ]
  }
@@ -163,4 +162,6 @@ Translation are in `static/assets/languages`
 
 ### controller.manager.js
 
+
+CAUTION
 

@@ -59,7 +59,7 @@ export class Controller {
             } else if (next.needUser && !fromUser) {
 
             } else {
-                // previous step was not marked as done even tough the command was executed
+                // previous step was not marked as done even though the command was executed
                 // it's most likely because we needed the user to click on continue
                 // now it's totally done
                 if (!current.done && this.isDone(current) && next.needUser && fromUser) {
@@ -69,9 +69,9 @@ export class Controller {
 
                 this.currentIndex++;
                 current = this.steps[this.currentIndex];
-                next = this.steps[this.currentIndex + 1];
                 VUE.onStepStarted(current);
                 current.commandDone = await this.executeStep(current);
+                next = this.steps[this.currentIndex + 1];
                 if (current.commandDone) {
                     current.done = !next || !next.needUser; //not totally done if we need user to click on continue
                     VUE.onStepFinished(current, next);
@@ -113,7 +113,7 @@ export class Controller {
         } else {
             stepsToAdd.push({
                 "title": "Reboot",
-                "instruction": `rebooting in ${mode}`,
+                "instruction": `rebooting in ${mode}. Click next once in mode ${mode}`,
                 "command": `reboot ${mode}`
             });
         }
@@ -122,7 +122,7 @@ export class Controller {
             "instruction": "please connect again",
             "command": `connect ${mode}`,
             "needUser": true,
-        })
+        });
         if (stepsToAdd.length) {
             this.addSteps(stepsToAdd, this.currentIndex + 1);
         }
@@ -223,15 +223,18 @@ export class Controller {
                 }
                 if (!isLocked) {
                     this.deviceManager.lock(cmd.command);
-                    this.steps[this.currentIndex].needUser = true;
 
                 } else {
                     //since it's already locked, let's consider this step finished
-                    this.steps[this.currentIndex].done = true;
                 }
                 return true;
             case Command.CMD_TYPE.sideload:
                 await this.deviceManager.sideload(cmd.file);
+                return true;
+                break;
+            default:
+                console.log(`try unknow command ${cmd.command}`)
+                await this.deviceManager.runCommand(cmd.command);
                 return true;
                 break;
         }
@@ -263,7 +266,7 @@ export class Controller {
             //we check on serialNumber because productName may not be the same between adb/fastboot driver
         } else {
             try {
-                this.model = productName.toLowerCase().replace(/ /g, '');
+                this.model = productName.toLowerCase().replace(/[ |_]/g, '');
                 this.resources = await (await fetch(`js/resources/${this.model}.json`)).json() || {};
             } catch (e) {
                 throw Error('model not supported');

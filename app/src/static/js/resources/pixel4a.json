@@ -1,0 +1,49 @@
+{
+  "oem": {
+    "unlocked": {
+      "unlock": {
+        "command": "flashing unlock"
+      },
+      "lock": {
+        "command": "flashing lock"
+      }
+    }
+  },
+  "steps": [
+    {
+      "mode": "bootloader",
+      "command": "flashing unlock unlocked",
+      "instruction": "unlock bootloader"
+    },
+    {
+      "command": "flash boot recovery.img"
+    },
+    {
+      "command": "sideload rom.zip"
+    },
+    {
+      "instruction": "go to bootloader manually",
+      "needUser": true
+    },
+    {
+      "instruction": "connect bootloader",
+      "command": "connect bootloader",
+      "needUser": true
+    },
+    {
+      "mode": "bootloader",
+      "command": "flashing lock unlocked",
+      "instruction": "lock bootloader"
+    }
+  ],
+  "folder": [
+    {
+      "path": "assets/sources/sunfish/recovery-e-1.14-r-20230815320614-stable-sunfish.img",
+      "name": "recovery.img"
+    },
+    {
+      "path": "assets/sources/sunfish/e-1.14-r-20230815320614-stable-sunfish.zip",
+      "name": "rom.zip"
+    }
+  ]
+}

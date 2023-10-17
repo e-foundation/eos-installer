@@ -97,8 +97,8 @@ export class DeviceManager {
             case MODE.adb :
                 this.device = this.adb;
                 break;
-            case MODE.adb :
-                this.recovery = this.recovery;
+            case MODE.recovery :
+                this.device = this.recovery;
                 break;
             case MODE.fastboot :
                 this.device = this.fastboot;

@@ -113,7 +113,11 @@ export class Downloader {
     async getData(dbFile, fileEntry, onProgress) {
         return new Promise(async (resolve, reject) => {
             const db = await this.openDBStore();
-            const file = await this.getDBStore(db, dbFile);
+            let file;
+            try{
+                //file = await this.getDBStore(db, dbFile);
+            } catch(e) { console.log(e)}
+            console.log(file)
             if (file) {
                 resolve(file.content);
             } else {
@@ -135,7 +139,10 @@ export class Downloader {
 
     async get(path, onProgress) {
         const db = await this.openDBStore();
-        const file = await this.getDBStore(db, path);
+        let file;
+        try{
+           //file = await this.getDBStore(db, path);
+        } catch(e) { console.log(e)}
         if (file) {
             return file.content;
         } else {
@@ -187,7 +194,7 @@ export class Downloader {
         store.put(blob, path);
     }
 
-    async getDBStore(db, key) {
+     getDBStore(db, key) {
         return new Promise((resolve, reject) => {
             const store = db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
             const request = store.get(key);
@@ -212,7 +219,7 @@ export class Downloader {
             request.onupgradeneeded = function (event) {
                 const db = event.target.result;
                 /*const store: IDBObjectStore = */
-                db.createObjectStore(DB_NAME, {keyPath: "id"});
+                db.createObjectStore(DB_NAME, {autoIncrement: false });
             };
             request.onsuccess = function (event) {
                 resolve(event.target.result);

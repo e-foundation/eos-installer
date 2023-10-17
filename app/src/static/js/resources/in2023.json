@@ -1,0 +1,61 @@
+{
+  "steps": [
+    {
+      "mode": "bootloader",
+      "command": "oem unlock unlocked",
+      "instruction": "unlock bootloader"
+    },
+    {
+      "command": "flash dtbo dtbo.img"
+    },
+    {
+      "command": "flash vbmeta vbmeta.img"
+    },
+    {
+      "command": "flash recovery recovery.img"
+    },
+    {
+      "instruction": "go to recovery manually"
+    },
+    {
+      "instruction": "eraseData",
+      "needUser": true
+    },
+    {
+      "instruction": "go to sideLoad",
+      "needUser": true
+    },
+    {
+      "instruction": "connect recovery",
+      "command": "connect recovery",
+      "needUser": true
+    },
+    {
+      "mode": "recovery",
+      "command": "sideload rom.zip"
+    },
+    {
+      "mode": "recovery",
+      "instruction": "reboot device manually",
+      "needUser": true
+    }
+  ],
+  "folder": [
+    {
+      "name": "rom.zip",
+      "path": "assets/sources/instantnoodlep/e-1.14-r-20230815320614-stable-instantnoodlep.zip"
+    },
+    {
+      "name": "recovery.img",
+      "path": "assets/sources/instantnoodlep/recovery-e-1.14-r-20230815320614-stable-instantnoodlep.img"
+    },
+    {
+      "name": "vbmeta.img",
+      "path": "assets/sources/instantnoodlep/vbmeta.img"
+    },
+    {
+      "name": "dtbo.img",
+      "path": "assets/sources/instantnoodlep/dtbo.img"
+    }
+  ]
+}
