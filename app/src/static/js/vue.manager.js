@@ -26,17 +26,19 @@ class VueManager {
         }
         this.translationManager.translateDOM();
     }
-    clearProcess(){
+
+    clearProcess() {
         this.$process.innerHTML = '';
     }
 
-    onStepStarted(currentStep){
+    onStepStarted(currentStep) {
         if (currentStep.title && currentStep?.title !== currentStep.title) {
             this.$stepTitle.innerText = this.translationManager.translate(currentStep.title);
         }
         this.selectStep(currentStep);
     }
-    onStepFinished(currentStep, nextStep){
+
+    onStepFinished(currentStep, nextStep) {
         if (currentStep) {
             if (currentStep.done) {
                 const $currentStep = document.getElementById(currentStep.id);
@@ -48,7 +50,8 @@ class VueManager {
             $next.disabled = !nextStep.needUser;
         }
     }
-    selectStep(step){
+
+    selectStep(step) {
         const $steps = document.getElementsByClassName('step active');
         for (let i = 0; i < $steps.length; i++) {
             $steps[i].classList.add('inactive');
@@ -60,6 +63,7 @@ class VueManager {
             $step.classList.remove('inactive');
         }
     }
+
     getStepNode(index, step) {
         const $instruction = document.createElement('div');
         $instruction.dataset.title = step.title;
@@ -75,6 +79,7 @@ class VueManager {
     onNext($button) {
         this.controller.next(true);
     }
+
     // /BUTTON EVENTS
 
     /*
@@ -99,6 +104,7 @@ class VueManager {
     async onCommandExecuted(cmd) {
         this.logManager.log(`${cmd} executed`);
     }
+
     async onCheckDeviceConnection() {
         this.logManager.log(`trying to reconnect phone`);
         //this.render(await this.controller.getData());
@@ -217,5 +223,6 @@ class VueManager {
         }
         this.logManager.log(`Installing ${id}: ${Math.round(v * 100)}/${100}`, `installing-${id}`);
     }
+
     // /CONTROLLER EVENTS
 }

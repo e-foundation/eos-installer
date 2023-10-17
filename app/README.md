@@ -51,7 +51,34 @@ Please respect ♥
 
 ## Defining a process
 
-### Available commands
+A process is in  2 parts : steps and folder
+
+### Steps
+
+#### Description
+
+Steps is an array on objects describing the process
+
+```
+"steps": [
+    {
+      "mode": string?,
+      "command" : string?,
+      "instruction": string?,
+      "needUser": boolean?
+    }
+  ]
+```
+#### Options
+
+| key           | exemple                         | description                                                                 |
+|---------------|---------------------------------|-----------------------------------------------------------------------------|
+| `mode`        | `[fastboot\| adb\| bootloader]` | It's a shortcut for a reboot and a reconnect before the command is executed |
+| `needUser`    | `[true\| false]`                | The user needs to click on continue before the command is executed          |
+| `instruction` | `Please select unlock`          | String displayed to the user at this step. Command is used if not defined   |
+| `command`     | `flashing unlock unlocked`      | Command as defined in the next chapter                                      |
+
+#### Available commands
 
 | command                                | exemple                    | description     |
 |----------------------------------------|----------------------------|-----------------|
@@ -66,7 +93,14 @@ Please respect ♥
 
 For oem, recovery, rom and key, we parse these command and execute them. The others commands are not analyzed and executed arbitrarily in the device.
 
-### Defining files
+
+
+
+
+#### Exemples
+
+
+### Folder
 
 #### Description
 

@@ -1,5 +1,5 @@
-
 import {Helper} from "./helper.class.js";
+
 export class MessageHeader {
     /**
      * Creates a new MessageHeader
@@ -20,6 +20,7 @@ export class MessageHeader {
         this.length = length;
         this.checksum = checksum;
     }
+
     /**
      * Converts the MessageHeader into a {@link DataView}.
      * @returns {DataView} a DataView with 24 bytes, with the header content.
@@ -36,6 +37,7 @@ export class MessageHeader {
         view.setUint32(20, magic, true);
         return view;
     }
+
     /**
      * Creates a header from a {@link DataView}.
      * @param {DataView} data the {@link DataView} that will be used to create the header.

@@ -1,10 +1,11 @@
+import {MessageHeader} from "./message-header.class.js";
 
-import { MessageHeader } from "./message-header.class.js";
 export class MessageClass {
     constructor(header, data) {
         this.header = header;
         this.data = data;
     }
+
     /**
      * Returns the data content as a {@link string} or {@link null} if data is not available.
      * @returns {string | null} a {@link string} or {@link null} if data is not available.
@@ -16,6 +17,7 @@ export class MessageClass {
         const textDecoder = new TextDecoder();
         return textDecoder.decode(this.data);
     }
+
     /**
      * Creates a new Message. See {@link MessageHeader}.
      * @param {string} cmd the command.
@@ -37,6 +39,7 @@ export class MessageClass {
         const header = new MessageHeader.MessageHeader(cmd, arg0, arg1, byteLength, checksum);
         return new MessageClass(header, data);
     }
+
     /**
      * Creates a new `OPEN` message.
      * @param {number} localId local stream ID
@@ -50,6 +53,7 @@ export class MessageClass {
         const data = new DataView(encoder.encode('' + service + '\0').buffer);
         return MessageClass.newMessage('OPEN', localId, remoteId, useChecksum, data);
     }
+
     /**
      * Creates a new `CNXN` message.
      * @param {number} version version of the protocol to be used.
@@ -63,6 +67,7 @@ export class MessageClass {
         const data = new DataView(encoder.encode(banner).buffer);
         return MessageClass.newMessage('CNXN', version, maxPayload, useChecksum, data);
     }
+
     /**
      * Creates a new `AUTH` message, with the a signed token.
      * @param {DataView} signedToken a DataView with the signed token.
@@ -72,6 +77,7 @@ export class MessageClass {
     static authSignature(signedToken, useChecksum) {
         return MessageClass.newMessage('AUTH', 2, 0, useChecksum, signedToken);
     }
+
     /**
      * Creates a new `AUTH` message, with the a Public Key.
      * @param {DataView} publicKey a DataView with the public key
@@ -83,6 +89,7 @@ export class MessageClass {
         const data = textEncoder.encode(Helper.toB64(publicKey.buffer) + '\0');
         return MessageClass.newMessage('AUTH', 3, 0, useChecksum, new DataView(data.buffer));
     }
+
     /**
      * Creates a new `SYNC` message, with the a Public Key.
      * @param
@@ -98,6 +105,7 @@ export class MessageClass {
         const data = textEncoder.encode(Helper.toB64(publicKey.buffer) + '\0');
         return MessageClass.newMessage('SYNC', 3, 0, useChecksum, new DataView(data.buffer));
     }
+
     /**
      * Creates a new `SEND` message, with the a Public Key.
      * @param
@@ -113,6 +121,7 @@ export class MessageClass {
         const data = textEncoder.encode(Helper.toB64(publicKey.buffer) + '\0');
         return MessageClass.newMessage('SEND', 3, 0, useChecksum, new DataView(data.buffer));
     }
+
     /**
      * Creates a new `DONE` message, with the a Public Key.
      * @param
@@ -129,6 +138,7 @@ export class MessageClass {
         const data = textEncoder.encode(Helper.toB64(publicKey.buffer) + '\0');
         return MessageClass.newMessage('DONE', 3, 0, useChecksum, new DataView(data.buffer));
     }
+
     static checksum(dataView) {
         let sum = 0;
         for (let i = 0; i < dataView.byteLength; i++) {

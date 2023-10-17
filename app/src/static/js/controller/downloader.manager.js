@@ -31,7 +31,7 @@ export class Downloader {
                 onDownloadProgress(value, total, file.name);
             });
             if (file.unzip) {
-                this.unzipping[file.name] = this.unZip(file, onUnzipProgress, filesName);
+                this.unzipping[file.name] = this.unZip(file.name, onUnzipProgress, filesName);
                 this.unzipping[file.name].then(() => {
                     delete this.unzipping[file.name];
                 }).catch((e) => {
@@ -41,13 +41,18 @@ export class Downloader {
         }
     }
 
-    /*
-    * wait for the folder this.files[fileName] to download
-    * retrieve the entries of the unzipped folder
-    * for each entry, set this.files[fileName] = promise<file get blob>
-    * */
-    async unZip(file, onProgress) {
-        const downloading = this.getFile(file.name);
+
+    /**
+     *
+     * @param file : string
+     * @param onProgress : function
+     * @returns {Promise<Awaited<unknown>[]>}
+     * wait for the folder this.files[fileName] to download
+     * retrieve the entries of the unzipped folder
+     * for each entry, set this.files[fileName] = promise<file get blob>
+     */
+    async unZip(name, onProgress) {
+        const downloading = this.getFile(name);
         const all = [];
         if (downloading) {
             const blob = await downloading;
@@ -81,17 +86,17 @@ export class Downloader {
     }
 
 
-    /*
-    * getFile return Promise<blob File> requested
-    * It does not launch download <!> (downloads are launched with downloadFolder)
-    * this function retrieve the promise linked to the fileName
-    * */
+    /**
+     * @param name
+     * @returns {Promise<blob|boolean>}
+     *  It does not launch download <!> (downloads are launched with downloadFolder)
+     * this function retrieve the promise linked to the fileName
+     */
     async getFile(name) {
         if (this.files[name]) {
             return this.files[name];
         } else {
             const unzipping = Object.values(this.unzipping);
-            console.log(unzipping.length);
             if (unzipping.length) { //unzipping in Process, maybe our file is in it
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 console.log(`waiting unzip of  ${name}`);
@@ -108,7 +113,7 @@ export class Downloader {
     async getData(dbFile, fileEntry, onProgress) {
         return new Promise(async (resolve, reject) => {
             const db = await this.openDBStore();
-            const file = false; //await this.getDBStore(db, dbFile);
+            const file = await this.getDBStore(db, dbFile);
             if (file) {
                 resolve(file.content);
             } else {
@@ -128,23 +133,20 @@ export class Downloader {
 
     }
 
-    async get(dbFile, onProgress) {
+    async get(path, onProgress) {
         const db = await this.openDBStore();
-        const file = false; //await this.getDBStore(db, dbFile);
+        const file = await this.getDBStore(db, path);
         if (file) {
-            //console.log(file)
             return file.content;
         } else {
             try {
-                //this.setInDBStore(db,  { id: dbFile, content: blob });
-
                 const buffers = await this.download({
-                    url: dbFile,
+                    url: path,
                     chunkSize: 15 * 1024 * 1024,
                     poolLimit: 6,
                 })
                 const blob = new Blob([buffers]);
-                // this.setInDBStore(db,blob)
+                this.setInDBStore(db, blob, path);
                 return blob;
 
             } catch (e) {
@@ -173,16 +175,16 @@ export class Downloader {
 
     }
 
-    async deleteDBStore(db, dbFile) {
+    async deleteDBStore(db, path) {
         return new Promise((resolve, reject) => {
             const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-            resolve(store.delete(dbFile));
+            resolve(store.delete(path));
         })
     }
 
-    setInDBStore(db, blob) {
+    setInDBStore(db, blob, path) {
         const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-        store.put(blob);
+        store.put(blob, path);
     }
 
     async getDBStore(db, key) {

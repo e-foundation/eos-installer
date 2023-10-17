@@ -1,56 +1,62 @@
 {
-  "commands": [
+  "steps": [
     {
       "mode": "bootloader",
-      "command" : "oem unlock unlocked",
+      "command": "oem unlock unlocked",
       "instruction": "unlock bootloader"
     },
-    { "command" : "flash dtbo dtbo.img" },
-    { "command" : "flash vbmeta vbmeta.img" },
-    { "command" : "flash recovery recovery.img" },
+    {
+      "command": "flash dtbo dtbo.img"
+    },
+    {
+      "command": "flash vbmeta vbmeta.img"
+    },
+    {
+      "command": "flash recovery recovery.img"
+    },
     {
       "instruction": "go to recovery manually"
     },
     {
       "instruction": "eraseData",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "go to sideLoad",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "connect recovery",
-      "command" : "connect recovery",
-      "needUser" : true
+      "command": "connect recovery",
+      "needUser": true
     },
     {
       "mode": "recovery",
       "instruction": "installing sideload",
-      "command" : "sideload rom.zip"
+      "command": "sideload rom.zip"
     },
     {
       "mode": "recovery",
       "instruction": "reboot manually",
-      "needUser" : true
+      "needUser": true
     }
   ],
   "folder": [
     {
       "name": "vbmeta.img",
-      "path" : "assets/sources/avicii/vbmeta.img"
+      "path": "assets/sources/avicii/vbmeta.img"
     },
     {
       "name": "dtbo.img",
-      "path" : "assets/sources/avicii/dtbo.img"
+      "path": "assets/sources/avicii/dtbo.img"
     },
     {
       "name": "recovery.img",
-      "path" : "assets/sources/avicii/recovery-e-1.14-s-20230818321663-dev-avicii.img"
+      "path": "assets/sources/avicii/recovery-e-1.14-s-20230818321663-dev-avicii.img"
     },
     {
       "name": "rom.zip",
-      "path" : "assets/sources/avicii/e-1.14-s-20230818321663-dev-avicii.zip"
+      "path": "assets/sources/avicii/e-1.14-s-20230818321663-dev-avicii.zip"
     }
   ]
 }

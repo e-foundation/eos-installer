@@ -1,83 +1,89 @@
 {
-  "commands": [
+  "steps": [
     {
       "mode": "bootloader",
-      "command" : "flashing unlock unlocked",
+      "command": "flashing unlock unlocked",
       "instruction": "unlock bootloader"
     },
-    { "command" : "flash dtbo dtbo.img" },
-    { "command" : "flash vendor_boot vendor_boot.img" },
-    { "command" : "flash vendor_boot recovery.img" },
+    {
+      "command": "flash dtbo dtbo.img"
+    },
+    {
+      "command": "flash vendor_boot vendor_boot.img"
+    },
+    {
+      "command": "flash vendor_boot recovery.img"
+    },
     {
       "instruction": "go to recovery manually"
     },
     {
       "instruction": "eraseData",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "go to sideLoad",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "connect recovery",
-      "command" : "connect recovery",
-      "needUser" : true
+      "command": "connect recovery",
+      "needUser": true
     },
     {
       "mode": "recovery",
       "instruction": "installing sideload",
-      "command" : "sideload rom.zip",
-      "needUser" : true
+      "command": "sideload rom.zip",
+      "needUser": true
     },
     {
       "instruction": "go to bootloader manually",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "connect bootloader",
-      "command" : "connect bootloader",
-      "needUser" : true
+      "command": "connect bootloader",
+      "needUser": true
     },
     {
       "mode": "bootloader",
-      "command" : "erase avb_custom_key"
+      "command": "erase avb_custom_key"
     },
     {
       "mode": "bootloader",
-      "command" : "flash avb_custom_key pkmd_pixel.bin"
+      "command": "flash avb_custom_key pkmd_pixel.bin"
     },
     {
       "mode": "bootloader",
-      "command" : "flashing lock unlocked",
+      "command": "flashing lock unlocked",
       "instruction": "lock bootloader",
-      "needUser" : true
+      "needUser": true
     },
     {
       "instruction": "restart if needed. /e/ should be installed",
-      "needUser" : true
+      "needUser": true
     }
   ],
   "folder": [
     {
       "name": "dtbo.img",
-      "path" : "assets/sources/redfin/dtbo.img"
+      "path": "assets/sources/redfin/dtbo.img"
     },
     {
       "name": "vendor_boot.img",
-      "path" : "assets/sources/redfin/vendor_boot.img"
+      "path": "assets/sources/redfin/vendor_boot.img"
     },
     {
       "name": "pkmd_pixel.bin",
-      "path" : "assets/sources/redfin/pkmd_pixel.bin"
+      "path": "assets/sources/redfin/pkmd_pixel.bin"
     },
     {
       "name": "recovery.img",
-      "path" : "assets/sources/redfin/recovery-e-latest-s-redfin.img"
+      "path": "assets/sources/redfin/recovery-e-latest-s-redfin.img"
     },
     {
       "name": "rom.zip",
-      "path" : "assets/sources/redfin/e-latest-s-redfin.zip"
+      "path": "assets/sources/redfin/e-latest-s-redfin.zip"
     }
   ]
 }

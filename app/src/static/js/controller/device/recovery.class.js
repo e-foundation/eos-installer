@@ -28,12 +28,12 @@ export class Recovery extends Device {
 
     async connect() {
         try {
-            if(this.device && this.device.isConnected) {
+            if (this.device && this.device.isConnected) {
             } else {
                 this.webusb = await Adb.open("WebUSB");
             }
             if (this.webusb.isAdb()) {
-                this.device =  await this.webusb.connectAdb("host::");
+                this.device = await this.webusb.connectAdb("host::");
                 return true;
             }
         } catch (e) {
@@ -42,6 +42,7 @@ export class Recovery extends Device {
         }
         return false;
     }
+
     async sideload(blob, onProgress) {
         try {
             await this.adbConnect(blob, false);
@@ -116,10 +117,11 @@ export class Recovery extends Device {
         return await this.device.shell(`reboot ${mode}`);
     }
 
-    getProductName(){
+    getProductName() {
         return this.webusb.device.productName;
     }
-    getSerialNumber(){
+
+    getSerialNumber() {
         return this.webusb.device.serialNumber;
     }
 
@@ -233,6 +235,7 @@ export class Recovery extends Device {
         }
         return true;
     }
+
     write(data) {
         return this.device.transport.send(this.device.ep_out, data);
     }

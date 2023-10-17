@@ -55,24 +55,25 @@ export class Controller {
                 //we need reboot
                 await this.needReboot(next.mode);
                 await this.next();
-                return;
-            } else if(next.needUser && !fromUser) {
-                return;
-            } else  {
+
+            } else if (next.needUser && !fromUser) {
+
+            } else {
                 // previous step was not marked as done even tough the command was executed
                 // it's most likely because we needed the user to click on continue
                 // now it's totally done
-                if(!current.done && this.isDone(current) && next.needUser && fromUser) {
+                if (!current.done && this.isDone(current) && next.needUser && fromUser) {
                     current.done = true;
                     VUE.onStepFinished(current);
-                };
+                }
+
                 this.currentIndex++;
                 current = this.steps[this.currentIndex];
                 next = this.steps[this.currentIndex + 1];
                 VUE.onStepStarted(current);
                 current.commandDone = await this.executeStep(current);
                 if (current.commandDone) {
-                    current.done = !next.needUser; //not totally done if we need user to click on continue
+                    current.done = !next || !next.needUser; //not totally done if we need user to click on continue
                     VUE.onStepFinished(current, next);
                     await this.next();
                 } else {
@@ -83,7 +84,7 @@ export class Controller {
         }
     }
 
-    isDone(step){
+    isDone(step) {
         return (!step.command || (step.command && step.commandDone));
     }
 
@@ -108,7 +109,7 @@ export class Controller {
         const stepsToAdd = []
         //run reboot
         //need the user to connect just after
-        if(this.inInMode('fastboot')) {
+        if (this.inInMode('fastboot')) {
         } else {
             stepsToAdd.push({
                 "title": "Reboot",
@@ -120,9 +121,9 @@ export class Controller {
             "title": "Connect",
             "instruction": "please connect again",
             "command": `connect ${mode}`,
-            "needUser" : true,
+            "needUser": true,
         })
-        if(stepsToAdd.length){
+        if (stepsToAdd.length) {
             this.addSteps(stepsToAdd, this.currentIndex + 1);
         }
     }
@@ -160,7 +161,7 @@ export class Controller {
                     await this.deviceManager.connect(cmd.mode);
                     await this.onDeviceConnected();
                     return true;
-                }catch (e) {
+                } catch (e) {
                     return false;
                 }
             case Command.CMD_TYPE.erase:
@@ -181,7 +182,8 @@ export class Controller {
                 if (!isUnlocked) {
                     //try command
                     try {
-                         this.deviceManager.unlock(cmd.command);
+                        await this.deviceManager.unlock(cmd.command);
+                        this.steps[this.currentIndex].needUser = true;
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
                         if (e.bootloaderMessage?.includes("already")) {
@@ -198,8 +200,6 @@ export class Controller {
                         this.steps[this.currentIndex]
                     ])
                     this.addSteps(stepsToAdd, this.currentIndex + 1);
-                } else {
-                    this.steps[this.currentIndex].done = true;
                 }
                 return true;
             case Command.CMD_TYPE.lock:
@@ -222,7 +222,9 @@ export class Controller {
                     }
                 }
                 if (!isLocked) {
-                     this.deviceManager.lock(cmd.command);
+                    this.deviceManager.lock(cmd.command);
+                    this.steps[this.currentIndex].needUser = true;
+
                 } else {
                     //since it's already locked, let's consider this step finished
                     this.steps[this.currentIndex].done = true;
@@ -243,7 +245,7 @@ export class Controller {
         ].map((c, index) => {
             const i = index;
             return Object.assign({}, c
-             ,{
+                , {
                     index: i,
                     id: `step_${i}`
                 })
@@ -255,7 +257,7 @@ export class Controller {
 
     async onDeviceConnected() {
         const serialNumber = this.deviceManager.getSerialNumber();
-        const productName = "oneplusnord";//this.deviceManager.getProductName();
+        const productName = this.deviceManager.getProductName();
         if (this.deviceManager.wasAlreadyConnected(serialNumber)) {
             //already connected
             //we check on serialNumber because productName may not be the same between adb/fastboot driver
@@ -269,8 +271,8 @@ export class Controller {
             }
             if (this.resources) {
                 this.deviceManager.setResources(this.resources);
-                if (this.resources.commands) {
-                    this.steps.push(...this.resources.commands.map((c, index) => {
+                if (this.resources.steps) {
+                    this.steps.push(...this.resources.steps.map((c, index) => {
                         const i = index + this.steps.length;
                         return Object.assign({}, {index: i, id: `step_${i}`, mode: 'bootloader'}, c);
                     }));

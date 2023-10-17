@@ -1,0 +1,70 @@
+{
+  "steps": [
+    {
+      "mode": "bootloader",
+      "command": "flashing unlock unlocked",
+      "instruction": "Select unlock bootloader"
+    },
+    {
+      "command": "flash system system.img"
+    },
+    {
+      "command": "flash vendor vendor.img"
+    },
+    {
+      "command": "flash boot boot.img"
+    },
+    {
+      "command": "flash dtbo dtbo.img"
+    },
+    {
+      "command": "flash recovery recovery.img"
+    },
+    {
+      "command": "flash logo logo.img"
+    },
+    {
+      "command": "flash md1dsp md1dsp.img"
+    },
+    {
+      "command": "flash md1img md1img.img"
+    },
+    {
+      "command": "flash spmfw spmfw.img"
+    },
+    {
+      "command": "flash lk lk.img"
+    },
+    {
+      "command": "flash lk2 lk.img"
+    },
+    {
+      "command": "flash sspm_1 sspm.img"
+    },
+    {
+      "command": "flash sspm_2 sspm.img"
+    },
+    {
+      "command": "flash tee1 trustzone1.bin"
+    },
+    {
+      "command": "flash tee2 trustzone2.bin"
+    },
+    {
+      "command": "flash preloader preloader.img"
+    },
+    {
+      "command": "erase userdata"
+    },
+    {
+      "command": "reboot"
+    }
+  ],
+  "folder": [
+    {
+      "name": "GS290 installer",
+      "unzip": true,
+      "path": "assets/sources/GS290/IMG-e-1.15-s-20230916331435-dev-GS290.zip"
+    }
+  ]
+}

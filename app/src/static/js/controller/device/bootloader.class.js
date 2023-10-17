@@ -68,12 +68,10 @@ export class Bootloader extends Device {
     }
 
     getProductName() {
-        console.log(this.device.device.productName)
         return this.device.device.productName;
     }
 
     getSerialNumber() {
-        console.log(this.device.device.serialNumber)
         return this.device.device.serialNumber;
     }
 

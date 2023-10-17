@@ -8,16 +8,19 @@ var DebugLevel;
     DebugLevel[DebugLevel["Verbose"] = 2] = "Verbose";
 })(DebugLevel || (DebugLevel = {}));
 let debugLevel = DebugLevel.Silent;
+
 function logDebug(...data) {
     if (debugLevel >= 1) {
         console.log(...data);
     }
 }
+
 function logVerbose(...data) {
     if (debugLevel >= 2) {
         console.log(...data);
     }
 }
+
 /**
  * Change the debug level for the fastboot client:
  *   - 0 = silent
@@ -29,6 +32,7 @@ function logVerbose(...data) {
 function setDebugLevel(level) {
     debugLevel = level;
 }
+
 /**
  * Reads all of the data in the given blob and returns it as an ArrayBuffer.
  *
@@ -48,11 +52,13 @@ function readBlobAsBuffer(blob) {
         reader.readAsArrayBuffer(blob);
     });
 }
+
 function waitForFrame() {
     return new Promise((resolve, _reject) => {
         window.requestAnimationFrame(resolve);
     });
 }
+
 async function runWithTimedProgress(onProgress, action, item, duration, workPromise) {
     let startTime = new Date().getTime();
     let stop = false;
@@ -72,6 +78,7 @@ async function runWithTimedProgress(onProgress, action, item, duration, workProm
     await workPromise;
     onProgress(action, item, 1.0);
 }
+
 /** Exception class for operations that exceeded their timeout duration. */
 class TimeoutError extends Error {
     constructor(timeout) {
@@ -80,6 +87,7 @@ class TimeoutError extends Error {
         this.timeout = timeout;
     }
 }
+
 function runWithTimeout(promise, timeout) {
     return new Promise((resolve, reject) => {
         // Set up timeout
@@ -92,22 +100,23 @@ function runWithTimeout(promise, timeout) {
         // Passthrough
         promise
             .then((val) => {
-            if (!timedOut) {
-                resolve(val);
-            }
-        })
+                if (!timedOut) {
+                    resolve(val);
+                }
+            })
             .catch((err) => {
-            if (!timedOut) {
-                reject(err);
-            }
-        })
+                if (!timedOut) {
+                    reject(err);
+                }
+            })
             .finally(() => {
-            if (!timedOut) {
-                clearTimeout(tid);
-            }
-        });
+                if (!timedOut) {
+                    clearTimeout(tid);
+                }
+            });
     });
 }
+
 async function getEntryMetadata(blob, entry) {
     const offset = entry.offset;
     const headerBeginRaw = await blob.slice(offset, offset + ZIP_ENTRY_HEADER_BEGIN_LENGTH).arrayBuffer();
@@ -126,18 +135,17 @@ async function getEntryMetadata(blob, entry) {
         headerSize,
     };
 }
+
 // Wrapper for Entry#getData() that unwraps ProgressEvent errors
 async function zipGetData(entry, writer, options) {
     try {
         return await entry.getData(writer, options);
-    }
-    catch (e) {
+    } catch (e) {
         if (e instanceof ProgressEvent &&
             e.type === "error" &&
             e.target !== null) {
             throw e.target.error;
-        }
-        else {
+        } else {
             throw e;
         }
     }
@@ -150,12 +158,14 @@ const FILE_HEADER_SIZE = 28;
 const CHUNK_HEADER_SIZE = 12;
 // AOSP libsparse uses 64 MiB chunks
 const RAW_CHUNK_SIZE = 64 * 1024 * 1024;
+
 class ImageError extends Error {
     constructor(message) {
         super(message);
         this.name = "ImageError";
     }
 }
+
 var ChunkType;
 (function (ChunkType) {
     ChunkType[ChunkType["Raw"] = 51905] = "Raw";
@@ -163,18 +173,22 @@ var ChunkType;
     ChunkType[ChunkType["Skip"] = 51907] = "Skip";
     ChunkType[ChunkType["Crc32"] = 51908] = "Crc32";
 })(ChunkType || (ChunkType = {}));
+
 class BlobBuilder {
     constructor(type = "") {
         this.type = type;
-        this.blob = new Blob([], { type: this.type });
+        this.blob = new Blob([], {type: this.type});
     }
+
     append(blob) {
-        this.blob = new Blob([this.blob, blob], { type: this.type });
+        this.blob = new Blob([this.blob, blob], {type: this.type});
     }
+
     getBlob() {
         return this.blob;
     }
 }
+
 /**
  * Returns a parsed version of the sparse image file header from the given buffer.
  *
@@ -210,6 +224,7 @@ function parseFileHeader(buffer) {
         crc32: view.getUint32(24, true),
     };
 }
+
 function parseChunkHeader(buffer) {
     let view = new DataView(buffer);
     // This isn't the same as what createImage takes.
@@ -222,21 +237,25 @@ function parseChunkHeader(buffer) {
         data: null, // to be populated by consumer
     };
 }
+
 function calcChunksBlockSize(chunks) {
     return chunks
         .map((chunk) => chunk.blocks)
         .reduce((total, c) => total + c, 0);
 }
+
 function calcChunksDataSize(chunks) {
     return chunks
         .map((chunk) => chunk.data.size)
         .reduce((total, c) => total + c, 0);
 }
+
 function calcChunksSize(chunks) {
     // 28-byte file header, 12-byte chunk headers
     let overhead = FILE_HEADER_SIZE + CHUNK_HEADER_SIZE * chunks.length;
     return overhead + calcChunksDataSize(chunks);
 }
+
 async function createImage(header, chunks) {
     let blobBuilder = new BlobBuilder();
     let buffer = new ArrayBuffer(FILE_HEADER_SIZE);
@@ -271,6 +290,7 @@ async function createImage(header, chunks) {
     }
     return blobBuilder.getBlob();
 }
+
 /**
  * Creates a sparse image from buffer containing raw image data.
  *
@@ -296,6 +316,7 @@ async function fromRaw(blob) {
     }
     return createImage(header, chunks);
 }
+
 /**
  * Split a sparse image into smaller sparse images within the given size.
  * This takes a Blob instead of an ArrayBuffer because it may process images
@@ -339,8 +360,7 @@ async function* splitBlob(blob, splitSize) {
             splitChunks.push(chunk);
             // Track amount of data written on the output device, in bytes
             splitDataBytes += chunk.blocks * header.blockSize;
-        }
-        else {
+        } else {
             // Out of space, finish this split
             // Blocks need to be calculated from chunk headers instead of going by size
             // because FILL and SKIP chunks cover more blocks than the data they contain.
@@ -394,8 +414,8 @@ async function* splitBlob(blob, splitSize) {
  1. Redistributions of source code must retain the above copyright notice,
  this list of conditions and the following disclaimer.
 
- 2. Redistributions in binary form must reproduce the above copyright 
- notice, this list of conditions and the following disclaimer in 
+ 2. Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in
  the documentation and/or other materials provided with the distribution.
 
  3. The names of the authors may not be used to endorse or promote products

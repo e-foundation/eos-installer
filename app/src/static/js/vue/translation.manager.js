@@ -11,7 +11,6 @@ class TranslationManager {
 
     async init() {
         this.$select = document.getElementById('translation');
-        console.log(this.$select);
         this.$select.addEventListener('change', ($event) => {
             this.onSelectTranslationChange($event);
         });

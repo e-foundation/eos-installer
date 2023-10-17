@@ -14,17 +14,17 @@ class LogManager {
             date: new Date(),
             log,
         });
-        if(log instanceof Error){
+        if (log instanceof Error) {
             console.error(log);
         }
-        if(this.$log) {
+        if (this.$log) {
             let span = id ? document.getElementById(id) || document.createElement("SPAN") : document.createElement("SPAN");
             span.id = id;
-            span.innerText =  log;
-            if(isError) {
+            span.innerText = log;
+            if (isError) {
                 span.classList.add('error');
             }
-            if(!span.parentNode) {
+            if (!span.parentNode) {
                 this.$log.append(span);
                 this.$log.append('\n');
                 this.scrollToBottom();
@@ -32,19 +32,21 @@ class LogManager {
         }
     }
 
-    error(log, id){
+    error(log, id) {
         this.log(log, id, true);
     }
-    untie(id){
+
+    untie(id) {
         const span = document.getElementById(id);
         delete span.id;
     }
-    clear(){
+
+    clear() {
         this.$log.innerText = '';
         this.logs = [];
     }
 
-    scrollToBottom(){
+    scrollToBottom() {
         this.$logCtn.scrollTo(0, this.$logCtn.scrollHeight);
     }
 }

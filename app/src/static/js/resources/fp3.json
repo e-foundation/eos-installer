@@ -1,61 +1,133 @@
 {
-  "commands": [
+  "steps": [
     {
       "mode": "bootloader",
-      "command" : "oem unlock unlocked",
-      "instruction": "unlock bootloader"
+      "command": "oem unlock unlocked",
+      "instruction": "Select unlock bootloader"
     },
-    { "command" : "flash modem_a modem.img" },
-    { "command" : "flash modem_a modem.img" },
-    { "command" : "flash modem_b modem.img" },
-    { "command" : "flash sbl1_a sbl1.img" },
-    { "command" : "flash sbl1_b sbl1.img" },
-    { "command" : "flash rpm_a rpm.img" },
-    { "command" : "flash rpm_b rpm.img" },
-    { "command" : "flash tz_a tz.img" },
-    { "command" : "flash tz_b tz.img" },
-    { "command" : "flash devcfg_a devcfg.img" },
-    { "command" : "flash devcfg_b devcfg.img" },
-    { "command" : "flash dsp_a dsp.img" },
-    { "command" : "flash dsp_b dsp.img" },
-    { "command" : "flash aboot_a aboot.img" },
-    { "command" : "flash aboot_b aboot.img" },
-    { "command" : "flash boot_a boot.img" },
-    { "command" : "flash boot_b boot.img" },
-    { "command" : "flash dtbo_a dtbo.img" },
-    { "command" : "flash dtbo_b dtbo.img" },
-    { "command" : "flash system_a system.img" },
-    { "command" : "flash system_b system.img" },
-    { "command" : "flash vbmeta_a vbmeta.img" },
-    { "command" : "flash vbmeta_b vbmeta.img" },
-    { "command" : "flash vendor_a vendor.img" },
-    { "command" : "flash vendor_b vendor.img" },
-    { "command" : "flash mdtp_a mdtp.img" },
-    { "command" : "flash mdtp_b mdtp.img" },
-    { "command" : "flash lksecapp_a lksecapp.img" },
-    { "command" : "flash lksecapp_b lksecapp.img" },
-    { "command" : "flash cmnlib_a cmnlib.img" },
-    { "command" : "flash cmnlib_b cmnlib.img" },
-    { "command" : "flash cmnlib64_a cmnlib64.img" },
-    { "command" : "flash cmnlib64_b cmnlib64.img" },
-    { "command" : "flash keymaster_a keymaster.img" },
-    { "command" : "flash keymaster_b keymaster.img" },
-    { "command" : "flash userdata userdata.img" },
+    {
+      "command": "flash modem_a modem.img"
+    },
+    {
+      "command": "flash modem_a modem.img"
+    },
+    {
+      "command": "flash modem_b modem.img"
+    },
+    {
+      "command": "flash sbl1_a sbl1.img"
+    },
+    {
+      "command": "flash sbl1_b sbl1.img"
+    },
+    {
+      "command": "flash rpm_a rpm.img"
+    },
+    {
+      "command": "flash rpm_b rpm.img"
+    },
+    {
+      "command": "flash tz_a tz.img"
+    },
+    {
+      "command": "flash tz_b tz.img"
+    },
+    {
+      "command": "flash devcfg_a devcfg.img"
+    },
+    {
+      "command": "flash devcfg_b devcfg.img"
+    },
+    {
+      "command": "flash dsp_a dsp.img"
+    },
+    {
+      "command": "flash dsp_b dsp.img"
+    },
+    {
+      "command": "flash aboot_a aboot.img"
+    },
+    {
+      "command": "flash aboot_b aboot.img"
+    },
+    {
+      "command": "flash boot_a boot.img"
+    },
+    {
+      "command": "flash boot_b boot.img"
+    },
+    {
+      "command": "flash dtbo_a dtbo.img"
+    },
+    {
+      "command": "flash dtbo_b dtbo.img"
+    },
+    {
+      "command": "flash system_a system.img"
+    },
+    {
+      "command": "flash system_b system.img"
+    },
+    {
+      "command": "flash vbmeta_a vbmeta.img"
+    },
+    {
+      "command": "flash vbmeta_b vbmeta.img"
+    },
+    {
+      "command": "flash vendor_a vendor.img"
+    },
+    {
+      "command": "flash vendor_b vendor.img"
+    },
+    {
+      "command": "flash mdtp_a mdtp.img"
+    },
+    {
+      "command": "flash mdtp_b mdtp.img"
+    },
+    {
+      "command": "flash lksecapp_a lksecapp.img"
+    },
+    {
+      "command": "flash lksecapp_b lksecapp.img"
+    },
+    {
+      "command": "flash cmnlib_a cmnlib.img"
+    },
+    {
+      "command": "flash cmnlib_b cmnlib.img"
+    },
+    {
+      "command": "flash cmnlib64_a cmnlib64.img"
+    },
+    {
+      "command": "flash cmnlib64_b cmnlib64.img"
+    },
+    {
+      "command": "flash keymaster_a keymaster.img"
+    },
+    {
+      "command": "flash keymaster_b keymaster.img"
+    },
+    {
+      "command": "flash userdata userdata.img"
+    },
     {
       "instruction": "lock bootloader",
-      "command" : "oem lock unlocked",
-      "needUser" : true
+      "command": "oem lock unlocked",
+      "needUser": true
     },
     {
       "instruction": "restart if needed. /e/ should be installed",
-      "needUser" : true
+      "needUser": true
     }
   ],
-  "folder" : [
+  "folder": [
     {
       "name": "FP3 installer",
       "unzip": true,
-      "path" : "assets/sources/fp3/IMG-e-1.15-s-20230916331435-dev-FP3.zip"
+      "path": "assets/sources/fp3/IMG-e-1.15-s-20230916331435-dev-FP3.zip"
     }
   ]
 }
