@@ -4,7 +4,6 @@ import {ADB} from "./device/adb.class.js";
 import {Recovery} from "./device/recovery.class.js";
 import {Fastboot} from "./device/fastboot.class.js";
 
-let next_id = 0;
 const MODE = {
     adb: 'adb',
     recovery: 'recovery',

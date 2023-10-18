@@ -1,5 +1,3 @@
-// @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&dn=expat.txt MIT
-
 import * as fastboot from "../../lib/fastboot/fastboot.mjs";
 import {TimeoutError} from "../../lib/fastboot/fastboot.mjs";
 import {Device} from "./device.class.js";
@@ -8,7 +6,6 @@ import {Device} from "./device.class.js";
  * wrap fastboot interactions
  * */
 export class Bootloader extends Device {
-    CONNECT = "host::features=shell_v2,cmd,stat_v2,ls_v2,fixed_push_mkdir,apex,abb,fixed_push_symlink_timestamp,abb_exec,remount_shell,track_app,sendrecv_v2,sendrecv_v2_brotli,sendrecv_v2_lz4,sendrecv_v2_zstd,sendrecv_v2_dry_run_send,openscreen_mdns";
 
     constructor() {
         super(new fastboot.FastbootDevice());
@@ -23,10 +20,6 @@ export class Bootloader extends Device {
         });
         // Enable verbose debug logging
         fastboot.setDebugLevel(2);
-    }
-
-    startInBootloader() {
-        return this.device.reboot('bootloader');
     }
 
     reboot(mode) {

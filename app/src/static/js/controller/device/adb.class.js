@@ -1,8 +1,5 @@
 import {Device} from "./device.class.js";
 
-const VERSION = 0x01000000;
-const VERSION_NO_CHECKSUM = 0x01000001;
-
 export class ADB extends Device {
     constructor(device) {
         super(device);
@@ -49,10 +46,6 @@ export class ADB extends Device {
     async runCommand(cmd) {
         let shell = await this.device.shell(cmd);
         return await shell.receive();
-    }
-
-    startInBootloader() {
-        return this.runCommand('reboot bootloader');
     }
 
     async reboot(mode) {

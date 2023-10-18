@@ -1,6 +1,5 @@
 import {Device} from "./device.class.js";
 
-
 export class Fastboot extends Device {
     constructor(device) {
         super(device);

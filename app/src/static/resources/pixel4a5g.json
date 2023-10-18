@@ -9,7 +9,7 @@
       "command": "flash dtbo dtbo.img"
     },
     {
-      "command": "flash vendor_boot vendor_boot.img"
+      "command": "flash boot boot.img"
     },
     {
       "command": "flash vendor_boot recovery.img"
@@ -46,43 +46,26 @@
     },
     {
       "mode": "bootloader",
-      "command": "erase avb_custom_key"
-    },
-    {
-      "mode": "bootloader",
-      "command": "flash avb_custom_key pkmd_pixel.bin"
-    },
-    {
-      "mode": "bootloader",
       "command": "flashing lock unlocked",
-      "instruction": "lock bootloader",
-      "needUser": true
-    },
-    {
-      "instruction": "restart if needed. /e/ should be installed",
-      "needUser": true
+      "instruction": "lock bootloader"
     }
   ],
   "folder": [
     {
-      "name": "dtbo.img",
-      "path": "assets/sources/redfin/dtbo.img"
+      "path": "assets/sources/bramble/dtbo.img",
+      "name": "dtbo.img"
     },
     {
-      "name": "vendor_boot.img",
-      "path": "assets/sources/redfin/vendor_boot.img"
+      "path": "assets/sources/bramble/boot.img",
+      "name": "boot.img"
     },
     {
-      "name": "pkmd_pixel.bin",
-      "path": "assets/sources/redfin/pkmd_pixel.bin"
+      "path": "assets/sources/bramble/recovery-e-1.14-r-20230815320614-stable-bramble.img",
+      "name": "recovery.img"
     },
     {
-      "name": "recovery.img",
-      "path": "assets/sources/redfin/recovery-e-latest-s-redfin.img"
-    },
-    {
-      "name": "rom.zip",
-      "path": "assets/sources/redfin/e-latest-s-redfin.zip"
+      "path": "assets/sources/bramble/e-1.14-r-20230815320614-stable-bramble.zip",
+      "name": "rom.zip"
     }
   ]
 }

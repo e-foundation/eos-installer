@@ -18,7 +18,7 @@
       "instruction": "go to recovery manually"
     },
     {
-      "instruction": "eraseData",
+      "instruction": "Format data / Factory reset",
       "needUser": true
     },
     {
