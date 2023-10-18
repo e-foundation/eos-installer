@@ -267,7 +267,7 @@ export class Controller {
         } else {
             try {
                 this.model = productName.toLowerCase().replace(/[ |_]/g, '');
-                this.resources = await (await fetch(`js/resources/${this.model}.json`)).json() || {};
+                this.resources = await (await fetch(`resources/${this.model}.json`)).json() || {};
             } catch (e) {
                 throw Error('model not supported');
                 this.resources = {};

@@ -26,7 +26,7 @@ The project is available at `http://localhost:3000/`
 # Installation
 
 Drop the files used to flash the device in the corresponding folder in  `static/assets/sources`
-And **overwrite the .json** file of your device with the correct file name
+And **overwrite the .json** `static/resources` file of your device with the correct file name
 
 # Development information
 
