@@ -1,4 +1,4 @@
-class LogManager {
+export class LogManager {
     constructor() {
         this.logs = [];
     }

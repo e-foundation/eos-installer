@@ -1,5 +1,3 @@
-import {MessageClass} from "../../lib/webadb/message.class.js";
-import {MessageHeader} from "../../lib/webadb/message-header.class.js";
 import {Device} from "./device.class.js";
 
 const VERSION = 0x01000000;

@@ -4,7 +4,7 @@
 * also change single Node text if needed
 * [data-translate] is used to find Nodes needing translation
 */
-class TranslationManager {
+export class TranslationManager {
     constructor() {
         this.translation = {};
     }

@@ -69,21 +69,4 @@ export class Command {
             command: cmd
         };
     }
-
-    static encodeCmd = function (cmd) {
-        const encoder = new TextEncoder();
-        const buffer = encoder.encode(cmd).buffer;
-        const view = new DataView(buffer);
-        return view.getUint32(0, true);
-    }
-
-    static decodeCmd = function (cmd) {
-        const decoder = new TextDecoder();
-        const buffer = new ArrayBuffer(4);
-        const view = new DataView(buffer);
-        view.setUint32(0, cmd, true);
-        return decoder.decode(buffer);
-    }
-
-
 }

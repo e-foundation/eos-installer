@@ -1,14 +1,4 @@
 {
-  "oem": {
-    "unlocked": {
-      "unlock": {
-        "command": "flashing unlock"
-      },
-      "lock": {
-        "command": "flashing lock"
-      }
-    }
-  },
   "steps": [
     {
       "mode": "bootloader",
@@ -19,7 +9,26 @@
       "command": "flash boot recovery.img"
     },
     {
-      "command": "sideload rom.zip"
+      "instruction": "go to recovery manually"
+    },
+    {
+      "instruction": "erase data",
+      "needUser": true
+    },
+    {
+      "instruction": "go to sideLoad",
+      "needUser": true
+    },
+    {
+      "instruction": "connect recovery",
+      "command": "connect recovery",
+      "needUser": true
+    },
+    {
+      "mode": "recovery",
+      "instruction": "installing sideload",
+      "command": "sideload rom.zip",
+      "needUser": true
     },
     {
       "instruction": "go to bootloader manually",

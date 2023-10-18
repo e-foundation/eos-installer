@@ -5,15 +5,17 @@
 */
 class VueManager {
     constructor() {
-        this.logManager = new LogManager();
-        this.translationManager = new TranslationManager();
     }
 
     async init() {
-        const pr = await import("./controller.manager.js");
+        const cm = await import("./controller.manager.js");
+        const lm = await import("./vue/log.manager.js");
+        const tm = await import("./vue/translation.manager.js");
         this.$process = document.getElementById('process');
         this.$stepTitle = document.getElementById('step-title');
-        this.controller = new pr.Controller();
+        this.logManager = new lm.LogManager();
+        this.translationManager = new tm.TranslationManager();
+        this.controller = new cm.Controller();
         await this.controller.init();
         await this.logManager.init();
         await this.translationManager.init();
