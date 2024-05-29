@@ -1,0 +1,32 @@
+.docker:
+  stage: build
+  image: docker:git
+  services:
+    - docker:dind
+  tags:
+    - generic_privileged
+  before_script:
+    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+
+docker:
+  extends: .docker
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f app/Dockerfile app
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+docker-latest:
+  extends: .docker
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:latest -f app/Dockerfile app
+    - docker push $CI_REGISTRY_IMAGE:latest
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
+
+docker-tag:
+  extends: .docker
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:${CI_COMMIT_TAG/v/} -f app/Dockerfile app
+    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_TAG/v/}
+  rules:
+    - if: '$CI_COMMIT_TAG'
