@@ -11,8 +11,6 @@ export class Downloader {
     constructor() {
         this.db = null;
         this.files = {};
-        this.unzipping = {};
-        this.folder = {};
     }
 
     async init() {
@@ -20,91 +18,109 @@ export class Downloader {
     }
 
     /*
-    * download the files of folder set in resources
-    * set this.files[fileName] = promise<file downloading>
-    * if it needs unzip we also do this.unZip
     * */
-    async downloadFolder(folder, onDownloadProgress, onUnzipProgress, filesName) {
-        for (let i = 0; i < folder.length; i++) {
-            const file = folder[i];
-            this.files[file.name] = this.get(file.path, (value, total) => {
-                onDownloadProgress(value, total, file.name);
-            });
-            if (file.unzip) {
-                this.unzipping[file.name] = this.unZip(file.name, onUnzipProgress, filesName);
-                this.unzipping[file.name].then(() => {
-                    delete this.unzipping[file.name];
-                }).catch((e) => {
-                    console.error(e);
-                })
-            }
+    async downloadAndUnzipFolder(folder, onDownloadProgress, onUnzipProgress) {
+
+        const filesDownloaded = await this.downloadFolder(folder, onDownloadProgress);
+
+        const filesToUnzip = filesDownloaded.filter(file => file.unzip);
+        const filesUnzipped = await this.unzipFolder(filesToUnzip, onUnzipProgress);
+        const allFiles = filesDownloaded.concat(filesUnzipped);
+
+        for (let i = 0; i < allFiles.length; i++) {
+            this.files[allFiles[i].name] = allFiles[i].blob;
         }
+
+    }
+    async downloadFolder(folder, onDownloadProgress) {
+        const totalToDownload = new Array(folder.length).fill(0);
+        const totalDownloaded = new Array(folder.length).fill(0);
+        const files = [];
+        for (let i = 0; i < folder.length; i++) {
+            files.push(this.downloadFile(folder[i], (value, total)=> {
+                totalToDownload[i] = total;
+                totalDownloaded[i] = value;
+                const sumTotal = totalToDownload.reduce((partialSum, a) => partialSum + a, 0);
+                const sumValue = totalDownloaded.reduce((partialSum, a) => partialSum + a, 0);
+                onDownloadProgress(sumValue, sumTotal);
+            }));
+        }
+        return Promise.all(files);
+    }
+    async unzipFolder(folder, onUnzipProgress) {
+        const totalToUnzip = new Array(folder.length).fill(0);
+        const totalUnzipped = new Array(folder.length).fill(0);
+        const files = [];
+        for (let i = 0; i < folder.length; i++) {
+            const unzippedFiles = await this.unzip(folder[i].blob, (value, total)=> {
+                totalToUnzip[i] = total;
+                totalUnzipped[i] = value;
+                const sumTotal = totalToUnzip.reduce((partialSum, a) => partialSum + a, 0);
+                const sumValue = totalUnzipped.reduce((partialSum, a) => partialSum + a, 0);
+                onUnzipProgress(sumValue, sumTotal);
+            });
+            files.push(...unzippedFiles);
+        }
+        return files;
+    }
+
+    async downloadFile(file, onDownloadProgress) {
+        let blob = await this.download(file.path, (value, total) => {
+            onDownloadProgress(value, total, file.name);
+        });
+        return {
+            name : file.name,
+            blob : blob,
+            unzip : file.unzip
+        };
     }
 
 
     /**
      *
-     * @param file : string
-     * @param onProgress : function
+     * @param folder : blob of a folder to unzip
+     * @param onProgress : function called on the unzipping of a file of the folder
      * @returns {Promise<Awaited<unknown>[]>}
-     * wait for the folder this.files[fileName] to download
      * retrieve the entries of the unzipped folder
-     * for each entry, set this.files[fileName] = promise<file get blob>
+     * for each entry, return a blob
      */
-    async unZip(name, onProgress) {
-        const downloading = this.getFile(name);
-        const all = [];
-        if (downloading) {
-            const blob = await downloading;
-            if (blob) {
-                const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
-                const files = await zipReader.getEntries();
-                for (var i = 0; i < files.length; i++) {
-                    const path = files[i].filename;
-                    all.push(new Promise(async (resolve, reject) => {
-                        this.files[path] = await files[i].getData(new zip.BlobWriter(), {
-                            onprogress: (value, total) => {
-                                onProgress(value, total, path);
-                            },
-                            onend: () => {
-                                console.log('end')
-                            },
-                            useWebWorkers: false,
-                        });
-                        resolve(this.files[path]);
-                    }))
-                }
-                const res = await Promise.all(all);
-                await zipReader.close();
-                return res;
-            } else {
-                throw Error('something went wrong on folder file download');
-            }
-        } else {
-            throw Error('file not downloaded');
+    async unzip(folder, onProgress) {
+        const zipReader = new zip.ZipReader(new zip.BlobReader(folder));
+        const files = await zipReader.getEntries();
+        const unzippingFiles = files.map(file=> {
+            return this.getFileFromZip(file, onProgress);
+        }); // Promises[<name : string, blob : blob>]
+        const unzippedFiles = await Promise.all(unzippingFiles);
+        await zipReader.close();
+        return unzippedFiles;
+    }
+    async getFileFromZip(file, onProgress) {
+        const name = file.filename;
+        const blob = await file.getData(new zip.BlobWriter(), {
+            onprogress: (value, total) => {
+                onProgress(value, total, name);
+            },
+            useWebWorkers: false,
+        });
+        return {
+            name,
+            blob
         }
     }
 
 
     /**
      * @param name
-     * @returns {Promise<blob|boolean>}
+     * @returns {<blob>}
      *  It does not launch download <!> (downloads are launched with downloadFolder)
      * this function retrieve the promise linked to the fileName
      */
     async getFile(name) {
-        if (this.files[name]) {
-            return this.files[name];
-        } else {
-            const unzipping = Object.values(this.unzipping);
-            if (unzipping.length) { //unzipping in Process, maybe our file is in it
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                console.log(`waiting unzip of  ${name}`);
-                return await this.getFile(name);
-            } else {
-                return false;
-            }
+        const file = this.files[name];
+        if(!file){
+            throw Error(`File ${name} was not previously downloaded`)
         }
+        return this.files[name];
     }
 
     /*
@@ -139,7 +155,7 @@ export class Downloader {
 
     }
 
-    async get(path, onProgress) {
+    async download(path, onProgress) {
         const db = await this.openDBStore();
         let file;
         try {
@@ -151,15 +167,14 @@ export class Downloader {
             return file.content;
         } else {
             try {
-                const buffers = await this.download({
+                const buffers = await this.fetch({
                     url: path,
                     chunkSize: 15 * 1024 * 1024,
                     poolLimit: 6,
-                })
+                }, onProgress)
                 const blob = new Blob([buffers]);
                 this.setInDBStore(db, blob, path);
                 return blob;
-
             } catch (e) {
                 console.error(e);
                 throw Error(e);
@@ -259,7 +274,7 @@ export class Downloader {
         });
     }
 
-    getBinaryContent(url, start, end, i) {
+    getBinaryContent(url, start, end, i, onprogress) {
         return new Promise((resolve, reject) => {
             try {
                 let xhr = new XMLHttpRequest();
@@ -272,6 +287,7 @@ export class Downloader {
                         buffer: xhr.response,
                     });
                 };
+                xhr.onprogress = onprogress;
                 xhr.send();
             } catch (err) {
                 reject(new Error(err));
@@ -309,17 +325,22 @@ export class Downloader {
         return Promise.all(ret);
     }
 
-    async download({url, chunkSize, poolLimit = 1}) {
+    async fetch({url, chunkSize, poolLimit = 1}, onProgress) {
         const contentLength = await this.getContentLength(url);
         const chunks =
             typeof chunkSize === "number" ? Math.ceil(contentLength / chunkSize) : 1;
+        const totalByChunks = new Array(chunks).fill(0);
         const results = await this.asyncPool(
             poolLimit,
             [...new Array(chunks).keys()],
             (i) => {
                 let start = i * chunkSize;
                 let end = i + 1 == chunks ? contentLength - 1 : (i + 1) * chunkSize - 1;
-                return this.getBinaryContent(url, start, end, i);
+                return this.getBinaryContent(url, start, end, i, (e) => {
+                    totalByChunks[i] = e.loaded;
+                    const sum = totalByChunks.reduce((partialSum, a) => partialSum + a, 0)
+                    onProgress(sum, contentLength);
+                });
             }
         );
         const sortedBuffers = results

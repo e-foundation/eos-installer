@@ -7,23 +7,31 @@
 export class TranslationManager {
     constructor() {
         this.translation = {};
+        this.values = {};
     }
 
     async init() {
+        await this.DOMListener();
+        await this.renderTranslation('en'); //default translation is en.json
+    }
+
+    async DOMListener(){
         this.$select = document.getElementById('translation');
-        this.$select.addEventListener('change', ($event) => {
-            this.onSelectTranslationChange($event);
-        });
-        await this.changeTranslation(this.$select.value);
+        if(!!this.$select) {
+            this.$select.addEventListener('change', ($event) => {
+                this.onSelectTranslationChange($event);
+            });
+            await this.renderTranslation(this.$select.value);
+        }
     }
 
     async onSelectTranslationChange($event) {
         if (this.$select.value) {
-            await this.changeTranslation(this.$select.value);
+            await this.renderTranslation(this.$select.value);
         }
     }
 
-    async changeTranslation(translation) {
+    async renderTranslation(translation) {
         if (this.local !== translation) {
             this.local = translation;
             await this.loadTranslation(translation);
@@ -35,15 +43,31 @@ export class TranslationManager {
         this.translation = await (await fetch(`assets/languages/${this.local}.json`)).json() || {};
     }
 
+    async changeValue(key, value){
+    }
+
     translateDOM() {
         const elems = document.querySelectorAll('[data-translate]');
         for (let i = 0; i < elems.length; i++) {
-            elems[i].innerText = this.translate(elems[i].dataset.translate);
+            elems[i].innerHTML = this.translate(elems[i].dataset.translate);
         }
     }
 
-    translate(key) {
-        return this.translation[key] || key;
+    translate(key, values) {
+        let text = this.translation[key];
+        if(!text) {
+            console.warn(`translation of ${key} not found`)
+            text = key;
+        }
+        //I have to choose tags, so I'm using Mustache tags
+        //I'm not adding the lib since it's not necessary
+        //But if one day it is, the translation does not have to change :>
+        if(typeof values === 'object') {
+            Object.keys(values).forEach(k => {
+                text.replaceAll(`{{${k}}}`, values[key]);
+            });
+        }
+        return text;
     }
 
 }

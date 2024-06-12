@@ -9100,11 +9100,11 @@ async function flashEntryBlob(device, entry, onProgress, partition) {
         onstart(total) {
             logDebug(`Unpacking ${partition} (${total} bytes)`);
             onProgress("unpack", partition, 0.0);
-            return;
+
         },
         onprogress(progress, total) {
             onProgress("unpack", partition, progress / total);
-            return;
+
         }
     });
     logDebug(`Flashing ${partition}`);
@@ -9221,11 +9221,11 @@ async function flashZip(device, blob, wipe, onReconnect, onProgress = (_action, 
         onstart(total) {
             logDebug(`Loading nested images from zip (${total} bytes)`);
             onProgress("unpack", "images", 0.0);
-            return;
+
         },
         onprogress(progress, total) {
             onProgress("unpack", "images", progress / total);
-            return;
+
         }
     }));
     const imageEntries = await imageReader.getEntries();

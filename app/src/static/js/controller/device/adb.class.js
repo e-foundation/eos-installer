@@ -26,6 +26,7 @@ export class ADB extends Device {
             this.webusb = await Adb.open("WebUSB");
             if (this.webusb.isAdb()) {
                 this.device = await this.webusb.connectAdb("host::", cb);
+                console.log('CONNECTED')
                 return true;
             }
         } catch (e) {

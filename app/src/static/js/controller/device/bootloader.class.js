@@ -53,10 +53,11 @@ export class Bootloader extends Device {
                     break;
                 }
             }
-            await VUE.onWaiting();
+            await VIEW.onWaiting();
             //sleep before trying again
-            await new Promise(r => setTimeout(r, 500));
+            await sleep(500);
         }
+        console.log(this.device.device);
         return this.device.device;
     }
 

@@ -1,7 +1,20 @@
 {
-  "Open parameters" : "Open parameters",
-  "Please wait for the phone to restart and click on next" : "Please wait for the phone to restart and click on next",
-  "Press 7 times build number" : "Press 7 times build number",
-  "Next": "Next",
-  "Requirements": "Requirements"
+  "Ex 1: before installing /e/OSS, you should update to the latest stock Android 12": "<b>Ex 1:</b> before installing /e/OSS, you should update to the latest stock Android 12",
+  "Ex 2: or if you're installing /e/OSR, make sure to update to the latest stock Android 11": "<b>Ex 2:</b> or if you're installing /e/OSR, make sure to update to the latest stock Android 11",
+  "Ex 3: similarly, if you're installing /e/OSR, it should be the latest stock Android 10": "<b>Ex 3:</b> similarly, if you're installing /e/OSR, it should be the latest stock Android 10",
+  "check-update-android-version": "Check & update your Android version",
+  "check-update-android-version-caution": "<b>Caution</b>: before proceeding with the installation, verify if the latest Android firmware is available for your device.",
+  "connect-your-phone": "Connect your phone",
+  "connect-your-phone-instructions": "Connect your phone to your computer with a USB cable. We will automatically detect your phone to install /e/OS.",
+  "connect-your-phone-instructions-notes": "Note: ’USB debugging’ is required for automatic device detection to work. If you haven't enabled it yet, we will help you out in the next steps.",
+  "donate": "Donate",
+  "follow-the-examples-below": "Follow the examples below:",
+  "help": "Help",
+  "let-s-get-started": "Let's get started",
+  "next": "Next",
+  "start": "Start",
+  "device-detection": "Device detection",
+  "device-detection-detected": "A device has been detected.",
+  "connect-your-device": "Connect your device.",
+  "this-might-take-some-time-please-be-patient": "This might take some time please be patient"
 }

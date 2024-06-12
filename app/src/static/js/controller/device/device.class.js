@@ -46,4 +46,8 @@ export class Device {
     getSerialNumber() {
         return undefined;
     }
+
+    reboot(mode) {
+        return undefined;
+    }
 }

@@ -1,65 +1,166 @@
-/*body {
-    background-color: #f4f4f4;
-    font-family: 'Lato';
+@font-face {
+    font-family: "Century Gothic";
+    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Century Gothic Bold";
+    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+:root {
+    --top-banner-color: #191823;
+    --top-background-color: #0f0f0f;
+    --background-color: #f7f7f7;
+    --text-color: #111111;
+    --info-color: #027ffe;
+    --base-color: #dedee5;
+    --base-color-alt: #f5f5f7;
+    --blue: #2a7ae2;
+    --white: white;
+    --green: #00b13c;
+    --success-color: #61CE70;
+    --downloading-color: #027ffe;
+    --button-color: #027ffe;
+    --button-text-color: white;
+    --warning-background-color: #fff1c9;
+    --warning-text-color: #795917;
+    --info-background-color: #cbe9ee;
+    --info-text-color: #104a55;
 }
 
-.item {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: transparent;
-    border-radius: 5px;
-    box-shadow: 0 0 1em #ccc;
-    transition: all .2s ease-in-out;
+.warning {
+    background: var(--warning-background-color);
+    color: var(--warning-text-color);
+}
+.info {
+    background: var(--info-background-color);
+    color: var(--info-text-color);
 }
 
-.item:hover {
-    box-shadow: 0 0 1em #aaa;
+button {
+    border-radius: 100px;
+    padding: 0.4rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease-in-out;
 }
 
-.item.completed {
-    text-decoration: line-through;
+button.next {
+    background: var(--button-color);
+    color: var(--button-text-color);
+    border: none;
 }
 
-.toggles {
-    color: black;
+button:disabled {
+    background: rgba(2, 127, 254, 0.6);
+    cursor: auto;
 }
 
-.name {
-    padding-top: 3px;
-}
-
-.remove {
-    padding-left: 0;
-}
-
-button:focus {
-    border: 1px solid #333;
-}*/
 
 html, body {
-    height: 100%;
     margin: 0px;
-}
-body > * {
-    padding:5px;
-}
-body {
-    background-color: #f4f4f4;
-    font-family: 'Lato';
-    display: flex;
-    flex-direction: column;
-}
-body #process {
- flex-grow: 1;
+    background: var(--background-color);
+    font-family: 'Century Gothic', 'Lato';
 }
 
-.step.active {
-    opacity : 1;
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
 }
-.step.inactive {
-    opacity : 0.5;
+
+
+/* <BANNER> */
+#banner {
+    top: 0;
+    position: fixed;
+    width: 100%;
 }
-.step.done {
-    color : green;
+#top-banner {
+    background: var(--top-banner-color);
+    color: var(--white);
+    height: 50px;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: center;
+    justify-content: center;
 }
+#sub-banner {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+#donate, #help {
+    display: flex;
+    align-items: center;
+    gap : 8px;
+    padding: 0.2rem 1.5rem;
+}
+#donate img, #help img{
+    width: 24px;
+    height: 24px;
+}
+#donate{
+    background: var(--green);
+    border: var(--green);
+    color: var(--white);
+}
+#help{
+    background: transparent;
+    border-color: var(--blue);
+    color: var(--blue);
+}
+/* </BANNER> */
+
+#process-ctn {
+    background: linear-gradient(to bottom, var(--top-background-color) 400px, transparent 400px);
+    padding: 150px 0;
+    position: relative;
+    width: 100%;
+}
+
+.inactive {
+    display: none;
+}
+
+.active, .done {
+    display: block;
+}
+
+/* <CARD> */
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    max-width: 768px;
+    border-radius: 6px;
+    background: var(--white);
+    margin: 50px auto auto;
+    min-height: 400px;
+}
+.card-title {
+    font-size: 28px;
+    font-family: 'Century Gothic Bold';
+}
+.card-footer {
+    text-align : right;
+}
+/* </CARD> */
+
+/* <let-s-get-started> */
+#let-s-get-started .instruction-ctn {
+    padding : 12px 0;
+    display : flex;
+    align-items: center;
+    gap : 24px;
+}
+#let-s-get-started .instruction-img {
+    width: 32px;
+    height: 32px;
+}
+/* </let-s-get-started> */
