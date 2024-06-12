@@ -9,6 +9,7 @@ class ViewManager {
 
     async init() {
         const cm = await import("./controller.manager.js");
+        const em = await import("./errorManager.js");
         const lm = await import("./vue/log.manager.js");
         const tm = await import("./vue/translation.manager.js");
         this.controller = new cm.Controller();
@@ -17,6 +18,8 @@ class ViewManager {
         await this.logManager.init();
         this.translationManager = new tm.TranslationManager();
         await this.translationManager.init();
+        this.errorManager = new em.ErrorManager();
+        await this.errorManager.init();
     }
 
     selectStep(step) {
@@ -35,6 +38,7 @@ class ViewManager {
         try {
             await this.controller.next();
         } catch (e) {
+            this.errorManager.displayError('next', `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
@@ -44,6 +48,7 @@ class ViewManager {
         try {
             await this.controller.executeStep(stepId);
         } catch (e) {
+            this.errorManager.displayError(stepId, `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }

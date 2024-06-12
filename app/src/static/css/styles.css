@@ -96,6 +96,12 @@ html, body {
     justify-content: space-between;
     padding: 5px 10px;
 }
+#error-message {
+    color: red;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
 #donate, #help {
     display: flex;
     align-items: center;
