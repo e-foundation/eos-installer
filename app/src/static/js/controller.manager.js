@@ -14,7 +14,9 @@ export class Controller {
             new Step("check-your-android-version", 1, undefined, true ),
             new Step("connect-your-phone", 2, undefined, true),
             new Step("activate-developer-options", 3, undefined, true),
-            new Step("device-detection", 4, 'connect adb', true),
+            new Step("activate-usb-debugging", 4, undefined, true),
+            new Step("enable-usb-file-transfer", 5, undefined, true),
+            new Step("device-detection", 6, 'connect adb', true),
 
         ];
         this.currentIndex = 0;
@@ -88,30 +90,6 @@ export class Controller {
     inInMode(mode) {
         return this.deviceManager.isInMode(mode);
     }
-
-    async checkConnection(mode) {
-        await this.runCommand({type : Command.CMD_TYPE.connect, mode : mode});
-    }
-    /**
-     *
-     * @param mode
-     * @returns {Promise<boolean>}
-     *
-     * reboot & reconnect
-     */
-    async needReboot(mode) {
-        //run reboot
-        //need the user to connect just after
-        if (this.inInMode('fastboot')) {
-        } else {
-            const res = await this.deviceManager.reboot(mode);
-            if(res) {
-                await this.deviceManager.connect(mode);
-            }
-        }
-        return this.inInMode(mode);
-    }
-
 
     async runCommand(cmd) {
         switch (cmd.type) {
@@ -207,31 +185,21 @@ export class Controller {
                 }
                 return true;
             case Command.CMD_TYPE.sideload:
-                await this.deviceManager.sideload(cmd.file);
-                return true;
+                try {
+                    await this.deviceManager.connect('recovery');
+                    await this.deviceManager.sideload(cmd.file);
+                    return true;
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
                 break;
             default:
-                console.log(`try unknow command ${cmd.command}`)
+                console.log(`try unknown command ${cmd.command}`)
                 await this.deviceManager.runCommand(cmd.command);
                 return true;
                 break;
         }
-    }
-
-    addSteps(steps, index) {
-        this.steps = [
-            ...this.steps.slice(0, index),
-            ...steps,
-            ...this.steps.slice(index)
-        ].map((c, index) => {
-            const i = index;
-            return Object.assign({}, c
-                , {
-                    index: i,
-                    id: `step_${i}`
-                })
-        });
-        VIEW.onStepStarted(this.steps[this.currentIndex]);
     }
 
     async onDeviceConnected() {

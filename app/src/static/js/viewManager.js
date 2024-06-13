@@ -27,8 +27,8 @@ class ViewManager {
         if ($step) {
             $step.classList.add('active');
             $step.classList.remove('inactive');
+            $step.scrollIntoView({ behavior: "smooth", block: "nearest"});
         }
-        $step.scrollIntoView({ behavior: "smooth", block: "nearest"});
     }
 
     // BUTTON EVENTS

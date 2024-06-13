@@ -8,12 +8,10 @@
     },
     {
       "id": "unlocking",
-      "mode": "bootloader",
       "command": "oem unlock unlocked",
       "needUserGesture": true
     },
     {
-      "mode": "bootloader",
       "id": "connect-bootloader-2",
       "command": "connect bootloader",
       "needUserGesture": true
@@ -170,13 +168,16 @@
     {
       "id": "murena-cloud-account",
       "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
     }
   ],
   "folder": [
     {
       "name": "fp3.zip",
       "unzip": true,
-      "path": "assets/sources/fp3/IMG-e-1.15-s-20230916331435-dev-FP3.zip"
+      "path": "assets/sources/fp3/IMG-e-2.1-t-20240603406607-stable-FP3.zip"
     }
   ]
 }

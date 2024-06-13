@@ -1,0 +1,80 @@
+{
+  "steps": [
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking",
+      "command": "oem unlock unlocked --skip-reboot",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection-2",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader-2",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
+      "command": "flash dtbo dtbo.img"
+    },
+    {
+      "id": "flashing",
+      "command": "flash vbmeta vbmeta.img"
+    },
+    {
+      "id": "flashing",
+      "command": "flash recovery recovery.img"
+    },
+    {
+      "id": "flashing",
+      "command": "reboot recovery"
+    },
+    {
+      "id": "erase-data-recovery",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
+      "command": "sideload rom.zip"
+    },
+    {
+      "mode": "recovery",
+      "needUser": true
+    }
+  ],
+  "folder": [
+    {
+      "name": "vbmeta.img",
+      "path": "assets/sources/avicii/vbmeta.img"
+    },
+    {
+      "name": "dtbo.img",
+      "path": "assets/sources/avicii/dtbo.img"
+    },
+    {
+      "name": "recovery.img",
+      "path": "assets/sources/avicii/recovery-e-1.14-s-20230818321663-dev-avicii.img"
+    },
+    {
+      "name": "rom.zip",
+      "path": "assets/sources/avicii/e-1.14-s-20230818321663-dev-avicii.zip"
+    }
+  ]
+}

@@ -56,8 +56,9 @@ export class Recovery extends Device {
 
     async adbConnect(blob, useChecksum) {
 
-        if (this.device == null)
-            return;
+        if (this.device == null) {
+            throw Error(`device not connected`);
+        }
 
         const MAX_PAYLOAD = this.device.max_payload;
         const fileSize = blob.size;

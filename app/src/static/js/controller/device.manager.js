@@ -9,7 +9,6 @@ const MODE = {
     adb: 'adb',
     recovery: 'recovery',
     bootloader: 'bootloader',
-    fastboot: 'fastboot',
 }
 
 /**
@@ -95,8 +94,6 @@ export class DeviceManager {
             case MODE.recovery :
                 this.device = this.recovery;
                 break;
-            case MODE.fastboot :
-                this.device = this.fastboot;
                 break;
         }
     }
@@ -122,8 +119,6 @@ export class DeviceManager {
                     return this.device.isADB();
                 case 'recovery':
                     return this.device.isRecovery();
-                case 'fastboot':
-                    return this.device.isFastboot();
             }
         }
         return false;
@@ -169,7 +164,7 @@ export class DeviceManager {
             console.error(e);
         }
         let isBack = false;
-        if(res){
+        /*if(res){
             while(!isBack) {
                 await sleep(5000);
                 try{
@@ -179,7 +174,8 @@ export class DeviceManager {
                     isBack = true; //TODO what to do in case getDevices does not work ?
                 }
             }
-        }
+        }*/
+        console.log(res);
         return res;
     }
 

@@ -111,6 +111,30 @@
                 <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
             </div>
         </div>
+        <div id="activate-usb-debugging" class="card inactive">
+            <div class="card-title" data-translate="activate-usb-debugging"></div>
+            <div class="card-body">
+                <p data-translate="activate-usb-debugging-instructions-1"></p>
+                <img class="instruction-img" src="assets/images/illustrations/activate-usb-debugging-1.png">
+                <p data-translate="activate-usb-debugging-instruction-2"></p>
+                <img class="instruction-img" src="assets/images/illustrations/activate-usb-debugging-2.png">
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+        <div id="enable-usb-file-transfer" class="card inactive">
+            <div class="card-title" data-translate="enable-usb-file-transfer"></div>
+            <div class="card-body">
+                <p data-translate="enable-usb-file-transfer-instructions-1"></p>
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-1.png">
+                <p data-translate="enable-usb-file-transfer-instruction-2"></p>
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-2.png">
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
 
         <div id="device-detection" class="card inactive">
             <div class="card-title" data-translate="device-detection"></div>
@@ -147,6 +171,54 @@
                 <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
             </div>
         </div>
+        <div id="reboot-manually-to-bootloader" class="card inactive">
+            <div class="card-title" data-translate="repeat-the-following-step"></div>
+            <div class="card-body">
+                <ul>
+                    <li data-translate="turn-off-your-phone"></li>
+                    <li data-translate="access-download-mode"></li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+        <div id="activate-developer-options-2" class="card inactive">
+            <div class="card-title" data-translate="activate-developer-options"></div>
+            <div class="card-body">
+                <p data-translate="activate-developer-options-instructions-1"></p>
+                <img class="instruction-img" src="assets/images/illustrations/activate-developer-options-1.png">
+                <p data-translate="activate-developer-options-instructions-2"></p>
+                <img class="instruction-img" src="assets/images/illustrations/activate-developer-options-2.png">
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+        <div id="enable-usb-file-transfer-2" class="card inactive">
+            <div class="card-title" data-translate="enable-usb-file-transfer"></div>
+            <div class="card-body">
+                <p data-translate="enable-usb-file-transfer-instructions-1"></p>
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-1.png">
+                <p data-translate="enable-usb-file-transfer-instruction-2"></p>
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-2.png">
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+
+        <div id="device-detection-2" class="card inactive">
+            <div class="card-title" data-translate="device-detection"></div>
+            <div class="card-body">
+                <p data-translate="connect-your-device"></p>
+                <button data-translate="connect" onclick="VIEW.executeStep(this, 'device-detection-2')"></button>
+            </div>
+            <div class="card-body inactive">
+                <p data-translate="device-detection-detected"></p>
+                <img class="instruction-img" src="assets/images/icons/check-success.svg">
+            </div>
+        </div>
         <div id="connect-bootloader-2" class="card inactive">
             <div class="card-title" data-translate="connect-bootloader"></div>
             <div class="card-body">
@@ -160,10 +232,28 @@
                 <progress id="installing-progress-bar" max="100" value="0"></progress>
             </div>
         </div>
+        <div id="erase-data-recovery" class="card inactive">
+            <div class="card-title" data-translate="restart-to-recovery"></div>
+            <div class="card-body">
+                <p data-translate="erase-data-instruction"></p>
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+        <div id="sideload" class="card inactive">
+            <div class="card-title" data-translate="restart-to-recovery"></div>
+            <div class="card-body">
+                <p data-translate="erase-data-instruction"></p>
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
         <div id="locking" class="card inactive">
             <div class="card-title" data-translate="locking"></div>
             <div class="card-body">
-                click to unlock
+                click to lock
                 <button data-translate="next" class="locking" onclick="VIEW.executeStep(this, 'locking')"></button>
             </div>
             <div class="card-footer">
@@ -171,11 +261,13 @@
             </div>
         </div>
         <div id="murena-cloud-account" class="card inactive">
-            <div class="card-title" data-translate="locking"></div>
+            <div class="card-title" data-translate="murena-cloud-account"></div>
             <div class="card-body">
-                blablabla
+                <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
+                <p data-translate="murena-cloud-account-instructions"></p>
             </div>
             <div class="card-footer">
+                <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
             </div>
         </div>
         <div id="installation-complete" class="card inactive">
