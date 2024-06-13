@@ -2,13 +2,68 @@
   "steps": [
     {
       "mode": "bootloader",
-      "command": "flashing unlock unlocked",
-      "instruction": "Select unlock bootloader"
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
     },
     {
-      "command": "flashing unlock_critical"
+      "id": "unlocking",
+      "command": "flashing unlock",
+      "needUserGesture": true
     },
     {
+      "id": "unlocking",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection-2",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader-2",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking",
+      "command": "flashing unlock_critical",
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer-2",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection-2",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader-2",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
       "command": "flash bluetooth_a bluetooth.img"
     },
     {
@@ -154,7 +209,7 @@
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "assets/sources/fp4/IMG-e-1.14-s-20230816320616-stable-FP4.zip"
+      "path": "assets/sources/fp4/IMG-e-2.1-t-20240603406607-stable-FP4.zip"
     }
   ]
 }
