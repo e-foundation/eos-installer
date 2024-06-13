@@ -169,4 +169,11 @@ html, body {
     width: 32px;
     height: 32px;
 }
+.let-s-get-started .instruction-img {
+    width: 32px;
+    height: 32px;
+}
 /* </let-s-get-started> */
+.device-detection .instruction-img{
+    max-width: 300px;
+}

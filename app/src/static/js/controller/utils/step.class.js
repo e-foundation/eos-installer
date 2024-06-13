@@ -5,8 +5,14 @@ export class Step {
         this.id = id;
         this.index = index;
         this.needUserGesture = needUserGesture;
+        this.commands = [];
         if(command) {
-            this.command = new Command(command);
+            if(Array.isArray(command)){
+                this.commands = command.map(m => new Command(m) );
+                console.log(this.commands)
+            } else {
+                this.commands = [new Command(command)];
+            }
         }
         this.mode = mode;
     }
