@@ -63,8 +63,12 @@ export class Controller {
     }
     async executeStep(stepId){
         const current = this.steps[this.currentIndex];
-        if(current.id === stepId && current.command){
-            const res = await this.runCommand(current.command);
+        if(current.id === stepId) {
+            let res = true;
+            for(let i = 0 ; i < current.commands.length && res; i++) {
+                res = await this.runCommand(current.commands[i]);
+                console.log(res)
+            }
             const next = this.steps[this.currentIndex + 1];
             let previous = this.steps[this.currentIndex - 1];
             if(res) {

@@ -25,9 +25,15 @@ class ViewManager {
     selectStep(step) {
         const $step = document.getElementById(step.id);
         if ($step) {
-            $step.classList.add('active');
-            $step.classList.remove('inactive');
-            $step.scrollIntoView({ behavior: "smooth", block: "nearest"});
+            const $copyStep = $step.cloneNode(true);
+            $copyStep.id = new Date().getTime();
+            $copyStep.classList.add('active');
+            $copyStep.classList.remove('inactive');
+            let $processCtn = document.getElementById('process-ctn');
+            if($processCtn){
+                $processCtn.appendChild($copyStep);
+                $copyStep.scrollIntoView({ behavior: "smooth", block: "nearest"});
+            }
         }
     }
 

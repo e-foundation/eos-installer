@@ -159,14 +159,21 @@ html, body {
 /* </CARD> */
 
 /* <let-s-get-started> */
-#let-s-get-started .instruction-ctn {
+.let-s-get-started .instruction-ctn {
     padding : 12px 0;
     display : flex;
     align-items: center;
     gap : 24px;
 }
-#let-s-get-started .instruction-img {
+.let-s-get-started .instruction-img {
+    width: 32px;
+    height: 32px;
+}
+.let-s-get-started .instruction-img {
     width: 32px;
     height: 32px;
 }
 /* </let-s-get-started> */
+.device-detection .instruction-img{
+    max-width: 300px;
+}

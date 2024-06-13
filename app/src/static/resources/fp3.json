@@ -12,157 +12,54 @@
       "needUserGesture": true
     },
     {
-      "id": "connect-bootloader-2",
+      "id": "connect-bootloader",
       "command": "connect bootloader",
       "needUserGesture": true
     },
     {
       "id": "flashing",
-      "command": "flash modem_a modem.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash modem_a modem.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash modem_b modem.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash sbl1_a sbl1.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash sbl1_b sbl1.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash rpm_a rpm.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash rpm_b rpm.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash tz_a tz.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash tz_b tz.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash devcfg_a devcfg.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash devcfg_b devcfg.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash dsp_a dsp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash dsp_b dsp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash aboot_a aboot.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash aboot_b aboot.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash boot_a boot.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash boot_b boot.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash dtbo_a dtbo.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash dtbo_b dtbo.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash system_a system.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash system_b system.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vbmeta_a vbmeta.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vbmeta_b vbmeta.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vendor_a vendor.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vendor_b vendor.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash mdtp_a mdtp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash mdtp_b mdtp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash lksecapp_a lksecapp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash lksecapp_b lksecapp.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash cmnlib_a cmnlib.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash cmnlib_b cmnlib.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash cmnlib64_a cmnlib64.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash cmnlib64_b cmnlib64.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash keymaster_a keymaster.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash keymaster_b keymaster.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash userdata userdata.img"
+      "command" : [
+        "flash modem_a modem.img",
+        "flash modem_a modem.img",
+        "flash modem_b modem.img",
+        "flash sbl1_a sbl1.img",
+        "flash sbl1_b sbl1.img",
+        "flash rpm_a rpm.img",
+        "flash rpm_b rpm.img",
+        "flash tz_a tz.img",
+        "flash devcfg_a devcfg.img",
+        "flash devcfg_b devcfg.img",
+        "flash dsp_a dsp.img",
+        "flash dsp_b dsp.img",
+        "flash aboot_a aboot.img",
+        "flash aboot_b aboot.img",
+        "flash boot_a boot.img",
+        "flash boot_b boot.img",
+        "flash dtbo_a dtbo.img",
+        "flash dtbo_b dtbo.img",
+        "flash dtbo_a dtbo.img",
+        "flash system_a system.img",
+        "flash system_b system.img",
+        "flash vbmeta_a vbmeta.img",
+        "flash vbmeta_b vbmeta.img",
+        "flash vendor_a vendor.img",
+        "flash vendor_b vendor.img",
+        "flash mdtp_a mdtp.img",
+        "flash mdtp_b mdtp.img",
+        "flash lksecapp_a lksecapp.img",
+        "flash lksecapp_b lksecapp.img",
+        "flash cmnlib_a cmnlib.img",
+        "flash cmnlib_b cmnlib.img",
+        "flash cmnlib64_a cmnlib64.img",
+        "flash cmnlib64_b cmnlib64.img",
+        "flash keymaster_a keymaster.img",
+        "flash keymaster_b keymaster.img",
+        "flash userdata userdata.img",
+        "oem lock unlocked"
+      ]
     },
     {
       "id": "locking",
-      "command": "oem lock unlocked",
       "needUserGesture": true
     },
     {
