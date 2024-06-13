@@ -12,21 +12,21 @@
       "needUserGesture": true
     },
     {
-      "id": "activate-developer-options-2",
+      "id": "activate-developer-options",
       "needUserGesture": true
     },
     {
-      "id": "enable-usb-file-transfer-2",
+      "id": "enable-usb-file-transfer",
       "needUserGesture": true
     },
     {
-      "id": "device-detection-2",
+      "id": "device-detection",
       "command": "connect adb",
       "needUserGesture": true
     },
     {
       "mode": "bootloader",
-      "id": "connect-bootloader-2",
+      "id": "connect-bootloader",
       "command": "connect bootloader",
       "needUserGesture": true
     },

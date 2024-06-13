@@ -12,7 +12,7 @@
       "needUserGesture": true
     },
     {
-      "id": "connect-bootloader-2",
+      "id": "connect-bootloader",
       "command": "connect bootloader",
       "needUserGesture": true
     },
