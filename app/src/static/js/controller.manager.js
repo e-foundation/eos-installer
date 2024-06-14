@@ -19,7 +19,7 @@ export class Controller {
             new Step("device-detection", 6, 'connect adb', true),
 
         ];
-        this.currentIndex = 0;
+        this.currentIndex = 6;
     }
 
 
@@ -67,7 +67,6 @@ export class Controller {
             let res = true;
             for(let i = 0 ; i < current.commands.length && res; i++) {
                 res = await this.runCommand(current.commands[i]);
-                console.log(res)
             }
             const next = this.steps[this.currentIndex + 1];
             let previous = this.steps[this.currentIndex - 1];
@@ -78,7 +77,9 @@ export class Controller {
                 }
             } else {
                 VIEW.onStepFailed(current, previous);
-                this.currentIndex--;
+                if(!current.needUserGesture) {
+                    this.currentIndex--;
+                }
                 throw Error('command failed');
             }
         } else {
