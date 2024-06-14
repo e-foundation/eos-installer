@@ -15,6 +15,9 @@
   "connect-your-phone-instructions-notes": "Note: ’USB debugging’ is required for automatic device detection to work. If you haven't enabled it yet, we will help you out in the next steps.",
   "device-detection": "Device detection",
   "device-detection-detected": "A device has been detected.",
+  "navigator-detection": "Navigator detection",
+  "navigator-not-supported": "Your navigator is not supported",
+  "navigator-not-supported-instructions": "You can use the following browsers: Microsoft Edge, Safari, Opera, Chrome",
   "donate": "Donate",
   "installation-complete": "The installation is complete!",
   "installation-complete-instructions-1": "Congrats! While your phone is booting, you should see the logo below. This takes time, please be patient.",
@@ -28,9 +31,27 @@
   "device-detection-instructions-2": "A pop-up will appear on your phone. Check 'always allow from this computer'",
   "let-s-get-started": "Let's get started",
   "murena-cloud-account": "Murena Cloud account",
+  "sign-up-free": "Sign up FREE",
+  "i-already-have-an-account": "I already have an account",
   "murena-cloud-account-instructions": "Keep your data safe and sync this device with your personal Murena Cloud account. 1GB free and paid plans available for more storage.",
   "next": "Next",
   "skip": "Skip",
   "start": "Start",
-  "this-might-take-some-time-please-be-patient": "This might take some time please be patient"
+
+
+
+
+  "go-to-apply-update-instructions-1": "1. Select Apply Update",
+  "go-to-apply-update-instructions-2": "2. Apply update from adb",
+  "go-to-apply-update-instructions-3": "3. The device is now in sideload mode",
+
+  "erase-data-instructions-1": "1. Select Factory reset",
+  "erase-data-instructions-2": "2. Select Format data / Factory reset option",
+  "erase-data-instructions-3": "3. Next screen will display a warning that this action cannot be undone",
+  "erase-data-instructions-4": "4. Select Format data to proceed or Cancel if you want to go back",
+  "erase-data-instructions-5": "5. If you selected Format data, the format process will complete",
+  "erase-data-instructions-6": "6. Display will now return to the Factory Reset screen",
+  "this-might-take-some-time-please-be-patient": "This might take some time please be patient",
+  "help-us-improve-the-tool-instructions-1": "Please, rate your experience with the Easy Installer.",
+  "help-us-improve-the-tool-instructions-2": "Do you have any thoughts on how to improve this software?"
 }

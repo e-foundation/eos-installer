@@ -23,7 +23,7 @@ export class Bootloader extends Device {
     }
 
     reboot(mode) {
-        return this.device.reboot(mode);
+        return this.device.reboot(mode, true);
     }
 
     runCommand(command) {
@@ -106,6 +106,9 @@ export class Bootloader extends Device {
             }
             return false;
         }
+    }
+     bootBlob(blob) {
+        return this.device.bootBlob(blob);
     }
 
     async isUnlocked(variable) {

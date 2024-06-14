@@ -19,12 +19,12 @@ export class Downloader {
 
     /*
     * */
-    async downloadAndUnzipFolder(folder, onDownloadProgress, onUnzipProgress) {
+    async downloadAndUnzipFolder(files, folder, onDownloadProgress, onUnzipProgress) {
 
         const filesDownloaded = await this.downloadFolder(folder, onDownloadProgress);
 
         const filesToUnzip = filesDownloaded.filter(file => file.unzip);
-        const filesUnzipped = await this.unzipFolder(filesToUnzip, onUnzipProgress);
+        const filesUnzipped = await this.unzipFolder(files, filesToUnzip, onUnzipProgress);
         const allFiles = filesDownloaded.concat(filesUnzipped);
 
         for (let i = 0; i < allFiles.length; i++) {
@@ -47,12 +47,12 @@ export class Downloader {
         }
         return Promise.all(files);
     }
-    async unzipFolder(folder, onUnzipProgress) {
+    async unzipFolder(filesRequired, folder, onUnzipProgress) {
         const totalToUnzip = new Array(folder.length).fill(0);
         const totalUnzipped = new Array(folder.length).fill(0);
         const files = [];
         for (let i = 0; i < folder.length; i++) {
-            const unzippedFiles = await this.unzip(folder[i].blob, (value, total)=> {
+            const unzippedFiles = await this.unzip(filesRequired, folder[i].blob, (value, total)=> {
                 totalToUnzip[i] = total;
                 totalUnzipped[i] = value;
                 const sumTotal = totalToUnzip.reduce((partialSum, a) => partialSum + a, 0);
@@ -84,12 +84,17 @@ export class Downloader {
      * retrieve the entries of the unzipped folder
      * for each entry, return a blob
      */
-    async unzip(folder, onProgress) {
+    async unzip(filesRequired, folder, onProgress) {
         const zipReader = new zip.ZipReader(new zip.BlobReader(folder));
         const files = await zipReader.getEntries();
-        const unzippingFiles = files.map(file=> {
-            return this.getFileFromZip(file, onProgress);
-        }); // Promises[<name : string, blob : blob>]
+        const unzippingFiles = [];
+        console.log(filesRequired);
+        for(var i= 0 ; i < files.length; i++) {
+            console.log(files[i].filename)
+            if(filesRequired.includes(files[i].filename)){
+                unzippingFiles.push(this.getFileFromZip(files[i], onProgress))
+            }
+        }// Promises[<name : string, blob : blob>]
         const unzippedFiles = await Promise.all(unzippingFiles);
         await zipReader.close();
         return unzippedFiles;

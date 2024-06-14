@@ -3,12 +3,11 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": "connect bootloader",
+      "command": ["connect bootloader", "oem unlock unlocked --skip-reboot"],
       "needUserGesture": true
     },
     {
       "id": "unlocking",
-      "command": "oem unlock unlocked --skip-reboot",
       "needUserGesture": true
     },
     {
@@ -40,11 +39,9 @@
     },
     {
       "id": "flashing",
-      "command": "flash recovery recovery.img"
-    },
-    {
-      "id": "flashing",
-      "command": "reboot recovery"
+      "command": [
+        "flash recovery recovery.img"
+      ]
     },
     {
       "id": "erase-data-recovery",

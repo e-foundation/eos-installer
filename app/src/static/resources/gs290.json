@@ -1,70 +1,53 @@
 {
   "steps": [
     {
+      "command": "reboot bootloader"
+    },
+    {
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
       "mode": "bootloader",
-      "command": "flashing unlock unlocked",
-      "instruction": "Select unlock bootloader"
+      "command": [
+        "flash system system.img",
+        "flash vendor vendor.img",
+        "flash boot boot.img",
+        "flash dtbo dtbo.img",
+        "flash recovery recovery.img",
+        "flash logo logo.img",
+        "flash md1dsp md1dsp.img",
+        "flash md1img md1img.img",
+        "flash spmfw spmfw.img",
+        "flash lk lk.img",
+        "flash lk2 lk.img",
+        "flash sspm_1 sspm.img",
+        "flash sspm_2 sspm.img",
+        "flash tee1 trustzone1.bin",
+        "flash tee2 trustzone2.bin",
+        "flash preloader preloader.img",
+        "reboot adb"
+      ]
     },
     {
-      "command": "flash system system.img"
+      "id": "murena-cloud-account",
+      "needUserGesture": true
     },
     {
-      "command": "flash vendor vendor.img"
-    },
-    {
-      "command": "flash boot boot.img"
-    },
-    {
-      "command": "flash dtbo dtbo.img"
-    },
-    {
-      "command": "flash recovery recovery.img"
-    },
-    {
-      "command": "flash logo logo.img"
-    },
-    {
-      "command": "flash md1dsp md1dsp.img"
-    },
-    {
-      "command": "flash md1img md1img.img"
-    },
-    {
-      "command": "flash spmfw spmfw.img"
-    },
-    {
-      "command": "flash lk lk.img"
-    },
-    {
-      "command": "flash lk2 lk.img"
-    },
-    {
-      "command": "flash sspm_1 sspm.img"
-    },
-    {
-      "command": "flash sspm_2 sspm.img"
-    },
-    {
-      "command": "flash tee1 trustzone1.bin"
-    },
-    {
-      "command": "flash tee2 trustzone2.bin"
-    },
-    {
-      "command": "flash preloader preloader.img"
-    },
-    {
-      "command": "erase userdata"
-    },
-    {
-      "command": "reboot"
+      "id": "installation-complete"
     }
   ],
   "folder": [
     {
       "name": "GS290 installer",
       "unzip": true,
-      "path": "assets/sources/GS290/IMG-e-1.15-s-20230916331435-dev-GS290.zip"
+      "path": "assets/sources/GS290/e-2.1-s-20240603406609-stable-GS290.zip"
     }
   ]
 }

@@ -147,7 +147,6 @@ html, body {
     border-radius: 6px;
     background: var(--white);
     margin: 50px auto auto;
-    min-height: 400px;
 }
 .card-title {
     font-size: 28px;
@@ -176,4 +175,9 @@ html, body {
 /* </let-s-get-started> */
 .device-detection .instruction-img{
     max-width: 300px;
+}
+.navigator-detection .instruction-ctn{
+    margin: 100px auto;
+    max-width : 320px;
+    text-align: center;
 }

@@ -10,13 +10,13 @@ import {Step} from "./controller/utils/step.class.js";
 export class Controller {
     constructor() {
         this.steps = [
-            new Step("let-s-get-started", 0, undefined, true ),
-            new Step("check-your-android-version", 1, undefined, true ),
-            new Step("connect-your-phone", 2, undefined, true),
-            new Step("activate-developer-options", 3, undefined, true),
-            new Step("activate-usb-debugging", 4, undefined, true),
-            new Step("enable-usb-file-transfer", 5, undefined, true),
-            new Step("device-detection", 6, 'connect adb', true),
+            new Step("let-s-get-started",  undefined, true ),
+            new Step("check-your-android-version",  undefined, true ),
+            new Step("connect-your-phone",  undefined, true),
+            new Step("activate-developer-options", undefined, true),
+            new Step("activate-usb-debugging", undefined, true),
+            new Step("enable-usb-file-transfer", undefined, true),
+            new Step("device-detection",  'connect adb', true),
 
         ];
         this.currentIndex = 0;
@@ -99,7 +99,13 @@ export class Controller {
         switch (cmd.type) {
             case Command.CMD_TYPE.download:
                 try {
-                    await this.deviceManager.downloadResources((loaded, total, name) => {
+                    const files = this.steps.map(s =>{
+                        return s.commands.map(c =>  {
+                            console.log(c)
+                           return c.file;
+                        })
+                    }).flat();
+                    await this.deviceManager.downloadAll(files,(loaded, total, name) => {
                         VIEW.onDownloading(name, loaded, total);
                     }, (loaded, total, name) => {
                         VIEW.onUnzip(name, loaded, total);
@@ -111,8 +117,12 @@ export class Controller {
                 }
                 return false;
             case Command.CMD_TYPE.reboot:
-                debugger;
-                await this.deviceManager.reboot(cmd.mode);
+                try {
+                    await this.deviceManager.reboot(cmd.mode);
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
                 return true;
             case Command.CMD_TYPE.connect:
                 try {
@@ -147,7 +157,7 @@ export class Controller {
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
                         if (e.bootloaderMessage?.includes("already")) {
-                            isUnlocked = true;
+                            await this.deviceManager.reboot('adb');
                         } else if (e.bootloaderMessage?.includes("not allowed")) {
                             //TODO
                         }
@@ -224,10 +234,9 @@ export class Controller {
             if (this.resources) {
                 this.deviceManager.setResources(this.resources);
                 if (this.resources.steps) {
-                    this.steps.push(new Step("downloading", this.steps.length, 'download', false));
-                    this.steps.push(...this.resources.steps.map((step, index) => {
-                        const i = index + this.steps.length;
-                        return new Step(step.id, i, step.command, step.needUserGesture ?? false,  step.mode);
+                    this.steps.push(new Step("downloading", 'download', false));
+                    this.steps.push(...this.resources.steps.map((step) => {
+                        return new Step(step.id,  step.command, step.needUserGesture ?? false,  step.mode);
                     }));
                 }
             }

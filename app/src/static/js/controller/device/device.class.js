@@ -50,4 +50,8 @@ export class Device {
     reboot(mode) {
         return undefined;
     }
+
+    async bootBlob(blob) {
+        return false;
+    }
 }

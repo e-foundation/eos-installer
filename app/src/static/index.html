@@ -28,6 +28,16 @@
             </div>
         </div>
 
+        <div id="navigator-detection" class="navigator-detection card inactive">
+            <div class="card-title" data-translate="navigator-detection"></div>
+            <div class="card-body">
+                <div class="instruction-ctn">
+                    <img class="instruction-img" src="assets/images/icons/critical-error.svg">
+                    <p data-translate="navigator-not-supported"></p>
+                    <p data-translate="navigator-not-supported-instructions"></p>
+                </div>
+            </div>
+        </div>
 
         <div id="let-s-get-started" class="let-s-get-started card inactive">
             <div class="card-title" data-translate="let-s-get-started"></div>
@@ -142,7 +152,8 @@
                 <p data-translate="device-detection-instructions-1"></p>
                 <button data-translate="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
                 <p data-translate="device-detection-instructions-2"></p>
-                <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging.png">
+                <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-1.png">
+                <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-2.png">
             </div>
             <div class="card-body inactive">
                 <p data-translate="device-detection-detected"></p>
@@ -195,16 +206,32 @@
         <div id="erase-data-recovery" class="card inactive">
             <div class="card-title" data-translate="restart-to-recovery"></div>
             <div class="card-body">
-                <p data-translate="erase-data-instruction"></p>
+                <p data-translate="erase-data-instructions-1"></p>
+                <p data-translate="erase-data-instructions-2"></p>
+                <p data-translate="erase-data-instructions-3"></p>
+                <p data-translate="erase-data-instructions-4"></p>
+                <p data-translate="erase-data-instructions-5"></p>
+                <p data-translate="erase-data-instructions-6"></p>
+            </div>
+            <div class="card-footer">
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            </div>
+        </div>
+        <div id="go-to-apply-update" class="card inactive">
+            <div class="card-title" data-translate="go-to-sideload"></div>
+            <div class="card-body">
+                <p data-translate="go-to-apply-update-instructions-1"></p>
+                <p data-translate="go-to-apply-update-instructions-2"></p>
+                <p data-translate="go-to-apply-update-instructions-3"></p>
             </div>
             <div class="card-footer">
                 <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
             </div>
         </div>
         <div id="sideload" class="card inactive">
-            <div class="card-title" data-translate="restart-to-recovery"></div>
+            <div class="card-title" data-translate="sideload"></div>
             <div class="card-body">
-                <p data-translate="erase-data-instruction"></p>
+                <p data-translate="sideload-instruction"></p>
             </div>
             <div class="card-footer">
                 <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
@@ -232,18 +259,19 @@
         </div>
         <div id="installation-complete" class="card inactive">
             <div class="card-title" data-translate="installation-complete"></div>
-            <p data-translate="installation-complete-instructions-1"></p>
-            <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
-            <p data-translate="installation-complete-instructions-2"></p>
             <div class="card-body">
+                <p data-translate="installation-complete-instructions-1"></p>
+                <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
+                <p data-translate="installation-complete-instructions-2"></p>
             </div>
             <div class="card-footer">
             </div>
         </div>
         <div id="help-us-improve-the-tool" class="card inactive">
             <div class="card-title" data-translate="help-us-improve-the-tool"></div>
-            <p data-translate="help-us-improve-the-tool-instructions"></p>
             <div class="card-body">
+                <p data-translate="help-us-improve-the-tool-instructions-1"></p>
+                <p data-translate="help-us-improve-the-tool-instructions-2"></p>
             </div>
             <div class="card-footer">
             </div>

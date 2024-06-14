@@ -2,7 +2,6 @@ import {Bootloader} from "./device/bootloader.class.js";
 import {Downloader} from "./downloader.manager.js";
 import {ADB} from "./device/adb.class.js";
 import {Recovery} from "./device/recovery.class.js";
-import {Fastboot} from "./device/fastboot.class.js";
 import {Device} from "./device/device.class.js";
 
 const MODE = {
@@ -21,11 +20,9 @@ export class DeviceManager {
         this.key = undefined;
         this.patch = [];
         this.oem = undefined;
-        this.resources = {};
         this.device = new Device();
         this.bootloader = new Bootloader();
         this.recovery = new Recovery();
-        this.fastboot = new Fastboot();
         this.adb = new ADB();
         this.downloader = new Downloader();
     }
@@ -33,7 +30,6 @@ export class DeviceManager {
     async init() {
         await this.bootloader.init();
         await this.adb.init();
-        await this.fastboot.init();
         await this.recovery.init();
         await this.downloader.init();
     }
@@ -55,11 +51,7 @@ export class DeviceManager {
     }
 
     setResources(resources) {
-        this.resources = resources;
         this.folder = Array.isArray(resources.folder) ? resources.folder : [resources.folder];
-    }
-    downloadResources(onDownloading, onUnzip){
-        return this.downloadAll(onDownloading, onUnzip);
     }
 
     async getUnlocked(variable) {
@@ -93,7 +85,6 @@ export class DeviceManager {
                 break;
             case MODE.recovery :
                 this.device = this.recovery;
-                break;
                 break;
         }
     }
@@ -156,26 +147,10 @@ export class DeviceManager {
 
 
     async reboot(mode) {
-        let res = false;
-        try {
-            res = this.device.reboot(mode);
+        const res = await this.device.reboot(mode);
+        if(res) {
             this.setMode(mode);
-        } catch (e) {
-            console.error(e);
         }
-        let isBack = false;
-        /*if(res){
-            while(!isBack) {
-                await sleep(5000);
-                try{
-                    isBack = await this.isDetected();
-                } catch (e){
-                    console.error(e);
-                    isBack = true; //TODO what to do in case getDevices does not work ?
-                }
-            }
-        }*/
-        console.log(res);
         return res;
     }
 
@@ -196,9 +171,9 @@ export class DeviceManager {
         }
     }
 
-    async downloadAll(onProgress, onUnzip) {
-        /*let filesName = [];
-        if (this.patch?.length) {
+    async downloadAll(files, onProgress, onUnzip) {
+        let filesName = [];
+        /*if (this.patch?.length) {
             for (var i = 0; i < this.patch.length; i++) {
                 if (this.patch[i].file) {
                     filesName.push(this.patch[i].file);
@@ -214,8 +189,7 @@ export class DeviceManager {
                     filesName.push(this.key[i].file);
                 }
             }
-        }
-        filesName = filesName.filter((item, index) => filesName.indexOf(item) === index);*/
-        return await this.downloader.downloadAndUnzipFolder(this.folder, onProgress, onUnzip);
+        }*/
+        return await this.downloader.downloadAndUnzipFolder(files, this.folder, onProgress, onUnzip);
     }
 }

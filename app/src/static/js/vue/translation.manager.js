@@ -15,9 +15,9 @@ export class TranslationManager {
         await this.renderTranslation('en'); //default translation is en.json
     }
 
-    async DOMListener(){
+    async DOMListener() {
         this.$select = document.getElementById('translation');
-        if(!!this.$select) {
+        if (!!this.$select) {
             this.$select.addEventListener('change', ($event) => {
                 this.onSelectTranslationChange($event);
             });
@@ -43,7 +43,7 @@ export class TranslationManager {
         this.translation = await (await fetch(`assets/languages/${this.local}.json`)).json() || {};
     }
 
-    async changeValue(key, value){
+    async changeValue(key, value) {
     }
 
     translateDOM() {
@@ -55,14 +55,14 @@ export class TranslationManager {
 
     translate(key, values) {
         let text = this.translation[key];
-        if(!text) {
+        if (!text) {
             console.warn(`translation of ${key} not found`)
             text = key;
         }
         //I have to choose tags, so I'm using Mustache tags
         //I'm not adding the lib since it's not necessary
         //But if one day it is, the translation does not have to change :>
-        if(typeof values === 'object') {
+        if (typeof values === 'object') {
             Object.keys(values).forEach(k => {
                 text.replaceAll(`{{${k}}}`, values[key]);
             });

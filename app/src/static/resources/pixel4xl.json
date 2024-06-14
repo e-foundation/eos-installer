@@ -1,71 +1,92 @@
 {
   "steps": [
     {
-      "command": "flashing unlock unlocked"
+      "command": "reboot bootloader"
     },
     {
-      "command": "flash dtbo dtbo.img"
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "needUserGesture": true
     },
     {
-      "command": "flash boot recovery.img"
+      "id": "activate-developer-options",
+      "needUserGesture": true
     },
     {
-      "instruction": "go to recovery manually"
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
     },
     {
-      "instruction": "Format data / Factory reset",
-      "needUser": true
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
     },
     {
-      "instruction": "go to sideLoad",
-      "needUser": true
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader"
+      ],
+      "needUserGesture": true
     },
     {
-      "instruction": "connect recovery",
-      "command": "connect recovery",
-      "needUser": true
+      "id": "flashing",
+      "command": [
+        "flash dtbo dtbo.img",
+        "flash boot recovery.img",
+        "reboot"
+      ]
     },
     {
-      "mode": "recovery",
-      "instruction": "installing sideload",
+      "id": "device-detection",
+      "command": [
+        "connect adb",
+        "reboot recovery"
+      ],
+      "needUserGesture": true
+    },
+    {
+      "id": "erase-data-recovery",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
       "command": "sideload rom.zip"
     },
     {
-      "mode": "recovery",
-      "instruction": "go to bootloader manually",
-      "needUser": true
+      "id": "sideload-ended",
+      "needUserGesture": true
     },
     {
-      "instruction": "connect bootloader",
-      "command": "connect bootloader",
-      "needUser": true
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "erase avb_custom_key",
+        "flash avb_custom_key pkmd_pixel.bin",
+        "flashing lock unlocked"
+      ],
+      "needUserGesture": true
     },
     {
-      "command": "erase avb_custom_key"
+      "id": "murena-cloud-account",
+      "needUserGesture": true
     },
     {
-      "command": "flash avb_custom_key pkmd_pixel.bin"
-    },
-    {
-      "command": "flashing lock unlocked"
-    },
-    {
-      "instruction": "restart in /e/",
-      "needUser": true
+      "id": "installation-complete"
     }
   ],
   "folder": [
     {
       "name": "dtbo.img",
-      "path": "assets/sources/coral/dtbo.img"
+      "path": "assets/sources/coral/dtbo-e-2.1-t-20240605406922-dev-coral.img"
     },
     {
       "name": "recovery.img",
-      "path": "assets/sources/coral/recovery-e-1.14-s-20230818321663-dev-coral.img"
+      "path": "assets/sources/coral/recovery-e-2.1-t-20240605406922-dev-coral.img"
     },
     {
       "name": "rom.zip",
-      "path": "assets/sources/coral/e-1.14-s-20230818321663-dev-coral.zip"
+      "path": "assets/sources/coral/e-2.1-t-20240605406922-dev-coral.zip"
     },
     {
       "name": "pkmd_pixel.bin",

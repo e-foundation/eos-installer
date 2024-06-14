@@ -21,6 +21,7 @@ export class Command {
 
      parseCommand(cmd) {
         const res = cmd.split(' ').map(m => m.trim()).filter(m => m != '');
+        console.log(cmd)
         switch (res[0]) {
             case 'download':
                 this.type = Command.CMD_TYPE.download;
