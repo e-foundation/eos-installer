@@ -179,9 +179,10 @@
         <div id="unlocking" class="card inactive">
             <div class="card-title" data-translate="Unlocking"></div>
             <div class="card-body">
+                <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
             </div>
             <div class="card-footer">
-                <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
+                <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
             </div>
         </div>
         <div id="reboot-manually-to-bootloader" class="card inactive">

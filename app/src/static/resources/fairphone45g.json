@@ -2,159 +2,149 @@
   "steps": [
     {
       "mode": "bootloader",
-      "command": "flashing unlock unlocked",
-      "instruction": "Select unlock bootloader"
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock"],
+      "needUserGesture": true
     },
     {
-      "command": "flashing unlock_critical"
+      "id": "unlocking",
+      "needUserGesture": true
     },
     {
-      "command": "flash bluetooth_a bluetooth.img"
+      "id": "activate-developer-options",
+      "needUserGesture": true
     },
     {
-      "command": "flash bluetooth_b bluetooth.img"
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
     },
     {
-      "command": "flash devcfg_a devcfg.img"
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
     },
     {
-      "command": "flash devcfg_b devcfg.img"
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock_critical"],
+      "needUserGesture": true
     },
     {
-      "command": "flash dsp_a dsp.img"
+      "id": "unlocking",
+      "needUserGesture": true
     },
     {
-      "command": "flash dsp_b dsp.img"
+      "id": "activate-developer-options",
+      "needUserGesture": true
     },
     {
-      "command": "flash modem_a modem.img"
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
     },
     {
-      "command": "flash modem_b modem.img"
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
     },
     {
-      "command": "flash xbl_a xbl.img"
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
     },
     {
-      "command": "flash xbl_b xbl.img"
-    },
-    {
-      "command": "flash tz_a tz.img"
-    },
-    {
-      "command": "flash tz_b tz.img"
-    },
-    {
-      "command": "flash hyp_a hyp.img"
-    },
-    {
-      "command": "flash hyp_b hyp.img"
-    },
-    {
-      "command": "flash keymaster_a keymaster.img"
-    },
-    {
-      "command": "flash keymaster_b keymaster.img"
-    },
-    {
-      "command": "flash abl_a abl.img"
-    },
-    {
-      "command": "flash abl_b abl.img"
-    },
-    {
-      "command": "flash boot_a boot.img"
-    },
-    {
-      "command": "flash boot_b boot.img"
-    },
-    {
-      "command": "flash recovery_a recovery.img"
-    },
-    {
-      "command": "flash recovery_b recovery.img"
-    },
-    {
-      "command": "flash dtbo_a dtbo.img"
-    },
-    {
-      "command": "flash dtbo_b dtbo.img"
-    },
-    {
-      "command": "flash vbmeta_system_a vbmeta_system.img"
-    },
-    {
-      "command": "flash vbmeta_system_b vbmeta_system.img"
-    },
-    {
-      "command": "flash vbmeta_a vbmeta.img"
-    },
-    {
-      "command": "flash vbmeta_b vbmeta.img"
-    },
-    {
-      "command": "flash super super.img"
-    },
-    {
-      "command": "flash aop_a aop.img"
-    },
-    {
-      "command": "flash aop_b aop.img"
-    },
-    {
-      "command": "flash featenabler_a featenabler.img"
-    },
-    {
-      "command": "flash featenabler_b featenabler.img"
-    },
-    {
-      "command": "flash imagefv_a imagefv.img"
-    },
-    {
-      "command": "flash imagefv_b imagefv.img"
-    },
-    {
-      "command": "flash multiimgoem_a multiimgoem.img"
-    },
-    {
-      "command": "flash multiimgoem_b multiimgoem.img"
-    },
-    {
-      "command": "flash qupfw_a qupfw.img"
-    },
-    {
-      "command": "flash qupfw_b qupfw.img"
-    },
-    {
-      "command": "flash uefisecapp_a uefisecapp.img"
-    },
-    {
-      "command": "flash uefisecapp_b uefisecapp.img"
-    },
-    {
-      "command": "flash xbl_config_a xbl_config.img"
-    },
-    {
-      "command": "flash xbl_config_b xbl_config.img"
-    },
-    {
-      "command": "flash core_nhlos_a core_nhlos.img"
-    },
-    {
-      "command": "flash core_nhlos_b core_nhlos.img"
-    },
-    {
-      "command": "erase userdata"
-    },
-    {
-      "command": "erase metadata"
-    }
+      "id": "flashing",
+      "command": [
+          "flash bluetooth_a bluetooth.img",
+          "flash bluetooth_b bluetooth.img",
+          "flash devcfg_a devcfg.img",
+          "flash devcfg_b devcfg.img",
+          "flash dsp_a dsp.img",
+          "flash dsp_b dsp.img",
+          "flash modem_a modem.img",
+          "flash modem_b modem.img",
+          "flash xbl_a xbl.img",
+          "flash xbl_b xbl.img",
+          "flash tz_a tz.img",
+          "flash tz_b tz.img",
+          "flash hyp_a hyp.img",
+          "flash hyp_b hyp.img",
+          "flash keymaster_a keymaster.img",
+          "flash keymaster_b keymaster.img",
+          "flash abl_a abl.img",
+          "flash abl_b abl.img",
+          "flash boot_a boot.img",
+          "flash boot_b boot.img",
+          "flash recovery_a recovery.img",
+          "flash recovery_b recovery.img",
+          "flash dtbo_a dtbo.img",
+          "flash dtbo_b dtbo.img",
+          "flash vbmeta_system_a vbmeta_system.img",
+          "flash vbmeta_system_b vbmeta_system.img",
+          "flash vbmeta_a vbmeta.img",
+          "flash vbmeta_b vbmeta.img",
+          "flash super super.img",
+          "flash aop_a aop.img",
+          "flash aop_b aop.img",
+          "flash featenabler_a featenabler.img",
+          "flash featenabler_b featenabler.img",
+          "flash imagefv_a imagefv.img",
+          "flash imagefv_b imagefv.img",
+          "flash multiimgoem_a multiimgoem.img",
+          "flash multiimgoem_b multiimgoem.img",
+          "flash qupfw_a qupfw.img",
+          "flash qupfw_b qupfw.img",
+          "flash uefisecapp_a uefisecapp.img",
+          "flash uefisecapp_b uefisecapp.img",
+          "flash xbl_config_a xbl_config.img",
+          "flash xbl_config_b xbl_config.img",
+          "flash core_nhlos_b core_nhlos.img",
+          "flash core_nhlos_a core_nhlos.img",
+          "erase userdata",
+          "erase metadata",
+          "--set-active=a",
+          "flashing lock"]
+        },
+        {
+          "id": "locking",
+          "needUserGesture": true
+        },
+        {
+          "id": "activate-developer-options",
+          "needUserGesture": true
+        },
+        {
+          "id": "enable-usb-file-transfer",
+          "needUserGesture": true
+        },
+        {
+          "id": "device-detection",
+          "command": "connect adb",
+          "needUserGesture": true
+        },
+        {
+          "mode": "bootloader",
+          "id": "connect-bootloader",
+          "command": ["connect bootloader", "flashing lock_critical"],
+          "needUserGesture": true
+        },
+        {
+          "id": "unlocking",
+          "needUserGesture": true
+        },
+        {
+          "id": "murena-cloud-account",
+          "needUserGesture": true
+        },
+        {
+          "id": "installation-complete"
+        }
   ],
   "folder": [
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "assets/sources/fp4/IMG-e-1.14-s-20230816320616-stable-FP4.zip"
+      "path": "assets/sources/fp4/IMG-e-2.1-t-20240603406607-stable-FP4.zip"
     }
   ]
 }
