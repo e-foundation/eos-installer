@@ -29,7 +29,7 @@
         </div>
 
         <div id="navigator-detection" class="navigator-detection card inactive">
-            <div class="card-title" data-translate="navigator-detection"></div>
+            <div class="card-header" data-translate="navigator-detection"></div>
             <div class="card-body">
                 <div class="instruction-ctn">
                     <img class="instruction-img" src="assets/images/icons/critical-error.svg">
@@ -38,9 +38,12 @@
                 </div>
             </div>
         </div>
-
-        <div id="let-s-get-started" class="let-s-get-started card inactive">
-            <div class="card-title" data-translate="let-s-get-started"></div>
+        <div class="logo-ctn">
+            <img class="instruction-img" src="assets/images/icons/logo.png">
+            <h1 class="title">/e/OS Easy Installer</h1>
+        </div>
+        <div id="let-s-get-started" class="let-s-get-started card">
+            <div class="card-header" data-translate="let-s-get-started"></div>
             <div class="card-body">
                 <div class="instruction-ctn">
                     <img class="instruction-img" src="assets/images/icons/free-up-some-time.svg">
@@ -84,7 +87,7 @@
         </div>
 
         <div id="check-your-android-version" class="card inactive">
-            <div class="card-title" data-translate="check-update-android-version"></div>
+            <div class="card-header" data-translate="check-update-android-version"></div>
             <div class="card-body">
                 <div class="warning">
                     <div  data-translate="check-update-android-version-caution"></div>
@@ -99,7 +102,7 @@
         </div>
 
         <div id="connect-your-phone" class="card inactive">
-            <div class="card-title" data-translate="connect-your-phone"></div>
+            <div class="card-header" data-translate="connect-your-phone"></div>
             <div class="card-body">
                 <p data-translate="connect-your-phone-instructions"></p>
                 <img class="instruction-img" src="assets/images/illustrations/connect-your-phone.png">
@@ -110,7 +113,7 @@
             </div>
         </div>
         <div id="activate-developer-options" class="card inactive">
-            <div class="card-title" data-translate="activate-developer-options"></div>
+            <div class="card-header" data-translate="activate-developer-options"></div>
             <div class="card-body">
                 <p data-translate="activate-developer-options-instructions-1"></p>
                 <img class="instruction-img" src="assets/images/illustrations/activate-developer-options-1.png">
@@ -122,7 +125,7 @@
             </div>
         </div>
         <div id="activate-usb-debugging" class="card inactive">
-            <div class="card-title" data-translate="activate-usb-debugging"></div>
+            <div class="card-header" data-translate="activate-usb-debugging"></div>
             <div class="card-body">
                 <p data-translate="activate-usb-debugging-instructions-1"></p>
                 <img class="instruction-img" src="assets/images/illustrations/activate-usb-debugging-1.png">
@@ -134,7 +137,7 @@
             </div>
         </div>
         <div id="enable-usb-file-transfer" class="card inactive">
-            <div class="card-title" data-translate="enable-usb-file-transfer"></div>
+            <div class="card-header" data-translate="enable-usb-file-transfer"></div>
             <div class="card-body">
                 <p data-translate="enable-usb-file-transfer-instructions-1"></p>
                 <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-1.png">
@@ -147,7 +150,7 @@
         </div>
 
         <div id="device-detection" class="device-detection card inactive">
-            <div class="card-title" data-translate="device-detection"></div>
+            <div class="card-header" data-translate="device-detection"></div>
             <div class="card-body">
                 <p data-translate="device-detection-instructions-1"></p>
                 <button data-translate="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
@@ -162,7 +165,7 @@
         </div>
 
         <div id="downloading" class="card inactive">
-            <div class="card-title" data-translate="Downloading /e/OS"></div>
+            <div class="card-header" data-translate="Downloading /e/OS"></div>
             <div class="card-body">
                 <p data-translate="this-might-take-some-time-please-be-patient"></p>
                 <progress id="downloading-progress-bar" max="100" value="0"></progress>
@@ -171,13 +174,13 @@
             </div>
         </div>
         <div id="connect-bootloader" class="card inactive">
-            <div class="card-title" data-translate="connect-bootloader"></div>
+            <div class="card-header" data-translate="connect-bootloader"></div>
             <div class="card-body">
                 <button data-translate="next" class="" onclick="VIEW.executeStep(this, 'connect-bootloader')"></button>
             </div>
         </div>
         <div id="unlocking" class="card inactive">
-            <div class="card-title" data-translate="Unlocking"></div>
+            <div class="card-header" data-translate="Unlocking"></div>
             <div class="card-body">
                 <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
             </div>
@@ -186,7 +189,7 @@
             </div>
         </div>
         <div id="reboot-manually-to-bootloader" class="card inactive">
-            <div class="card-title" data-translate="repeat-the-following-step"></div>
+            <div class="card-header" data-translate="repeat-the-following-step"></div>
             <div class="card-body">
                 <ul>
                     <li data-translate="turn-off-your-phone"></li>
@@ -198,14 +201,14 @@
             </div>
         </div>
         <div id="flashing" class="card inactive">
-            <div class="card-title" data-translate="installing"></div>
+            <div class="card-header" data-translate="installing"></div>
             <div class="card-body">
                 <p data-translate="this-might-take-some-time-please-be-patient"></p>
                 <progress id="installing-progress-bar" max="100" value="0"></progress>
             </div>
         </div>
         <div id="erase-data-recovery" class="card inactive">
-            <div class="card-title" data-translate="restart-to-recovery"></div>
+            <div class="card-header" data-translate="restart-to-recovery"></div>
             <div class="card-body">
                 <p data-translate="erase-data-instructions-1"></p>
                 <p data-translate="erase-data-instructions-2"></p>
@@ -219,7 +222,7 @@
             </div>
         </div>
         <div id="go-to-apply-update" class="card inactive">
-            <div class="card-title" data-translate="go-to-sideload"></div>
+            <div class="card-header" data-translate="go-to-sideload"></div>
             <div class="card-body">
                 <p data-translate="go-to-apply-update-instructions-1"></p>
                 <p data-translate="go-to-apply-update-instructions-2"></p>
@@ -230,7 +233,7 @@
             </div>
         </div>
         <div id="sideload" class="card inactive">
-            <div class="card-title" data-translate="sideload"></div>
+            <div class="card-header" data-translate="sideload"></div>
             <div class="card-body">
                 <p data-translate="sideload-instruction"></p>
             </div>
@@ -239,7 +242,7 @@
             </div>
         </div>
         <div id="locking" class="card inactive">
-            <div class="card-title" data-translate="locking"></div>
+            <div class="card-header" data-translate="locking"></div>
             <div class="card-body">
                 click to lock
                 <button data-translate="next" class="locking" onclick="VIEW.executeStep(this, 'locking')"></button>
@@ -249,7 +252,7 @@
             </div>
         </div>
         <div id="murena-cloud-account" class="card inactive">
-            <div class="card-title" data-translate="murena-cloud-account"></div>
+            <div class="card-header" data-translate="murena-cloud-account"></div>
             <div class="card-body">
                 <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
                 <p data-translate="murena-cloud-account-instructions"></p>
@@ -259,7 +262,7 @@
             </div>
         </div>
         <div id="installation-complete" class="card inactive">
-            <div class="card-title" data-translate="installation-complete"></div>
+            <div class="card-header" data-translate="installation-complete"></div>
             <div class="card-body">
                 <p data-translate="installation-complete-instructions-1"></p>
                 <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
@@ -268,13 +271,39 @@
             <div class="card-footer">
             </div>
         </div>
-        <div id="help-us-improve-the-tool" class="card inactive">
-            <div class="card-title" data-translate="help-us-improve-the-tool"></div>
+        <div id="help-us-improve-the-tool" class="help-us-improve-the-tool card inactive">
+            <div class="card-header" data-translate="help-us-improve-the-tool"></div>
             <div class="card-body">
-                <p data-translate="help-us-improve-the-tool-instructions-1"></p>
-                <p data-translate="help-us-improve-the-tool-instructions-2"></p>
+                <form>
+                    <p data-translate="help-us-improve-the-tool-instructions-1"></p>
+                    <div class="instructions-ctn">
+                        <div class="instruction-ctn very-dissatisfied">
+                            <img class="instruction-img" src="assets/images/icons/survey-very-dissatisfied.svg">
+                            <div data-translate="very-dissatisfied"></div>
+                        </div>
+                        <div class="instruction-ctn dissatisfied">
+                            <img class="instruction-img" src="assets/images/icons/survey-dissatisfied.svg">
+                            <div data-translate="dissatisfied"></div>
+                        </div>
+                        <div class="instruction-ctn neutral">
+                            <img class="instruction-img" src="assets/images/icons/survey-neutral.svg">
+                            <div data-translate="neutral"></div>
+                        </div>
+                        <div class="instruction-ctn satisfied">
+                            <img class="instruction-img" src="assets/images/icons/survey-satisfied.svg">
+                            <div data-translate="satisfied"></div>
+                        </div>
+                        <div class="instruction-ctn very-satisfied">
+                            <img class="instruction-img" src="assets/images/icons/survey-very-satisfied.svg">
+                            <div data-translate="very-satisfied"></div>
+                        </div>
+                    </div>
+                    <p data-translate="help-us-improve-the-tool-instructions-2"></p>
+                    <textarea class="thoughts"></textarea>
+                </form>
             </div>
             <div class="card-footer">
+                <button data-translate="send-to-e-team" class="next"></button>
             </div>
         </div>
     </div>

@@ -19,14 +19,14 @@ export class Controller {
             new Step("device-detection",  'connect adb', true),
 
         ];
-        this.currentIndex = 6;
+        this.currentIndex = 0;//6;
     }
 
 
     async init() {
         this.deviceManager = new DeviceManager();
         await this.deviceManager.init();
-        VIEW.onStepStarted(this.steps[this.currentIndex]);
+        //VIEW.onStepStarted(this.steps[this.currentIndex]);
     }
 
     async next() {
