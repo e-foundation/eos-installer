@@ -36,6 +36,10 @@
     background: var(--info-background-color);
     color: var(--info-text-color);
 }
+.warning, .info {
+    padding: 10px;
+    border-radius: 4px;
+}
 .secondary {
     color : var(--secondary-color);
 }
@@ -166,12 +170,27 @@ html, body {
 .card-header {
     font-size: 28px;
     font-family: 'Century Gothic';
-    padding-bottom: 32px;
     font-weight: 600;
+}
+.card-body {
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 .card-footer {
     text-align : right;
-    padding-top: 32px;
+}
+.instruction-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+.instruction-img {
+    margin-bottom : 20px;
+    margin-top : 20px;
+}
+.icon {
+    width: 42px;
+    height: 42px;
 }
 /* </CARD> */
 
@@ -188,25 +207,15 @@ html, body {
     align-items: center;
     gap : 24px;
 }
- .let-s-get-started .instruction-title {
-    font-size: 18px;
-    font-weight: 600;
-    padding-bottom: 8px;
-}
-.let-s-get-started .instruction-img {
-    width: 42px;
-    height: 42px;
-}
 /* </let-s-get-started> */
-.device-detection .instruction-img{
-    max-width: 300px;
+.navigator-not-supported .instructions-ctn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    text-align:center;
+    font-size:14px;
+    padding: 16px 0;
 }
-.navigator-detection .instruction-ctn {
-    margin: 100px auto;
-    max-width : 320px;
-    text-align: center;
-}
-
 .help-us-improve-the-tool p {
     padding-top: 16px;
     padding-bottom: 16px;
@@ -245,7 +254,7 @@ html, body {
     border-width : 1px;
     border-style: solid;
 }
-.help-us-improve-the-tool .instruction-img {
+.help-us-improve-the-tool  .instruction-ctn > img {
     width : 28px;
     height : 28px;
     padding: 6px 8px ;

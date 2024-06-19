@@ -22,11 +22,14 @@ class ViewManager {
         await this.errorManager.init();
     }
 
-    selectStep(step) {
-        const $step = document.getElementById(step.id);
+    selectStep(currentIndex, step) {
+        const $stepIndex = document.getElementById('current-step');
+        $stepIndex.innerText = currentIndex+1;
+
+        const $step = document.getElementById(step.name);
         if ($step) {
             const $copyStep = $step.cloneNode(true);
-            $copyStep.id = new Date().getTime();
+            $copyStep.id = step.id;
             $copyStep.classList.add('active');
             $copyStep.classList.remove('inactive');
             let $processCtn = document.getElementById('process-ctn');
@@ -37,6 +40,10 @@ class ViewManager {
         }
     }
 
+    updateTotalStep(total){
+        const $total = document.getElementById('total-step');
+        $total.innerText = total;
+    }
     // BUTTON EVENTS
 
     async onNext($button) {
@@ -49,19 +56,19 @@ class ViewManager {
         } finally {
         }
     }
-    async executeStep($button, stepId) {
+    async executeStep($button, stepName) {
         $button.disabled = true;
         try {
-            await this.controller.executeStep(stepId);
+            await this.controller.executeStep(stepName);
         } catch (e) {
-            this.errorManager.displayError(stepId, `${e.message || e}`);
+            this.errorManager.displayError(stepName, `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
 
     }
-    onStepStarted(currentStep) {
-        this.selectStep(currentStep);
+    onStepStarted(currentIndex, currentStep) {
+        this.selectStep(currentIndex, currentStep);
     }
 
     onStepFinished(currentStep, nextStep) {

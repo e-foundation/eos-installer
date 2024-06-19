@@ -44,9 +44,9 @@ export class Controller {
             }
             this.currentIndex++;
             current = this.steps[this.currentIndex];
-            VIEW.onStepStarted(current);
+            VIEW.onStepStarted(this.currentIndex, current);
             if(!current.needUserGesture) {
-                await this.executeStep(current.id);
+                await this.executeStep(current.name);
             }
             /*current.commandDone = await this.runCommand(current.command);
             if(current.commandDone) {
@@ -61,9 +61,10 @@ export class Controller {
             }*/
         }
     }
-    async executeStep(stepId){
+    async executeStep(stepName){
         const current = this.steps[this.currentIndex];
-        if(current.id === stepId) {
+        console.trace()
+        if(current.name === stepName) {
             let res = true;
             for(let i = 0 ; i < current.commands.length && res; i++) {
                 res = await this.runCommand(current.commands[i]);
@@ -239,6 +240,7 @@ export class Controller {
                     this.steps.push(...this.resources.steps.map((step) => {
                         return new Step(step.id,  step.command, step.needUserGesture ?? false,  step.mode);
                     }));
+                    VIEW.updateTotalStep(this.steps.length);
                 }
             }
         }
