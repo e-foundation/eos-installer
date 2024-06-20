@@ -108,31 +108,69 @@ class ViewManager {
         this.logManager.log(`.`);
     }
 
-     onDownloading(id, loaded, total) {
-        let progress = document.getElementById(`downloading-progress-bar`);
-         const v = Math.round(loaded / total * 100) ;
-        if (progress) {
-            progress.value = v;
-        }
-        this.logManager.log(`Downloading ${id}: ${Math.round(v * 100)}/${100}`, `downloading-${id}`);
-    }
-
-    onUnzip(id, loaded, total) {
-        let progress = document.getElementById(`downloading-progress-bar`);
+     onDownloading(name, loaded, total) {
         const v = Math.round(loaded / total * 100) ;
-        if (progress) {
-            progress.value = v;
+        let $progressBar = document.querySelector(`.active .downloading-progress-bar`);
+        let $progress = document.querySelector(`.active .downloading-progress`);
+        if ($progressBar) {
+            $progressBar.value = v;
         }
-        this.logManager.log(`Unzipping ${id}: ${Math.round(v * 100)}/${100}`, `downloading-${id}`);
+        if ($progress) {
+            $progress.innerText = `Downloading ${name}: ${v}/${100}`;
+        }
+        this.logManager.log(`Downloading ${name}: ${v}/${100}`, `downloading-${name}`);
     }
 
-    async onInstalling(id, loaded, total) {
-        let progress = document.getElementById(`installing-progress-bar`);
-        const v = loaded / total;
-        if (progress) {
-            progress.value = v;
+    onUnzip(name, loaded, total) {
+        const v = Math.round(loaded / total * 100) ;
+        let $progressBar = document.querySelector(`.active .downloading-progress-bar`);
+        let $progress = document.querySelector(`.active .downloading-progress`);
+        if ($progressBar) {
+            $progressBar.value = v;
         }
-        this.logManager.log(`Installing ${id}: ${Math.round(v * 100)}/${100}`, `installing-${id}`);
+        if ($progress) {
+            $progress.innerText = `Extracting ${name}: ${v}/${100}`;
+        }
+        this.logManager.log(`Unzipping ${name}: ${v}/${100}`, `Unzipping-${name}`);
+    }
+    onDownloadingEnd() {
+        let $progressBar = document.querySelector(`.active .downloading-progress-bar`);
+        if ($progressBar) {
+            $progressBar.classList.add('success');
+        }
+        let $progress = document.querySelector(`.active .downloading-progress`);
+        if ($progress) {
+            $progress.innerText = `Download is complete!`;
+        }
+        let $ready = document.querySelector(`.active .ready-to-install-e-os `);
+        if ($ready) {
+            $ready.style.display = `block`;
+        }
+    }
+
+    async onInstalling(name, loaded, total) {
+        const v = Math.round(loaded / total * 100) ;
+        let $progressBar = document.querySelector(`.active .installing-progress-bar`);
+        let $progress = document.querySelector(`.active .installing-progress`);
+        if ($progressBar) {
+            $progressBar.value = v;
+        }
+        if ($progress) {
+            $progress.innerText = `Installing ${name}: ${v}/${100}`;
+        }
+        this.logManager.log(`Installing ${name}: ${Math.round(v * 100)}/${100}`, `installing-${name}`);
+    }
+    updateData(key, value){
+        let $subscribers = document.querySelectorAll(`[data-subscribe="${key}"]`);
+        console.log($subscribers)
+        console.log({
+            [key] : value
+        })
+        for(let i = 0 ; i< $subscribers.length; i++) {
+            this.translationManager.translateElement($subscribers[i],  {
+                [key] : value
+            })
+        }
     }
 
     // /CONTROLLER EVENTS

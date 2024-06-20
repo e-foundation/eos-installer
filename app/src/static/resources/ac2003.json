@@ -31,15 +31,9 @@
     },
     {
       "id": "flashing",
-      "command": "flash dtbo dtbo.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vbmeta vbmeta.img"
-    },
-    {
-      "id": "flashing",
       "command": [
+        "flash dtbo dtbo.img",
+        "flash vbmeta vbmeta.img",
         "flash recovery recovery.img"
       ]
     },

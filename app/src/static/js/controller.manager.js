@@ -112,6 +112,7 @@ export class Controller {
                     }, (loaded, total, name) => {
                         VIEW.onUnzip(name, loaded, total);
                     });
+                    VIEW.onDownloadingEnd();
                     return true;
                 } catch (e) {
                     console.error(e)
@@ -142,7 +143,6 @@ export class Controller {
                     VIEW.onInstalling(cmd.file, done, total);
                 });
             case Command.CMD_TYPE.unlock:
-                console.log('UNLOCK')
                 //check if unlocked to avoid unnecessary command
                 let isUnlocked = false;
                 if (cmd.partition) {
@@ -225,13 +225,11 @@ export class Controller {
             //already connected
             //we check on serialNumber because productName may not be the same between adb/fastboot driver
         } else {
+            VIEW.updateData('product-name', productName);
             try {
                 this.model = productName.toLowerCase().replace(/[ |_]/g, '');
                 this.resources = await (await fetch(`resources/${this.model}.json`)).json() || {};
             } catch (e) {
-                console.error(e);
-                throw Error('model not supported');
-                this.resources = {};
             }
             if (this.resources) {
                 this.deviceManager.setResources(this.resources);
@@ -242,6 +240,9 @@ export class Controller {
                     }));
                     VIEW.updateTotalStep(this.steps.length);
                 }
+            } else {
+                this.steps.push(new Step("device-model-not-supported"));
+                VIEW.updateTotalStep(this.steps.length);
             }
         }
     }

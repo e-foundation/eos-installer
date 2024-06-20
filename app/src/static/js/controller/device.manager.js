@@ -171,25 +171,7 @@ export class DeviceManager {
         }
     }
 
-    async downloadAll(files, onProgress, onUnzip) {
-        let filesName = [];
-        /*if (this.patch?.length) {
-            for (var i = 0; i < this.patch.length; i++) {
-                if (this.patch[i].file) {
-                    filesName.push(this.patch[i].file);
-                }
-            }
-        }
-        if (this.rom?.file) {
-            filesName.push(this.rom.file)
-        }
-        if (this.key?.length) {
-            for (var i = 0; i < this.key.length; i++) {
-                if (this.key[i].file) {
-                    filesName.push(this.key[i].file);
-                }
-            }
-        }*/
-        return await this.downloader.downloadAndUnzipFolder(files, this.folder, onProgress, onUnzip);
+    async downloadAll(filesName, onProgress, onUnzip) {
+        return await this.downloader.downloadAndUnzipFolder(filesName, this.folder, onProgress, onUnzip);
     }
 }
