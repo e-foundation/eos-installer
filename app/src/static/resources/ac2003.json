@@ -31,17 +31,9 @@
     },
     {
       "id": "flashing",
-      "command": "flash dtbo dtbo.img"
-    },
-    {
-      "id": "flashing",
-      "command": "flash vbmeta vbmeta.img"
-    },
-    {
-      "id": "flashing",
-      "command": [
-        "flash recovery recovery.img"
-      ]
+      "command": ["flash dtbo dtbo-e-2.1-s-20240603406609-stable-avicii.img",
+                  "flash vbmeta vbmeta-e-2.1-s-20240603406609-stable-avicii.img",
+                  "flash recovery recovery-e-2.1-s-20240603406609-stable-avicii.img"]
     },
     {
       "id": "erase-data-recovery",
@@ -58,20 +50,13 @@
   ],
   "folder": [
     {
-      "name": "vbmeta.img",
-      "path": "assets/sources/avicii/vbmeta.img"
-    },
-    {
-      "name": "dtbo.img",
-      "path": "assets/sources/avicii/dtbo.img"
-    },
-    {
       "name": "recovery.img",
-      "path": "assets/sources/avicii/recovery-e-1.14-s-20230818321663-dev-avicii.img"
+      "path": "assets/sources/avicii/recovery-IMG-e-2.1-s-20240603406609-stable-avicii.zip",
+      "unzip": true
     },
     {
       "name": "rom.zip",
-      "path": "assets/sources/avicii/e-1.14-s-20230818321663-dev-avicii.zip"
+      "path": "assets/sources/avicii/e-2.1-s-20240603406609-stable-avicii.zip"
     }
   ]
 }

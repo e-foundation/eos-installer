@@ -119,11 +119,11 @@ export class Recovery extends Device {
     }
 
     getProductName() {
-        return this.webusb.device.productName;
+        return this.webusb.name;
     }
 
     getSerialNumber() {
-        return this.webusb.device.serialNumber;
+        return this.webusb.product;
     }
 
     async adbOpen(blob, useChecksum) {

@@ -15,6 +15,8 @@ export class Downloader {
 
     async init() {
         //this.quota = await navigator.storage.estimate();
+
+        await this.clearDBStore();
     }
 
     /*
@@ -159,8 +161,16 @@ export class Downloader {
         })
 
     }
+    
+    
+    async clearDBStore() {
+        const db = await this.openDBStore();
+        const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
+        store.clear();
+    }
 
     async download(path, onProgress) {
+        await this.removeFile(path);
         const db = await this.openDBStore();
         let file;
         try {
@@ -237,6 +247,7 @@ export class Downloader {
     }
 
     async openDBStore() {
+
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
             request.onerror = reject;

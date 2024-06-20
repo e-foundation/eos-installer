@@ -218,8 +218,8 @@ export class Controller {
     }
 
     async onDeviceConnected() {
-        const serialNumber = this.deviceManager.getSerialNumber();
-        const productName = this.deviceManager.getProductName();
+        const serialNumber = this.deviceManager.adb.device.serialNumber;
+        const productName = this.deviceManager.adb.device.productName;
         if (this.deviceManager.wasAlreadyConnected(serialNumber)) {
             //already connected
             //we check on serialNumber because productName may not be the same between adb/fastboot driver

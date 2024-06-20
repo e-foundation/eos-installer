@@ -2343,18 +2343,6 @@ class AdbTcpIpCommand extends AdbCommandBase {
     }
 }
 
-class AdbWebBackendWatcher {
-    constructor(callback) {
-        this.callback = callback;
-        window.navigator.usb.addEventListener('connect', callback);
-        window.navigator.usb.addEventListener('disconnect', callback);
-    }
-    dispose() {
-        window.navigator.usb.removeEventListener('connect', this.callback);
-        window.navigator.usb.removeEventListener('disconnect', this.callback);
-    }
-}
-
 const WebUsbDeviceFilter = {
     classCode: 0xFF,
     subclassCode: 0x42,
@@ -2498,7 +2486,7 @@ var AdbPropKey;
     AdbPropKey["Device"] = "ro.product.device";
     AdbPropKey["Features"] = "features";
 })(AdbPropKey || (AdbPropKey = {}));
-class Adb {
+class Adb2 {
     constructor(backend, logger) {
         this._connected = false;
         this.packetDispatcher = new AdbPacketDispatcher(backend, logger);

@@ -23,11 +23,22 @@ export class ADB extends Device {
 
     async connect(cb) {
         try {
+            //K1ZFP TODO : Manage this.webusb.isAdb()?
+            /*
             this.webusb = await Adb.open("WebUSB");
             if (this.webusb.isAdb()) {
                 this.device = await this.webusb.connectAdb("host::", cb);
-                console.log('CONNECTED')
+
+            */
+            let adbWebBackend =await AdbWebBackend.requestDevice();
+            if (adbWebBackend) {
+                let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js
+                await adbDevice.connect();
+                this.device = adbWebBackend._device;
+                this.webusb = adbDevice;
                 return true;
+            } else {
+                console.log('no device found');
             }
         } catch (e) {
             this.device = null;
@@ -37,20 +48,24 @@ export class ADB extends Device {
     }
 
     getProductName() {
-        return this.webusb.device.productName;
+        return this.webusb.name;
     }
 
     getSerialNumber() {
-        return this.webusb.device.serialNumber;
+        return this.webusb.product;
     }
 
     async runCommand(cmd) {
-        let shell = await this.device.shell(cmd);
-        return await shell.receive();
+        //let shell = await this.webusb.shell();
+        console.log("Run command>", cmd);
+        return await this.webusb.exec(cmd);
     }
 
     async reboot(mode) {
-        return await this.device.shell(`reboot ${mode}`);
+        //return await this.webusb.shell(`reboot ${mode}`);
+        return await this.webusb.createStreamAndReadAll(`reboot:${mode}`);
     }
+
+
 
 }

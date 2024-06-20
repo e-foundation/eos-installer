@@ -8,6 +8,7 @@
     <title>/e/Os web installer</title>
     <script src="js/lib/zip/zip-no-worker-inflate.min.js"></script>
     <script src="js/lib/webadb/webadb.js"></script>
+    <script src="js/lib/webadb/adb.bundle.js"></script>
     <script src="js/viewManager.js"></script>
 </head>
 <body id="body">
@@ -349,5 +350,7 @@
     document.addEventListener('DOMContentLoaded', async () => {
         await VIEW.init();
     });
+
+    
 </script>
 </html>
