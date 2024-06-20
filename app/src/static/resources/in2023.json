@@ -6,13 +6,11 @@
       "instruction": "unlock bootloader"
     },
     {
-      "command": "flash dtbo dtbo.img"
-    },
-    {
-      "command": "flash vbmeta vbmeta.img"
-    },
-    {
-      "command": "flash recovery recovery.img"
+      "command": [
+        "flash dtbo dtbo.img",
+        "flash vbmeta vbmeta.img",
+        "flash recovery recovery.img"
+      ]
     },
     {
       "instruction": "go to recovery manually"

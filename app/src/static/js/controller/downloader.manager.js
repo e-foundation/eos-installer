@@ -10,97 +10,46 @@ const DB_VERSION = 1;
 export class Downloader {
     constructor() {
         this.db = null;
-        this.files = {};
+        this.stored = {};
     }
 
     async init() {
-        //this.quota = await navigator.storage.estimate();
-
+        this.db = await this.openDBStore();
         await this.clearDBStore();
+        //this.quota = await navigator.storage.estimate();
     }
 
     /*
     * */
-    async downloadAndUnzipFolder(files, folder, onDownloadProgress, onUnzipProgress) {
-
-        const filesDownloaded = await this.downloadFolder(folder, onDownloadProgress);
-
-        const filesToUnzip = filesDownloaded.filter(file => file.unzip);
-        const filesUnzipped = await this.unzipFolder(files, filesToUnzip, onUnzipProgress);
-        const allFiles = filesDownloaded.concat(filesUnzipped);
-
-        for (let i = 0; i < allFiles.length; i++) {
-            this.files[allFiles[i].name] = allFiles[i].blob;
-        }
-
-    }
-    async downloadFolder(folder, onDownloadProgress) {
-        const totalToDownload = new Array(folder.length).fill(0);
-        const totalDownloaded = new Array(folder.length).fill(0);
-        const files = [];
+    async downloadAndUnzipFolder(filesRequired, folder, onDownloadProgress, onUnzipProgress) {
         for (let i = 0; i < folder.length; i++) {
-            files.push(this.downloadFile(folder[i], (value, total)=> {
-                totalToDownload[i] = total;
-                totalDownloaded[i] = value;
-                const sumTotal = totalToDownload.reduce((partialSum, a) => partialSum + a, 0);
-                const sumValue = totalDownloaded.reduce((partialSum, a) => partialSum + a, 0);
-                onDownloadProgress(sumValue, sumTotal);
-            }));
-        }
-        return Promise.all(files);
-    }
-    async unzipFolder(filesRequired, folder, onUnzipProgress) {
-        const totalToUnzip = new Array(folder.length).fill(0);
-        const totalUnzipped = new Array(folder.length).fill(0);
-        const files = [];
-        for (let i = 0; i < folder.length; i++) {
-            const unzippedFiles = await this.unzip(filesRequired, folder[i].blob, (value, total)=> {
-                totalToUnzip[i] = total;
-                totalUnzipped[i] = value;
-                const sumTotal = totalToUnzip.reduce((partialSum, a) => partialSum + a, 0);
-                const sumValue = totalUnzipped.reduce((partialSum, a) => partialSum + a, 0);
-                onUnzipProgress(sumValue, sumTotal);
-            });
-            files.push(...unzippedFiles);
-        }
-        return files;
-    }
+            const file = folder[i];
+            if(filesRequired.includes(file.name) || file.unzip){
+                const blob = await this.download(file.path, (value, total) => {
+                    onDownloadProgress(value, total, file.name);
+                });
+                if(file.unzip){
+                    const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
+                    const filesEntries = await zipReader.getEntries();
+                    for(let i= 0 ; i < filesEntries.length; i++) {
+                        if(filesRequired.includes(filesEntries[i].filename)){
+                            const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
+                                onUnzipProgress(value, total, filesEntries[i].filename);
+                            });
+                            await this.setInDBStore(unzippedEntry, filesEntries[i].filename);
+                            this.stored[filesEntries[i].filename] = true;
+                        }
+                    }
+                    await zipReader.close();
 
-    async downloadFile(file, onDownloadProgress) {
-        let blob = await this.download(file.path, (value, total) => {
-            onDownloadProgress(value, total, file.name);
-        });
-        return {
-            name : file.name,
-            blob : blob,
-            unzip : file.unzip
-        };
-    }
-
-
-    /**
-     *
-     * @param folder : blob of a folder to unzip
-     * @param onProgress : function called on the unzipping of a file of the folder
-     * @returns {Promise<Awaited<unknown>[]>}
-     * retrieve the entries of the unzipped folder
-     * for each entry, return a blob
-     */
-    async unzip(filesRequired, folder, onProgress) {
-        const zipReader = new zip.ZipReader(new zip.BlobReader(folder));
-        const files = await zipReader.getEntries();
-        const unzippingFiles = [];
-        console.log(filesRequired);
-        for(var i= 0 ; i < files.length; i++) {
-            console.log(files[i].filename)
-            if(filesRequired.includes(files[i].filename)){
-                unzippingFiles.push(this.getFileFromZip(files[i], onProgress))
+                } else {
+                    await this.setInDBStore(file.blob,file.name);
+                    this.stored[file.name] = true;
+                }
             }
-        }// Promises[<name : string, blob : blob>]
-        const unzippedFiles = await Promise.all(unzippingFiles);
-        await zipReader.close();
-        return unzippedFiles;
+        }
     }
+
     async getFileFromZip(file, onProgress) {
         const name = file.filename;
         const blob = await file.getData(new zip.BlobWriter(), {
@@ -123,55 +72,30 @@ export class Downloader {
      * this function retrieve the promise linked to the fileName
      */
     async getFile(name) {
-        const file = this.files[name];
+        const file = this.stored[name];
         if(!file){
             throw Error(`File ${name} was not previously downloaded`)
         }
-        return this.files[name];
+        const dbStored = await this.getFromDBStore(name);
+        return dbStored.blob;
     }
 
     /*
     * getData from a zip file
     * */
     async getData(dbFile, fileEntry, onProgress) {
-        return new Promise(async (resolve, reject) => {
-            const db = await this.openDBStore();
-            let file;
-            try {
-                //file = await this.getDBStore(db, dbFile);
-            } catch (e) {
-                console.log(e)
-            }
-            console.log(file)
-            if (file) {
-                resolve(file.content);
-            } else {
-                const _zip = new zip.BlobWriter();
-                const blob = await fileEntry.getData(_zip, {
-                    onprogress: (value, total) => {
-                        onProgress(value, total, dbFile);
-                    },
-                    onend: () => {
-                        console.log('end')
-                    },
-                    useWebWorkers: true,
-                });
-                resolve(blob);
-            }
-        })
-
-    }
-    
-    
-    async clearDBStore() {
-        const db = await this.openDBStore();
-        const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-        store.clear();
+        const _zip = new zip.BlobWriter();
+        const blob = await fileEntry.getData(_zip, {
+            onprogress: (value, total) => {
+                onProgress(value, total, dbFile);
+            },
+            onend: () => {},
+            useWebWorkers: true,
+        });
+        return blob;
     }
 
     async download(path, onProgress) {
-        await this.removeFile(path);
-        const db = await this.openDBStore();
         let file;
         try {
             //file = await this.getDBStore(db, path);
@@ -187,9 +111,7 @@ export class Downloader {
                     chunkSize: 15 * 1024 * 1024,
                     poolLimit: 6,
                 }, onProgress)
-                const blob = new Blob([buffers]);
-                this.setInDBStore(db, blob, path);
-                return blob;
+                return new Blob([buffers]);
             } catch (e) {
                 console.error(e);
                 throw Error(e);
@@ -199,38 +121,34 @@ export class Downloader {
 
 
     async removeFile(filename) {
-        /*const dbFile = this.files[filename];
-        if(dbFile){
-           return new Promise((resolve, reject) => {
-                    this.openDBStore().then(db => {
-                        this.deleteDBStore(db, dbFile).then(v => {
-                            delete this.files[filename];
-                            resolve(true);
-                        });
-                    }).catch(event=>{
-                        console.error("Cannot open database");
-                        reject(null);
-                    });
-                });
-        }*/
-
+        try {
+            await this.removeFromDBStore(filename);
+            delete this.stored[filename];
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 
-    async deleteDBStore(db, path) {
+    async clearDBStore() {
+        console.log('store.clear')
+        const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
+        store.clear();
+    }
+    async removeFromDBStore(key) {
+        const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
+        return store.delete(path);
+    }
+
+
+    async setInDBStore(blob, name) {
+        const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
+        store.put(blob, name);
+    }
+
+    getFromDBStore(key) {
         return new Promise((resolve, reject) => {
-            const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-            resolve(store.delete(path));
-        })
-    }
-
-    setInDBStore(db, blob, path) {
-        const store = db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-        store.put(blob, path);
-    }
-
-    getDBStore(db, key) {
-        return new Promise((resolve, reject) => {
-            const store = db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
+            const store = this.db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
             const request = store.get(key);
             request.onsuccess = function (event) {
                 const result = event.target.result;
@@ -247,7 +165,6 @@ export class Downloader {
     }
 
     async openDBStore() {
-
         return new Promise((resolve, reject) => {
             const request = indexedDB.open(DB_NAME, DB_VERSION);
             request.onerror = reject;

@@ -1,8 +1,9 @@
 import {Command} from "../device/command.class.js";
 
 export class Step {
-    constructor(id,  command, needUserGesture,mode) {
-        this.id = id;
+    constructor(name,  command, needUserGesture,mode) {
+        this.name = name;
+        this.id = new Date().getTime() + Math.round((Math.random() * 1000));
         this.needUserGesture = needUserGesture;
         this.commands = [];
         if(command) {
@@ -10,7 +11,6 @@ export class Step {
                 this.commands = command.map(m => {
                     return new Command(m)
                 });
-                console.log(this.commands)
             } else {
                 this.commands = [new Command(command)];
             }

@@ -53,6 +53,12 @@ export class TranslationManager {
         }
     }
 
+    translateElement($el, values) {
+        if($el.dataset.translate) {
+            $el.innerHTML = this.translate($el.dataset.translate, values);
+        }
+    }
+
     translate(key, values) {
         let text = this.translation[key];
         if (!text) {
@@ -64,7 +70,7 @@ export class TranslationManager {
         //But if one day it is, the translation does not have to change :>
         if (typeof values === 'object') {
             Object.keys(values).forEach(k => {
-                text.replaceAll(`{{${k}}}`, values[key]);
+                text = text.replaceAll(`{{${k}}}`, values[k]);
             });
         }
         return text;

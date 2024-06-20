@@ -16,7 +16,7 @@
     <div id="banner">
         <div id="top-banner">
             <b>Installation</b>
-            <div>*</div>
+            <div><span id="current-step">1</span>/</span><span id="total-step">?</span></div>
             <div>completed</div>
             <div id="error-message">
                 <div id="error-caption"></div>
@@ -28,72 +28,78 @@
             <button id="help"><img src="assets/images/icons/help.svg"><span data-translate="help"></span></button>
         </div>
     </div>
-
-    <div id="navigator-detection" class="navigator-detection card inactive">
-        <div class="card-header" data-translate="navigator-detection"></div>
-        <div class="card-body">
-            <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/critical-error.svg">
-                <p data-translate="navigator-not-supported"></p>
-                <p data-translate="navigator-not-supported-instructions"></p>
-            </div>
-        </div>
-    </div>
     <div class="logo-ctn">
         <img class="instruction-img" src="assets/images/icons/logo.png">
         <h1 class="title">/e/OS Easy Installer</h1>
+    </div>
+
+    <div id="navigator-not-supported" class="navigator-not-supported card inactive">
+        <div class="card-header" data-translate="navigator-detection"></div>
+        <div class="card-body  text-center">
+            <img class="error-img" src="assets/images/icons/critical-error.svg">
+            <p class="instruction-title" data-translate="navigator-not-supported"></p>
+            <p data-translate="navigator-not-supported-instructions"></p>
+            <div class="instructions-ctn">
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/edge.svg">
+                    <div>Microsoft Edge <b>125.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/safari.svg">
+                    <div>Safari <b>17.4.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/opera.svg">
+                    <div>Opera <b>111.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/chrome.svg">
+                    <div>Chrome <b>126.0.0</b></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="let-s-get-started" class="let-s-get-started card">
         <div class="card-header" data-translate="let-s-get-started"></div>
         <div class="card-body">
             <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/free-up-some-time.svg">
+                <img class="icon" src="assets/images/icons/free-up-some-time.svg">
                 <div>
-                    <div class="instruction-title">1. Free up some time</div>
-                    <div class="instruction-text">The complete installation process requires around 1 hour. Be
-                        patient!
-                    </div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-1"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-1"></div>
                 </div>
             </div>
             <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/free-up-some-disk-space.svg">
+                <img class="icon" src="assets/images/icons/free-up-some-disk-space.svg">
                 <div>
-                    <div class="instruction-title">2. Free up some disk space</div>
-                    <div class="instruction-text">You'll need to have at least 6GB of free space in your computer to
-                        download and install /e/OS. Make sure you have enough free disk space.
-                    </div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-2"></div>
+                    <div class="instruction-text"  data-translate="let-s-get-started-instruction-2"></div>
                 </div>
             </div>
             <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/charge-your-phone.svg">
+                <img class="icon" src="assets/images/icons/charge-your-phone.svg">
                 <div>
-                    <div class="instruction-title">3. Charge your phone</div>
-                    <div class="instruction-text">Before installing /e/OS, ensure your phone has at least 50% battery
-                        charge.
-                    </div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-3"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-3"></div>
                 </div>
             </div>
             <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/back-up-your-data.svg">
+                <img class="icon" src="assets/images/icons/back-up-your-data.svg">
                 <div>
-                    <div class="instruction-title">4. Back up your data</div>
-                    <div class="instruction-text">All data will be erased from your smartphone during the installation,
-                        so we recommend that you back up your data.
-                    </div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-4"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-4"></div>
                 </div>
             </div>
             <div class="instruction-ctn">
-                <img class="instruction-img" src="assets/images/icons/grab-a-USB-data-cable.svg">
+                <img class="icon" src="assets/images/icons/grab-a-USB-data-cable.svg">
                 <div>
-                    <div class="instruction-title">5. Grab a USB data cable</div>
-                    <div class="instruction-text">A working USB data cable is required. Power cables don't transfer date
-                        and will not work! We recommend USB 3.x or newer.
-                    </div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-5"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-5"></div>
                 </div>
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="i-m-ready" class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')"></button>
         </div>
     </div>
 
@@ -103,16 +109,16 @@
             <div class="warning">
                 <div data-translate="check-update-android-version-caution"></div>
             </div>
-            <div class="card-sub-title" data-translate="follow-the-examples-below"></div>
+            <p class="card-sub-title" data-translate="follow-the-examples-below"></p>
             <div class="info">
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'check-your-android-version')"></button>
         </div>
     </div>
 
-    <div id="connect-your-phone" class="card inactive">
+    <div id="connect-your-phone" class="connect-your-phone card inactive">
         <div class="card-header" data-translate="connect-your-phone"></div>
         <div class="card-body">
             <p data-translate="connect-your-phone-instructions"></p>
@@ -122,10 +128,11 @@
             <p class="secondary" data-translate="connect-your-phone-instructions-notes"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'connect-your-phone')"></button>
         </div>
     </div>
-    <div id="activate-developer-options" class="card inactive">
+
+    <div id="activate-developer-options" class="activate-developer-options card inactive">
         <div class="card-header" data-translate="activate-developer-options"></div>
         <div class="card-body">
             <p data-translate="activate-developer-options-instructions-1"></p>
@@ -138,10 +145,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'activate-developer-options')"></button>
         </div>
     </div>
-    <div id="activate-usb-debugging" class="card inactive">
+    <div id="activate-usb-debugging" class="activate-usb-debugging card inactive">
         <div class="card-header" data-translate="activate-usb-debugging"></div>
         <div class="card-body">
             <p data-translate="activate-usb-debugging-instructions-1"></p>
@@ -154,10 +161,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'activate-usb-debugging')"></button>
         </div>
     </div>
-    <div id="enable-usb-file-transfer" class="card inactive">
+    <div id="enable-usb-file-transfer" class="enable-usb-file-transfer card inactive">
         <div class="card-header" data-translate="enable-usb-file-transfer"></div>
         <div class="card-body">
             <p data-translate="enable-usb-file-transfer-instructions-1"></p>
@@ -170,7 +177,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'enable-usb-file-transfer')"></button>
         </div>
     </div>
 
@@ -183,7 +190,7 @@
             </div>
             <p data-translate="device-detection-instructions-2"></p>
             <div class="text-center">
-                <button data-translate="connect" class="success" onclick="VIEW.executeStep(this, 'device-detection')"></button>
+                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
             </div>
             <p data-translate="device-detection-instructions-3"></p>
             <div class="text-center">
@@ -196,47 +203,59 @@
         </div>
     </div>
 
+    <div id="device-model-not-supported" class="device-model-not-supported card inactive">
+        <div class="card-header" data-translate="device-model-not-supported"></div>
+        <div class="card-body  text-center">
+            <img class="error-img" src="assets/images/icons/error.svg">
+            <p class="instruction-title" data-subscribe="product-name" data-translate="device-model-not-supported-title"></p>
+            <p data-translate="device-model-not-supported-instructions"></p>
+        </div>
+    </div>
+
     <div id="downloading" class="card inactive">
         <div class="card-header" data-translate="Downloading /e/OS"></div>
         <div class="card-body">
             <p data-translate="this-might-take-some-time-please-be-patient"></p>
-            <progress id="downloading-progress-bar" max="100" value="0"></progress>
+            <div class="text-center large-padding">
+                <p class="downloading-progress"></p>
+                <progress class="downloading-progress-bar" max="100"></progress>
+                <p class="ready-to-install-e-os"  data-translate="ready-to-install-e-os" ></p>
+            </div>
             <div class="loader"></div>
             <div class="downloader"></div>
         </div>
     </div>
+
     <div id="connect-bootloader" class="card inactive">
         <div class="card-header" data-translate="connect-bootloader"></div>
         <div class="card-body">
-            <button data-translate="next" class="" onclick="VIEW.executeStep(this, 'connect-bootloader')"></button>
+            <p data-translate="connect-bootloader-instructions-1"></p>
+            <p data-translate="connect-bootloader-instructions-2"></p>
+            <div class="text-center">
+                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'connect-bootloader')"></button>
+            </div>
         </div>
     </div>
     <div id="unlocking" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
+        <p data-translate="unlocking-instructions-1"></p>
+        <p data-translate="unlocking-instructions-2"></p>
+        <p data-translate="unlocking-instructions-3"></p>
+        <p data-translate="unlocking-instructions-4"></p>
         <div class="card-body">
+        </div>
+        <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
-        </div>
-        <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
-        </div>
-    </div>
-    <div id="reboot-manually-to-bootloader" class="card inactive">
-        <div class="card-header" data-translate="repeat-the-following-step"></div>
-        <div class="card-body">
-            <ul>
-                <li data-translate="turn-off-your-phone"></li>
-                <li data-translate="access-download-mode"></li>
-            </ul>
-        </div>
-        <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
     <div id="flashing" class="card inactive">
         <div class="card-header" data-translate="installing"></div>
         <div class="card-body">
             <p data-translate="this-might-take-some-time-please-be-patient"></p>
-            <progress id="installing-progress-bar" max="100" value="0"></progress>
+            <div class="text-center large-padding">
+                <p class="installing-progress"></p>
+                <progress class="installing-progress-bar" max="100"></progress>
+            </div>
         </div>
     </div>
     <div id="erase-data-recovery" class="card inactive">
@@ -250,7 +269,7 @@
             <p data-translate="erase-data-instructions-6"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'erase-data-recovery')"></button>
         </div>
     </div>
     <div id="go-to-apply-update" class="card inactive">
@@ -261,7 +280,7 @@
             <p data-translate="go-to-apply-update-instructions-3"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'go-to-apply-update')"></button>
         </div>
     </div>
     <div id="sideload" class="card inactive">
@@ -276,8 +295,8 @@
     <div id="locking" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
-            click to lock
-            <button data-translate="next" class="locking" onclick="VIEW.executeStep(this, 'locking')"></button>
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
@@ -286,7 +305,9 @@
     <div id="murena-cloud-account" class="card inactive">
         <div class="card-header" data-translate="murena-cloud-account"></div>
         <div class="card-body">
-            <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
+            </div>
             <p data-translate="murena-cloud-account-instructions"></p>
         </div>
         <div class="card-footer">
@@ -297,10 +318,13 @@
         <div class="card-header" data-translate="installation-complete"></div>
         <div class="card-body">
             <p data-translate="installation-complete-instructions-1"></p>
-            <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
-            <p data-translate="installation-complete-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
+            </div>
+            <p class="info" data-translate="installation-complete-instructions-2"></p>
         </div>
         <div class="card-footer">
+            <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
     <div id="help-us-improve-the-tool" class="help-us-improve-the-tool card inactive">
@@ -310,23 +334,23 @@
                 <p data-translate="help-us-improve-the-tool-instructions-1"></p>
                 <div class="instructions-ctn">
                     <div class="instruction-ctn very-dissatisfied">
-                        <img class="instruction-img" src="assets/images/icons/survey-very-dissatisfied.svg">
+                        <img src="assets/images/icons/survey-very-dissatisfied.svg">
                         <div data-translate="very-dissatisfied"></div>
                     </div>
                     <div class="instruction-ctn dissatisfied">
-                        <img class="instruction-img" src="assets/images/icons/survey-dissatisfied.svg">
+                        <img src="assets/images/icons/survey-dissatisfied.svg">
                         <div data-translate="dissatisfied"></div>
                     </div>
                     <div class="instruction-ctn neutral">
-                        <img class="instruction-img" src="assets/images/icons/survey-neutral.svg">
+                        <img src="assets/images/icons/survey-neutral.svg">
                         <div data-translate="neutral"></div>
                     </div>
                     <div class="instruction-ctn satisfied">
-                        <img class="instruction-img" src="assets/images/icons/survey-satisfied.svg">
+                        <img src="assets/images/icons/survey-satisfied.svg">
                         <div data-translate="satisfied"></div>
                     </div>
                     <div class="instruction-ctn very-satisfied">
-                        <img class="instruction-img" src="assets/images/icons/survey-very-satisfied.svg">
+                        <img src="assets/images/icons/survey-very-satisfied.svg">
                         <div data-translate="very-satisfied"></div>
                     </div>
                 </div>

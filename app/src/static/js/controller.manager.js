@@ -44,9 +44,9 @@ export class Controller {
             }
             this.currentIndex++;
             current = this.steps[this.currentIndex];
-            VIEW.onStepStarted(current);
+            VIEW.onStepStarted(this.currentIndex, current);
             if(!current.needUserGesture) {
-                await this.executeStep(current.id);
+                await this.executeStep(current.name);
             }
             /*current.commandDone = await this.runCommand(current.command);
             if(current.commandDone) {
@@ -61,9 +61,10 @@ export class Controller {
             }*/
         }
     }
-    async executeStep(stepId){
+    async executeStep(stepName){
         const current = this.steps[this.currentIndex];
-        if(current.id === stepId) {
+        console.trace()
+        if(current.name === stepName) {
             let res = true;
             for(let i = 0 ; i < current.commands.length && res; i++) {
                 res = await this.runCommand(current.commands[i]);
@@ -111,6 +112,7 @@ export class Controller {
                     }, (loaded, total, name) => {
                         VIEW.onUnzip(name, loaded, total);
                     });
+                    VIEW.onDownloadingEnd();
                     return true;
                 } catch (e) {
                     console.error(e)
@@ -141,7 +143,6 @@ export class Controller {
                     VIEW.onInstalling(cmd.file, done, total);
                 });
             case Command.CMD_TYPE.unlock:
-                console.log('UNLOCK')
                 //check if unlocked to avoid unnecessary command
                 let isUnlocked = false;
                 if (cmd.partition) {
@@ -224,13 +225,11 @@ export class Controller {
             //already connected
             //we check on serialNumber because productName may not be the same between adb/fastboot driver
         } else {
+            VIEW.updateData('product-name', productName);
             try {
                 this.model = productName.toLowerCase().replace(/[ |_]/g, '');
                 this.resources = await (await fetch(`resources/${this.model}.json`)).json() || {};
             } catch (e) {
-                console.error(e);
-                throw Error('model not supported');
-                this.resources = {};
             }
             if (this.resources) {
                 this.deviceManager.setResources(this.resources);
@@ -239,7 +238,11 @@ export class Controller {
                     this.steps.push(...this.resources.steps.map((step) => {
                         return new Step(step.id,  step.command, step.needUserGesture ?? false,  step.mode);
                     }));
+                    VIEW.updateTotalStep(this.steps.length);
                 }
+            } else {
+                this.steps.push(new Step("device-model-not-supported"));
+                VIEW.updateTotalStep(this.steps.length);
             }
         }
     }

@@ -36,6 +36,10 @@
     background: var(--info-background-color);
     color: var(--info-text-color);
 }
+.warning, .info {
+    padding: 10px;
+    border-radius: 4px;
+}
 .secondary {
     color : var(--secondary-color);
 }
@@ -48,7 +52,7 @@ button {
     cursor: pointer;
     transition: background-color 0.25s ease-in-out;
 }
-button.success {
+button.connect {
     background: var(--success-color);
     color: var(--button-text-color);
     border: none;
@@ -63,8 +67,6 @@ button:disabled {
     background: rgba(2, 127, 254, 0.6);
     cursor: auto;
 }
-
-
 html, body {
     margin: 0px;
     background: var(--background-color);
@@ -146,6 +148,12 @@ html, body {
     display: block;
 }
 
+.ready-to-install-e-os {
+    color : var(--info-color);
+    font-size: 28px;
+    display: none;
+}
+
 .logo-ctn {
     max-width: 780px;
     margin:auto;
@@ -166,12 +174,60 @@ html, body {
 .card-header {
     font-size: 28px;
     font-family: 'Century Gothic';
-    padding-bottom: 32px;
     font-weight: 600;
+}
+.card-body, .large-padding {
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 .card-footer {
     text-align : right;
-    padding-top: 32px;
+}
+.instruction-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+.instruction-img, .normal-padding {
+    margin-bottom : 20px;
+    margin-top : 20px;
+}
+.connect-your-phone .instruction-img{
+    max-width: 500px;
+}
+.enable-usb-file-transfer .instruction-img {
+    max-width: 225px;
+}
+.device-detection .instruction-img {
+    max-width: 300px;
+}
+.activate-developer-options .instruction-img,
+.activate-usb-debugging .instruction-img {
+    max-width: 350px;
+}
+.icon {
+    width: 42px;
+    height: 42px;
+}
+progress {
+    height: 3px;
+    width: 50%;
+    min-width: 300px;
+}
+progress[value] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+}
+progress[value]::-webkit-progress-bar {
+    background-color: #d0d0d0;
+}
+progress[value]::-webkit-progress-value {
+    background-color: var(--downloading-color);
+}
+progress[value].success::-webkit-progress-value {
+    background-color: var(--green);
 }
 /* </CARD> */
 
@@ -188,25 +244,15 @@ html, body {
     align-items: center;
     gap : 24px;
 }
- .let-s-get-started .instruction-title {
-    font-size: 18px;
-    font-weight: 600;
-    padding-bottom: 8px;
-}
-.let-s-get-started .instruction-img {
-    width: 42px;
-    height: 42px;
-}
 /* </let-s-get-started> */
-.device-detection .instruction-img{
-    max-width: 300px;
+.navigator-not-supported .instructions-ctn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    text-align:center;
+    font-size:14px;
+    padding: 16px 0;
 }
-.navigator-detection .instruction-ctn {
-    margin: 100px auto;
-    max-width : 320px;
-    text-align: center;
-}
-
 .help-us-improve-the-tool p {
     padding-top: 16px;
     padding-bottom: 16px;
@@ -245,7 +291,7 @@ html, body {
     border-width : 1px;
     border-style: solid;
 }
-.help-us-improve-the-tool .instruction-img {
+.help-us-improve-the-tool  .instruction-ctn > img {
     width : 28px;
     height : 28px;
     padding: 6px 8px ;
