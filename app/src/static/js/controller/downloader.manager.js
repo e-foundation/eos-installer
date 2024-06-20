@@ -36,14 +36,14 @@ export class Downloader {
                             const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
                                 onUnzipProgress(value, total, filesEntries[i].filename);
                             });
-                            await this.setInDBStore(unzippedEntry, filesEntries[i].filename);
+                            await this.setInDBStore(unzippedEntry.blob, filesEntries[i].filename);
                             this.stored[filesEntries[i].filename] = true;
                         }
                     }
                     await zipReader.close();
 
                 } else {
-                    await this.setInDBStore(file.blob,file.name);
+                    await this.setInDBStore(blob,file.name);
                     this.stored[file.name] = true;
                 }
             }
@@ -76,8 +76,7 @@ export class Downloader {
         if(!file){
             throw Error(`File ${name} was not previously downloaded`)
         }
-        const dbStored = await this.getFromDBStore(name);
-        return dbStored.blob;
+        return await this.getFromDBStore(name);
     }
 
     /*
@@ -96,26 +95,16 @@ export class Downloader {
     }
 
     async download(path, onProgress) {
-        let file;
         try {
-            //file = await this.getDBStore(db, path);
+            const buffers = await this.fetch({
+                url: path,
+                chunkSize: 15 * 1024 * 1024,
+                poolLimit: 6,
+            }, onProgress)
+            return new Blob([buffers]);
         } catch (e) {
-            console.log(e)
-        }
-        if (file) {
-            return file.content;
-        } else {
-            try {
-                const buffers = await this.fetch({
-                    url: path,
-                    chunkSize: 15 * 1024 * 1024,
-                    poolLimit: 6,
-                }, onProgress)
-                return new Blob([buffers]);
-            } catch (e) {
-                console.error(e);
-                throw Error(e);
-            }
+            console.error(e);
+            throw Error(e);
         }
     }
 
@@ -142,16 +131,19 @@ export class Downloader {
 
 
     async setInDBStore(blob, name) {
+        console.log('store',blob,  name )
         const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
         store.put(blob, name);
     }
 
     getFromDBStore(key) {
+        console.log('getFromstore', key )
         return new Promise((resolve, reject) => {
             const store = this.db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
             const request = store.get(key);
             request.onsuccess = function (event) {
                 const result = event.target.result;
+                console.log(result)
                 if (result) {
                     resolve(result);
                 } else {
