@@ -24,10 +24,23 @@ export class ErrorManager {
 
     async init() {}
 
-    displayError = function(caption, message) {
+    displayError(caption, message) {
         const errorCaption = document.getElementById('error-caption');
         const errorText = document.getElementById('error-text');
         errorCaption.textContent = caption;
         errorText.textContent = message; 
     }
+
+    displayNavigatorError(){
+        const $errorBackground = document.getElementById('overlay-background');
+        const $errorCaption = document.getElementById('navigator-not-supported');
+        $errorCaption.style.display = 'block';
+        if ($errorCaption) {
+            $errorBackground.classList.add('active');
+            $errorBackground.classList.remove('inactive');
+            $errorCaption.classList.add('active');
+            $errorCaption.classList.remove('inactive');
+        }
+    }
+
 }

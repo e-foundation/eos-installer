@@ -11,7 +11,6 @@ export class Controller {
     constructor() {
         this.steps = [
             new Step("let-s-get-started",  undefined, true ),
-            new Step("check-your-android-version",  undefined, true ),
             new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
             new Step("activate-usb-debugging", undefined, true),
