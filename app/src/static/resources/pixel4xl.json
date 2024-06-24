@@ -32,8 +32,8 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo.img",
-        "flash boot recovery.img",
+        "flash dtbo dtbo-e-2.1-t-20240605406922-dev-coral.img",
+        "flash boot recovery-e-2.1-t-20240605406922-dev-coral.img",
         "reboot"
       ]
     },
@@ -77,12 +77,9 @@
   ],
   "folder": [
     {
-      "name": "dtbo.img",
-      "path": "assets/sources/coral/dtbo-e-2.1-t-20240605406922-dev-coral.img"
-    },
-    {
       "name": "recovery.img",
-      "path": "assets/sources/coral/recovery-e-2.1-t-20240605406922-dev-coral.img"
+      "path": "assets/sources/coral/recovery-IMG-e-2.1-t-20240605406922-dev-coral.zip",
+      "unzip": true
     },
     {
       "name": "rom.zip",
