@@ -2,87 +2,103 @@
   "steps": [
     {
       "mode": "bootloader",
-      "command": "flashing unlock unlocked",
-      "instruction": "unlock bootloader"
+      "id": "connect-bootloader",
+      "command": ["connect bootloader","flashing unlock unlocked"],
+      "needUserGesture": true
     },
     {
-      "command": "flash dtbo dtbo.img"
+      "id": "unlocking",
+      "needUserGesture": true
     },
     {
-      "command": "flash vendor_boot vendor_boot.img"
+      "id": "activate-developer-options",
+      "needUserGesture": true
     },
     {
-      "command": "flash vendor_boot recovery.img"
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
     },
     {
-      "instruction": "go to recovery manually"
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
     },
     {
-      "instruction": "Format data / Factory reset",
-      "needUser": true
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
     },
     {
-      "instruction": "go to sideLoad",
-      "needUser": true
+      "id": "flashing",
+      "command": [
+        "flash boot boot.img",
+        "flash dtbo dtbo.img",
+        "flash vendor_boot recovery.img"
+      ]
     },
     {
-      "instruction": "connect recovery",
-      "command": "connect recovery",
-      "needUser": true
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
     },
     {
-      "mode": "recovery",
-      "instruction": "installing sideload",
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
       "command": "sideload rom.zip"
     },
     {
-      "instruction": "go to bootloader manually",
-      "needUser": true
+      "id": "sideload-ended",
+      "needUserGesture": true
     },
     {
-      "instruction": "connect bootloader",
-      "command": "connect bootloader",
-      "needUser": true
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "erase avb_custom_key",
+        "flash avb_custom_key pkmd_pixel.bin",
+        "flashing lock unlocked"
+      ],
+      "needUserGesture": true
     },
     {
-      "mode": "bootloader",
-      "command": "erase avb_custom_key"
+      "id": "locking",
+      "needUserGesture": true
     },
     {
-      "mode": "bootloader",
-      "command": "flash avb_custom_key pkmd_pixel.bin"
+      "id": "murena-cloud-account",
+      "needUserGesture": true
     },
     {
-      "mode": "bootloader",
-      "command": "flashing lock unlocked",
-      "instruction": "lock bootloader",
-      "needUser": true
-    },
-    {
-      "instruction": "restart if needed. /e/ should be installed",
-      "needUser": true
+      "id": "installation-complete"
     }
   ],
   "folder": [
     {
       "name": "dtbo.img",
-      "path": "assets/sources/redfin/dtbo.img"
+      "path": "assets/sources/redfin/dtbo-e-2.1-t-20240605406922-dev-redfin.img"
     },
     {
-      "name": "vendor_boot.img",
-      "path": "assets/sources/redfin/vendor_boot.img"
+      "name": "boot.img",
+      "path": "assets/sources/redfin/boot-e-2.1-t-20240605406922-dev-redfin.img"
+    },
+    {
+      "name": "recovery.img",
+      "path": "assets/sources/redfin/recovery-e-2.1-t-20240605406922-dev-redfin.img"
     },
     {
       "name": "pkmd_pixel.bin",
       "path": "assets/sources/redfin/pkmd_pixel.bin"
     },
     {
-      "name": "recovery.img",
-      "path": "assets/sources/redfin/recovery-e-latest-s-redfin.img"
-    },
-    {
       "name": "rom.zip",
-      "path": "assets/sources/redfin/e-latest-s-redfin.zip"
+      "path": "assets/sources/redfin/e-2.1-t-20240605406922-dev-redfin.zip"
     }
   ]
 }

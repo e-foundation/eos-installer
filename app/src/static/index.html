@@ -32,33 +32,6 @@
         <img class="instruction-img" src="assets/images/icons/logo.png">
         <h1 class="title">/e/OS Easy Installer</h1>
     </div>
-
-    <div id="navigator-not-supported" class="navigator-not-supported card inactive">
-        <div class="card-header" data-translate="navigator-detection"></div>
-        <div class="card-body  text-center">
-            <img class="error-img" src="assets/images/icons/critical-error.svg">
-            <p class="instruction-title" data-translate="navigator-not-supported"></p>
-            <p data-translate="navigator-not-supported-instructions"></p>
-            <div class="instructions-ctn">
-                <div class="instruction-ctn">
-                    <img class="icon" src="assets/images/icons/edge.svg">
-                    <div>Microsoft Edge <b>125.0.0</b></div>
-                </div>
-                <div class="instruction-ctn">
-                    <img class="icon" src="assets/images/icons/safari.svg">
-                    <div>Safari <b>17.4.0</b></div>
-                </div>
-                <div class="instruction-ctn">
-                    <img class="icon" src="assets/images/icons/opera.svg">
-                    <div>Opera <b>111.0.0</b></div>
-                </div>
-                <div class="instruction-ctn">
-                    <img class="icon" src="assets/images/icons/chrome.svg">
-                    <div>Chrome <b>126.0.0</b></div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="let-s-get-started" class="let-s-get-started card">
         <div class="card-header" data-translate="let-s-get-started"></div>
         <div class="card-body">
@@ -97,24 +70,14 @@
                     <div class="instruction-text" data-translate="let-s-get-started-instruction-5"></div>
                 </div>
             </div>
+            <div class="normal-padding">
+                <div class="warning">
+                    <div data-translate="check-update-android-version-caution"></div>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button data-translate="i-m-ready" class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')"></button>
-        </div>
-    </div>
-
-    <div id="check-your-android-version" class="card inactive">
-        <div class="card-header" data-translate="check-update-android-version"></div>
-        <div class="card-body">
-            <div class="warning">
-                <div data-translate="check-update-android-version-caution"></div>
-            </div>
-            <p class="card-sub-title" data-translate="follow-the-examples-below"></p>
-            <div class="info">
-            </div>
-        </div>
-        <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'check-your-android-version')"></button>
         </div>
     </div>
 
@@ -190,11 +153,11 @@
             </div>
             <p data-translate="device-detection-instructions-2"></p>
             <div class="text-center">
-                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
-            </div>
-            <p data-translate="device-detection-instructions-3"></p>
-            <div class="text-center">
                 <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-2.png">
+            </div>
+            <div class="text-center instruction-title">
+                <p data-translate="device-detection-instructions-3"></p>
+                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
             </div>
         </div>
         <div class="card-body inactive">
@@ -238,11 +201,11 @@
     </div>
     <div id="unlocking" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
-        <p data-translate="unlocking-instructions-1"></p>
-        <p data-translate="unlocking-instructions-2"></p>
-        <p data-translate="unlocking-instructions-3"></p>
-        <p data-translate="unlocking-instructions-4"></p>
         <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
@@ -258,22 +221,34 @@
             </div>
         </div>
     </div>
-    <div id="erase-data-recovery" class="card inactive">
-        <div class="card-header" data-translate="restart-to-recovery"></div>
+    <div id="bootloader-to-recovery-manually" class="card bootloader-to-recovery-manually inactive">
+        <div class="card-header" data-translate="bootloader-to-recovery-manually"></div>
         <div class="card-body">
-            <p data-translate="erase-data-instructions-1"></p>
-            <p data-translate="erase-data-instructions-2"></p>
-            <p data-translate="erase-data-instructions-3"></p>
-            <p data-translate="erase-data-instructions-4"></p>
-            <p data-translate="erase-data-instructions-5"></p>
-            <p data-translate="erase-data-instructions-6"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-1"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-2"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-3"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'erase-data-recovery')"></button>
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
+        </div>
+    </div>
+    <div id="format-device" class="card inactive">
+        <div class="card-header" data-translate="format-device"></div>
+        <div class="card-body">
+            <p data-translate="format-device-instructions-1"></p>
+            <p data-translate="format-device-instructions-2"></p>
+            <p data-translate="format-device-instructions-3"></p>
+            <p data-translate="format-device-instructions-4"></p>
+            <p data-translate="format-device-instructions-5"></p>
+            <p data-translate="format-device-instructions-6"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'format-device')"></button>
         </div>
     </div>
     <div id="go-to-apply-update" class="card inactive">
-        <div class="card-header" data-translate="go-to-sideload"></div>
+        <div class="card-header" data-translate="go-to-apply-update"></div>
         <div class="card-body">
             <p data-translate="go-to-apply-update-instructions-1"></p>
             <p data-translate="go-to-apply-update-instructions-2"></p>
@@ -286,7 +261,10 @@
     <div id="sideload" class="card inactive">
         <div class="card-header" data-translate="sideload"></div>
         <div class="card-body">
-            <p data-translate="sideload-instruction"></p>
+            <p data-translate="sideload-instructions-1"></p>
+            <p data-translate="sideload-instructions-2"></p>
+            <p data-translate="sideload-instructions-3"></p>
+            <p data-translate="sideload-instructions-4"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
@@ -371,6 +349,37 @@
         </div>
         <div class="card-footer">
             <button data-translate="send-to-e-team" class="next"></button>
+        </div>
+    </div>
+</div>
+<div class="inactive" id="overlay-background">
+    <div class="card inactive"  id="error-dialogue">
+        <div class="card-body text-center">
+            <img class="error-img" src="assets/images/icons/critical-error.svg">
+            <p class="instruction-title" id="error-title"></p>
+            <p data-translate="navigator-not-supported-instructions" id="error-instruction"></p>
+        </div>
+    </div>
+    <div id="navigator-not-supported" class="navigator-not-supported card inactive">
+        <div class="card-header" data-translate="navigator-detection"></div>
+        <div class="card-body text-center">
+            <img class="error-img" src="assets/images/icons/critical-error.svg">
+            <p class="instruction-title" data-translate="navigator-not-supported"></p>
+            <p data-translate="navigator-not-supported-instructions"></p>
+            <div class="instructions-ctn">
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/edge.svg">
+                    <div>Microsoft Edge <b>125.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/opera.svg">
+                    <div>Opera <b>111.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/chrome.svg">
+                    <div>Chrome <b>126.0.0</b></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

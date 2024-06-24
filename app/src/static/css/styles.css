@@ -135,13 +135,13 @@ html, body {
 
 #process-ctn {
     background: linear-gradient(to bottom, var(--top-background-color) 400px, transparent 400px);
-    padding: 150px 0;
+    padding-top: 150px;
     position: relative;
     width: 100%;
 }
 
 .inactive {
-    display: none;
+    display: none !important;
 }
 
 .active, .done {
@@ -209,6 +209,17 @@ html, body {
     width: 42px;
     height: 42px;
 }
+#overlay-background {
+    position: absolute;
+    background: #0000004f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+}
 progress {
     height: 3px;
     width: 50%;
@@ -257,7 +268,21 @@ progress[value].success::-webkit-progress-value {
     padding-top: 16px;
     padding-bottom: 16px;
 }
-
+kbd {
+    padding: .2rem .4rem;
+    font-size: 87.5%;
+    color: #fff;
+    background-color: #212529;
+    border-radius: .2rem;
+}
+code {
+    border: 1px solid #e8e8e8;
+    border-radius: 3px;
+    background-color: #eef;
+    font-size: 87.5%;
+    color: #e83e8c;
+    word-wrap: break-word;
+}
 .help-us-improve-the-tool .instructions-ctn {
     display: grid;
     grid-template-columns: repeat(5, 1fr);

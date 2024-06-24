@@ -16,7 +16,7 @@ export class Downloader {
     async init() {
         this.db = await this.openDBStore();
         await this.clearDBStore();
-        //this.quota = await navigator.storage.estimate();
+        this.quota = await navigator.storage.estimate();
     }
 
     /*
