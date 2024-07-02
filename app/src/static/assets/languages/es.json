@@ -12,7 +12,6 @@
   "bootloader-to-recovery-manually-instructions": "Ahora reiniciaremos tu dispositivo en modo Recovery. Por favor, sigue los pasos a continuación:",
   "bootloader-to-recovery-manually-instructions-1": "1. En el bootloader, selecciona recovery usando <kbd>Subir volumen</kbd> y <kbd>Bajar volumen</kbd> para navegar",
   "bootloader-to-recovery-manually-instructions-2": "2. Presiona <kbd>Encendido</kbd> para confirmar",
-  "bootloader-to-recovery-manually-instructions-3": "3. Si te saltaste este paso, apaga tu teléfono e inicia en Recovery presionando simultáneamente <kbd>Encendido</kbd> y <kbd>Subir volumen</kbd> hasta que el dispositivo se encienda.",
   "check-update-android-version": "Verificar y actualizar tu versión de Android",
   "check-update-android-version-caution": "<b>Precaución</b>: antes de proceder con la instalación, verifica si el último firmware de Android está disponible para tu dispositivo.",
   "connect": "Conectar",

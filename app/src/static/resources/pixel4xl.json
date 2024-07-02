@@ -9,23 +9,30 @@
       "needUserGesture": true
     },
     {
-      "mode": "bootloader",
-      "id": "connect-bootloader",
-      "command": [
-        "connect bootloader"
-      ],
+      "id": "unlocking-pixel",
       "needUserGesture": true
     },
     {
       "id": "flashing",
       "command": [
         "flash dtbo dtbo-e-2.1-t-20240605406922-dev-coral.img",
-        "flash boot recovery-e-2.1-t-20240605406922-dev-coral.img",
-        "reboot recovery"
+        "flash boot recovery-e-2.1-t-20240605406922-dev-coral.img"
       ]
     },
     {
-      "id": "erase-data-recovery",
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
       "needUserGesture": true
     },
     {

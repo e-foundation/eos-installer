@@ -214,10 +214,27 @@
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube')"></button>
         </div>
     </div>
+    <!-- Pixel -->
+    <div id="unlocking-pixel" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2-a"></p>
+
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="unlocking-instructions-5"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-pixel')"></button>
+        </div>
+    </div>
     <!-- All other-->
     <div id="unlocking" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
-        <div class="card-body">
+        <div class="card-body">0
             <p data-translate="unlocking-instructions-1"></p>
             <p data-translate="unlocking-instructions-2"></p>
             <p data-translate="unlocking-instructions-3"></p>
@@ -246,7 +263,6 @@
             <p data-translate="bootloader-to-recovery-manually-instructions"></p>
             <p data-translate="bootloader-to-recovery-manually-instructions-1"></p>
             <p data-translate="bootloader-to-recovery-manually-instructions-2"></p>
-            <p data-translate="bootloader-to-recovery-manually-instructions-3"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
@@ -261,6 +277,7 @@
             <p data-translate="format-device-instructions-4"></p>
             <p data-translate="format-device-instructions-5"></p>
             <p data-translate="format-device-instructions-6"></p>
+            <p data-translate="format-device-instructions-7"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'format-device')"></button>
