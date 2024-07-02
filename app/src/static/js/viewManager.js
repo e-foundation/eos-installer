@@ -1,25 +1,28 @@
+
 /*
 * Class to manage events
 * from the buttons events to the event of the controller and fastboot
 * it's just log for now, but maybe it will be more usefull for dynamic display
 */
+
 class ViewManager {
+    
     constructor() {
+   
     }
 
     async init() {
+        const wdebug = await import ("./debug.js");
+        this.WDebug = wdebug.WDebug;
+        const errorManager = await import ("./errorManager.js");
+        this.ErrorManager = errorManager.ErrorManager;
+
         const cm = await import("./controller.manager.js");
-        const em = await import("./errorManager.js");
-        const lm = await import("./vue/log.manager.js");
         const tm = await import("./vue/translation.manager.js");
         this.controller = new cm.Controller();
         await this.controller.init();
-        this.logManager = new lm.LogManager();
-        await this.logManager.init();
         this.translationManager = new tm.TranslationManager();
         await this.translationManager.init();
-        this.errorManager = new em.ErrorManager();
-        await this.errorManager.init();
     }
 
     selectStep(currentIndex, step) {
@@ -51,7 +54,7 @@ class ViewManager {
         try {
             await this.controller.next();
         } catch (e) {
-            this.errorManager.displayError('next', `${e.message || e}`);
+            this.ErrorManager.displayError('next', `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
@@ -61,7 +64,7 @@ class ViewManager {
         try {
             await this.controller.executeStep(stepName);
         } catch (e) {
-            this.errorManager.displayError(stepName, `${e.message || e}`);
+            this.ErrorManager.displayError(stepName, `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
@@ -101,11 +104,11 @@ class ViewManager {
     * STEP 1 : Connect
     */
     onADBConnect() {
-        this.logManager.log(`Device connected !`);
+        this.WDebug.log(`Device connected !`);
     }
 
     async onWaiting() {
-        this.logManager.log(`.`);
+        this.WDebug.log(`.`);
     }
 
      onDownloading(name, loaded, total) {
@@ -118,7 +121,7 @@ class ViewManager {
         if ($progress) {
             $progress.innerText = `Downloading ${name}: ${v}/${100}`;
         }
-        this.logManager.log(`Downloading ${name}: ${v}/${100}`, `downloading-${name}`);
+        this.WDebug.log(`Downloading ${name}: ${v}/${100}`, `downloading-${name}`);
     }
 
     onUnzip(name, loaded, total) {
@@ -131,7 +134,7 @@ class ViewManager {
         if ($progress) {
             $progress.innerText = `Extracting ${name}: ${v}/${100}`;
         }
-        this.logManager.log(`Unzipping ${name}: ${v}/${100}`, `Unzipping-${name}`);
+        this.WDebug.log(`Unzipping ${name}: ${v}/${100}`, `Unzipping-${name}`);
     }
     onDownloadingEnd() {
         let $progressBar = document.querySelector(`.active .downloading-progress-bar`);
@@ -158,14 +161,14 @@ class ViewManager {
         if ($progress) {
             $progress.innerText = `Installing ${name}: ${v}/${100}`;
         }
-        this.logManager.log(`Installing ${name}: ${Math.round(v * 100)}/${100}`, `installing-${name}`);
+        this.WDebug.log(`Installing ${name}: ${Math.round(v * 100)}/${100}`, `installing-${name}`);
     }
     updateData(key, value){
         let $subscribers = document.querySelectorAll(`[data-subscribe="${key}"]`);
-        console.log($subscribers)
-        console.log({
+        this.WDebug.log($subscribers);
+        this.WDebug.log({
             [key] : value
-        })
+        });
         for(let i = 0 ; i< $subscribers.length; i++) {
             this.translationManager.translateElement($subscribers[i],  {
                 [key] : value

@@ -1,7 +1,7 @@
 import {DeviceManager} from "./controller/device.manager.js";
 import {Command} from "./controller/device/command.class.js";
 import {Step} from "./controller/utils/step.class.js";
-
+import { WDebug } from "./debug.js";
 
 /*
 * Class to manage process
@@ -11,10 +11,10 @@ export class Controller {
     constructor() {
         this.steps = [
             new Step("let-s-get-started",  undefined, true ),
-            new Step("connect-your-phone",  undefined, true),
+            /*new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
             new Step("activate-usb-debugging", undefined, true),
-            new Step("enable-usb-file-transfer", undefined, true),
+            new Step("enable-usb-file-transfer", undefined, true),*/
             new Step("device-detection",  'connect adb', true),
 
         ];
@@ -29,8 +29,12 @@ export class Controller {
     }
 
     async next() {
+
         let current = this.steps[this.currentIndex];
         let next = this.steps[this.currentIndex + 1];
+
+        WDebug.log("Controller Manager Next", next);
+
         if (next) {
             if (next.mode) { //if next step require another mode [adb|fastboot|bootloader]
                 if(this.deviceManager.isConnected() && !this.inInMode(next.mode)){
@@ -62,7 +66,7 @@ export class Controller {
     }
     async executeStep(stepName){
         const current = this.steps[this.currentIndex];
-        console.trace()
+        WDebug.log("ControllerManager Execute step", current)
         if(current.name === stepName) {
             let res = true;
             for(let i = 0 ; i < current.commands.length && res; i++) {
@@ -97,13 +101,14 @@ export class Controller {
     }
 
     async runCommand(cmd) {
+        WDebug.log("ControllerManager run command:", cmd);
         switch (cmd.type) {
             case Command.CMD_TYPE.download:
                 try {
                     const files = this.steps.map(s =>{
                         return s.commands.map(c =>  {
-                            console.log(c)
-                           return c.file;
+                            WDebug.log("ControllerManagerDownload", c)
+                            return c.file;
                         })
                     }).flat();
                     await this.deviceManager.downloadAll(files,(loaded, total, name) => {
@@ -115,7 +120,7 @@ export class Controller {
                     return true;
                 } catch (e) {
                     console.error(e)
-                    //TODO what to do on download error ?
+                    //K1ZFP TODO what to do on download error ?
                 }
                 return false;
             case Command.CMD_TYPE.reboot:
@@ -123,6 +128,7 @@ export class Controller {
                     await this.deviceManager.reboot(cmd.mode);
                 } catch (e) {
                     console.error(e);
+                    //K1ZFP TODO
                     return false;
                 }
                 return true;
@@ -132,6 +138,7 @@ export class Controller {
                     await this.onDeviceConnected();
                     return true;
                 } catch (e) {
+                    //K1ZFP TODO
                     console.error(e);
                     return false;
                 }
@@ -146,21 +153,25 @@ export class Controller {
                 let isUnlocked = false;
                 if (cmd.partition) {
                     try {
-                        isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
+                            isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
                     } catch (e) {
                     }
                 }
                 if (!isUnlocked) {
-                    //try command
+                    WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName());
                     try {
-                        await this.deviceManager.unlock(cmd.command);
+                        if (this.deviceManager.adb.getProductName() == "Teracube_2e") { //K1ZFP Hardcoded behavior
+                            this.deviceManager.unlock(cmd.command);
+                        }
+                        else
+                            await this.deviceManager.unlock(cmd.command);
                         //this.steps[this.currentIndex].needUser = true;
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
                         if (e.bootloaderMessage?.includes("already")) {
                             await this.deviceManager.reboot('adb');
                         } else if (e.bootloaderMessage?.includes("not allowed")) {
-                            //TODO
+                            //K1ZFP TODO
                         }
                     }
                 }
@@ -176,6 +187,7 @@ export class Controller {
                 return true;
             case Command.CMD_TYPE.lock:
                 let isLocked = false;
+                let is_teracube = this.deviceManager.adb.getProductName() == "Teracube_2e"; // K1ZFP Hard coded behavior
                 if (cmd.partition) {
                     try {
                         isLocked = !(await this.deviceManager.getUnlocked(cmd.partition));
@@ -185,13 +197,18 @@ export class Controller {
                 if (!isLocked) {
                     //try command
                     try {
-                        await this.deviceManager.lock(cmd.command);
+                        if (is_teracube) {
+                            this.deviceManager.lock(cmd.command);
+                            isLocked = true; // Assumes lock works                        
+                        }
+                        else
+                            await this.deviceManager.lock(cmd.command);
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already locked"
                         if (e.bootloaderMessage?.includes("already")) {
                             isLocked = true;
                         } else {
-                            console.error(e);
+                            console.error(e); //K1ZFP TODO
                         }
                     }
                 }
@@ -205,12 +222,12 @@ export class Controller {
                     await this.deviceManager.sideload(cmd.file);
                     return true;
                 } catch (e) {
-                    console.error(e);
+                    console.error(e); // K1ZFP TODO
                     return false;
                 }
                 break;
             default:
-                console.log(`try unknown command ${cmd.command}`)
+                WDebug.log(`try unknown command ${cmd.command}`)
                 await this.deviceManager.runCommand(cmd.command);
                 return true;
                 break;
@@ -218,6 +235,7 @@ export class Controller {
     }
 
     async onDeviceConnected() {
+
         const serialNumber = this.deviceManager.adb.device.serialNumber;
         const productName = this.deviceManager.adb.device.productName;
         if (this.deviceManager.wasAlreadyConnected(serialNumber)) {
@@ -227,6 +245,7 @@ export class Controller {
             VIEW.updateData('product-name', productName);
             try {
                 this.model = productName.toLowerCase().replace(/[ |_]/g, '');
+                WDebug.log("ControllerManager Model:", this.model);
                 this.resources = await (await fetch(`resources/${this.model}.json`)).json() || {};
             } catch (e) {
             }

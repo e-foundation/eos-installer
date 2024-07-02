@@ -36,7 +36,15 @@
                   "flash recovery recovery-e-2.1-s-20240603406609-stable-avicii.img"]
     },
     {
-      "id": "erase-data-recovery",
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
       "needUserGesture": true
     },
     {
@@ -44,8 +52,15 @@
       "command": "sideload rom.zip"
     },
     {
-      "mode": "recovery",
-      "needUser": true
+      "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
     }
   ],
   "folder": [

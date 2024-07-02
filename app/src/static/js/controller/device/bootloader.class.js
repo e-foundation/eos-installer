@@ -23,7 +23,7 @@ export class Bootloader extends Device {
     }
 
     reboot(mode) {
-        return this.device.reboot(mode, true);
+        return this.device.reboot(mode);
     }
 
     runCommand(command) {
@@ -57,7 +57,6 @@ export class Bootloader extends Device {
             //sleep before trying again
             await sleep(500);
         }
-        console.log(this.device.device);
         return this.device.device;
     }
 
@@ -98,10 +97,10 @@ export class Bootloader extends Device {
             return true;
         } catch (e) {
             if (e instanceof TimeoutError) {
-                console.log(e)
+                console.error(e) //K1ZFP TODO
                 return await this.flashBlob(partition, blob, onProgress);
             } else {
-                console.log(e)
+                console.error(e) //K1ZFP TODO
                 throw e;
             }
             return false;
@@ -117,7 +116,7 @@ export class Bootloader extends Device {
                 const unlocked = await this.device.getVariable(variable);
                 return !(!unlocked || unlocked === 'no');
             } catch (e) {
-                console.error(e);
+                console.error(e); // K1ZFP TODO
                 throw e;
             }
         }
@@ -130,7 +129,7 @@ export class Bootloader extends Device {
                 const unlocked = await this.device.getVariable(variable);
                 return !unlocked || unlocked === 'no';
             } catch (e) {
-                console.error(e);
+                console.error(e); //K1ZFP TODO
                 throw e;
             }
         }
@@ -141,7 +140,7 @@ export class Bootloader extends Device {
         if (command) {
             const res = await this.device.runCommand(command);
         } else {
-            throw Error('no unlock command configured');
+            throw Error('no unlock command configured'); //K1ZFP TODO
         }
     }
 
@@ -154,7 +153,7 @@ export class Bootloader extends Device {
                 throw e;
             }
         } else {
-            throw Error('no lock command configured');
+            throw Error('no lock command configured'); //K1ZFP TODO
         }
     }
 

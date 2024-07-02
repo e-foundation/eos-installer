@@ -16,7 +16,7 @@
   "check-update-android-version": "Check & update your Android version",
   "check-update-android-version-caution": "<b>Caution</b>: before proceeding with the installation, verify if the latest Android firmware is available for your device.",
   "connect": "Connect",
-  "connect-bootloader": "Bootloader connection",
+  "connect-bootloader": "Bootloader status",
   "connect-bootloader-instructions-1": "Your phone will now reboot in <code>bootloader</code> mode",
   "connect-bootloader-instructions-2": "When your phone is on, connect your phone in <code>bootloader</code> mode by clicking on the button bellow",
   "connect-your-phone": "Connect your phone",
@@ -69,6 +69,7 @@
   "locking": "Locking",
   "locking-instructions-1": "Your phone is asking for an unlock. Select <code>lock bootloader</code>",
   "locking-instructions-2": "If the device doesn’t automatically reboot, reboot it",
+  "locking-instructions-3": "Then click Next",
   "murena-cloud-account": "Murena Cloud account",
   "murena-cloud-account-instructions": "Keep your data safe and sync this device with your personal Murena Cloud account. 1GB free and paid plans available for more storage.",
   "navigator-detection": "Navigator detection",
@@ -96,6 +97,7 @@
   "unlocking-instructions-2": "If the device doesn’t automatically reboot, reboot it. It should now be unlocked.",
   "unlocking-instructions-3": "Since the device <b>resets completely</b>, you will need to <b>re-enable USB debugging</b>.",
   "unlocking-instructions-4": "Pass the setup and click on next",
+  "unlocking-instructions-5": "Then click on next",
   "very-dissatisfied": "Very Dissatisfied",
   "very-satisfied": "Very Satisfied"
 }

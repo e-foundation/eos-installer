@@ -3,7 +3,6 @@ import {MessageHeader} from "../../lib/webadb/message-header.class.js";
 import {Device} from "./device.class.js";
 
 const VERSION = 0x01000000;
-const VERSION_NO_CHECKSUM = 0x01000001;
 
 export class Recovery extends Device {
     constructor(device) {
@@ -38,7 +37,7 @@ export class Recovery extends Device {
             }
         } catch (e) {
             this.device = null;
-            throw Error(e);
+            throw Error(e); // K1ZFP TODO
         }
         return false;
     }
@@ -49,15 +48,14 @@ export class Recovery extends Device {
             await this.adbOpen(blob, true);
             return true;
         } catch (e) {
-            console.log(e);
-            throw Error(`error sideload failed`);
+            throw Error(`error sideload failed`); // K1ZFP TODO
         }
     }
 
     async adbConnect(blob, useChecksum) {
 
         if (this.device == null) {
-            throw Error(`device not connected`);
+            throw Error(`device not connected`); // K1ZFP TODO
         }
 
         const MAX_PAYLOAD = this.device.max_payload;
@@ -173,7 +171,6 @@ export class Recovery extends Device {
             const block = Number(res);
 
             if (isNaN(block) && res === 'DONEDONE') {
-                console.log("transfer done");
                 break;
             }
 
@@ -188,8 +185,8 @@ export class Recovery extends Device {
             }
 
             const slice = blob.slice(offset, offset + to_write); //K1ZFP type?
-            //console.log("offset to_write", offset, to_write);   // 1 179 254 784
-            console.log("to_write(" + to_write + ") offset(" + offset + ") " + (await slice.arrayBuffer()).byteLength);
+            //cons ole.log("offset to_write", offset, to_write);   // 1 179 254 784
+            //cons ole.log("to_write(" + to_write + ") offset(" + offset + ") " + (await slice.arrayBuffer()).byteLength);
 
             let header = new MessageHeader('WRTE', localId, remoteId, to_write, checksum);
 

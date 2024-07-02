@@ -139,7 +139,6 @@
 				.then(response => {
 					if (response.cmd != "CNXN")
 						throw new Error("Failed to connect with '" + banner + "'");
-					console.log('version', response.arg0);
 					if (response.arg0 != VERSION && response.arg0 != VERSION_NO_CHECKSUM)
 						throw new Error("Version mismatch: " + response.arg0 + " (expected: " + VERSION + " or " + VERSION_NO_CHECKSUM + ")");
 					if (Adb.Opt.debug)
@@ -806,7 +805,6 @@
 				row += "   ";
 
 			row += " | " + decoder.decode(new DataView(view.buffer, i, max));
-			console.log(row);
 		}
 	}
 

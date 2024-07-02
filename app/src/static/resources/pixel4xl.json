@@ -9,19 +9,6 @@
       "needUserGesture": true
     },
     {
-      "id": "activate-developer-options",
-      "needUserGesture": true
-    },
-    {
-      "id": "enable-usb-file-transfer",
-      "needUserGesture": true
-    },
-    {
-      "id": "device-detection",
-      "command": "connect adb",
-      "needUserGesture": true
-    },
-    {
       "mode": "bootloader",
       "id": "connect-bootloader",
       "command": [
@@ -34,16 +21,8 @@
       "command": [
         "flash dtbo dtbo-e-2.1-t-20240605406922-dev-coral.img",
         "flash boot recovery-e-2.1-t-20240605406922-dev-coral.img",
-        "reboot"
-      ]
-    },
-    {
-      "id": "device-detection",
-      "command": [
-        "connect adb",
         "reboot recovery"
-      ],
-      "needUserGesture": true
+      ]
     },
     {
       "id": "erase-data-recovery",

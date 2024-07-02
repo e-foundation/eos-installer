@@ -1,4 +1,6 @@
 import {Device} from "./device.class.js";
+import {WDebug} from "../../debug.js";
+import { ErrorManager } from "../../errorManager.js";
 
 export class ADB extends Device {
     constructor(device) {
@@ -34,11 +36,12 @@ export class ADB extends Device {
             if (adbWebBackend) {
                 let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js
                 await adbDevice.connect();
+                //K1ZFP TODO the build ID is available here(await adbDevice.getProp("ro.build.id"));
                 this.device = adbWebBackend._device;
                 this.webusb = adbDevice;
                 return true;
             } else {
-                console.log('no device found');
+                ErrorManager.displayError('Error','no device found');
             }
         } catch (e) {
             this.device = null;
@@ -57,7 +60,7 @@ export class ADB extends Device {
 
     async runCommand(cmd) {
         //let shell = await this.webusb.shell();
-        console.log("Run command>", cmd);
+        WDebug.log("ADB Run command>", cmd);
         return await this.webusb.exec(cmd);
     }
 

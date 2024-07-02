@@ -199,6 +199,22 @@
             </div>
         </div>
     </div>
+    <!-- Start UNLOCKING -->
+    <!-- Teracube -->
+    <div id="unlocking-teracube" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/teracube/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="unlocking-instructions-5"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube')"></button>
+        </div>
+    </div>
+    <!-- All other-->
     <div id="unlocking" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
         <div class="card-body">
@@ -211,6 +227,9 @@
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
         </div>
     </div>
+    
+    <!-- End UNLOCKING -->
+
     <div id="flashing" class="card inactive">
         <div class="card-header" data-translate="installing"></div>
         <div class="card-body">
@@ -281,6 +300,22 @@
             <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
+    <!-- Start LOCKING -->
+    <!-- Teracube -->
+    <div id="locking-teracube" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/teracube/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="locking-instructions-3"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'locking-teracube')"></button>
+        </div>
+    </div>
+    <!-- All other -->
     <div id="locking" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
@@ -291,6 +326,17 @@
             <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
+    <div id="locking" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+        </div>
+    </div>
+    <!-- End LOCKING -->
     <div id="murena-cloud-account" class="card inactive">
         <div class="card-header" data-translate="murena-cloud-account"></div>
         <div class="card-body">

@@ -22,16 +22,14 @@ export class ErrorManager {
     constructor() {
     }
 
-    async init() {}
-
-    displayError(caption, message) {
+    static displayError(caption, message) {
         const errorCaption = document.getElementById('error-caption');
         const errorText = document.getElementById('error-text');
         errorCaption.textContent = caption;
         errorText.textContent = message; 
     }
 
-    displayNavigatorError(){
+    /*displayNavigatorError(){
         const $errorBackground = document.getElementById('overlay-background');
         const $errorCaption = document.getElementById('navigator-not-supported');
         $errorCaption.style.display = 'block';
@@ -41,6 +39,6 @@ export class ErrorManager {
             $errorCaption.classList.add('active');
             $errorCaption.classList.remove('inactive');
         }
-    }
+    }*/
 
 }

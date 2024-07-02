@@ -1,3 +1,5 @@
+import { WDebug } from "../../debug.js";
+
 export class Command {
     static CMD_TYPE = {
         flash: 'flash',
@@ -21,7 +23,7 @@ export class Command {
 
      parseCommand(cmd) {
         const res = cmd.split(' ').map(m => m.trim()).filter(m => m != '');
-        console.log(cmd)
+        WDebug.log(`command.class parseCommand : ${cmd}`);
         switch (res[0]) {
             case 'download':
                 this.type = Command.CMD_TYPE.download;

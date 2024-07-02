@@ -166,7 +166,7 @@ export class DeviceManager {
         try {
             return this.device.runCommand(command);
         } catch (e) {
-            console.error(e);
+            console.error(e); //K1ZFP TODO
             throw Error(`error ${command} failed`);
         }
     }

@@ -1,6 +1,8 @@
 const DB_NAME = "BlobStore";
 const DB_VERSION = 1;
 
+import { WDebug } from "../debug.js";
+
 /**
  * Download Manager
  * Download files from the device folder of [modelname].json
@@ -103,7 +105,7 @@ export class Downloader {
             }, onProgress)
             return new Blob([buffers]);
         } catch (e) {
-            console.error(e);
+            console.error(e); //K1ZFP TODO
             throw Error(e);
         }
     }
@@ -120,7 +122,7 @@ export class Downloader {
     }
 
     async clearDBStore() {
-        console.log('store.clear')
+        WDebug.log('DownloaderManager store.clear')
         const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
         store.clear();
     }
@@ -131,19 +133,19 @@ export class Downloader {
 
 
     async setInDBStore(blob, name) {
-        console.log('store',blob,  name )
+        WDebug.log('DownloaderManager store',blob,  name )
         const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
         store.put(blob, name);
     }
 
     getFromDBStore(key) {
-        console.log('getFromstore', key )
+        WDebug.log('DownloaderManager getFromstore', key )
         return new Promise((resolve, reject) => {
             const store = this.db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
             const request = store.get(key);
             request.onsuccess = function (event) {
                 const result = event.target.result;
-                console.log(result)
+                WDebug.log('DownloaderManager result', result)
                 if (result) {
                     resolve(result);
                 } else {
