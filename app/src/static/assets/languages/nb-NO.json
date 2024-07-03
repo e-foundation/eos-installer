@@ -1,1 +1,11 @@
-{}
+{
+    "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Eks. 1:</b> før du installerer /e/OS Android 12, bør du oppdatere til den nyeste Android 12",
+    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Eks. 2:</b> eller hvis du installerer /e/OS Android 11, må du sørge for å oppdatere til den nyeste Android 11",
+    "Ex 3: similarly, if you're installing /e/OS Android 11, it should be the latest stock Android 10": "<b>Eks. 3:</b> likeså, hvis du installerer /e/OS Android 11, bør det være den nyeste Android 10",
+    "activate-developer-options": "Aktiver utvikleralternativer",
+    "activate-usb-debugging": "Aktiver USB-feilsøking",
+    "activate-developer-options-instructions-1": "1. Åpne menyen Innstillinger, og skriv \"bygg\" i søkefeltet.",
+    "activate-developer-options-instructions-2": "2. På neste skjermbilde finner du \"Byggnummer\" og trykker 7 ganger på det.",
+    "activate-usb-debugging-instructions-1": "Gå tilbake til menyen Innstillinger og skriv \"USB-feilsøking\" i søkefeltet.",
+    "activate-usb-debugging-instructions-2": "På dette tidspunktet bør du være i skjermbildet \"Utvikleralternativer\". Trykk nå på \"USB-feilsøking\" for å aktivere den (på noen enheter kalles den \"Android-feilsøking\")."
+}
