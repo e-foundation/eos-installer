@@ -1,3 +1,8 @@
 {
-    "donate": "Donera"
+    "donate": "Donera",
+    "connect": "Anslut",
+    "connect-your-phone": "Anslut din telefon",
+    "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Exempel 1:</b> innan installation av /e/OS Android 12 bör du uppgradera till den senaste standardversionen av Android 12",
+    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Exempel 2:</b> eller om du installerar /e/OS Android 11, se till att uppgradera till den senaste standardversionen av Android 11",
+    "next": "Nästa"
 }
