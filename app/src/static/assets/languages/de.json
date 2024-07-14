@@ -39,8 +39,8 @@
     "format-device-instructions-1": "1. Wähle Werkseinstellung zurücksetzen",
     "format-device-instructions-2": "2. Wähle die Option Daten formatieren / Werkseinstellung zurücksetzen",
     "format-device-instructions-3": "3. Der nächste Bildschirm zeigt eine Warnung an, dass diese Aktion nicht rückgängig gemacht werden kann",
-    "format-device-instructions-4": "4. Wähle Daten formatieren, um fortzufahren, oder Abbrechen, wenn du zurückgehen möchtest",
-    "format-device-instructions-5": "5. Wenn du Daten formatieren gewählt hast, wird der Formatierungsprozess abgeschlossen",
+    "format-device-instructions-4": "4. Wähle Daten formatieren um fortzufahren",
+    "format-device-instructions-5": "5. Bitte warten, der Formatierungsprozess wird abgeschlossen",
     "format-device-instructions-6": "6. Der Bildschirm kehrt jetzt zum Werkseinstellungsbildschirm zurück",
     "go-to-apply-update": "Fast geschafft!",
     "go-to-apply-update-instructions-1": "1. Wähle Aktualisierung anwenden",
@@ -82,7 +82,7 @@
     "recovery-to-bootloader-instructions-1": "1. Wähle <code>Advanced</code>",
     "recovery-to-bootloader-instructions-2": "2. Wähle <code>Reboot to bootloader</code>",
     "satisfied": "Zufrieden",
-    "send-to-e-team": "An das /e/Team senden",
+    "send-to-e-team": "An das Murena Team senden",
     "sideload": "Installation läuft",
     "sideload-instructions-1": "Der Bildschirm zeigt den Fortschritt in Prozenten an … ",
     "sideload-instructions-2": "Bei 47% ist eine Pause üblich, übe dich etwas in Geduld.",
@@ -97,5 +97,10 @@
     "unlocking-instructions-3": "Da das Gerät <b>vollständig zurückgesetzt</b> wird, musst du <b>USB-Debugging erneut aktivieren</b>.",
     "unlocking-instructions-4": "Überspringe die Einrichtung und klicke auf Weiter",
     "very-dissatisfied": "Sehr unzufrieden",
-    "very-satisfied": "Sehr zufrieden"
+    "very-satisfied": "Sehr zufrieden",
+    "format-device-instructions-7": "7. Auf den Rückwärts-Pfeil tippen, dann auf Weiter",
+    "locking-instructions-3": "Dann auf Weiter tippen",
+    "unlocking-instructions-2-a": "Das Gerät wird neu starten, <b>warte</b> bis der Bootloader-Bildschirm erneut erscheint ",
+    "unlocking-instructions-5": "Dann auf Weiter tippen",
+    "unlocking-instructions-1-a": "Benutze die Lautstärke-Tasten zum Navigieren, und den Anschaltknopf zum Bestätigen."
 }
