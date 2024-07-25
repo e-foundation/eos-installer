@@ -32,7 +32,7 @@
     "dissatisfied": "Dissatisfied",
     "donate": "Donate",
     "enable-usb-file-transfer": "Enable USB file transfer",
-    "enable-usb-file-transfer-instructions-1": "Still inside the ‘Developer options’, scroll down to find ’Default USB configuration’ and top on it.",
+    "enable-usb-file-transfer-instructions-1": "Still inside the ‘Developer options’, scroll down to find ’Default USB configuration’ and tap on it.",
     "enable-usb-file-transfer-instructions-2": "Now select the ’File Transfer’ option (on some devices it is called 'MTP mode (media transfer protocol)').",
     "format-device": "Format the device",
     "format-device-instructions-1": "1. Select Factory reset",
