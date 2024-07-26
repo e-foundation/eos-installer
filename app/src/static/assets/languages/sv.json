@@ -53,5 +53,6 @@
     "go-to-apply-update-instructions-1": "1. Välj applicera uppdatering",
     "go-to-apply-update-instructions-2": "2. Applicera uppdatering från adb",
     "installation-complete-instructions-2": "<b>Tips</b>: följ instruktionerna på din telefon för att ställa in din enhet. Du kan nu föra över dina filer tillbaka till din telefon.",
-    "let-s-get-started-instruction-1": "Hela installationsprocessen kräver cirka 1 timme. Var\n  tålmodig!"
+    "let-s-get-started-instruction-1": "Hela installationsprocessen kräver cirka 1 timme. Var\n  tålmodig!",
+    "enable-usb-file-transfer-instructions-2": "Välj nu alternativet Filöverföring (på en del enheter kallas det \"MTP-läge (media transfer protocol)\")."
 }
