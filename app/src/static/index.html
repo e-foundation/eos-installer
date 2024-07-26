@@ -28,8 +28,8 @@
             <button id="help"><img src="assets/images/icons/help.svg"><span data-translate="help"></span></button>
         </div>
     </div>
-    <div class="logo-ctn">
-        <img class="instruction-img" src="assets/images/icons/logo.png">
+    <div id="logo-ctn">
+        <img id="logo" src="assets/images/icons/logo.png">
         <h1 class="title">/e/OS Easy Installer</h1>
     </div>
     <div id="let-s-get-started" class="let-s-get-started card">
@@ -147,13 +147,13 @@
     <div id="device-detection" class="device-detection card inactive">
         <div class="card-header" data-translate="device-detection"></div>
         <div class="card-body">
-            <p data-translate="device-detection-instructions-1"></p>
-            <div class="text-center">
+            <div class="flex align-items-center gap-4">
                 <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-1.png">
+                <p data-translate="device-detection-instructions-1"></p>
             </div>
-            <p data-translate="device-detection-instructions-2"></p>
-            <div class="text-center">
+            <div class="flex align-items-center gap-4">
                 <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-2.png">
+                <p data-translate="device-detection-instructions-2"></p>
             </div>
             <div class="text-center instruction-title">
                 <p data-translate="device-detection-instructions-3"></p>
@@ -174,7 +174,14 @@
             <p data-translate="device-model-not-supported-instructions"></p>
         </div>
     </div>
-
+    <div id="android-version-not-supported" class="android-version-not-supported card inactive">
+        <div class="card-header" data-translate="android-version-not-supported"></div>
+        <div class="card-body  text-center">
+            <img class="error-img" src="assets/images/icons/error.svg">
+            <p class="instruction-title" data-subscribe="android-version" data-translate="android-version-not-supported-title"></p>
+            <p data-subscribe="android-version-required" data-translate="android-version-not-supported-instructions"></p>
+        </div>
+    </div>
     <div id="downloading" class="card inactive">
         <div class="card-header" data-translate="Downloading /e/OS"></div>
         <div class="card-body">
@@ -218,14 +225,15 @@
     <div id="unlocking-pixel" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
         <div class="card-body">
-            <p data-translate="unlocking-instructions-1"></p>
-            <p data-translate="unlocking-instructions-1-a"></p>
-            <p data-translate="unlocking-instructions-2-a"></p>
-
-            <div class="text-center">
+            <div class="flex align-items-center gap-4">
                 <img class="instruction-img" src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png">
+                <div>
+                    <p data-translate="unlocking-instructions-1"></p>
+                    <p data-translate="unlocking-instructions-1-a"></p>
+                    <p data-translate="unlocking-instructions-2-a"></p>
+                    <p data-translate="unlocking-instructions-5"></p>
+                </div>
             </div>
-            <p data-translate="unlocking-instructions-5"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-pixel')"></button>
@@ -333,16 +341,6 @@
         </div>
     </div>
     <!-- All other -->
-    <div id="locking" class="card inactive">
-        <div class="card-header" data-translate="locking"></div>
-        <div class="card-body">
-            <p data-translate="locking-instructions-1"></p>
-            <p data-translate="locking-instructions-2"></p>
-        </div>
-        <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
-        </div>
-    </div>
     <div id="locking" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">

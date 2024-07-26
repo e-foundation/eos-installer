@@ -1,57 +1,5 @@
-@font-face {
-    font-family: "Century Gothic";
-    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Century Gothic Bold";
-    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
-}
-:root {
-    --top-banner-color: #191823;
-    --top-background-color: #0f0f0f;
-    --background-color: #f7f7f7;
-    --text-color: #111111;
-    --info-color: #027ffe;
-    --base-color: #dedee5;
-    --secondary-color: #898989;
-    --base-color-alt: #f5f5f7;
-    --blue: #2a7ae2;
-    --white: white;
-    --green: #00b13c;
-    --success-color: #61CE70;
-    --downloading-color: #027ffe;
-    --button-color: #027ffe;
-    --button-text-color: white;
-    --warning-background-color: #fff1c9;
-    --warning-text-color: #795917;
-    --info-background-color: #cbe9ee;
-    --info-text-color: #104a55;
-}
+@import "theme.css";
 
-.warning {
-    background: var(--warning-background-color);
-    color: var(--warning-text-color);
-}
-.info {
-    background: var(--info-background-color);
-    color: var(--info-text-color);
-}
-.warning, .info {
-    padding: 10px;
-    border-radius: 4px;
-}
-.secondary {
-    color : var(--secondary-color);
-}
-.text-center {
-    text-align: center;
-}
-button {
-    border-radius: 100px;
-    padding: 0.4rem 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.25s ease-in-out;
-}
 button.connect {
     background: var(--success-color);
     color: var(--button-text-color);
@@ -62,28 +10,17 @@ button.next {
     color: var(--button-text-color);
     border: none;
 }
-
-button:disabled {
+button.next:disabled {
     background: rgba(2, 127, 254, 0.6);
     cursor: auto;
 }
-html, body {
-    margin: 0px;
-    background: var(--background-color);
-    font-family: 'Century Gothic', 'Lato';
-    font-size : 16px;
+#error-message {
+    color: red;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
 }
-
-#background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 400px;
-}
-
-
-/* <BANNER> */
+/* <banner> */
 #banner {
     top: 0;
     position: fixed;
@@ -101,12 +38,6 @@ html, body {
     justify-content: center;
 }
 #sub-banner {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-}
-#error-message {
-    color: red;
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
@@ -131,21 +62,13 @@ html, body {
     border-color: var(--blue);
     color: var(--blue);
 }
-/* </BANNER> */
-
+/* </banner> */
+/* <header> */
 #process-ctn {
-    background: linear-gradient(to bottom, var(--top-background-color) 400px, transparent 400px);
-    padding-top: 150px;
+    background: linear-gradient(to bottom, var(--top-background-color) 500px, transparent 500px);
+    padding-top: 250px;
     position: relative;
     width: 100%;
-}
-
-.inactive {
-    display: none !important;
-}
-
-.active, .done {
-    display: block;
 }
 
 .ready-to-install-e-os {
@@ -154,7 +77,7 @@ html, body {
     display: none;
 }
 
-.logo-ctn {
+#logo-ctn {
     max-width: 780px;
     margin:auto;
     display: flex;
@@ -162,7 +85,11 @@ html, body {
     color : #F7F7F7;
     align-items: center;
 }
-/* <CARD> */
+#logo {
+    max-width: 96px;
+}
+/* <header> */
+/* <card> */
 .card {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     max-width: 780px;
@@ -172,23 +99,23 @@ html, body {
     padding: 32px;
 }
 .card-header {
-    font-size: 28px;
+    font-size: 24px;
     font-family: 'Century Gothic';
     font-weight: 600;
 }
 .card-body, .large-padding {
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 .card-footer {
     text-align : right;
 }
+/* </card> */
 .instruction-title {
     font-size: 18px;
     font-weight: 600;
-    padding-bottom: 8px;
 }
-.instruction-img, .normal-padding {
+.normal-padding {
     margin-bottom : 20px;
     margin-top : 20px;
 }
@@ -204,10 +131,6 @@ html, body {
 .activate-developer-options .instruction-img,
 .activate-usb-debugging .instruction-img {
     max-width: 350px;
-}
-.icon {
-    width: 42px;
-    height: 42px;
 }
 #overlay-background {
     position: absolute;
@@ -249,11 +172,8 @@ progress[value].success::-webkit-progress-value {
     align-items: center;
     gap : 24px;
 }
-.let-s-get-started .instruction-ctn {
-    padding : 16px 0;
-    display : flex;
-    align-items: center;
-    gap : 24px;
+.let-s-get-started .instruction-title {
+    padding-bottom: 8px;
 }
 /* </let-s-get-started> */
 .navigator-not-supported .instructions-ctn {
@@ -264,24 +184,10 @@ progress[value].success::-webkit-progress-value {
     font-size:14px;
     padding: 16px 0;
 }
+/* <help-us-improve-the-tool> */
 .help-us-improve-the-tool p {
     padding-top: 16px;
     padding-bottom: 16px;
-}
-kbd {
-    padding: .2rem .4rem;
-    font-size: 87.5%;
-    color: #fff;
-    background-color: #212529;
-    border-radius: .2rem;
-}
-code {
-    border: 1px solid #e8e8e8;
-    border-radius: 3px;
-    background-color: #eef;
-    font-size: 87.5%;
-    color: #e83e8c;
-    word-wrap: break-word;
 }
 .help-us-improve-the-tool .instructions-ctn {
     display: grid;
@@ -331,3 +237,4 @@ code {
     outline: none !important;
     border-color:#C6CBDD;
 }
+/* </help-us-improve-the-tool> */

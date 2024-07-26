@@ -3,7 +3,6 @@ import {Downloader} from "./downloader.manager.js";
 import {ADB} from "./device/adb.class.js";
 import {Recovery} from "./device/recovery.class.js";
 import {Device} from "./device/device.class.js";
-
 const MODE = {
     adb: 'adb',
     recovery: 'recovery',
@@ -39,7 +38,7 @@ export class DeviceManager {
      * @returns {boolean}
      *
      * We check if the serialNumber is the same as our connected device
-     * If it is, then the device was already connected
+     *  Because productName may not be the same between adb/fastboot driver
      *
      */
     wasAlreadyConnected(serialNumber) {
@@ -50,12 +49,20 @@ export class DeviceManager {
         return false;
     }
 
-    setResources(resources) {
-        this.folder = Array.isArray(resources.folder) ? resources.folder : [resources.folder];
+    setResources(folder, steps ) {
+        this.folder = folder;
+        this.files = steps.map(s => {
+            return s.commands.map(c => {
+                return c.file;
+            })
+        }).flat();
     }
 
     async getUnlocked(variable) {
         return this.bootloader.isUnlocked(variable);
+    }
+    async getAndroidVersion() {
+        return await this.device.getAndroidVersion();
     }
     async isDetected(){
         const serial = this.serialNumber;
@@ -171,7 +178,7 @@ export class DeviceManager {
         }
     }
 
-    async downloadAll(filesName, onProgress, onUnzip) {
-        return await this.downloader.downloadAndUnzipFolder(filesName, this.folder, onProgress, onUnzip);
+    async downloadAll(onProgress, onUnzip) {
+        return await this.downloader.downloadAndUnzipFolder(this.files, this.folder, onProgress, onUnzip);
     }
 }

@@ -1,4 +1,5 @@
 {
+  "android": 13,
   "steps": [
     {
       "command": "reboot bootloader"

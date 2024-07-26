@@ -1,7 +1,7 @@
 import {DeviceManager} from "./controller/device.manager.js";
 import {Command} from "./controller/device/command.class.js";
 import {Step} from "./controller/utils/step.class.js";
-import { WDebug } from "./debug.js";
+import {WDebug} from "./debug.js";
 
 /*
 * Class to manage process
@@ -10,12 +10,12 @@ import { WDebug } from "./debug.js";
 export class Controller {
     constructor() {
         this.steps = [
-            new Step("let-s-get-started",  undefined, true ),
+            new Step("let-s-get-started", undefined, true),
             /*new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
             new Step("activate-usb-debugging", undefined, true),
             new Step("enable-usb-file-transfer", undefined, true),*/
-            new Step("device-detection",  'connect adb', true),
+            new Step("device-detection", 'connect adb', true),
 
         ];
         this.currentIndex = 0;//6;
@@ -37,18 +37,18 @@ export class Controller {
 
         if (next) {
             if (next.mode) { //if next step require another mode [adb|fastboot|bootloader]
-                if(this.deviceManager.isConnected() && !this.inInMode(next.mode)){
+                if (this.deviceManager.isConnected() && !this.inInMode(next.mode)) {
                     //we need reboot
                     await this.deviceManager.reboot(next.mode);
                 }
-                if(!this.deviceManager.isConnected()){
+                if (!this.deviceManager.isConnected()) {
                     await this.deviceManager.connect(next.mode);
                 }
             }
             this.currentIndex++;
             current = this.steps[this.currentIndex];
             VIEW.onStepStarted(this.currentIndex, current);
-            if(!current.needUserGesture) {
+            if (!current.needUserGesture) {
                 await this.executeStep(current.name);
             }
             /*current.commandDone = await this.runCommand(current.command);
@@ -64,24 +64,25 @@ export class Controller {
             }*/
         }
     }
-    async executeStep(stepName){
+
+    async executeStep(stepName) {
         const current = this.steps[this.currentIndex];
         WDebug.log("ControllerManager Execute step", current)
-        if(current.name === stepName) {
+        if (current.name === stepName) {
             let res = true;
-            for(let i = 0 ; i < current.commands.length && res; i++) {
+            for (let i = 0; i < current.commands.length && res; i++) {
                 res = await this.runCommand(current.commands[i]);
             }
             const next = this.steps[this.currentIndex + 1];
             let previous = this.steps[this.currentIndex - 1];
-            if(res) {
-                if(next) {
+            if (res) {
+                if (next) {
                     VIEW.onStepFinished(current, next);
                     await this.next();
                 }
             } else {
                 VIEW.onStepFailed(current, previous);
-                if(!current.needUserGesture) {
+                if (!current.needUserGesture) {
                     this.currentIndex--;
                 }
                 throw Error('command failed');
@@ -90,6 +91,7 @@ export class Controller {
             throw Error('this is not the current step')
         }
     }
+
     /**
      *
      * @param mode
@@ -105,13 +107,7 @@ export class Controller {
         switch (cmd.type) {
             case Command.CMD_TYPE.download:
                 try {
-                    const files = this.steps.map(s =>{
-                        return s.commands.map(c =>  {
-                            WDebug.log("ControllerManagerDownload", c)
-                            return c.file;
-                        })
-                    }).flat();
-                    await this.deviceManager.downloadAll(files,(loaded, total, name) => {
+                    await this.deviceManager.downloadAll((loaded, total, name) => {
                         VIEW.onDownloading(name, loaded, total);
                     }, (loaded, total, name) => {
                         VIEW.onUnzip(name, loaded, total);
@@ -153,17 +149,16 @@ export class Controller {
                 let isUnlocked = false;
                 if (cmd.partition) {
                     try {
-                            isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
+                        isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
                     } catch (e) {
                     }
                 }
                 if (!isUnlocked) {
                     WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName());
                     try {
-                        if (this.deviceManager.adb.getProductName() == "Teracube_2e") { //K1ZFP Hardcoded behavior
+                        if (this.deviceManager.adb.getProductName() === "Teracube_2e") { //K1ZFP Hardcoded behavior
                             this.deviceManager.unlock(cmd.command);
-                        }
-                        else
+                        } else
                             await this.deviceManager.unlock(cmd.command);
                         //this.steps[this.currentIndex].needUser = true;
                     } catch (e) {
@@ -187,7 +182,7 @@ export class Controller {
                 return true;
             case Command.CMD_TYPE.lock:
                 let isLocked = false;
-                let is_teracube = this.deviceManager.adb.getProductName() == "Teracube_2e"; // K1ZFP Hard coded behavior
+                let is_teracube = this.deviceManager.adb.getProductName() === "Teracube_2e"; // K1ZFP Hard coded behavior
                 if (cmd.partition) {
                     try {
                         isLocked = !(await this.deviceManager.getUnlocked(cmd.partition));
@@ -199,9 +194,8 @@ export class Controller {
                     try {
                         if (is_teracube) {
                             this.deviceManager.lock(cmd.command);
-                            isLocked = true; // Assumes lock works                        
-                        }
-                        else
+                            isLocked = true; // Assumes lock works
+                        } else
                             await this.deviceManager.lock(cmd.command);
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already locked"
@@ -236,33 +230,59 @@ export class Controller {
 
     async onDeviceConnected() {
 
-        const serialNumber = this.deviceManager.adb.device.serialNumber;
-        const productName = this.deviceManager.adb.device.productName;
-        if (this.deviceManager.wasAlreadyConnected(serialNumber)) {
-            //already connected
-            //we check on serialNumber because productName may not be the same between adb/fastboot driver
-        } else {
+        const serialNumber = this.deviceManager.getSerialNumber();
+        const productName = this.deviceManager.getProductName();
+        const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected(serialNumber);
+        if (!wasAlreadyConnected) {
             VIEW.updateData('product-name', productName);
+            this.model = productName.toLowerCase().replace(/[ |_]/g, '');
+            WDebug.log("ControllerManager Model:", this.model);
             try {
-                this.model = productName.toLowerCase().replace(/[ |_]/g, '');
-                WDebug.log("ControllerManager Model:", this.model);
-                this.resources = await (await fetch(`resources/${this.model}.json`)).json() || {};
-            } catch (e) {
-            }
-            if (this.resources) {
-                this.deviceManager.setResources(this.resources);
-                if (this.resources.steps) {
-                    this.steps.push(new Step("downloading", 'download', false));
-                    this.steps.push(...this.resources.steps.map((step) => {
-                        return new Step(step.id,  step.command, step.needUserGesture ?? false,  step.mode);
-                    }));
-                    VIEW.updateTotalStep(this.steps.length);
+                const resources = await this.getResources();
+                console.log(resources)
+                console.log(resources.android)
+                if(resources.android){
+                    VIEW.updateData('android-version-required', resources.android);
+                    await this.checkAndroidVersion(resources.android);
                 }
-            } else {
-                this.steps.push(new Step("device-model-not-supported"));
+                this.setResources(resources);
+            } catch(e) {
+                console.log(e)
+                console.log(e.message)
+                WDebug.log(e);
+                this.steps.push(new Step(e.message));
                 VIEW.updateTotalStep(this.steps.length);
             }
         }
     }
-
+    async checkAndroidVersion(versionRequired){
+        const android = await this.deviceManager.getAndroidVersion();
+        if( android) {
+            VIEW.updateData('android-version', android);
+            if(android < versionRequired){
+                throw Error('android-version-not-supported');
+            }
+        }
+    }
+    async getResources(){
+        let resources;
+        try {
+            resources = await (await fetch(`resources/${this.model}.json`)).json();
+        } catch (e) {}
+        if(!resources){
+            throw Error('device-model-not-supported');
+        }
+        return resources;
+    }
+    setResources(resources){
+        this.resources = resources;
+        if (this.resources.steps) {
+            this.steps.push(new Step("downloading", 'download', false));
+            this.steps.push(...this.resources.steps.map((step) => {
+                return new Step(step.id, step.command, step.needUserGesture ?? false, step.mode);
+            }));
+            VIEW.updateTotalStep(this.steps.length);
+        }
+        this.deviceManager.setResources(this.resources.folder, this.steps);
+    }
 }

@@ -46,6 +46,9 @@ export class Device {
     getSerialNumber() {
         return undefined;
     }
+    async getAndroidVersion() {
+        return undefined;
+    }
 
     reboot(mode) {
         return undefined;

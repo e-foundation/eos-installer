@@ -32,7 +32,7 @@ export class ADB extends Device {
                 this.device = await this.webusb.connectAdb("host::", cb);
 
             */
-            let adbWebBackend =await AdbWebBackend.requestDevice();
+            let adbWebBackend = await AdbWebBackend.requestDevice();
             if (adbWebBackend) {
                 let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js
                 await adbDevice.connect();
@@ -54,8 +54,13 @@ export class ADB extends Device {
         return this.webusb.name;
     }
 
+
     getSerialNumber() {
-        return this.webusb.product;
+        return this.webusb.serialNumber;
+    }
+
+    async getAndroidVersion() {
+        return this.webusb.getProp('ro.build.version.release');
     }
 
     async runCommand(cmd) {
