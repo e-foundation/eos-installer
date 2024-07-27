@@ -18,7 +18,7 @@
     "connect": "Verbinden",
     "connect-bootloader": "Bootloader-Verbindung",
     "connect-bootloader-instructions-1": "Dein Telefon wird jetzt im <code>Bootloader</code>-Modus neu starten.",
-    "connect-bootloader-instructions-2": "Wenn dein Telefon eingeschaltet ist, verbinde es im <code>Bootloader</code>-Modus, indem du auf den untenstehenden Button tippst.",
+    "connect-bootloader-instructions-2": "Wenn dein Telefon eingeschaltet ist, verbinde es im <code>Bootloader</code>-Modus, indem du auf die untenstehende Schaltfläche tippst.",
     "connect-your-phone": "Verbinde dein Telefon",
     "connect-your-phone-instructions": "Verbinde dein Telefon mit einem USB-Kabel mit deinem Computer. Wir erkennen dein Telefon automatisch, um /e/OS zu installieren.",
     "connect-your-phone-instructions-notes": "<b>Hinweis</b>: ‘USB-Debugging’ ist erforderlich, damit die automatische Geräteerkennung funktioniert. Wenn du es noch nicht aktiviert hast, helfen wir dir in den nächsten Schritten.",
@@ -102,5 +102,8 @@
     "locking-instructions-3": "Dann auf Weiter tippen",
     "unlocking-instructions-2-a": "Das Gerät wird neu starten, <b>warte</b> bis der Bootloader-Bildschirm erneut erscheint ",
     "unlocking-instructions-5": "Dann auf Weiter tippen",
-    "unlocking-instructions-1-a": "Benutze die Lautstärke-Tasten zum Navigieren, und den Anschaltknopf zum Bestätigen."
+    "unlocking-instructions-1-a": "Benutze die Lautstärke-Tasten zum Navigieren, und den Anschaltknopf zum Bestätigen.",
+    "android-version-not-supported-title": "Ihre Android-Version <code>{{android-version}}</code> wird nicht unterstützt",
+    "android-version-not-supported": "Android-Version veraltet",
+    "android-version-not-supported-instructions": "Aktualisieren Sie Ihr System auf die erforderliche Minimal-Version <code>{{android-version-required}}</code>"
 }
