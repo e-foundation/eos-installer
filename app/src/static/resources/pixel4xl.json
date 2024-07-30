@@ -55,7 +55,11 @@
       "needUserGesture": true
     },
     {
-      "id": "installation-complete"
+      "id": "installation-complete",
+      "needUserGesture": true
+    },
+    {
+      "id": "help-us-improve-the-tool"
     }
   ],
   "folder": [
