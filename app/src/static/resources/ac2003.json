@@ -3,7 +3,10 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "oem unlock unlocked --skip-reboot"],
+      "command": [
+        "connect bootloader",
+        "oem unlock unlocked --skip-reboot"
+      ],
       "needUserGesture": true
     },
     {
@@ -31,9 +34,11 @@
     },
     {
       "id": "flashing",
-      "command": ["flash dtbo dtbo-e-2.1-s-20240603406609-stable-avicii.img",
-                  "flash vbmeta vbmeta-e-2.1-s-20240603406609-stable-avicii.img",
-                  "flash recovery recovery-e-2.1-s-20240603406609-stable-avicii.img"]
+      "command": [
+        "flash dtbo dtbo-e-2.1-s-20240603406609-stable-avicii.img",
+        "flash vbmeta vbmeta-e-2.1-s-20240603406609-stable-avicii.img",
+        "flash recovery recovery-e-2.1-s-20240603406609-stable-avicii.img"
+      ]
     },
     {
       "id": "bootloader-to-recovery-manually",

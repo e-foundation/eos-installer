@@ -1,9 +1,15 @@
 {
+  "android": 13,
   "steps": [
     {
-      "mode": "bootloader",
+      "command": "reboot bootloader"
+    },
+    {
       "id": "connect-bootloader",
-      "command": ["connect bootloader","flashing unlock unlocked"],
+      "command": [
+        "connect bootloader",
+        "oem unlock"
+      ],
       "needUserGesture": true
     },
     {
@@ -32,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash boot boot.img",
-        "flash dtbo dtbo.img",
-        "flash vendor_boot recovery.img"
+        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-instantnoodle.img",
+        "flash vbmeta vbmeta-e-2.2-t-20240717417775-dev-instantnoodle.img",
+        "flash recovery recovery-e-2.2-t-20240717417775-dev-instantnoodle.img"
       ]
     },
     {
@@ -47,14 +53,11 @@
     },
     {
       "id": "go-to-apply-update",
-      "needUserGesture": true,
-      "command": [
-        "sideload rom.zip"
-       ]
+      "needUserGesture": true
     },
     {
       "id": "sideload",
-      "command": true
+      "command": "sideload rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -64,14 +67,8 @@
       "id": "connect-bootloader",
       "command": [
         "connect bootloader",
-        "erase avb_custom_key",
-        "flash avb_custom_key pkmd_pixel.bin",
-        "flashing lock unlocked"
+        "reboot"
       ],
-      "needUserGesture": true
-    },
-    {
-      "id": "locking",
       "needUserGesture": true
     },
     {
@@ -84,24 +81,13 @@
   ],
   "folder": [
     {
-      "name": "dtbo.img",
-      "path": "assets/sources/redfin/dtbo-e-2.1-t-20240605406922-dev-redfin.img"
-    },
-    {
-      "name": "boot.img",
-      "path": "assets/sources/redfin/boot-e-2.1-t-20240605406922-dev-redfin.img"
-    },
-    {
       "name": "recovery.img",
-      "path": "assets/sources/redfin/recovery-e-2.1-t-20240605406922-dev-redfin.img"
-    },
-    {
-      "name": "pkmd_pixel.bin",
-      "path": "assets/sources/redfin/pkmd_pixel.bin"
+      "path": "assets/sources/instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
+      "unzip": true
     },
     {
       "name": "rom.zip",
-      "path": "assets/sources/redfin/e-2.1-t-20240605406922-dev-redfin.zip"
+      "path": "assets/sources/instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
     }
   ]
 }

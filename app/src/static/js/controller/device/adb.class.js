@@ -56,7 +56,7 @@ export class ADB extends Device {
 
 
     getSerialNumber() {
-        return this.webusb.serialNumber;
+        return this.device.serialNumber;
     }
 
     async getAndroidVersion() {

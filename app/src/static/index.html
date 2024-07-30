@@ -84,9 +84,9 @@
     <div id="connect-your-phone" class="connect-your-phone card inactive">
         <div class="card-header" data-translate="connect-your-phone"></div>
         <div class="card-body">
-            <p data-translate="connect-your-phone-instructions"></p>
-            <div class="text-center">
+            <div class="normal-padding flex align-items-center gap-4">
                 <img class="instruction-img" src="assets/images/illustrations/connect-your-phone.png">
+                <p data-translate="connect-your-phone-instructions"></p>
             </div>
             <p class="secondary" data-translate="connect-your-phone-instructions-notes"></p>
         </div>
@@ -160,10 +160,6 @@
                 <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
             </div>
         </div>
-        <div class="card-body inactive">
-            <p data-translate="device-detection-detected"></p>
-            <img class="instruction-img" src="assets/images/icons/check-success.svg">
-        </div>
     </div>
 
     <div id="device-model-not-supported" class="device-model-not-supported card inactive">
@@ -212,10 +208,10 @@
         <div class="card-header" data-translate="Unlocking"></div>
         <div class="card-body">
             <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
             <div class="text-center">
                 <img class="instruction-img" src="assets/images/illustrations/teracube/Illustration - Accept warning-1.png">
             </div>
-            <p data-translate="unlocking-instructions-5"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube')"></button>
@@ -230,8 +226,8 @@
                 <div>
                     <p data-translate="unlocking-instructions-1"></p>
                     <p data-translate="unlocking-instructions-1-a"></p>
+                    <p data-translate="unlocking-instructions-2"></p>
                     <p data-translate="unlocking-instructions-2-a"></p>
-                    <p data-translate="unlocking-instructions-5"></p>
                 </div>
             </div>
         </div>
@@ -244,6 +240,7 @@
         <div class="card-header" data-translate="Unlocking"></div>
         <div class="card-body">0
             <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
             <p data-translate="unlocking-instructions-2"></p>
             <p data-translate="unlocking-instructions-3"></p>
             <p data-translate="unlocking-instructions-4"></p>
@@ -252,7 +249,7 @@
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
         </div>
     </div>
-    
+
     <!-- End UNLOCKING -->
 
     <div id="flashing" class="card inactive">
@@ -271,6 +268,7 @@
             <p data-translate="bootloader-to-recovery-manually-instructions"></p>
             <p data-translate="bootloader-to-recovery-manually-instructions-1"></p>
             <p data-translate="bootloader-to-recovery-manually-instructions-2"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-3"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
@@ -297,6 +295,7 @@
             <p data-translate="go-to-apply-update-instructions-1"></p>
             <p data-translate="go-to-apply-update-instructions-2"></p>
             <p data-translate="go-to-apply-update-instructions-3"></p>
+            <p class="secondary" data-translate="go-to-apply-update-instructions-4"></p>
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'go-to-apply-update')"></button>

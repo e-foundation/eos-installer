@@ -11,10 +11,10 @@ export class Controller {
     constructor() {
         this.steps = [
             new Step("let-s-get-started", undefined, true),
-            /*new Step("connect-your-phone",  undefined, true),
+            new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
             new Step("activate-usb-debugging", undefined, true),
-            new Step("enable-usb-file-transfer", undefined, true),*/
+            new Step("enable-usb-file-transfer", undefined, true),
             new Step("device-detection", 'connect adb', true),
 
         ];
@@ -51,17 +51,6 @@ export class Controller {
             if (!current.needUserGesture) {
                 await this.executeStep(current.name);
             }
-            /*current.commandDone = await this.runCommand(current.command);
-            if(current.commandDone) {
-                next = this.steps[this.currentIndex + 1];
-                if(next && current.nextWhenFinished) {
-                    await this.next();
-                }
-            } else {
-                VIEW.onStepFailed(current, previous);
-                this.currentIndex--;
-                throw Error('command failed');
-            }*/
         }
     }
 
@@ -158,26 +147,17 @@ export class Controller {
                     try {
                         if (this.deviceManager.adb.getProductName() === "Teracube_2e") { //K1ZFP Hardcoded behavior
                             this.deviceManager.unlock(cmd.command);
-                        } else
+                        } else {
                             await this.deviceManager.unlock(cmd.command);
-                        //this.steps[this.currentIndex].needUser = true;
+                        }
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
                         if (e.bootloaderMessage?.includes("already")) {
-                            await this.deviceManager.reboot('adb');
+
                         } else if (e.bootloaderMessage?.includes("not allowed")) {
                             //K1ZFP TODO
                         }
                     }
-                }
-                if (!isUnlocked) {
-                    //it's not unlocked
-                    //the unlock command needs for the user to accept unlocking on the device and restarting the phone, like the commands used at the start
-                    //TODO
-                    /*const stepsToAdd = this.startCommand.concat([
-                        this.steps[this.currentIndex]
-                    ])
-                    this.addSteps(stepsToAdd, this.currentIndex + 1);*/
                 }
                 return true;
             case Command.CMD_TYPE.lock:
@@ -219,12 +199,10 @@ export class Controller {
                     console.error(e); // K1ZFP TODO
                     return false;
                 }
-                break;
             default:
                 WDebug.log(`try unknown command ${cmd.command}`)
                 await this.deviceManager.runCommand(cmd.command);
                 return true;
-                break;
         }
     }
 
@@ -239,8 +217,6 @@ export class Controller {
             WDebug.log("ControllerManager Model:", this.model);
             try {
                 const resources = await this.getResources();
-                console.log(resources)
-                console.log(resources.android)
                 if(resources.android){
                     VIEW.updateData('android-version-required', resources.android);
                     await this.checkAndroidVersion(resources.android);

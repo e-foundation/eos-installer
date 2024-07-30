@@ -33,10 +33,6 @@
       "needUserGesture": true
     },
     {
-      "id": "go-to-apply-update",
-      "needUserGesture": true
-    },
-    {
       "id": "sideload",
       "command": "sideload rom.zip"
     },
@@ -50,7 +46,7 @@
         "connect bootloader",
         "erase avb_custom_key",
         "flash avb_custom_key pkmd_pixel.bin",
-        "flashing lock unlocked"
+        "reboot"
       ],
       "needUserGesture": true
     },
