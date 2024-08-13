@@ -1,4 +1,4 @@
-[last updated : 2023-10-18 ]
+[last updated : 2024-08-12 ]
 
 `app` folder contains the source of the application.
 
@@ -22,6 +22,107 @@ Go to the `app` folder.
 `docker run -v "${pwd}"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
 
 The project is available at `http://localhost:3000/`
+
+# Deployment
+
+## Deploy using Docker Compose Stack
+
+The eos-web-installer can be deployed using the Docker Compose stack provided in the <https://gitlab.e.foundation/e/online-services/infra/web/web-easy-installer> repo.
+To deploy the application:
+
+1. Clone repository:
+
+   ```
+   git clone https://gitlab.e.foundation/e/online-services/infra/web/web-easy-installer.git
+   cd /mnt/repo-base/web-easy-installer
+   ```
+
+2. Copy example.env file to .env:
+
+   ```
+   cp example.env .env
+   ```
+3. Deploy the application:
+
+   ```
+   docker compose up -d
+   ```
+   This command will pull the latest image from the Docker registry and start the eos-web-installer service.
+
+4. Access the application
+Once deployed, the eos-web-installer will be accessible at `http://localhost:3000` 
+
+## CI/CD Pipeline Overview
+
+The `eos-web-installer` project is equipped with a CI/CD pipeline that automates the process of building, tagging, and deploying Docker images. Below is an overview of each stage in the pipeline:
+
+### 1. `.docker` Stage
+
+![.docker Stage](assets/pipeline_stage1.jpeg)
+
+   - **Purpose**: This stage serves as the base configuration for all Docker-related jobs in the pipeline. It sets up the necessary Docker environment, including Docker-in-Docker (dind) service, and logs into the Docker registry.
+   - **Key Actions**:
+     - Sets up the Docker environment.
+     - Logs into the Docker registry.
+
+### 2. `docker` Stage
+
+![docker Stage](assets/pipeline_stage2.jpeg)
+
+   - **Purpose**: This stage builds a Docker image tagged with the current commit reference slug (usually a short version of the commit hash or branch name). It is triggered during a merge request event.
+   - **Key Actions**:
+     - Builds the Docker image using the `app/Dockerfile`.
+     - Tags the image with the commit reference slug (`$CI_COMMIT_REF_SLUG`).
+
+### 3. `docker-latest` Stage
+
+![docker-latest Stage](assets/pipeline_stage3.jpeg)
+
+   - **Purpose**: This stage builds and pushes a Docker image tagged as `latest`. This image is intended for the staging or production environments.
+   - **Key Actions**:
+     - Builds the Docker image using the `app/Dockerfile`.
+     - Tags the image as `latest`.
+     - Pushes the `latest` image to the Docker registry.
+   - **Trigger**: This stage is manually triggered when a commit is pushed to the `main` branch or during a merge request event.
+
+### 4. `trigger_deploy` Stage
+
+![trigger-deploy](assets/pipeline_stage4.jpeg)
+
+   - **Purpose**: This stage triggers the deployment of the `latest` Docker image to the staging environment.
+   - **Key Actions**:
+     - Triggers a deployment in another project (`e/online-services/infra/web/web-easy-installer`).
+     - Passes variables to indicate that this is a staging deployment.
+   - **Dependencies**: This stage depends on the successful completion of the `docker-latest` stage.
+
+### 5. `docker-tag` Stage
+
+![docker-tag Stage](assets/pipeline_stage5.jpeg)
+
+   - **Purpose**: This stage builds and pushes a Docker image tagged with the version number from a Git tag (e.g., `v1.0.0`).
+   - **Key Actions**:
+     - Builds the Docker image using the `app/Dockerfile`.
+     - Tags the image with the Git tag version, removing the `v` prefix (`${CI_COMMIT_TAG/v/}`).
+     - Pushes the tagged image to the Docker registry.
+   - **Trigger**: This stage is triggered by the creation of a Git tag (`$CI_COMMIT_TAG`).
+
+## Auto-deployment to Staging 
+
+The eos-web-installer supports automated deployment to a staging environment whenever a new image is created. 
+This is handled through a CI/CD pipeline defined in the .gitlab-ci.yml file.
+
+![Auto-deployment](assets/Auto-deployment.png)
+
+### How Auto-Deployment Works
+
+- Pipeline Triggers:
+    - Whenever a merge request is approved and merged into the main branch, or a manual trigger is activated, a new Docker image is built and tagged as latest.
+    - The pipeline then triggers a deployment process that pushes this image to the Docker registry.
+- Staging Deployment:
+    - Upon successful creation of the latest image, the pipeline automatically triggers a deployment to the staging environment.
+    - The staging environment is defined in the <https://gitlab.e.foundation/e/online-services/infra/web/web-easy-installer> repo. The deployment is managed by the trigger_deploy job in the pipeline.
+
+This setup ensures that every time a new image is created from the main branch, it is automatically deployed to the staging environment for testing and validation.
 
 # Installation
 
