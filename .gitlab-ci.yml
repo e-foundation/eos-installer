@@ -21,14 +21,14 @@ docker-latest:
     - docker build -t $CI_REGISTRY_IMAGE:latest -f app/Dockerfile app
     - docker push $CI_REGISTRY_IMAGE:latest
   when: manual
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+#  rules:
+#    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
+#    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 trigger_deploy:
   needs: ["docker-latest"]
-  rules:
-    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
+#  rules:
+##    - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   trigger:
     project: e/online-services/infra/web/web-easy-installer
