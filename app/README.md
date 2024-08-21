@@ -19,7 +19,7 @@ Go to the `app` folder.
 `docker run -v "%cd%"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
 
 ## Linux
-`docker run -v "${pwd}"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
+`docker run -v "$(pwd)/src:/app/src" -p 127.0.0.1:3000:3000 eos-web-installer` 
 
 The project is available at `http://localhost:3000/`
 
