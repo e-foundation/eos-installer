@@ -16,6 +16,8 @@ export class Downloader {
     }
 
     async init() {
+        if (this.db) return;  // Already initialized
+
         this.db = await this.openDBStore();
         await this.clearDBStore();
         this.quota = await navigator.storage.estimate();
@@ -45,7 +47,7 @@ export class Downloader {
                     await zipReader.close();
 
                 } else {
-                    await this.setInDBStore(blob,file.name);
+                    await this.setInDBStore(blob, file.name);
                     this.stored[file.name] = true;
                 }
             }
@@ -100,52 +102,48 @@ export class Downloader {
         try {
             const buffers = await this.fetch({
                 url: path,
-                chunkSize: 15 * 1024 * 1024,
-                poolLimit: 6,
-            }, onProgress)
-            return new Blob([buffers]);
+                chunkSize: 16 * 1024 * 1024,
+                poolLimit: 1,
+            }, onProgress);
+
+            //let totalSize = buffers.reduce((sum, buffer) => sum + buffer.byteLength, 0);
+            const ret = new Blob(buffers);
+            return ret;
         } catch (e) {
+            WDebug.log(`Erreur: ${e.message}`);
             console.error(e); //K1ZFP TODO
             throw Error(e);
         }
     }
 
-
-    async removeFile(filename) {
-        try {
-            await this.removeFromDBStore(filename);
-            delete this.stored[filename];
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
-
     async clearDBStore() {
-        WDebug.log('DownloaderManager store.clear')
         const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
         store.clear();
     }
-    async removeFromDBStore(key) {
-        const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-        return store.delete(path);
-    }
 
-
-    async setInDBStore(blob, name) {
-        WDebug.log('DownloaderManager store',blob,  name )
-        const store = this.db.transaction(DB_NAME, "readwrite").objectStore(DB_NAME);
-        store.put(blob, name);
-    }
-
-    getFromDBStore(key) {
-        WDebug.log('DownloaderManager getFromstore', key )
+    async setInDBStore(blob, key) {
         return new Promise((resolve, reject) => {
-            const store = this.db.transaction(DB_NAME, 'readonly').objectStore(DB_NAME);
+            const transaction = this.db.transaction(DB_NAME, 'readwrite');
+            const store = transaction.objectStore(DB_NAME);
+            const request = store.put(blob, key);
+
+            request.onsuccess = () => {
+                resolve();
+            };
+
+            request.onerror = (event) => {
+                reject(event.target.error);
+            };
+        });
+    }
+
+    async getFromDBStore(key) {
+        return new Promise((resolve, reject) => {
+            const transaction = this.db.transaction(DB_NAME, 'readonly');
+            const store = transaction.objectStore(DB_NAME);
             const request = store.get(key);
             request.onsuccess = function (event) {
                 const result = event.target.result;
-                WDebug.log('DownloaderManager result', result)
                 if (result) {
                     resolve(result);
                 } else {
@@ -164,7 +162,6 @@ export class Downloader {
             request.onerror = reject;
             request.onupgradeneeded = function (event) {
                 const db = event.target.result;
-                /*const store: IDBObjectStore = */
                 db.createObjectStore(DB_NAME, {autoIncrement: false});
             };
             request.onsuccess = function (event) {
@@ -201,78 +198,27 @@ export class Downloader {
         });
     }
 
-    getBinaryContent(url, start, end, i, onprogress) {
-        return new Promise((resolve, reject) => {
-            try {
-                let xhr = new XMLHttpRequest();
-                xhr.open("GET", url, true);
-                xhr.setRequestHeader("range", `bytes=${start}-${end}`); // Set range request information
-                xhr.responseType = "arraybuffer"; // Set the returned type to arraybuffer
-                xhr.onload = function () {
-                    resolve({
-                        index: i, // file block index
-                        buffer: xhr.response,
-                    });
-                };
-                xhr.onprogress = onprogress;
-                xhr.send();
-            } catch (err) {
-                reject(new Error(err));
-            }
-        });
-    }
-
-    saveAs({name, buffers, mime = "application/octet-stream"}) {
-        const blob = new Blob([buffers], {type: mime});
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.download = name || Math.random();
-        a.href = blobUrl;
-        a.click();
-        URL.revokeObjectURL(blob);
-    }
-
-    async asyncPool(concurrency, iterable, iteratorFn) {
-        const ret = []; // Store all asynchronous tasks
-        const executing = new Set(); // Stores executing asynchronous tasks
-        for (const item of iterable) {
-            // Call the iteratorFn function to create an asynchronous task
-            const p = Promise.resolve().then(() => iteratorFn(item, iterable));
-
-            ret.push(p); // save new async task
-            executing.add(p); // Save an executing asynchronous task
-
-            const clean = () => executing.delete(p);
-            p.then(clean).catch(clean);
-            if (executing.size >= concurrency) {
-                // Wait for faster task execution to complete
-                await Promise.race(executing);
-            }
-        }
-        return Promise.all(ret);
-    }
-
-    async fetch({url, chunkSize, poolLimit = 1}, onProgress) {
+    async fetch({url, chunkSize}, onProgress) {
         const contentLength = await this.getContentLength(url);
-        const chunks =
-            typeof chunkSize === "number" ? Math.ceil(contentLength / chunkSize) : 1;
-        const totalByChunks = new Array(chunks).fill(0);
-        const results = await this.asyncPool(
-            poolLimit,
-            [...new Array(chunks).keys()],
-            (i) => {
-                let start = i * chunkSize;
-                let end = i + 1 == chunks ? contentLength - 1 : (i + 1) * chunkSize - 1;
-                return this.getBinaryContent(url, start, end, i, (e) => {
-                    totalByChunks[i] = e.loaded;
-                    const sum = totalByChunks.reduce((partialSum, a) => partialSum + a, 0)
-                    onProgress(sum, contentLength);
-                });
-            }
-        );
-        const sortedBuffers = results
-            .map((item) => new Uint8Array(item.buffer));
-        return this.concatenate(sortedBuffers);
+        const totalChunks = Math.ceil(contentLength / chunkSize);
+
+        const buffers = [];
+
+        for (let i = 0; i < totalChunks; i++) {
+            const start = i * chunkSize;
+            const end = Math.min(start + chunkSize - 1, contentLength - 1);
+
+            const chunk = await fetch(url, {
+                headers: {
+                    'Range': `bytes=${start}-${end}`
+                }
+            }).then(res => res.arrayBuffer());
+
+            buffers.push(chunk);
+            onProgress(start + chunk.byteLength, contentLength);
+         }
+
+        return buffers;
     }
 
 }
