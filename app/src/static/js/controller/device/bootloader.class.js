@@ -106,7 +106,8 @@ export class Bootloader extends Device {
             return false;
         }
     }
-     bootBlob(blob) {
+    
+    bootBlob(blob) {
         return this.device.bootBlob(blob);
     }
 
