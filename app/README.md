@@ -118,6 +118,11 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
 #### Exemples
 ```  
 {
+  "android": 13,
+  "security_patch_level": "2024-04-05",
+  "steps": [
+    ...
+  ],
     "folder": [
       {
         "name": "recovery.img"
@@ -140,7 +145,9 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
  }
   ```
 
-
+* android: Android version (optional) => Display warning if version mistach (Installed vs easy installer one)
+* security_patch_level (optional) => Allow to load safe procedure descriptor file (postfixed with '-safe' eg: 'teracube2e.json vs teracube2e-safe.json') that contain a specific install process (eg does not lock the bootloader if current_security_path_level > new_security_path_level new_security_path_level is the one the json file)
+* folder: must be an array
 
 ## Vue
 
