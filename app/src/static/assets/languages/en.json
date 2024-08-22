@@ -5,6 +5,8 @@
     "activate-developer-options": "Activate Developer options",
     "activate-developer-options-instructions-1": "1. Open the settings menu and type ‘build’ in the search bar.",
     "activate-developer-options-instructions-2": "2. On the next screen, find ‘Build number’ and tap 7 times on it.",
+    "activate-oem-unlock": "OEM Unlock",
+    "activate-oem-unlock-instruction": "If you have not already done so, unlock the OEM function",
     "activate-usb-debugging": "Activate USB Debugging",
     "activate-usb-debugging-instructions-1": "1. Go back to the settings menu and type ‘USB debugging’ in the search bar.",
     "activate-usb-debugging-instructions-2": "2. At this point you should be in the ‘Developer options screen’. Now tap on ’USB debugging’ to activate it (on some devices it is called ’Android Debugging’).",
@@ -102,9 +104,11 @@
     "unlocking-instructions-1": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> and <kbd>Volume Down</kbd> to navigate.",
     "unlocking-instructions-1-a": "Use the button <kbd>Power</kbd> to confirm.",
     "unlocking-instructions-2": "The device will automatically reboot.",
-    "unlocking-instructions-2-a": "Your device will reboot. <b>Wait until the bootloader screen is visible again</b> before going to the next step",
+    "unlocking-instructions-2-a": "Y<b>Wait until the bootloader screen is visible again</b> before going to the next step",
     "unlocking-instructions-3": "Since the device <b>resets completely</b>, you will need to <b>re-enable USB debugging</b>.",
     "unlocking-instructions-4": "Pass the setup on the phone and click on next",
+    "unlocking-instructions-1-teracube": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> button.",
+    "unlocking-instructions-1-teracube-a": "Then click Next.",
     "very-dissatisfied": "Very Dissatisfied",
     "very-satisfied": "Very Satisfied"
 }
