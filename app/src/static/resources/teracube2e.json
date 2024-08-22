@@ -1,4 +1,5 @@
 {
+  "unused_security_patch_level": "2020-04-05",
   "steps": [
     {
       "mode": "bootloader",
@@ -39,7 +40,12 @@
       "needUserGesture": true
     },
     {
-      "mode": "adb",
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "reboot"],
+      "needUserGesture": true
+    },
+    {
       "id": "murena-cloud-account",
       "needUserGesture": true
     },
@@ -47,9 +53,11 @@
       "id": "installation-complete"
     }
   ],
-  "folder": {
-    "path": "assets/sources/emerald/IMG-e-2.1-s-20240603406609-stable-emerald.zip",
-    "name": "Teracube_2e installer",
-    "unzip": true
-  }
+  "folder": [
+    {
+     "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.2-s-20240715417774-stable-emerald.zip",
+     "name": "Teracube_2e installer",
+     "unzip": true
+    }
+  ]
 }

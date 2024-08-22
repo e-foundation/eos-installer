@@ -13,12 +13,13 @@ export class Controller {
             new Step("let-s-get-started", undefined, true),
             new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
+            new Step("activate-oem-unlock", undefined, true),
             new Step("activate-usb-debugging", undefined, true),
             new Step("enable-usb-file-transfer", undefined, true),
             new Step("device-detection", 'connect adb', true),
 
         ];
-        this.currentIndex = 0;//6;
+        this.currentIndex = 0;
     }
 
 
@@ -142,7 +143,7 @@ export class Controller {
                     } catch (e) {
                     }
                 }
-                if (!isUnlocked) {
+                 if (!isUnlocked) {
                     WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName());
                     try {
                         if (this.deviceManager.adb.getProductName() === "Teracube_2e") { //K1ZFP Hardcoded behavior
@@ -174,9 +175,10 @@ export class Controller {
                     try {
                         if (is_teracube) {
                             this.deviceManager.lock(cmd.command);
-                            isLocked = true; // Assumes lock works
-                        } else
+                        } else {
                             await this.deviceManager.lock(cmd.command);
+                        }
+                        isLocked = true; // Assumes lock works
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already locked"
                         if (e.bootloaderMessage?.includes("already")) {
@@ -185,9 +187,6 @@ export class Controller {
                             console.error(e); //K1ZFP TODO
                         }
                     }
-                }
-                if (!isLocked) {
-                    this.deviceManager.lock(cmd.command);
                 }
                 return true;
             case Command.CMD_TYPE.sideload:
@@ -223,8 +222,6 @@ export class Controller {
                 }
                 this.setResources(resources);
             } catch(e) {
-                console.log(e)
-                console.log(e.message)
                 WDebug.log(e);
                 this.steps.push(new Step(e.message));
                 VIEW.updateTotalStep(this.steps.length);
@@ -243,13 +240,37 @@ export class Controller {
     async getResources(){
         let resources;
         try {
+            let current_security_path_level = null;
+            try {
+                const security_patch = await this.deviceManager.adb.webusb.getProp("ro.build.version.security_patch");
+                //WDebug.log('security_patch', security_patch)
+                current_security_path_level = parseInt(security_patch.replace(/-/g, ''), 10);
+                WDebug.log("current_security_path_level", current_security_path_level);
+
+            } catch(ee) {
+                WDebug.log("Security patch Error");
+                current_security_path_level = null;
+            }
+
             resources = await (await fetch(`resources/${this.model}.json`)).json();
-        } catch (e) {}
+            if (current_security_path_level != null && typeof resources.security_patch_level != 'undefined') {
+                WDebug.log("EOS Rom has security patch ");
+                const new_security_path_level = parseInt(resources.security_patch_level.replace(/-/g, ''), 10);
+                if (current_security_path_level > new_security_path_level) {
+                    WDebug.log("Bypass lock procedure", `resources/${this.model}-safe.json`);
+                    resources = await (await fetch(`resources/${this.model}-safe.json`)).json();
+                }
+            }
+        } catch (e) {
+            WDebug.log("getRessources Error");
+            console.log(e)
+        }
         if(!resources){
             throw Error('device-model-not-supported');
         }
         return resources;
     }
+
     setResources(resources){
         this.resources = resources;
         if (this.resources.steps) {
