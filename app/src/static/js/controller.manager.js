@@ -198,6 +198,8 @@ export class Controller {
                     console.error(e); // K1ZFP TODO
                     return false;
                 }
+            case Command.CMD_TYPE.format:
+                return this.deviceManager.for(cmd.partition);
             default:
                 WDebug.log(`try unknown command ${cmd.command}`)
                 await this.deviceManager.runCommand(cmd.command);
@@ -206,7 +208,7 @@ export class Controller {
     }
 
     async onDeviceConnected() {
-
+        
         const serialNumber = this.deviceManager.getSerialNumber();
         const productName = this.deviceManager.getProductName();
         const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected(serialNumber);

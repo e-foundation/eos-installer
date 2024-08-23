@@ -9,7 +9,8 @@ export class Command {
         lock: 'lock',
         connect: 'connect',
         reboot: 'reboot',
-        downloading: 'downloading',
+        download: 'download',
+        format: 'format'
     };
 
     constructor(cmd) {
@@ -59,6 +60,10 @@ export class Command {
                     this.type = Command.CMD_TYPE.lock;
                 }
                 break;
+            case 'format':
+                this.partition = res[1];
+                this.type = Command.CMD_TYPE.format;
+                //"format md_udc",
         }
     }
 }
