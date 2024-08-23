@@ -143,14 +143,10 @@ export class Controller {
                     } catch (e) {
                     }
                 }
-                 if (!isUnlocked) {
-                    WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName());
+                WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName() + " isUnlocked = " + isUnlocked);
+                if (!isUnlocked) {
                     try {
-                        if (this.deviceManager.adb.getProductName() === "Teracube_2e") { //K1ZFP Hardcoded behavior
-                            this.deviceManager.unlock(cmd.command);
-                        } else {
-                            await this.deviceManager.unlock(cmd.command);
-                        }
+                        this.deviceManager.unlock(cmd.command); // Do not await thus display unlocking screen
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
                         if (e.bootloaderMessage?.includes("already")) {
@@ -159,11 +155,13 @@ export class Controller {
                             //K1ZFP TODO
                         }
                     }
+                } else {
+                    WDebug.log("The phone is not locked - bypass lock process");
+                    this.currentIndex++;
                 }
                 return true;
             case Command.CMD_TYPE.lock:
                 let isLocked = false;
-                let is_teracube = this.deviceManager.adb.getProductName() === "Teracube_2e"; // K1ZFP Hard coded behavior
                 if (cmd.partition) {
                     try {
                         isLocked = !(await this.deviceManager.getUnlocked(cmd.partition));
@@ -171,14 +169,8 @@ export class Controller {
                     }
                 }
                 if (!isLocked) {
-                    //try command
                     try {
-                        if (is_teracube) {
-                            this.deviceManager.lock(cmd.command);
-                        } else {
-                            await this.deviceManager.lock(cmd.command);
-                        }
-                        isLocked = true; // Assumes lock works
+                        this.deviceManager.lock(cmd.command); // Do not await thus display unlocking screen
                     } catch (e) {
                         //on some device, check unlocked does not work but when we try the command, it throws an error with "already locked"
                         if (e.bootloaderMessage?.includes("already")) {
@@ -223,7 +215,10 @@ export class Controller {
             this.model = productName;
             WDebug.log("ControllerManager Model:", this.model);
             try {
-                const resources = await this.getResources();
+                let resources = await this.getResources(false);
+                if (resources == null)
+                    resources = await this.getResources(true);
+                
                 if(resources.android){
                     VIEW.updateData('android-version-required', resources.android);
                     await this.checkAndroidVersion(resources.android);
@@ -245,8 +240,9 @@ export class Controller {
             }
         }
     }
-    async getResources(){
-        let resources;
+    async getResources(override){
+
+        let resources = null;
         try {
             let current_security_path_level = null;
             try {
@@ -260,7 +256,13 @@ export class Controller {
                 current_security_path_level = null;
             }
 
-            const this_model = this.deviceManager.adb.webusb.device;
+            let this_model = this.deviceManager.adb.webusb.device;
+            if (override) {
+                // K1ZFP Manage here model override
+                // Official ROM teracube 2020 returns Teracube_2e but eos ROM return zirconia
+                if (this_model == "zirconia") this_model = "Teracube_2e";
+            }
+
             resources = await (await fetch(`resources/${this_model}.json`)).json();
             if (current_security_path_level != null && typeof resources.security_patch_level != 'undefined') {
                 WDebug.log("EOS Rom has security patch ");
@@ -271,12 +273,12 @@ export class Controller {
                 }
             }
         } catch (e) {
+            resources = null;
             WDebug.log("getRessources Error");
-            console.log(e)
+            if (override)
+                throw Error('device-model-not-supported');
         }
-        if(!resources){
-            throw Error('device-model-not-supported');
-        }
+
         return resources;
     }
 
