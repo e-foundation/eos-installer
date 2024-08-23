@@ -1,4 +1,6 @@
 {
+  "UNUSED___security_patch_level": "2020-04-05",
+  "description" : "Teracube 2e (2021 emerald)",
   "steps": [
     {
       "mode": "bootloader",
@@ -7,7 +9,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking-teracube",
+      "id": "unlocking-teracube-v2",
       "needUserGesture": true
     },
     {
@@ -30,8 +32,13 @@
         "flash sspm_a sspm.img",
         "flash scp_a scp.img",
         "flash spmfw_a spmfw.img",
-        "flash md1img_a md1img.img --set-active=a"
+        "flash md1img_a md1img.img --set-active=a",
+        "flashing lock unlocked"
       ]
+    },
+    {
+      "id": "locking-teracube-v2",
+      "needUserGesture": true
     },
     {
       "mode": "bootloader",
@@ -49,9 +56,9 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.2-s-20240715417774-stable-emerald.zip",
-      "name": "Teracube_2e installer",
-      "unzip": true
+     "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.2-s-20240715417774-stable-emerald.zip",
+     "name": "Teracube 2e (2021 emerald) installer",
+     "unzip": true
     }
   ]
 }

@@ -1,0 +1,57 @@
+{
+  "UNUSED___security_patch_level": "2020-04-05",
+  "description" : "Teracube 2e (2020)",
+  "steps": [
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-teracube-v1",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",  
+      "command": [
+        
+        "erase userdata",
+        
+        "flash preloader preloader_zirconia.bin",
+        "flash lk lk.img",
+        "flash md1img md1img.img",
+        "flash logo logo.bin",
+        "flash scp1 scp.img",
+        "flash scp2 scp.img",
+        "flash sspm_1 sspm.img",
+        "flash sspm_2 sspm.img",
+        "flash spmfw spmfw.img",
+        "flash tee1 tee.img",
+        "flash tee2 tee.img",
+        "flash boot boot.img",
+        "flash dtbo dtbo.img",
+        "flash recovery recovery.img",
+        "flash vbmeta vbmeta.img",
+        "flash vbmeta_system vbmeta_system.img",
+        "flash vbmeta_vendor vbmeta_vendor.img",
+        "flash super super.img",
+        "reboot"
+      ]
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+     "path": "https://images.ecloud.global/stable/2e/IMG-e-2.2-s-20240715417774-stable-zirconia.zip",
+     "name": "Teracube 2e (2020) installer",
+     "unzip": true
+    }
+  ]
+}

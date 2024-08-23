@@ -36,9 +36,16 @@ export class ADB extends Device {
             if (adbWebBackend) {
                 let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js
                 await adbDevice.connect();
-                //K1ZFP TODO the build ID is available here(await adbDevice.getProp("ro.build.id"));
                 this.device = adbWebBackend._device;
                 this.webusb = adbDevice;
+
+                WDebug.log("----------------------------------");
+                WDebug.log("Model", adbDevice.model);
+                WDebug.log("product", adbDevice.product);
+                WDebug.log("Name", adbDevice.name);
+                WDebug.log(">Device (codename)", adbDevice.device); // codemane
+                WDebug.log("----------------------------------");
+
                 return true;
             } else {
                 ErrorManager.displayError('Error','no device found');

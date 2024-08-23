@@ -199,7 +199,13 @@ export class Controller {
                     return false;
                 }
             case Command.CMD_TYPE.format:
-                return this.deviceManager.for(cmd.partition);
+                try {
+                    this.deviceManager.for(cmd.partition);
+                } catch (e) {
+                    console.error(e); // K1ZFP TODO
+                }
+                return true;
+
             default:
                 WDebug.log(`try unknown command ${cmd.command}`)
                 await this.deviceManager.runCommand(cmd.command);
@@ -208,13 +214,13 @@ export class Controller {
     }
 
     async onDeviceConnected() {
-        
+
         const serialNumber = this.deviceManager.getSerialNumber();
         const productName = this.deviceManager.getProductName();
         const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected(serialNumber);
         if (!wasAlreadyConnected) {
             VIEW.updateData('product-name', productName);
-            this.model = productName.toLowerCase().replace(/[ |_]/g, '');
+            this.model = productName;
             WDebug.log("ControllerManager Model:", this.model);
             try {
                 const resources = await this.getResources();
@@ -254,13 +260,14 @@ export class Controller {
                 current_security_path_level = null;
             }
 
-            resources = await (await fetch(`resources/${this.model}.json`)).json();
+            const this_model = this.deviceManager.adb.webusb.device;
+            resources = await (await fetch(`resources/${this_model}.json`)).json();
             if (current_security_path_level != null && typeof resources.security_patch_level != 'undefined') {
                 WDebug.log("EOS Rom has security patch ");
                 const new_security_path_level = parseInt(resources.security_patch_level.replace(/-/g, ''), 10);
                 if (current_security_path_level > new_security_path_level) {
-                    WDebug.log("Bypass lock procedure", `resources/${this.model}-safe.json`);
-                    resources = await (await fetch(`resources/${this.model}-safe.json`)).json();
+                    WDebug.log("Bypass lock procedure", `resources/${this_model}-safe.json`);
+                    resources = await (await fetch(`resources/${this_model}-safe.json`)).json();
                 }
             }
         } catch (e) {

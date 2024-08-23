@@ -1,0 +1,80 @@
+{
+  "android": 13,
+  "steps": [
+    {
+      "command": "reboot bootloader"
+    },
+    {
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-pixel",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
+      "command": [
+        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-flame.img",
+        "flash boot recovery-e-2.2-t-20240717417775-dev-flame.img"
+      ]
+    },
+    {
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
+      "command": "sideload rom.zip"
+    },
+    {
+      "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "erase avb_custom_key",
+        "flash avb_custom_key pkmd_pixel.bin",
+        "reboot"
+      ],
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete",
+      "needUserGesture": true
+    },
+    {
+      "id": "help-us-improve-the-tool"
+    }
+  ],
+  "folder": [
+    {
+      "name": "recovery.img",
+      "path": "assets/sources/flame/recovery-IMG-e-2.2-t-20240717417775-dev-flame.zip",
+      "unzip": true
+    },
+    {
+      "name": "rom.zip",
+      "path": "assets/sources/flame/e-2.2-t-20240717417775-dev-flame.zip"
+    },
+    {
+      "name": "pkmd_pixel.bin",
+      "path": "assets/sources/flame/pkmd_pixel.bin"
+    }
+  ]
+}
