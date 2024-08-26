@@ -7,7 +7,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking",
+      "id": "unlocking-fp3",
       "needUserGesture": true
     },
     {
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "id": "locking",
+      "id": "locking-fp3",
       "needUserGesture": true
     },
     {

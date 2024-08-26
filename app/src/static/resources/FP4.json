@@ -1,4 +1,5 @@
 {
+  "security_patch_level": "2024-06-05",
   "steps": [
     {
       "mode": "bootloader",
@@ -7,7 +8,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking",
+      "id": "unlocking-fp4",
       "needUserGesture": true
     },
     {
@@ -30,7 +31,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking",
+      "id": "unlocking-fp4",
       "needUserGesture": true
     },
     {
@@ -99,14 +100,13 @@
           "flash xbl_config_a xbl_config.img",
           "flash xbl_config_b xbl_config.img",
           "flash core_nhlos_b core_nhlos.img",
-          "flash core_nhlos_a core_nhlos.img",
+          "flash core_nhlos_a core_nhlos.img --set-active=a",
           "erase userdata",
           "erase metadata",
-          "--set-active=a",
           "flashing lock"]
         },
         {
-          "id": "locking",
+          "id": "locking-fp4",
           "needUserGesture": true
         },
         {
@@ -129,7 +129,7 @@
           "needUserGesture": true
         },
         {
-          "id": "unlocking",
+          "id": "locking-fp4",
           "needUserGesture": true
         },
         {
@@ -144,7 +144,7 @@
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "assets/sources/fp4/IMG-e-2.1-t-20240603406607-stable-FP4.zip"
+      "path": "https://images.ecloud.global/stable/FP4/IMG-e-2.2-t-20240715417772-stable-FP4.zip"
     }
   ]
 }

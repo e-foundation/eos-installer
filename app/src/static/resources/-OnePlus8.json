@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "https://images.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
+      "path": "instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
       "unzip": true
     },
     {
       "name": "rom.zip",
-      "path": "https://images.ecloud.global/dev/instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
+      "path": "instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
     }
   ]
 }

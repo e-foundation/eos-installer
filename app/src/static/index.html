@@ -216,6 +216,40 @@
         </div>
     </div>
     <!-- Start UNLOCKING -->
+    <!-- FP3-->
+    <div id="unlocking-fp3" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-fp3')"></button>
+        </div>
+    </div>
+    <!-- FP4-->
+    <div id="unlocking-fp4" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-fp4')"></button>
+        </div>
+    </div>
     <!-- Teracube -->
     <div id="unlocking-teracube-v1" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
@@ -288,6 +322,7 @@
             </div>
         </div>
     </div>
+    <!-- Start Recovery-->
     <div id="bootloader-to-recovery-manually" class="card bootloader-to-recovery-manually inactive">
         <div class="card-header" data-translate="bootloader-to-recovery-manually"></div>
         <div class="card-body">
@@ -300,6 +335,8 @@
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
         </div>
     </div>
+    <!-- End Recovery-->
+    
     <div id="format-device" class="card inactive">
         <div class="card-header" data-translate="format-device"></div>
         <div class="card-body">
@@ -351,6 +388,34 @@
         </div>
     </div>
     <!-- Start LOCKING -->
+    <!-- FP3-->
+    <div id="locking-fp3" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp3')"></button>
+        </div>
+    </div>
+    <!-- FP4 -->
+    <div id="locking-fp4" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp4')"></button>
+        </div>
+    </div>
     <!-- Teracube -->
     <div id="locking-teracube-v2" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
