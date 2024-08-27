@@ -104,7 +104,7 @@
     "unlocking-instructions-1": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> and <kbd>Volume Down</kbd> to navigate.",
     "unlocking-instructions-1-a": "Use the button <kbd>Power</kbd> to confirm.",
     "unlocking-instructions-2": "The device will automatically reboot.",
-    "unlocking-instructions-2-a": "Y<b>Wait until the bootloader screen is visible again</b> before going to the next step",
+    "unlocking-instructions-2-a": "<b>Wait until the bootloader screen is visible again</b> before going to the next step",
     "unlocking-instructions-3": "Since the device <b>resets completely</b>, you will need to <b>re-enable USB debugging</b>.",
     "unlocking-instructions-4": "Pass the setup on the phone and click on next",
     "unlocking-instructions-1-teracube": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> button.",
