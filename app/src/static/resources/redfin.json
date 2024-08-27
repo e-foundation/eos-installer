@@ -1,7 +1,7 @@
 {
   "android": 13,
   "steps": [
-    {
+    {  
       "command": "reboot bootloader"
     },
     {
@@ -11,13 +11,16 @@
     },
     {
       "id": "unlocking-pixel",
-      "needUserGesture": true
+      "needUserGesture": true,
+      "command": "delay 15"
     },
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-flame.img",
-        "flash boot recovery-e-2.2-t-20240717417775-dev-flame.img"
+        
+        "flash dtbo dtbo-e-2.2-t-20240715417772-stable-redfin.img",
+	      "flash boot boot-e-2.2-t-20240715417772-stable-redfin.img",
+        "flash vendor_boot recovery-e-2.2-t-20240715417772-stable-redfin.img"
       ]
     },
     {
@@ -34,7 +37,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload rom.zip"
+      "command": "sideload pixel-5-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -46,8 +49,12 @@
         "connect bootloader",
         "erase avb_custom_key",
         "flash avb_custom_key pkmd_pixel.bin",
-        "reboot"
+        "flashing lock unlocked"
       ],
+      "needUserGesture": true
+    },
+    {
+      "id": "locking-pixel",
       "needUserGesture": true
     },
     {
@@ -55,26 +62,22 @@
       "needUserGesture": true
     },
     {
-      "id": "installation-complete",
-      "needUserGesture": true
-    },
-    {
-      "id": "help-us-improve-the-tool"
+      "id": "installation-complete"
     }
   ],
   "folder": [
     {
-      "name": "recovery.img",
-      "path": "assets/sources/flame/recovery-IMG-e-2.2-t-20240717417775-dev-flame.zip",
+      "name": "pixel-5-recovery.img",
+      "path": "https://images.ecloud.global/stable/redfin/recovery-IMG-e-2.2-t-20240715417772-stable-redfin.zip",
       "unzip": true
     },
     {
-      "name": "rom.zip",
-      "path": "assets/sources/flame/e-2.2-t-20240717417775-dev-flame.zip"
+      "name": "pixel-5-rom.zip",
+      "path": "https://images.ecloud.global/stable/redfin/e-2.2-t-20240715417772-stable-redfin.zip"    
     },
     {
       "name": "pkmd_pixel.bin",
-      "path": "assets/sources/flame/pkmd_pixel.bin"
+      "path": "https://images.ecloud.global/stable/pkmd_pixel.bin"
     }
   ]
 }

@@ -277,7 +277,7 @@
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v2')"></button>
         </div>
     </div>
-    <!-- Pixel -->
+    <!-- Pixel 4*, 5-->
     <div id="unlocking-pixel" class="card inactive">
         <div class="card-header" data-translate="Unlocking"></div>
         <div class="card-body">
@@ -367,13 +367,12 @@
     <div id="sideload" class="card inactive">
         <div class="card-header" data-translate="sideload"></div>
         <div class="card-body">
-            <p data-translate="sideload-instructions-1"></p>
-            <p data-translate="sideload-instructions-2"></p>
+            <p data-translate="this-might-take-some-time-please-be-patient"></p>
+            <div class="text-center large-padding">
+                <p class="installing-progress"></p>
+                <progress class="installing-progress-bar" max="100"></progress>
+            </div>
             <p data-translate="sideload-instructions-3"></p>
-            <p data-translate="sideload-instructions-4"></p>
-        </div>
-        <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
     <div id="sideload-ended" class="card inactive">
@@ -428,6 +427,20 @@
         </div>
         <div class="card-footer">
             <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'locking-teracube-v2')"></button>
+        </div>
+    </div>
+    <!-- Pixel 5 -->
+    <div id="locking-pixel" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="locking-instructions-4"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-pixel')"></button>
         </div>
     </div>
     <!-- All other -->

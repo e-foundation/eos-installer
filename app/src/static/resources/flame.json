@@ -17,8 +17,8 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.2-t-20240716417775-dev-sunfish.img",
-        "flash boot recovery-e-2.2-t-20240716417775-dev-sunfish.img"
+        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-flame.img",
+        "flash boot recovery-e-2.2-t-20240717417775-dev-flame.img"
       ]
     },
     {
@@ -35,7 +35,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload pixel-4a-rom.zip"
+      "command": "sideload pixel-4-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -63,13 +63,13 @@
   ],
   "folder": [
     {
-      "name": "pixel-4a-recovery.img",
-      "path": "https://images.ecloud.global/dev/sunfish/recovery-IMG-e-2.2-t-20240716417775-dev-sunfish.zip",
+      "name": "pixel-4-recovery.img",
+      "path": "https://images.ecloud.global/dev/flame/recovery-IMG-e-2.2-t-20240717417775-dev-flame.zip",
       "unzip": true
     },
     {
-      "name": "pixel-4a-rom.zip",
-      "path": "assets/e-2.2-t-20240716417775-dev-sunfish.zip"
+      "name": "pixel-4-rom.zip",
+      "path": "https://images.ecloud.global/dev/flame/e-2.2-t-20240717417775-dev-flame.zip"
     }
   ]
 }

@@ -236,6 +236,7 @@ export class Controller {
     }
     async checkAndroidVersion(versionRequired){
         const android = await this.deviceManager.getAndroidVersion();
+        WDebug.log("current android version:", android);
         if( android) {
             VIEW.updateData('android-version', android);
             if(android < versionRequired){
