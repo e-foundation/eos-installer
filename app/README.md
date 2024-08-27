@@ -145,7 +145,7 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
  }
   ```
 
-* android: Android version (optional) => Display warning if version mistach (Installed vs easy installer one)
+* android: Android version (optional) => Display warning if version mistach (this is the minimal current version than needs to be present in order to continue process see: Before following these instructions please ensure that the device is on the latest Android 13.0.0 firmware))
 * security_patch_level (optional) => Allow to load safe procedure descriptor file (postfixed with '-safe' eg: 'teracube2e.json vs teracube2e-safe.json') that contain a specific install process (eg does not lock the bootloader if current_security_path_level > new_security_path_level new_security_path_level is the one the json file)
 * folder: must be an array
 
