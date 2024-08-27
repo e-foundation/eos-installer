@@ -197,6 +197,9 @@ export class Controller {
                     console.error(e); // K1ZFP TODO
                 }
                 return true;
+            case Command.CMD_TYPE.delay:
+                await new Promise(resolve => setTimeout(resolve, cmd.partition));
+                return true;
 
             default:
                 WDebug.log(`try unknown command ${cmd.command}`)
