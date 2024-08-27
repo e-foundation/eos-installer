@@ -11,13 +11,14 @@
     },
     {
       "id": "unlocking-pixel",
-      "needUserGesture": true
+      "needUserGesture": true,
+      "command": "delay 15"
     },
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.1-t-20240605406922-dev-coral.img",
-        "flash boot recovery-e-2.1-t-20240605406922-dev-coral.img"
+        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-coral.img",
+        "flash boot recovery-e-2.2-t-20240717417775-dev-coral.img"
       ]
     },
     {
@@ -34,7 +35,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload rom.zip"
+      "command": "sideload pixel4-xl-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -44,8 +45,6 @@
       "id": "connect-bootloader",
       "command": [
         "connect bootloader",
-        "erase avb_custom_key",
-        "flash avb_custom_key pkmd_pixel.bin",
         "reboot"
       ],
       "needUserGesture": true
@@ -64,17 +63,13 @@
   ],
   "folder": [
     {
-      "name": "recovery.img",
-      "path": "assets/sources/coral/recovery-IMG-e-2.1-t-20240605406922-dev-coral.zip",
+      "name": "pixel4-xl-recovery.img",
+      "path": "https://images.ecloud.global/dev/coral/recovery-IMG-e-2.2-t-20240717417775-dev-coral.zip",
       "unzip": true
     },
     {
-      "name": "rom.zip",
-      "path": "assets/sources/coral/e-2.1-t-20240605406922-dev-coral.zip"
-    },
-    {
-      "name": "pkmd_pixel.bin",
-      "path": "assets/sources/coral/pkmd_pixel.bin"
+      "name": "pixel4-xl-rom.zip",
+      "path": "assets/e-2.2-t-20240717417775-dev-coral.zip"
     }
   ]
 }

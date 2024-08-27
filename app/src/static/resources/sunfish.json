@@ -34,7 +34,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload rom.zip"
+      "command": "sideload pixel-4a-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -62,13 +62,13 @@
   ],
   "folder": [
     {
-      "name": "recovery.img",
-      "path": "assets/sources/sunfish/recovery-IMG-e-2.2-t-20240716417775-dev-sunfish.zip",
+      "name": "pixel-4a-recovery.img",
+      "path": "https://images.ecloud.global/dev/sunfish/recovery-IMG-e-2.2-t-20240716417775-dev-sunfish.zip",
       "unzip": true
     },
     {
-      "name": "rom.zip",
-      "path": "assets/sources/sunfish/e-2.2-t-20240716417775-dev-sunfish.zip"
+      "name": "pixel-4a-rom.zip",
+      "path": "assets/e-2.2-t-20240716417775-dev-sunfish.zip"
     }
   ]
 }
