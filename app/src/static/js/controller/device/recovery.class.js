@@ -27,11 +27,6 @@ export class Recovery extends Device {
 
     async connect() {
         try {
-            console.log("------------>>>", this);
-//K1ZFP REMOVE THIS CLASS and use only ADB2
-            //VIEW.controller
-            //await this.webusb.dispose();
-
             if (this.device && this.device.isConnected) {
             } else {
                 this.webusb = await Adb.open("WebUSB");
