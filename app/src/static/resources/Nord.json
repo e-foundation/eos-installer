@@ -1,11 +1,14 @@
 {
+  "android": 12,
   "steps": [
     {
-      "mode": "bootloader",
+      "command": "reboot bootloader"
+    },
+    {
       "id": "connect-bootloader",
       "command": [
         "connect bootloader",
-        "oem unlock unlocked --skip-reboot"
+        "oem unlock"
       ],
       "needUserGesture": true
     },
@@ -35,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.1-s-20240603406609-stable-avicii.img",
-        "flash vbmeta vbmeta-e-2.1-s-20240603406609-stable-avicii.img",
-        "flash recovery recovery-e-2.1-s-20240603406609-stable-avicii.img"
+        "flash dtbo dtbo-e-2.2-t-20240716417775-dev-avicii.img",
+        "flash vbmeta vbmeta-e-2.2-t-20240716417775-dev-avicii.img",
+        "flash recovery recovery-e-2.2-t-20240716417775-dev-avicii.img"
       ]
     },
     {
@@ -54,10 +57,18 @@
     },
     {
       "id": "sideload",
-      "command": "sideload rom.zip"
+      "command": "sideload oneplus-nord-rom.zip"
     },
     {
       "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "reboot"
+      ],
       "needUserGesture": true
     },
     {
@@ -65,18 +76,22 @@
       "needUserGesture": true
     },
     {
-      "id": "installation-complete"
+      "id": "installation-complete",
+      "needUserGesture": true
+    },
+    {
+      "id": "help-us-improve-the-tool"
     }
   ],
   "folder": [
     {
-      "name": "recovery.img",
-      "path": "assets/sources/avicii/recovery-IMG-e-2.1-s-20240603406609-stable-avicii.zip",
+      "name": "One+ Nord recovery installer",
+      "path": "https://images.ecloud.global/dev/avicii/recovery-IMG-e-2.2-t-20240716417775-dev-avicii.zip",
       "unzip": true
     },
     {
-      "name": "rom.zip",
-      "path": "assets/sources/avicii/e-2.1-s-20240603406609-stable-avicii.zip"
+      "name": "oneplus-nord-rom.zip",
+      "path": "https://images.ecloud.global/stable/avicii/e-2.2-s-20240715417774-stable-avicii.zip"
     }
   ]
 }

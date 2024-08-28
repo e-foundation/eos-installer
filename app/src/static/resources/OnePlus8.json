@@ -13,7 +13,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking",
+      "id": "unlocking-oneplus",
       "needUserGesture": true
     },
     {
@@ -57,7 +57,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload rom.zip"
+      "command": "sideload oneplus-8-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
+      "path": "https://images.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
       "unzip": true
     },
     {
-      "name": "rom.zip",
-      "path": "instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
+      "name": "oneplus-8-rom.zip",
+      "path": "https://images.ecloud.global/dev/instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
     }
   ]
 }
