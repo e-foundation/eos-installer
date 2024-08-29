@@ -9,7 +9,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking",
+      "id": "unlocking-gs290",
       "needUserGesture": true
     },
     {
@@ -32,6 +32,7 @@
         "flash tee1 trustzone1.bin",
         "flash tee2 trustzone2.bin",
         "flash preloader preloader.img",
+        "", 
         "reboot adb"
       ]
     },
@@ -47,7 +48,7 @@
     {
       "name": "GS290 installer",
       "unzip": true,
-      "path": "assets/sources/GS290/e-2.1-s-20240603406609-stable-GS290.zip"
+      "path": "https://images.ecloud.global/stable/GS290/IMG-e-2.2-s-20240715417774-stable-GS290.zip"
     }
   ]
 }

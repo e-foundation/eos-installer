@@ -94,6 +94,7 @@
     "this-might-take-some-time-please-be-patient": "Cela peut prendre du temps, veuillez être patient",
     "unlocking-instructions-1": "Votre téléphone demande un déverrouillage. Sélectionnez <code>unlock bootloader</code> en utilisant les boutons <kbd>Volume Up</kbd> and <kbd>Volume Down</kbd> pour naviguer.",
     "unlocking-instructions-1-a": "Utiliser le bouton <kbd>Power</kbd> pour confirmer.",
+    "unlocking-instructions-1-b": "Votre téléphone demade à être déverrouilé. Selectionner <code>unlock bootloader</code> en utilisant le bouton <kbd>Volume Up</kbd>.",
     "unlocking-instructions-2": "L'appareil va redémarrer. Il devrait maintenant être déverrouillé.",
     "unlocking-instructions-2-a": "<b>Attehdez que l'écran du bootloader soir à nouveau visible</b> avant d'aller à l'étape suivante.",
     "unlocking-instructions-3": "Comme l'appareil <b>réinitialise complètement</b>, vous devrez <b>réactiver le débogage USB</b>.",

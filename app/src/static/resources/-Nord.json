@@ -1,0 +1,98 @@
+{
+    "android": 12,
+    "steps": [
+      {
+        "command": "reboot bootloader"
+      },
+      {
+        "id": "connect-bootloader",
+        "command": [
+          "connect bootloader",
+          "oem unlock"
+        ],
+        "needUserGesture": true
+      },
+      {
+        "id": "unlocking",
+        "needUserGesture": true
+      },
+      {
+        "id": "activate-developer-options",
+        "needUserGesture": true
+      },
+      {
+        "id": "enable-usb-file-transfer",
+        "needUserGesture": true
+      },
+      {
+        "id": "device-detection",
+        "command": "connect adb",
+        "needUserGesture": true
+      },
+      {
+        "mode": "bootloader",
+        "id": "connect-bootloader",
+        "command": "connect bootloader",
+        "needUserGesture": true
+      },
+      {
+        "id": "flashing",
+        "command": [
+          "flash dtbo dtbo-e-2.2-t-20240716417775-dev-avicii.img",
+          "flash vbmeta vbmeta-e-2.2-t-20240716417775-dev-avicii.img",
+          "flash recovery recovery-e-2.2-t-20240716417775-dev-avicii.img"
+        ]
+      },
+      {
+        "id": "bootloader-to-recovery-manually",
+        "needUserGesture": true
+      },
+      {
+        "id": "format-device",
+        "needUserGesture": true
+      },
+      {
+        "id": "go-to-apply-update",
+        "needUserGesture": true
+      },
+      {
+        "id": "sideload",
+        "command": "sideload oneplus-nord-rom.zip"
+      },
+      {
+        "id": "sideload-ended",
+        "needUserGesture": true
+      },
+      {
+        "id": "connect-bootloader",
+        "command": [
+          "connect bootloader",
+          "reboot"
+        ],
+        "needUserGesture": true
+      },
+      {
+        "id": "murena-cloud-account",
+        "needUserGesture": true
+      },
+      {
+        "id": "installation-complete",
+        "needUserGesture": true
+      },
+      {
+        "id": "help-us-improve-the-tool"
+      }
+    ],
+    "folder": [
+      {
+        "name": "One+ Nord recovery installer",
+        "path": "https://images.ecloud.global/dev/avicii/recovery-IMG-e-2.2-t-20240716417775-dev-avicii.zip",
+        "unzip": true
+      },
+      {
+        "name": "oneplus-nord-rom.zip",
+        "path": "https://images.ecloud.global/stable/avicii/e-2.2-s-20240715417774-stable-avicii.zip"
+      }
+    ]
+  }
+  

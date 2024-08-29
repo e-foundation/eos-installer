@@ -101,6 +101,7 @@
     "this-might-take-some-time-please-be-patient": "This might take some time please be patient",
     "unlocking-instructions-1": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> and <kbd>Volume Down</kbd> to navigate.",
     "unlocking-instructions-1-a": "Use the button <kbd>Power</kbd> to confirm.",
+    "unlocking-instructions-1-b": "Your phone is asking for an unlock. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> button.",
     "unlocking-instructions-2": "The device will automatically reboot.",
     "unlocking-instructions-2-a": "<b>Wait until the bootloader screen is visible again</b> before going to the next step",
     "unlocking-instructions-3": "Since the device <b>resets completely</b>, you will need to <b>re-enable USB debugging</b>.",
