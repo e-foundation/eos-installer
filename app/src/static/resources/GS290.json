@@ -1,11 +1,9 @@
 {
   "steps": [
-    {
-      "command": "reboot bootloader"
-    },
-    {
+    {  
+      "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "command": ["connect bootloader","flashing unlock unlocked"],
       "needUserGesture": true
     },
     {
@@ -32,7 +30,8 @@
         "flash tee1 trustzone1.bin",
         "flash tee2 trustzone2.bin",
         "flash preloader preloader.img",
-        "", 
+        "erase userdata",
+        "erase metadata",
         "reboot adb"
       ]
     },
