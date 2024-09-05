@@ -97,6 +97,13 @@ export class DeviceManager {
     }
     async connect(mode) {
         this.setMode(mode);
+        if (mode =='recovery') {
+            try {
+                await this.adb.webusb.dispose(); 
+            } catch (e){
+                console.log(e)
+            }
+        }
         return await this.device.connect();
     }
 
@@ -172,6 +179,7 @@ export class DeviceManager {
         if (!blob) {
             throw Error(`error getting blob file ${file}`);
         }
+        
         return await this.device.sideload(blob);
     }
 

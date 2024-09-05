@@ -2359,9 +2359,15 @@ class AdbWebBackend {
         return buffer;
     }
     async dispose() {
-        window.navigator.usb.removeEventListener('disconnect', this.handleDisconnect);
-        this.disconnectEvent.dispose();
-        await this._device.close();
+        try{
+            window.navigator.usb.removeEventListener('disconnect', this.handleDisconnect);
+        } catch(e) {}
+        try {
+            this.disconnectEvent.dispose();
+        } catch (e) {}
+        try {
+            await this._device.close();
+        } catch (e) {}
     }
 }
 

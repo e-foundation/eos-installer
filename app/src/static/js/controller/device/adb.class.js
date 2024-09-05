@@ -71,14 +71,14 @@ export class ADB extends Device {
     }
 
     async runCommand(cmd) {
-        //let shell = await this.webusb.shell();
         WDebug.log("ADB Run command>", cmd);
         return await this.webusb.exec(cmd);
     }
 
     async reboot(mode) {
-        //return await this.webusb.shell(`reboot ${mode}`);
-        return await this.webusb.createStreamAndReadAll(`reboot:${mode}`);
+        const res = await this.webusb.createStreamAndReadAll(`reboot:${mode}`);
+        return res;
+
     }
 
 
