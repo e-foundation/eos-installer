@@ -10,9 +10,25 @@
     <script src="js/lib/webadb/webadb.js"></script>
     <script src="js/lib/webadb/adb.bundle.js"></script>
     <script src="js/viewManager.js"></script>
+    <script>
+        window.onload = function() {
+            if ('usb' in navigator) {
+                // All is fine
+            } else {
+                document.getElementById('compatibility-check').style.display = 'block';
+                document.getElementById('let-s-get-started-button').style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body id="body">
 <div id="process-ctn">
+    <div id="compatibility-check">
+        <div class="popup-compatibility-check">
+            <h2 data-translate="_err_01"></h2>
+            <p data-translate="_err_02"></p>
+        </div>
+    </div>
     <div id="banner">
         <div id="top-banner">
             <b>Installation</b>
@@ -76,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
+        <div class="card-footer" id="let-s-get-started-button">
             <button data-translate="i-m-ready" class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')"></button>
         </div>
     </div>

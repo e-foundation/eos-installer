@@ -1,5 +1,18 @@
 @import "theme.css";
 
+
+#compatibility-check {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+    z-index: 1000;
+}
+
 button.connect {
     background: var(--success-color);
     color: var(--button-text-color);

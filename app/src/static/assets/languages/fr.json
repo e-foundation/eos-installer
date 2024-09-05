@@ -1,4 +1,6 @@
 {
+    "_err_01": "Erreur",
+    "_err_02": "Votre navigateur ne supporte pas Web USB",
     "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Ex 1 :</b> avant d'installer /e/OS Android 12, vous devez mettre à jour vers la dernière version stock d'Android 12",
     "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Ex 2 :</b> ou si vous installez /e/OS Android 11, assurez-vous de mettre à jour vers la dernière version stock d'Android 11",
     "Ex 3: similarly, if you're installing /e/OS Android 11, it should be the latest stock Android 10": "<b>Ex 3 :</b> de même, si vous installez /e/OS Android 11, il doit s'agir de la dernière version stock d'Android 10",
