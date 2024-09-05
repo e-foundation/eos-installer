@@ -1439,6 +1439,7 @@ class AdbPacketDispatcher extends AutoDisposable {
         this._running = true;
         this.receiveLoop();
     }
+
     async createStream(service) {
         if (this.appendNullToServiceString) {
             service += '\0';
@@ -1450,6 +1451,7 @@ class AdbPacketDispatcher extends AutoDisposable {
         this.streams.set(controller.localId, controller);
         return new AdbStream(controller);
     }
+    
     async sendPacket(packetOrCommand, arg0, arg1, payload) {
         var _a;
         let init;
@@ -1469,7 +1471,7 @@ class AdbPacketDispatcher extends AutoDisposable {
             throw new Error('payload too large');
         }
         try {
-            // `AdbPacket.write` writes each packet in two parts
+            // `AdbPacke t.write` writes each packet in two parts
             // Use a lock to prevent packets been interlaced
             await this.sendLock.wait();
             const packet = AdbPacket.create(init, this.calculateChecksum, this.backend);
@@ -1494,7 +1496,7 @@ var AdbCommand;
 (function (AdbCommand) {
     AdbCommand[AdbCommand["Auth"] = 1213486401] = "Auth";
     AdbCommand[AdbCommand["Close"] = 1163086915] = "Close";
-    AdbCommand[AdbCommand["Connect"] = 1314410051] = "Connect";
+    AdbCommand[AdbCommand["Connect"] = 1314410051] = "Connect"; // CNXN
     AdbCommand[AdbCommand["OK"] = 1497451343] = "OK";
     AdbCommand[AdbCommand["Open"] = 1313165391] = "Open";
     AdbCommand[AdbCommand["Write"] = 1163154007] = "Write";
@@ -1660,123 +1662,6 @@ class AdbCommandBase extends AutoDisposable {
         this.adb = adb;
     }
 }
-
-var AdbDemoModeWifiSignalStrength;
-(function (AdbDemoModeWifiSignalStrength) {
-    AdbDemoModeWifiSignalStrength["Hidden"] = "null";
-    AdbDemoModeWifiSignalStrength["Level0"] = "0";
-    AdbDemoModeWifiSignalStrength["Level1"] = "1";
-    AdbDemoModeWifiSignalStrength["Level2"] = "2";
-    AdbDemoModeWifiSignalStrength["Level3"] = "3";
-    AdbDemoModeWifiSignalStrength["Level4"] = "4";
-})(AdbDemoModeWifiSignalStrength || (AdbDemoModeWifiSignalStrength = {}));
-class AdbDemoMode extends AdbCommandBase {
-    async getAllowed() {
-        const result = await this.adb.exec('settings', 'get', 'global', AdbDemoMode.AllowedSettingKey);
-        return result.trim() === '1';
-    }
-    async setAllowed(value) {
-        if (value) {
-            await this.adb.exec('settings', 'put', 'global', AdbDemoMode.AllowedSettingKey, '1');
-        }
-        else {
-            await this.setEnabled(false);
-            await this.adb.exec('settings', 'delete', 'global', AdbDemoMode.AllowedSettingKey);
-        }
-    }
-    async getEnabled() {
-        const result = await this.adb.exec('settings', 'get', 'global', AdbDemoMode.EnabledSettingKey);
-        return result.trim() === '1';
-    }
-    async setEnabled(value) {
-        if (value) {
-            await this.adb.exec('settings', 'put', 'global', AdbDemoMode.EnabledSettingKey, '1');
-        }
-        else {
-            await this.adb.exec('settings', 'delete', 'global', AdbDemoMode.EnabledSettingKey);
-            await this.broadcast('exit');
-        }
-    }
-    async broadcast(command, extra) {
-        await this.adb.exec('am', 'broadcast', '-a', 'com.android.systemui.demo', '-e', 'command', command, ...(extra ? Object.entries(extra).flatMap(([key, value]) => ['-e', key, value]) : []));
-    }
-    async setBatteryLevel(level) {
-        await this.broadcast('battery', { level: level.toString() });
-    }
-    async setBatteryCharging(value) {
-        await this.broadcast('battery', { plugged: value.toString() });
-    }
-    async setPowerSaveMode(value) {
-        await this.broadcast('battery', { powersave: value.toString() });
-    }
-    async setAirplaneMode(show) {
-        await this.broadcast('network', { airplane: show ? 'show' : 'hide' });
-    }
-    async setWifiSignalStrength(value) {
-        await this.broadcast('network', { wifi: 'show', level: value });
-    }
-    async setMobileDataType(value) {
-        for (let i = 0; i < 2; i += 1) {
-            await this.broadcast('network', {
-                mobile: 'show',
-                sims: '1',
-                nosim: 'hide',
-                slot: '0',
-                datatype: value,
-                fully: 'true',
-                roam: 'false',
-                level: '4',
-                inflate: 'false',
-                activity: 'in',
-                carriernetworkchange: 'hide',
-            });
-        }
-    }
-    async setMobileSignalStrength(value) {
-        await this.broadcast('network', { mobile: 'show', level: value });
-    }
-    async setNoSimCardIcon(show) {
-        await this.broadcast('network', { nosim: show ? 'show' : 'hide' });
-    }
-    async setStatusBarMode(mode) {
-        await this.broadcast('bars', { mode });
-    }
-    async setVibrateModeEnabled(value) {
-        // https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/DemoStatusIcons.java;l=103
-        await this.broadcast('status', { volume: value ? 'vibrate' : 'hide' });
-    }
-    async setBluetoothConnected(value) {
-        // https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/DemoStatusIcons.java;l=114
-        await this.broadcast('status', { bluetooth: value ? 'connected' : 'hide' });
-    }
-    async setLocatingIcon(show) {
-        await this.broadcast('status', { location: show ? 'show' : 'hide' });
-    }
-    async setAlarmIcon(show) {
-        await this.broadcast('status', { alarm: show ? 'show' : 'hide' });
-    }
-    async setSyncingIcon(show) {
-        await this.broadcast('status', { sync: show ? 'show' : 'hide' });
-    }
-    async setMuteIcon(show) {
-        await this.broadcast('status', { mute: show ? 'show' : 'hide' });
-    }
-    async setSpeakerPhoneIcon(show) {
-        await this.broadcast('status', { speakerphone: show ? 'show' : 'hide' });
-    }
-    async setNotificationsVisibility(show) {
-        // https://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java;l=3131
-        await this.broadcast('notifications', { visible: show.toString() });
-    }
-    async setTime(hour, minute) {
-        await this.broadcast('clock', { hhmm: `${hour.toString().padStart(2, '0')}${minute.toString().padStart(2, '0')}` });
-    }
-}
-AdbDemoMode.AllowedSettingKey = 'sysui_demo_allowed';
-// Demo Mode actually doesn't have a setting indicates its enablement
-// However Developer Mode menu uses this key
-// So we can only try our best to guess if it's enabled
-AdbDemoMode.EnabledSettingKey = 'sysui_tuner_demo_on';
 
 const Version = new Struct({ littleEndian: true }).uint32('version');
 /*
@@ -2400,6 +2285,7 @@ class AdbWebBackend {
         if (!this._device.opened) {
             await this._device.open();
         }
+
         for (const configuration of this._device.configurations) {
             for (const interface_ of configuration.interfaces) {
                 for (const alternate of interface_.alternates) {
@@ -2492,7 +2378,6 @@ class Adb2 {
         this.packetDispatcher = new AdbPacketDispatcher(backend, logger);
         this.tcpip = new AdbTcpIpCommand(this);
         this.reverse = new AdbReverseCommand(this.packetDispatcher);
-        this.demoMode = new AdbDemoMode(this);
         backend.onDisconnected(this.dispose, this);
     }
     get backend() { return this.packetDispatcher.backend; }
@@ -2641,6 +2526,7 @@ class Adb2 {
         const stream = await this.createStream('sync:');
         return new AdbSync(this, stream);
     }
+    
     async framebuffer() {
         return framebuffer(this);
     }
@@ -2663,4 +2549,207 @@ class Adb2 {
     }
 }
 
-// export { Adb, AdbPropKey };
+class AdbWebBackend3 {
+    constructor(device) {
+        this.disconnectEvent = new EventEmitter();
+        this.onDisconnected = this.disconnectEvent.event;
+        this.handleDisconnect = (e) => {
+            if (e.device === this._device) {
+                this.disconnectEvent.fire();
+            }
+        };
+        this._device = device;
+        window.navigator.usb.addEventListener('disconnect', this.handleDisconnect);
+    }
+    static isSupported() {
+        var _a;
+        return !!((_a = window.navigator) === null || _a === void 0 ? void 0 : _a.usb);
+    }
+
+    static async requestDevice() {
+        try {
+            const device = await navigator.usb.requestDevice({ filters: [WebUsbDeviceFilter] });
+            return new AdbWebBackend3(device);
+        }
+        catch (e) {
+            switch (e.name) {
+                case 'NotFoundError':
+                    return undefined;
+                default:
+                    throw e;
+            }
+        }
+    }
+
+    async connect() {
+        var _a;
+        if (!this._device.opened) {
+            await this._device.open();
+        }
+
+        for (const configuration of this._device.configurations) {
+            for (const interface_ of configuration.interfaces) {
+                for (const alternate of interface_.alternates) {
+                    if (alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode &&
+                        alternate.interfaceClass === WebUsbDeviceFilter.classCode &&
+                        alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode) {
+                        if (((_a = this._device.configuration) === null || _a === void 0 ? void 0 : _a.configurationValue) !== configuration.configurationValue) {
+                            await this._device.selectConfiguration(configuration.configurationValue);
+                        }
+                        if (!interface_.claimed) {
+                            await this._device.claimInterface(interface_.interfaceNumber);
+                        }
+                        if (interface_.alternate.alternateSetting !== alternate.alternateSetting) {
+                            await this._device.selectAlternateInterface(interface_.interfaceNumber, alternate.alternateSetting);
+                        }
+                        for (const endpoint of alternate.endpoints) {
+                            switch (endpoint.direction) {
+                                case 'in':
+                                    this._inEndpointNumber = endpoint.endpointNumber;
+                                    if (this._outEndpointNumber !== undefined) {
+                                        return;
+                                    }
+                                    break;
+                                case 'out':
+                                    this._outEndpointNumber = endpoint.endpointNumber;
+                                    if (this._inEndpointNumber !== undefined) {
+                                        return;
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        throw new Error('Unknown error');
+    }
+    encodeUtf8(input) {
+        return encodeUtf8(input);
+    }
+    decodeUtf8(buffer) {
+        return decodeUtf8(buffer);
+    }
+    async write(buffer) {
+        await this._device.transferOut(this._outEndpointNumber, buffer);
+    }
+    async read(length) {
+        const result = await this._device.transferIn(this._inEndpointNumber, length);
+        if (result.status === 'stall') {
+            await this._device.clearHalt('in', this._inEndpointNumber);
+        }
+        const { buffer } = result.data;
+        return buffer;
+    }
+
+    async read2(length) {
+        const result = await this._device.transferIn(this._inEndpointNumber, length);
+        if (result.status === 'stall') {
+            await this._device.clearHalt('in', this._inEndpointNumber);
+        }
+        const { buffer } = result.data;
+
+        const stream = new BufferedStream({
+            read(length) {
+                return buffer;                
+            }
+        });
+        return AdbPacketStruct.deserialize({
+            read: stream.read.bind(stream),
+            decodeUtf8: decodeUtf8.bind(this),
+            encodeUtf8: encodeUtf8.bind(this),
+        });
+    }
+    async dispose() {
+        window.navigator.usb.removeEventListener('disconnect', this.handleDisconnect);
+        this.disconnectEvent.dispose();
+        await this._device.close();
+    }
+}
+
+class Adb3 { 
+    // This one is dedicated for adb sidelaod
+    constructor(backend) {
+        this._connected = false;
+        this.backend = backend;
+        this.sendLock = new AutoResetEvent();
+        this.initializers = new AsyncOperationManager(1);
+    }
+    get connected() { return this._connected; }
+    async connect() {
+        var _a, _b;
+        await ((_b = (_a = this.backend).connect) === null || _b === void 0 ? void 0 : _b.call(_a));
+        this.calculateChecksum = true;
+        this.appendNullToServiceString = true;
+        const version = 0x01000001;
+        const maxPayloadSize = 0x100000;
+  
+        await this.sendPacket(AdbCommand.Connect, version, maxPayloadSize, "host::\0");
+        const r = await AdbPacket.read(this.backend);
+        if (r.command == AdbCommand.Connect) {
+            //
+        }
+    }
+    parseBanner(banner) {
+        this._features = [];
+        const pieces = banner.split('::');
+        if (pieces.length > 1) {
+            const props = pieces[1];
+            for (const prop of props.split(';')) {
+                if (!prop) {
+                    continue;
+                }
+                const keyValue = prop.split('=');
+                if (keyValue.length !== 2) {
+                    continue;
+                }
+                const [key, value] = keyValue;
+                switch (key) {
+                    case AdbPropKey.Product:
+                        this._product = value;
+                        break;
+                    case AdbPropKey.Model:
+                        this._model = value;
+                        break;
+                    case AdbPropKey.Device:
+                        this._device = value;
+                        break;
+                    case AdbPropKey.Features:
+                        this._features = value.split(',');
+                        break;
+                }
+            }
+        }
+    }
+    spawn(command, ...args) {
+        // TODO: use shell protocol
+        return this.createStream(`shell:${command} ${args.join(' ')}`);
+    }
+    exec(command, ...args) {
+        // TODO: use shell protocol
+        return this.createStreamAndReadAll(`shell:${command} ${args.join(' ')}`);
+    }
+    async getProp(key) {
+        const output = await this.exec('getprop', key);
+        return output.trim();
+    }
+    
+    async createStream(service) {
+        const localId = 1;
+        service+='\0';
+        let remoteId;
+        await this.sendPacket(AdbCommand.Open, localId, 0, service);
+        //const remoteId = await initializer;
+        const r = await AdbPacket.read(this.backend);
+        if (r.command == AdbCommand.OK) {
+            remoteId = r.arg0;
+            const controller = new AdbStreamController(localId, remoteId, this);
+            return new AdbStream(controller);
+        }
+    }
+
+    async dispose() {
+        this.packetDispatcher.dispose();
+        await this.backend.dispose();
+    }
+}
