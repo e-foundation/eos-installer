@@ -88,6 +88,7 @@ export class Bootloader extends Device {
         } catch (e) {
             throw new Error(`Bootloader error: ${e.message || e}`);
         } finally {
+            onProgress(blob.size, blob.size, partition);
             return res;
         }
     }
