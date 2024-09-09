@@ -96,15 +96,12 @@ export class DeviceManager {
         }
     }
     async connect(mode) {
-        this.setMode(mode);
-        if (mode =='recovery') {
-            try {
-                await this.adb.webusb.dispose(); 
-            } catch (e){
-                console.log(e)
-            }
+        await this.setMode(mode);
+        try {
+            return await this.device.connect();
+        } catch(e) {
+            throw new Error(`Failed to connect: ${e.message || e}`); 
         }
-        return await this.device.connect();
     }
 
     isConnected() {
@@ -150,9 +147,13 @@ export class DeviceManager {
     async flash(file, partition, onProgress) {
         let blob = await this.downloader.getFile(file);
         if (!blob) {
-            throw Error(`error getting blob file ${file}`);
+            throw new Error(`error getting blob file ${file}`);
         }
-        return await this.bootloader.flashBlob(partition, blob, onProgress);
+        let flashed = await this.bootloader.flashBlob(partition, blob, onProgress);
+        if (!flashed) {
+            throw new Error(`error flashing file ${file}`);
+        }
+        return flashed;
     }
 
 
@@ -193,6 +194,10 @@ export class DeviceManager {
     }
 
     async downloadAll(onProgress, onUnzip) {
-        return await this.downloader.downloadAndUnzipFolder(this.files, this.folder, onProgress, onUnzip);
+        try {
+            await this.downloader.downloadAndUnzipFolder(this.files, this.folder, onProgress, onUnzip);
+        } catch (e) {
+            throw new Error(`downloadAll error ${e.message || e}`);
+        }
     }
 }

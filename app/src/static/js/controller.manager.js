@@ -2,7 +2,6 @@ import {DeviceManager} from "./controller/device.manager.js";
 import {Command} from "./controller/device/command.class.js";
 import {Step} from "./controller/utils/step.class.js";
 import {WDebug} from "./debug.js";
-
 /*
 * Class to manage process
 * Check and display the steps, interact with deviceManager
@@ -17,7 +16,6 @@ export class Controller {
             new Step("activate-usb-debugging", undefined, true),
             new Step("enable-usb-file-transfer", undefined, true),
             new Step("device-detection", 'connect adb', true),
-
         ];
         this.currentIndex = 0;
     }
@@ -37,6 +35,7 @@ export class Controller {
         WDebug.log("Controller Manager Next", next);
 
         if (next) {
+            //K1ZFP check this
             if (next.mode) { //if next step require another mode [adb|fastboot|bootloader]
                 if (this.deviceManager.isConnected() && !this.inInMode(next.mode)) {
                     //we need reboot
@@ -96,6 +95,7 @@ export class Controller {
         WDebug.log("ControllerManager run command:", cmd);
         switch (cmd.type) {
             case Command.CMD_TYPE.download:
+                let res = false;
                 try {
                     await this.deviceManager.downloadAll((loaded, total, name) => {
                         VIEW.onDownloading(name, loaded, total);
@@ -103,12 +103,12 @@ export class Controller {
                         VIEW.onUnzip(name, loaded, total);
                     });
                     VIEW.onDownloadingEnd();
-                    return true;
+                    res = true;
                 } catch (e) {
-                    console.error(e)
-                    //K1ZFP TODO what to do on download error ?
+                    throw new Error(`Cannot download " ${e.message || e}`);
+                } finally {
+                    return res;
                 }
-                return false;
             case Command.CMD_TYPE.reboot:
                 try {
                     await this.deviceManager.reboot(cmd.mode);
@@ -120,14 +120,15 @@ export class Controller {
                 return true;
             case Command.CMD_TYPE.connect:
                 try {
-                    await this.deviceManager.connect(cmd.mode);
-                    await this.onDeviceConnected();
-                    return true;
+                    const res = await this.deviceManager.connect(cmd.mode);
+                    if (res) {
+                        await this.onDeviceConnected();
+                        return true;
+                    } 
                 } catch (e) {
-                    //K1ZFP TODO
-                    console.error(e);
-                    return false;
+                    throw new Error(`The device is not connected " ${e.message || e}`);
                 }
+                return false;
             case Command.CMD_TYPE.erase:
                 return this.deviceManager.erase(cmd.partition);
             case Command.CMD_TYPE.flash:

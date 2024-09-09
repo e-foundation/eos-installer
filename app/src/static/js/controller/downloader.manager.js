@@ -1,4 +1,4 @@
-const DB_NAME = "BlobStore";
+const DB_NAME = "MurenaBlobStore";
 const DB_VERSION = 1;
 
 import { WDebug } from "../debug.js";
@@ -26,31 +26,35 @@ export class Downloader {
     /*
     * */
     async downloadAndUnzipFolder(filesRequired, folder, onDownloadProgress, onUnzipProgress) {
-        for (let i = 0; i < folder.length; i++) {
-            const file = folder[i];
-            if(filesRequired.includes(file.name) || file.unzip){
-                const blob = await this.download(file.path, (value, total) => {
-                    onDownloadProgress(value, total, file.name);
-                });
-                if(file.unzip){
-                    const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
-                    const filesEntries = await zipReader.getEntries();
-                    for(let i= 0 ; i < filesEntries.length; i++) {
-                        if(filesRequired.includes(filesEntries[i].filename)){
-                            const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
-                                onUnzipProgress(value, total, filesEntries[i].filename);
-                            });
-                            await this.setInDBStore(unzippedEntry.blob, filesEntries[i].filename);
-                            this.stored[filesEntries[i].filename] = true;
+        try {
+            for (let i = 0; i < folder.length; i++) {
+                const file = folder[i];
+                if(filesRequired.includes(file.name) || file.unzip){
+                    const blob = await this.download(file.path, (value, total) => {
+                        onDownloadProgress(value, total, file.name);
+                    });
+                    if(file.unzip){
+                        const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
+                        const filesEntries = await zipReader.getEntries();
+                        for(let i= 0 ; i < filesEntries.length; i++) {
+                            if(filesRequired.includes(filesEntries[i].filename)){
+                                const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
+                                    onUnzipProgress(value, total, filesEntries[i].filename);
+                                });
+                                await this.setInDBStore(unzippedEntry.blob, filesEntries[i].filename);
+                                this.stored[filesEntries[i].filename] = true;
+                            }
                         }
+                        await zipReader.close();
+    
+                    } else {
+                        await this.setInDBStore(blob, file.name);
+                        this.stored[file.name] = true;
                     }
-                    await zipReader.close();
-
-                } else {
-                    await this.setInDBStore(blob, file.name);
-                    this.stored[file.name] = true;
                 }
             }
+        } catch (e) {
+            throw new Error(`downloadAndUnzipFolder Error ${e.message || e}`);
         }
     }
 

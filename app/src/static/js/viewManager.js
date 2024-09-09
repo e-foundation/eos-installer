@@ -54,7 +54,7 @@ class ViewManager {
         try {
             await this.controller.next();
         } catch (e) {
-            this.ErrorManager.displayError('next', `${e.message || e}`);
+            this.ErrorManager.displayError_state('Error on next', `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
@@ -64,7 +64,7 @@ class ViewManager {
         try {
             await this.controller.executeStep(stepName);
         } catch (e) {
-            this.ErrorManager.displayError(stepName, `${e.message || e}`);
+            this.ErrorManager.displayError_state(`Error on step: ${stepName}`, `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
