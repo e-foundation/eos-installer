@@ -1,13 +1,14 @@
 import {MessageClass} from "../../lib/webadb/message.class.js";
 import {MessageHeader} from "../../lib/webadb/message-header.class.js";
 import {Device} from "./device.class.js";
-
-const VERSION = 0x01000000;
+import {WDebug} from "../../debug.js";
 
 export class Recovery extends Device {
     constructor(device) {
         super(device);
         this.webusb = null;
+        this.count = 0;
+        this.adbWebBackend = null;
     }
 
     async isConnected() {
@@ -26,41 +27,40 @@ export class Recovery extends Device {
     }
 
     async connect() {
+        let res = false;
         try {
             if (this.device && this.device.isConnected) {
-            } else {
-
-                /*this.webusb = await Adb.open("WebUSB"); //Adb.webusb.transport
-                if (this.webusb.isAdb()) {
-                    this.device = await this.webusb.connectAdb("host::");  //Adb.webusb.Device
-                    return true;
-                } */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-                let adbWebBackend = await AdbWebBackend3.requestDevice();
-                if (adbWebBackend) {
-                    let adbDevice = new Adb3(adbWebBackend, null); //adb.bundle.js
-                    await adbDevice.connect();
-                    this.device = adbWebBackend._device;
-                    this.webusb = adbDevice;
-                    this.adbWebBackend = adbWebBackend;
-                    return true;
-                }   
+                WDebug.log("Connect recovery the device is connected");
+            } else {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+                const adbWebBackend = await AdbWebBackend3.requestDevice();
+                WDebug.log("adbWebBackend = ", adbWebBackend);
+                const adbDevice = new Adb3(adbWebBackend, null); //adb.bundle.js
+                WDebug.log("adbDevice = ", adbDevice);
+                await adbDevice.connect();
+                WDebug.log("adbDevice connected");
+                this.device = adbWebBackend._device;
+                this.webusb = adbDevice;
+                this.adbWebBackend = adbWebBackend;
+                res = true;
             }
-           
+            return true;
         } catch (e) {
             this.device = null;
-            throw Error(e); // K1ZFP TODO
+            throw new Error(`Cannot connect Recovery ${e.message || e}`);
+        } finally {
+            return res;
         }
-        return false;
     }
 
     async sideload(blob, onProgress) {
+        let res = false;
         try {
-            //await this.adbConnect(blob, false);
-            await this.adbOpen2(blob, true);
-            //this.webusb.sideload(blob);
-            return true;
+            await this.adbOpen(blob, true);
+            res = true;
         } catch (e) {
-            throw Error(`error sideload failed`); // K1ZFP TODO
+            throw new Error(`Sideload fails ${e.message || e}`);
+        } finally {
+            return res;
         }
     }
 
@@ -76,7 +76,7 @@ export class Recovery extends Device {
         return this.webusb.product;
     }
 
-    async _______adbOpen(blob, useChecksum   ) {
+    async _______adbOpen_DEPRECATED(blob, useChecksum   ) {
 // K1ZFP this one is used by the webadb.js lib that does not works on MacOS
         const transport = this.device.transport;
         if (transport == null)
@@ -347,15 +347,15 @@ export class Recovery extends Device {
         return true;
     }
 
-    async adbOpen2(blob, useChecksum) {
+    async adbOpen(blob, useChecksum) {
         // This one is used by the adb.bundle.js 
 
         const encoder = new TextEncoder();
         const decoder = new TextDecoder();
 
-        const MAX_PAYLOAD = 0x40000; //K1ZFP TODO
+        const MAX_PAYLOAD = 0x40000;
         const fileSize = blob.size;
-        const service = `sideload-host:${fileSize}:${MAX_PAYLOAD}`; //ideload-host:1381604186:262144
+        const service = `sideload-host:${fileSize}:${MAX_PAYLOAD}`; //sideload-host:1381604186:262144
 
         let data = new DataView(encoder.encode('' + service + '\0').buffer);
         this.stream = await this.webusb.createStream(service);  // Send Open message and receive OKAY.
@@ -368,11 +368,11 @@ export class Recovery extends Device {
         const remoteId = this.stream.remoteId;
 
         let header = new MessageHeader('OKAY', localId, remoteId, 0, checksum);
-        let receivedData;
+        let receivedData, message;
         await this.adbWebBackend.write(header.toDataView().buffer);
         let r = await this.adbWebBackend.read(24);
-        let message = new MessageClass(header, r);
-        if (message.header.cmd == "OKAY") {
+        let v = Array.from(new Uint8Array(r)).map(byte => String.fromCharCode(byte)).join('');
+        if (v[0]=='W' && v[1]=='R' && v[2]=='T' && v[3]=='E') {
             receivedData = await this.adbWebBackend.read(8);
             message = new MessageClass(header, receivedData);
         } else {
@@ -385,6 +385,10 @@ export class Recovery extends Device {
 
             if (isNaN(block) && res === 'DONEDONE') {
                 break;
+            } else {
+                if ((block%10)==0) {
+                    WDebug.log("Sideloading " + block);
+                }
             }
 
             const offset = block * MAX_PAYLOAD;
@@ -404,25 +408,24 @@ export class Recovery extends Device {
             await this.adbWebBackend.write(header.toDataView().buffer)
             await this.adbWebBackend.write(buff);
             r = await this.adbWebBackend.read(24);
-            //TODO test OKAY
-            header = new MessageHeader('OKAY', localId, remoteId, 0, checksum);
-            await this.adbWebBackend.write(header.toDataView().buffer);
-            r = await this.adbWebBackend.read(24);
-            //TODO Test WRTE
-            receivedData = await this.adbWebBackend.read(8);
-            message = new MessageClass(header, receivedData);
-
+            v = Array.from(new Uint8Array(r)).map(byte => String.fromCharCode(byte)).join('');
+            //test OKAY
+            if (v[0]=='O' && v[1]=='K' && v[2]=='A' && v[3]=='Y') {
+                header = new MessageHeader('OKAY', localId, remoteId, 0, checksum);
+                await this.adbWebBackend.write(header.toDataView().buffer);
+                r = await this.adbWebBackend.read(24);
+                v = Array.from(new Uint8Array(r)).map(byte => String.fromCharCode(byte)).join('');
+                //Test WRTE
+                if (v[0]=='W' && v[1]=='R' && v[2]=='T' && v[3]=='E') {
+                    receivedData = await this.adbWebBackend.read(8);
+                    message = new MessageClass(header, receivedData);
+                } else {
+                    throw new Error(`WRTE Failed ${block}`);
+                }
+            } else {
+                throw new Error(`OKAY Failed ${block}`);
+            }
         }
         return true;
     }
-
-    /*write(data) {
-        return this.device.transport.send(this.device.ep_out, data);
-        }
-
-    read(l) {
-        return this.device.transport.receive(this.device.ep_in, l);
-    }*/
-
-
 }
