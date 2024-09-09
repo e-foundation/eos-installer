@@ -1,8 +1,8 @@
 {
   "android": 13,
   "steps": [
-    {  
-      "command": "reboot bootloader"
+    {
+      "command": ["reboot bootloader", "delay 5"]
     },
     {
       "id": "connect-bootloader",
@@ -12,7 +12,7 @@
     {
       "id": "unlocking-pixel",
       "needUserGesture": true,
-      "command": "delay 15"
+      "command": ["delay 15", "connect bootloader"]
     },
     {
       "id": "flashing",
