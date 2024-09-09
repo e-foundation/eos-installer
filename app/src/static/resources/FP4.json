@@ -16,6 +16,10 @@
       "needUserGesture": true
     },
     {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
       "id": "enable-usb-file-transfer",
       "needUserGesture": true
     },
@@ -36,6 +40,10 @@
     },
     {
       "id": "activate-developer-options",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-usb-debugging",
       "needUserGesture": true
     },
     {
@@ -104,41 +112,45 @@
           "erase userdata",
           "erase metadata",
           "flashing lock"]
-        },
-        {
-          "id": "locking-fp4",
-          "needUserGesture": true
-        },
-        {
-          "id": "activate-developer-options",
-          "needUserGesture": true
-        },
-        {
-          "id": "enable-usb-file-transfer",
-          "needUserGesture": true
-        },
-        {
-          "id": "device-detection",
-          "command": "connect adb",
-          "needUserGesture": true
-        },
-        {
-          "mode": "bootloader",
-          "id": "connect-bootloader",
-          "command": ["connect bootloader", "flashing lock_critical"],
-          "needUserGesture": true
-        },
-        {
-          "id": "locking-fp4",
-          "needUserGesture": true
-        },
-        {
-          "id": "murena-cloud-account",
-          "needUserGesture": true
-        },
-        {
-          "id": "installation-complete"
-        }
+    },
+    {
+      "id": "locking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing lock_critical"],
+      "needUserGesture": true
+    },
+    {
+      "id": "locking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
   ],
   "folder": [
     {
