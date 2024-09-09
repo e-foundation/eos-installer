@@ -105,7 +105,7 @@ export class Controller {
                     VIEW.onDownloadingEnd();
                     res = true;
                 } catch (e) {
-                    throw new Error(`Cannot download " ${e.message || e}`);
+                    throw new Error(`Cannot download ${e.message || e}`);
                 } finally {
                     return res;
                 }
@@ -126,7 +126,7 @@ export class Controller {
                         return true;
                     } 
                 } catch (e) {
-                    throw new Error(`The device is not connected " ${e.message || e}`);
+                    throw new Error(`The device is not connected ${e.message || e}`);
                 }
                 return false;
             case Command.CMD_TYPE.erase:
@@ -219,9 +219,7 @@ export class Controller {
             this.model = productName;
             WDebug.log("ControllerManager Model:", this.model);
             try {
-                let resources = await this.getResources(false);
-                if (resources == null)
-                    resources = await this.getResources(true);
+                const resources = await this.getResources();
                 
                 if(resources.android){
                     VIEW.updateData('android-version-required', resources.android);
@@ -229,9 +227,9 @@ export class Controller {
                 }
                 this.setResources(resources);
             } catch(e) {
-                WDebug.log(e);
                 this.steps.push(new Step(e.message));
                 VIEW.updateTotalStep(this.steps.length);
+                throw new Error(`onDeviceConnected ${e.message || e}`);
             }
         }
     }
@@ -245,7 +243,7 @@ export class Controller {
             }
         }
     }
-    async getResources(override){
+    async getResources(){
 
         let resources = null;
         try {
@@ -262,10 +260,34 @@ export class Controller {
             }
 
             let this_model = this.deviceManager.adb.webusb.device;
-            if (override) {
-                // K1ZFP Manage here model override
-                // Official ROM teracube 2020 returns Teracube_2e but eos ROM return zirconia
-                if (this_model == "zirconia") this_model = "Teracube_2e";
+            // K1ZFP Manage here model override see https://gitlab.e.foundation/e/os/backlog/-/issues/2475
+            if (this.deviceManager.adb.webusb.model == "Teracube 2e") { // Official ROM
+                if (this.deviceManager.adb.webusb.product == "Teracube_2e") { //emerald
+                    this_model = "emerald";
+                } else if (this.deviceManager.adb.webusb.product == "Teracube_2e") {
+                    this_model = "Teracube_2e";
+                } else {
+                    const id = 
+                    "model "+this.deviceManager.adb.webusb.model + " " + 
+                    "product "+this.deviceManager.adb.webusb.product + " " +
+                    "name "+this.deviceManager.adb.webusb.name + " " +
+                    "device "+this.deviceManager.adb.webusb.device;
+                    throw new Error("Cannot find device resource", id);
+                }              
+            } 
+            else if (this.deviceManager.adb.webusb.model == "Teracube_2e") { // under e/OS/
+                if (this.deviceManager.adb.webusb.device == "emerald") { //emerald
+                    this_model = "emerald";
+                } else if (this.deviceManager.adb.webusb.device == "zirconia") {
+                    this_model = "Teracube_2e";
+                } else {
+                    const id = 
+                    "model "+this.deviceManager.adb.webusb.model + " " + 
+                    "product "+this.deviceManager.adb.webusb.product + " " +
+                    "name "+this.deviceManager.adb.webusb.name + " " +
+                    "device "+this.deviceManager.adb.webusb.device;
+                    throw new Error("Cannot find device resource", id);
+                }
             }
 
             resources = await (await fetch(`resources/${this_model}.json`)).json();
