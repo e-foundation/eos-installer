@@ -1,5 +1,7 @@
 import * as fastboot from "../../lib/fastboot/fastboot.js";
+import {TimeoutError} from "../../lib/fastboot/fastboot.js";
 import {Device} from "./device.class.js";
+import { WDebug } from "../../debug.js";
 
 /**
  * wrap fastboot interactions
@@ -86,7 +88,12 @@ export class Bootloader extends Device {
             );
             res = true;
         } catch (e) {
-            throw new Error(`Bootloader error: ${e.message || e}`);
+            if (e instanceof TimeoutError) {
+                WDebug.log("Timeout on >" + partition);
+                return await this.flashBlob(partition, blob, onProgress);
+            } else {
+                throw new Error(`Bootloader error: ${e.message || e}`);
+            }
         } finally {
             onProgress(blob.size, blob.size, partition);
             return res;
