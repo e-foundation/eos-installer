@@ -77,7 +77,6 @@ export class Bootloader extends Device {
     }
 
     async flashBlob(partition, blob, onProgress) {
-        let res = false;
         try {
             await this.device.flashBlob(
                 partition,
@@ -86,17 +85,16 @@ export class Bootloader extends Device {
                     onProgress(progress * blob.size, blob.size, partition);
                 }
             );
-            res = true;
+            onProgress(blob.size, blob.size, partition);
+            return true;
         } catch (e) {
             if (e instanceof TimeoutError) {
-                WDebug.log("Timeout on >" + partition);
+                WDebug.log("Timeout on flashblob >" + partition);
                 return await this.flashBlob(partition, blob, onProgress);
             } else {
+                console.log("flashBlob error", e);
                 throw new Error(`Bootloader error: ${e.message || e}`);
             }
-        } finally {
-            onProgress(blob.size, blob.size, partition);
-            return res;
         }
     }
     

@@ -149,9 +149,12 @@ export class DeviceManager {
         if (!blob) {
             throw new Error(`error getting blob file ${file}`);
         }
-        let flashed = await this.bootloader.flashBlob(partition, blob, onProgress);
-        if (!flashed) {
-            throw new Error(`error flashing file ${file}`);
+        let flashed = false;
+        try {
+            flashed = await this.bootloader.flashBlob(partition, blob, onProgress);
+        }
+        catch (e) {
+            throw new Error(`error flashing file ${file} ${e.message || e}`);
         }
         return flashed;
     }
