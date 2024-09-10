@@ -15,6 +15,10 @@
       "needUserGesture": true
     },
     {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
       "id": "enable-usb-file-transfer",
       "needUserGesture": true
     },
@@ -38,6 +42,10 @@
       "needUserGesture": true
     },
     {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
       "id": "enable-usb-file-transfer",
       "needUserGesture": true
     },
@@ -55,61 +63,61 @@
     {
       "id": "flashing",
       "command": [
-          "flash bluetooth_a bluetooth.img",
-          "flash bluetooth_b bluetooth.img",
-          "flash devcfg_a devcfg.img",
-          "flash devcfg_b devcfg.img",
-          "flash dsp_a dsp.img",
-          "flash dsp_b dsp.img",
-          "flash modem_a modem.img",
-          "flash modem_b modem.img",
-          "flash xbl_a xbl.img",
-          "flash xbl_b xbl.img",
-          "flash tz_a tz.img",
-          "flash tz_b tz.img",
-          "flash hyp_a hyp.img",
-          "flash hyp_b hyp.img",
-          "flash keymaster_a keymaster.img",
-          "flash keymaster_b keymaster.img",
-          "flash abl_a abl.img",
-          "flash abl_b abl.img",
-          "flash boot_a boot.img",
-          "flash boot_b boot.img",
-          "flash recovery_a recovery.img",
-          "flash recovery_b recovery.img",
-          "flash dtbo_a dtbo.img",
-          "flash dtbo_b dtbo.img",
-          "flash vbmeta_system_a vbmeta_system.img",
-          "flash vbmeta_system_b vbmeta_system.img",
-          "flash vbmeta_a vbmeta.img",
-          "flash vbmeta_b vbmeta.img",
-          "flash super super.img",
-          "flash aop_a aop.img",
-          "flash aop_b aop.img",
-          "flash featenabler_a featenabler.img",
-          "flash featenabler_b featenabler.img",
-          "flash imagefv_a imagefv.img",
-          "flash imagefv_b imagefv.img",
-          "flash multiimgoem_a multiimgoem.img",
-          "flash multiimgoem_b multiimgoem.img",
-          "flash qupfw_a qupfw.img",
-          "flash qupfw_b qupfw.img",
-          "flash uefisecapp_a uefisecapp.img",
-          "flash uefisecapp_b uefisecapp.img",
-          "flash xbl_config_a xbl_config.img",
-          "flash xbl_config_b xbl_config.img",
-          "flash core_nhlos_b core_nhlos.img",
-          "flash core_nhlos_a core_nhlos.img --set-active=a",
-          "erase userdata",
-          "erase metadata"]
-        },
-        {
-          "id": "murena-cloud-account",
-          "needUserGesture": true
-        },
-        {
-          "id": "installation-complete"
-        }
+        "flash bluetooth_a bluetooth.img",
+        "flash bluetooth_b bluetooth.img",
+        "flash devcfg_a devcfg.img",
+        "flash devcfg_b devcfg.img",
+        "flash dsp_a dsp.img",
+        "flash dsp_b dsp.img",
+        "flash modem_a modem.img",
+        "flash modem_b modem.img",
+        "flash xbl_a xbl.img",
+        "flash xbl_b xbl.img",
+        "flash tz_a tz.img",
+        "flash tz_b tz.img",
+        "flash hyp_a hyp.img",
+        "flash hyp_b hyp.img",
+        "flash keymaster_a keymaster.img",
+        "flash keymaster_b keymaster.img",
+        "flash abl_a abl.img",
+        "flash abl_b abl.img",
+        "flash boot_a boot.img",
+        "flash boot_b boot.img",
+        "flash recovery_a recovery.img",
+        "flash recovery_b recovery.img",
+        "flash dtbo_a dtbo.img",
+        "flash dtbo_b dtbo.img",
+        "flash vbmeta_system_a vbmeta_system.img",
+        "flash vbmeta_system_b vbmeta_system.img",
+        "flash vbmeta_a vbmeta.img",
+        "flash vbmeta_b vbmeta.img",
+        "flash super super.img",
+        "flash aop_a aop.img",
+        "flash aop_b aop.img",
+        "flash featenabler_a featenabler.img",
+        "flash featenabler_b featenabler.img",
+        "flash imagefv_a imagefv.img",
+        "flash imagefv_b imagefv.img",
+        "flash multiimgoem_a multiimgoem.img",
+        "flash multiimgoem_b multiimgoem.img",
+        "flash qupfw_a qupfw.img",
+        "flash qupfw_b qupfw.img",
+        "flash uefisecapp_a uefisecapp.img",
+        "flash uefisecapp_b uefisecapp.img",
+        "flash xbl_config_a xbl_config.img",
+        "flash xbl_config_b xbl_config.img",
+        "flash core_nhlos_b core_nhlos.img",
+        "flash core_nhlos_a core_nhlos.img --set-active=a",
+        "erase userdata",
+        "erase metadata"]
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
   ],
   "folder": [
     {
