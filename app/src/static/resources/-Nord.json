@@ -21,6 +21,10 @@
         "needUserGesture": true
       },
       {
+        "id": "activate-usb-debugging",
+        "needUserGesture": true
+      },
+      {
         "id": "enable-usb-file-transfer",
         "needUserGesture": true
       },
@@ -38,9 +42,9 @@
       {
         "id": "flashing",
         "command": [
-          "flash dtbo dtbo-e-2.2-t-20240716417775-dev-avicii.img",
-          "flash vbmeta vbmeta-e-2.2-t-20240716417775-dev-avicii.img",
-          "flash recovery recovery-e-2.2-t-20240716417775-dev-avicii.img"
+          "flash dtbo dtbo-e-2.2-s-20240715417774-stable-avicii.img",
+          "flash vbmeta vbmeta-e-2.2-s-20240715417774-stable-avicii.img",
+          "flash recovery recovery-e-2.2-s-20240715417774-stable-avicii.img"
         ]
       },
       {
@@ -86,7 +90,7 @@
     "folder": [
       {
         "name": "One+ Nord recovery installer",
-        "path": "https://images.ecloud.global/dev/avicii/recovery-IMG-e-2.2-t-20240716417775-dev-avicii.zip",
+        "path": "https://images.ecloud.global/stable/avicii/recovery-IMG-e-2.2-s-20240715417774-stable-avicii.zip",
         "unzip": true
       },
       {
