@@ -24,7 +24,6 @@ export class Controller {
     async init() {
         this.deviceManager = new DeviceManager();
         await this.deviceManager.init();
-        //VIEW.onStepStarted(this.steps[this.currentIndex]);
     }
 
     async next() {
@@ -56,28 +55,37 @@ export class Controller {
 
     async executeStep(stepName) {
         const current = this.steps[this.currentIndex];
+        let this_command;
         WDebug.log("ControllerManager Execute step", current)
+        document.getElementById('error-message-state').style.display = 'none';
         if (current.name === stepName) {
             let res = true;
-            for (let i = 0; i < current.commands.length && res; i++) {
-                res = await this.runCommand(current.commands[i]);
-            }
-            const next = this.steps[this.currentIndex + 1];
-            let previous = this.steps[this.currentIndex - 1];
-            if (res) {
-                if (next) {
-                    VIEW.onStepFinished(current, next);
-                    await this.next();
+            let i;
+            try {
+                for (i= 0; i < current.commands.length && res; i++) {
+                    this_command = current.commands[i];
+                    res = await this.runCommand(this_command);
+                    WDebug.log("run command > ", this_command , "returns ", res);
                 }
-            } else {
-                VIEW.onStepFailed(current, previous);
-                if (!current.needUserGesture) {
-                    this.currentIndex--;
-                }
-                throw Error('command failed');
+                const next = this.steps[this.currentIndex + 1];
+                let previous = this.steps[this.currentIndex - 1];
+                if (res) {
+                    if (next) {
+                        VIEW.onStepFinished(current, next);
+                        await this.next();
+                    }
+                } else {
+                    VIEW.onStepFailed(current, previous);
+                    if (!current.needUserGesture) {
+                        this.currentIndex--;
+                    }
+                    throw new Error('command failed');
+                }    
+            } catch (e) {
+                throw new Error(`Cannot execute command ${this_command.command} <br/> ${e.message || e}`);
             }
         } else {
-            throw Error('this is not the current step')
+            throw new Error('this is not the current step')
         }
     }
 
@@ -91,6 +99,11 @@ export class Controller {
         return this.deviceManager.isInMode(mode);
     }
 
+    /*
+    * run a command
+    this throw new error if something went wwrong.
+    error should contain a proposal to solve the issue.
+    */
     async runCommand(cmd) {
         WDebug.log("ControllerManager run command:", cmd);
         switch (cmd.type) {
@@ -103,12 +116,12 @@ export class Controller {
                         VIEW.onUnzip(name, loaded, total);
                     });
                     VIEW.onDownloadingEnd();
-                    res = true;
+                    return true;
                 } catch (e) {
-                    throw new Error(`Cannot download ${e.message || e}`);
-                } finally {
-                    return res;
+                    const proposal = "Proposal: Retry by refreshing this page.";
+                    throw new Error(`Cannot download <br/> ${e.message || e} <br/> ${proposal}`);
                 }
+                return false;
             case Command.CMD_TYPE.reboot:
                 try {
                     await this.deviceManager.reboot(cmd.mode);
@@ -119,16 +132,17 @@ export class Controller {
                 }
                 return true;
             case Command.CMD_TYPE.connect:
+                const proposal = "Proposal: Check connection and that no other program is using the phone and retry.";
                 try {
                     const res = await this.deviceManager.connect(cmd.mode);
                     if (res) {
                         await this.onDeviceConnected();
                         return true;
-                    } 
+                    }
                 } catch (e) {
-                    throw new Error(`The device is not connected ${e.message || e}`);
+                    throw new Error(`The device is not connected ${e.message || e} <br/> ${proposal}`);
                 }
-                return false;
+                throw new Error(`Cannot connect the device <br/> ${proposal}`);
             case Command.CMD_TYPE.erase:
                 return this.deviceManager.erase(cmd.partition);
             case Command.CMD_TYPE.flash:
@@ -203,8 +217,12 @@ export class Controller {
                 return true;
 
             default:
-                WDebug.log(`try unknown command ${cmd.command}`)
-                await this.deviceManager.runCommand(cmd.command);
+                WDebug.log(`try unknown command ${cmd.command}`);
+                try {
+                    await this.deviceManager.runCommand(cmd.command);
+                } catch(e) {
+
+                }
                 return true;
         }
     }
@@ -229,7 +247,7 @@ export class Controller {
             } catch(e) {
                 this.steps.push(new Step(e.message));
                 VIEW.updateTotalStep(this.steps.length);
-                throw new Error(`onDeviceConnected ${e.message || e}`);
+                // Don not throw this error, as it is handled by the UI directly.
             }
         }
     }
@@ -302,8 +320,7 @@ export class Controller {
         } catch (e) {
             resources = null;
             WDebug.log("getRessources Error");
-            if (override)
-                throw Error('device-model-not-supported');
+            throw Error('device-model-not-supported');
         }
 
         return resources;

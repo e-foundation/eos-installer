@@ -26,9 +26,11 @@ export class Downloader {
     /*
     * */
     async downloadAndUnzipFolder(filesRequired, folder, onDownloadProgress, onUnzipProgress) {
+        let current_file ;
         try {
             for (let i = 0; i < folder.length; i++) {
                 const file = folder[i];
+                current_file = file.path;
                 if(filesRequired.includes(file.name) || file.unzip){
                     const blob = await this.download(file.path, (value, total) => {
                         onDownloadProgress(value, total, file.name);
@@ -54,7 +56,7 @@ export class Downloader {
                 }
             }
         } catch (e) {
-            throw new Error(`downloadAndUnzipFolder Error ${e.message || e}`);
+            throw new Error(`downloadAndUnzipFolder Error <br/>current_file ${current_file} <br/> ${e.message || e}`);
         }
     }
 
@@ -82,7 +84,7 @@ export class Downloader {
     async getFile(name) {
         const file = this.stored[name];
         if(!file){
-            throw Error(`File ${name} was not previously downloaded`)
+            throw new Error(`File ${name} was not previously downloaded`)
         }
         return await this.getFromDBStore(name);
     }
@@ -114,9 +116,7 @@ export class Downloader {
             const ret = new Blob(buffers);
             return ret;
         } catch (e) {
-            WDebug.log(`Erreur: ${e.message}`);
-            console.error(e); //K1ZFP TODO
-            throw Error(e);
+            throw new Error(`${e.message || e}`);
         }
     }
 
@@ -192,37 +192,63 @@ export class Downloader {
             let xhr = new XMLHttpRequest();
             xhr.open("HEAD", url);
             xhr.send();
+    
             xhr.onload = function () {
-                resolve(
-                    // xhr.getResponseHeader("Accept-Ranges") === "bytes" &&
-                    ~~xhr.getResponseHeader("Content-Length")
-                );
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const contentLength = xhr.getResponseHeader("Content-Length");
+                    if (contentLength) {
+                        resolve(parseInt(contentLength, 10));
+                    } else {
+                        reject(new Error("Cannot get Content-Length"));
+                    }
+                } else {
+                    reject(new Error(`Request error : ${xhr.status} ${xhr.statusText}`));
+                }
             };
-            xhr.onerror = reject;
+    
+            xhr.onerror = function () {
+                reject(new Error("Connetion issue"));
+            };
+    
+            xhr.ontimeout = function () {
+                reject(new Error("Timeout issue"));
+            };
         });
     }
 
     async fetch({url, chunkSize}, onProgress) {
-        const contentLength = await this.getContentLength(url);
-        const totalChunks = Math.ceil(contentLength / chunkSize);
-
-        const buffers = [];
-
-        for (let i = 0; i < totalChunks; i++) {
-            const start = i * chunkSize;
-            const end = Math.min(start + chunkSize - 1, contentLength - 1);
-
-            const chunk = await fetch(url, {
-                headers: {
-                    'Range': `bytes=${start}-${end}`
+        try {
+            const contentLength = await this.getContentLength(url);
+            const totalChunks = Math.ceil(contentLength / chunkSize);
+            const buffers = [];
+    
+            for (let i = 0; i < totalChunks; i++) {
+                const start = i * chunkSize;
+                const end = Math.min(start + chunkSize - 1, contentLength - 1);
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'Range': `bytes=${start}-${end}`
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Cannot download chunk (1) ${i + 1}: ${response.status} ${response.statusText}`);
+                    }
+    
+                    const chunk = await response.arrayBuffer();
+                    buffers.push(chunk);
+                    onProgress(start + chunk.byteLength, contentLength);
+    
+                } catch (chunkError) {
+                    throw new Error(`Cannot download chunk (2) ${i + 1} ${chunkError.message || chunkError}`);
                 }
-            }).then(res => res.arrayBuffer());
-
-            buffers.push(chunk);
-            onProgress(start + chunk.byteLength, contentLength);
-         }
-
-        return buffers;
+            }
+            return buffers;
+    
+        } catch (error) {
+            throw new Error(`Download fails ${error.message || error}`);
+        }
     }
+    
 
 }

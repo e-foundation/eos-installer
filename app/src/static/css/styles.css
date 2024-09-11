@@ -52,6 +52,13 @@ button.next:disabled {
     justify-content: space-between;
     padding: 5px 10px;
 }
+#error-message-state {
+    max-height: 100px;
+    overflow: auto;
+    padding: 5px;
+    border: 1px solid var(--top-banner-color); 
+    background-color:#fff;
+}
 #donate, #help {
     display: flex;
     align-items: center;

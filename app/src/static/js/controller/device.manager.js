@@ -181,7 +181,7 @@ export class DeviceManager {
     async sideload(file) {
         let blob = await this.downloader.getFile(file);
         if (!blob) {
-            throw Error(`error getting blob file ${file}`);
+            throw new Error(`error getting blob file ${file}`);
         }
         
         return await this.device.sideload(blob);
@@ -191,8 +191,7 @@ export class DeviceManager {
         try {
             return this.device.runCommand(command);
         } catch (e) {
-            console.error(e); //K1ZFP TODO
-            throw Error(`error ${command} failed`);
+            throw new Error(`error ${command} failed <br/> ${e.message || e}`);
         }
     }
 

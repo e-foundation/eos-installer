@@ -25,10 +25,15 @@ export class ErrorManager {
 
     // Display a message relative to when the installer is (Step)
     static displayError_state(caption, message) {
+        document.getElementById('error-message-state').style.display = 'block';
+        console.log("-------------------DISPLAY ERROR ----------------");
+        console.log(caption);
+        console.log(message);
+        console.log("-------------------------------------------------");
         const errorCaption = document.getElementById('error-caption-state');
         const errorText = document.getElementById('error-text-state');
-        errorCaption.textContent = caption;
-        errorText.textContent = message;
+        errorCaption.innerHTML = caption;
+        errorText.innerHTML = message;
     }
 
 }
