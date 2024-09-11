@@ -1,5 +1,5 @@
 const PRODUCT = 'Web easy installer';
-const VERSION = '0.2';
+const VERSION = '0.3';
 
 const express = require('express');
 const app = express();
