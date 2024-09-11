@@ -221,7 +221,7 @@ export class Controller {
                 try {
                     await this.deviceManager.runCommand(cmd.command);
                 } catch(e) {
-
+                    // K1ZFP TODO...
                 }
                 return true;
         }

@@ -5,15 +5,18 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0"/>
     <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="css/loader.css"/>
     <title>/e/OS web installer</title>
     <script src="js/lib/zip/zip-no-worker-inflate.min.js"></script>
     <script src="js/lib/webadb/adb.bundle.js"></script>
     <script src="js/viewManager.js"></script>
+    <script src="js/before-leave-app.js"></script>
     <script>
         window.onload = function() {
             if ('usb' in navigator) {
                 // All is fine
             } else {
+	            document.getElementById('overlay-background').classList.remove('inactive');
                 document.getElementById('compatibility-check').style.display = 'block';
                 document.getElementById('let-s-get-started-button').style.display = 'none';
             }
@@ -97,7 +100,10 @@
             </div>
         </div>
         <div class="card-footer" id="let-s-get-started-button">
-            <button data-translate="i-m-ready" class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')">
+                <span data-translate="i-m-ready"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
 
@@ -111,7 +117,10 @@
             <p class="secondary" data-translate="connect-your-phone-instructions-notes"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'connect-your-phone')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'connect-your-phone')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
 
@@ -128,7 +137,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'activate-developer-options')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-developer-options')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="activate-oem-unlock" class="activate-oem-unlock card inactive">
@@ -141,7 +153,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'activate-oem-unlock')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-oem-unlock')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="activate-usb-debugging" class="activate-usb-debugging card inactive">
@@ -157,7 +172,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'activate-usb-debugging')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-usb-debugging')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="enable-usb-file-transfer" class="enable-usb-file-transfer card inactive">
@@ -173,7 +191,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'enable-usb-file-transfer')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'enable-usb-file-transfer')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
 
@@ -190,7 +211,10 @@
             </div>
             <div class="text-center instruction-title">
                 <p data-translate="device-detection-instructions-3"></p>
-                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'device-detection')"></button>
+                <button class="connect" onclick="VIEW.executeStep(this, 'device-detection')">
+                    <span data-translate="connect"></span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
         </div>
     </div>
@@ -231,7 +255,10 @@
             <p data-translate="connect-bootloader-instructions-1"></p>
             <p data-translate="connect-bootloader-instructions-2"></p>
             <div class="text-center">
-                <button data-translate="connect" class="connect" onclick="VIEW.executeStep(this, 'connect-bootloader')"></button>
+                <button class="connect" onclick="VIEW.executeStep(this, 'connect-bootloader')">
+                    <span data-translate="connect"></span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
         </div>
     </div>
@@ -247,7 +274,10 @@
             <p data-translate="unlocking-instructions-1-teracube-a"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-gs290')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-gs290')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- FP3-->
@@ -264,7 +294,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-fp3')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-fp3')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- FP4-->
@@ -281,7 +314,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-fp4')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-fp4')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- Teracube -->
@@ -295,7 +331,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v1')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v1')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="unlocking-teracube-v2" class="card inactive">
@@ -308,7 +347,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v2')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v2')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- Pixel 4*, 5-->
@@ -326,7 +368,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-pixel')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-pixel')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- oneplus*-->
@@ -344,7 +389,10 @@
             </div>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking-oneplus')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-oneplus')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- All other-->
@@ -358,7 +406,10 @@
             <p data-translate="unlocking-instructions-4"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
 
@@ -384,7 +435,10 @@
             <p data-translate="bootloader-to-recovery-manually-instructions-3"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- End Recovery-->
@@ -401,7 +455,10 @@
             <p data-translate="format-device-instructions-7"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'format-device')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'format-device')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="go-to-apply-update" class="card inactive">
@@ -413,7 +470,10 @@
             <p class="secondary" data-translate="go-to-apply-update-instructions-4"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'go-to-apply-update')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'go-to-apply-update')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <div id="sideload" class="card inactive">
@@ -478,7 +538,10 @@
             <p data-translate="locking-instructions-3"></p>
         </div>
         <div class="card-footer">
-            <button data-translate="next" class="next" onclick="VIEW.executeStep(this, 'locking-teracube-v2')"></button>
+            <button class="next" onclick="VIEW.executeStep(this, 'locking-teracube-v2')"></button>
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
         </div>
     </div>
     <!-- Pixel 5 -->

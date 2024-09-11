@@ -38,7 +38,9 @@ class ViewManager {
             let $processCtn = document.getElementById('process-ctn');
             if($processCtn){
                 $processCtn.appendChild($copyStep);
-                $copyStep.scrollIntoView({ behavior: "smooth", block: "nearest"});
+                setTimeout(() => {
+                    $copyStep.scrollIntoView({ behavior: "smooth", block: "end"});
+                }, 100);
             }
         }
     }
@@ -61,12 +63,20 @@ class ViewManager {
     }
     async executeStep($button, stepName) {
         $button.disabled = true;
+        let loader = $button.querySelector('.btn-loader');
+        if(loader) {
+            loader.style.display = 'inline-block';
+        }
+
         try {
             await this.controller.executeStep(stepName);
         } catch (e) {
             this.ErrorManager.displayError_state(`Error on step: ${stepName}`, `${e.message || e}`);
             $button.disabled = false;
         } finally {
+            if(loader) {
+                loader.style.display = 'none';
+            }
         }
 
     }
