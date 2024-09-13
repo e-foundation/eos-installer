@@ -39,7 +39,23 @@ class ViewManager {
             if($processCtn){
                 $processCtn.appendChild($copyStep);
                 setTimeout(() => {
-                    $copyStep.scrollIntoView({ behavior: "smooth", block: "end"});
+                    $copyStep.scrollIntoView({ behavior: "smooth", block: "start"});
+
+                    const headerHeight = document.getElementById('banner').clientHeight;
+                    if($copyStep.clientHeight > (window.innerHeight - headerHeight)) {
+                        let isScrolling;
+                        window.addEventListener('scroll', function onScroll() {
+                            clearTimeout(isScrolling);
+                            
+                            isScrolling = setTimeout(function() {
+                                window.scrollBy({
+                                    top: -headerHeight,
+                                    behavior: 'smooth'
+                                });
+                                window.removeEventListener('scroll', onScroll);
+                            }, 100);
+                        });
+                    }
                 }, 100);
             }
         }
@@ -69,7 +85,7 @@ class ViewManager {
         }
 
         try {
-            await this.controller.executeStep(stepName);
+            await this.controller.executeStep(stepName, loader);
         } catch (e) {
             this.ErrorManager.displayError_state(`Error on step: ${stepName}`, `${e.message || e}`);
             $button.disabled = false;

@@ -53,7 +53,7 @@ export class Controller {
         }
     }
 
-    async executeStep(stepName) {
+    async executeStep(stepName, loader) {
         const current = this.steps[this.currentIndex];
         let this_command;
         WDebug.log("ControllerManager Execute step", current)
@@ -64,8 +64,9 @@ export class Controller {
             try {
                 for (i= 0; i < current.commands.length && res; i++) {
                     this_command = current.commands[i];
-                    res = await this.runCommand(this_command);
+                    res = await this.runCommand(this_command, loader);
                     WDebug.log("run command > ", this_command , "returns ", res);
+                    
                 }
                 const next = this.steps[this.currentIndex + 1];
                 let previous = this.steps[this.currentIndex - 1];
@@ -104,7 +105,7 @@ export class Controller {
     this throw new error if something went wwrong.
     error should contain a proposal to solve the issue.
     */
-    async runCommand(cmd) {
+    async runCommand(cmd, loader) {
         WDebug.log("ControllerManager run command:", cmd);
         switch (cmd.type) {
             case Command.CMD_TYPE.download:
@@ -137,6 +138,9 @@ export class Controller {
                     const res = await this.deviceManager.connect(cmd.mode);
                     if (res) {
                         await this.onDeviceConnected();
+                        if(loader) {
+                            loader.style.display = 'none';
+                        }
                         return true;
                     }
                 } catch (e) {
