@@ -8,7 +8,7 @@
 class ViewManager {
     
     constructor() {
-   
+
     }
 
     async init() {
@@ -16,13 +16,13 @@ class ViewManager {
         this.WDebug = wdebug.WDebug;
         const errorManager = await import ("./errorManager.js");
         this.ErrorManager = errorManager.ErrorManager;
-
         const cm = await import("./controller.manager.js");
         const tm = await import("./vue/translation.manager.js");
         this.controller = new cm.Controller();
         await this.controller.init();
         this.translationManager = new tm.TranslationManager();
         await this.translationManager.init();
+        window.scroll(0,0);
     }
 
     selectStep(currentIndex, step) {
@@ -40,22 +40,6 @@ class ViewManager {
                 $processCtn.appendChild($copyStep);
                 setTimeout(() => {
                     $copyStep.scrollIntoView({ behavior: "smooth", block: "start"});
-
-                    const headerHeight = document.getElementById('banner').clientHeight;
-                    if($copyStep.clientHeight > (window.innerHeight - headerHeight)) {
-                        let isScrolling;
-                        window.addEventListener('scroll', function onScroll() {
-                            clearTimeout(isScrolling);
-                            
-                            isScrolling = setTimeout(function() {
-                                window.scrollBy({
-                                    top: -headerHeight,
-                                    behavior: 'smooth'
-                                });
-                                window.removeEventListener('scroll', onScroll);
-                            }, 100);
-                        });
-                    }
                 }, 100);
             }
         }
