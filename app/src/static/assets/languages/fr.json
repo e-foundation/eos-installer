@@ -74,6 +74,8 @@
     "locking-instructions-2": "L'appareil va redémarrer",
     "locking-instructions-3": "Cliquer sur suivant",
     "locking-instructions-4": "Sur le téléphone appuyez sur le bouton start",
+    "locking-instructions-1-teracube": "Votre téléphone demande un verrouillage. Sélectionnez <code>lock bootloader</code> en utilisant le bouton <kbd>Volume Up</kbd>.",
+    "locking-instructions-1-teracube-a": "Ensuite cliquez sur Suivant.",
     "murena-cloud-account": "Compte Murena Cloud",
     "murena-cloud-account-instructions": "Gardez vos données en sécurité et synchronisez cet appareil avec votre compte personnel Murena Cloud. 1 Go gratuit et des plans payants disponibles pour plus de stockage.",
     "navigator-detection": "Détection du navigateur",
