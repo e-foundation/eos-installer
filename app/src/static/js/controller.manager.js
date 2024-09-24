@@ -286,7 +286,7 @@ export class Controller {
             if (this.deviceManager.adb.webusb.model == "Teracube 2e") { // Official ROM
                 if (this.deviceManager.adb.webusb.product == "Teracube_2e") { //emerald
                     this_model = "emerald";
-                } else if (this.deviceManager.adb.webusb.product == "Teracube_2e") {
+                } else if (this.deviceManager.adb.webusb.product == "Teracube_2e_EEA") { // zirconia
                     this_model = "Teracube_2e";
                 } else {
                     const id = 
