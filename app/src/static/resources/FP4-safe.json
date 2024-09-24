@@ -109,14 +109,15 @@
         "flash core_nhlos_b core_nhlos.img",
         "flash core_nhlos_a core_nhlos.img --set-active=a",
         "erase userdata",
-        "erase metadata"]
+        "erase metadata",
+        "reboot"]
+    },
+    {
+      "id": "installation-complete"
     },
     {
       "id": "murena-cloud-account",
       "needUserGesture": true
-    },
-    {
-      "id": "installation-complete"
     }
   ],
   "folder": [
