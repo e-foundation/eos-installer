@@ -46,4 +46,15 @@ export class Device {
     getSerialNumber() {
         return undefined;
     }
+    async getAndroidVersion() {
+        return undefined;
+    }
+
+    reboot(mode) {
+        return undefined;
+    }
+
+    async bootBlob(blob) {
+        return false;
+    }
 }

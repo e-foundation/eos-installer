@@ -1,0 +1,75 @@
+{
+  "android": 13,
+  "steps": [
+    {
+      "command": "reboot bootloader"
+    },
+    {
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-pixel",
+      "needUserGesture": true,
+      "command": "delay 15"
+    },
+    {
+      "id": "flashing",
+      "command": [
+        "flash dtbo dtbo-e-2.2-t-20240716417775-dev-sunfish.img",
+        "flash boot recovery-e-2.2-t-20240716417775-dev-sunfish.img"
+      ]
+    },
+    {
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
+      "command": "sideload pixel-4a-rom.zip"
+    },
+    {
+      "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "reboot"
+      ],
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete",
+      "needUserGesture": true
+    },
+    {
+      "id": "help-us-improve-the-tool"
+    }
+  ],
+  "folder": [
+    {
+      "name": "pixel-4a-recovery.img",
+      "path": "https://images.ecloud.global/dev/sunfish/recovery-IMG-e-2.2-t-20240716417775-dev-sunfish.zip",
+      "unzip": true
+    },
+    {
+      "name": "pixel-4a-rom.zip",
+      "path": "https://images.ecloud.global/dev/sunfish/e-2.2-t-20240716417775-dev-sunfish.zip"
+    }
+  ]
+}

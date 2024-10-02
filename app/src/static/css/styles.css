@@ -1,65 +1,260 @@
-/*body {
-    background-color: #f4f4f4;
-    font-family: 'Lato';
+@import "theme.css";
+
+
+#compatibility-check {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+    z-index: 1000;
 }
 
-.item {
-    background-color: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border: transparent;
-    border-radius: 5px;
-    box-shadow: 0 0 1em #ccc;
-    transition: all .2s ease-in-out;
+button.connect {
+    background: var(--success-color);
+    color: var(--button-text-color);
+    border: none;
 }
-
-.item:hover {
-    box-shadow: 0 0 1em #aaa;
+button.next {
+    background: var(--button-color);
+    color: var(--button-text-color);
+    border: none;
 }
-
-.item.completed {
-    text-decoration: line-through;
+button.next:disabled {
+    background: rgba(2, 127, 254, 0.6);
+    cursor: auto;
 }
-
-.toggles {
-    color: black;
+#error-message {
+    color: red;
 }
-
-.name {
-    padding-top: 3px;
+/* <banner> */
+#banner {
+    top: 0;
+    position: fixed;
+    width: 100%;
 }
-
-.remove {
-    padding-left: 0;
-}
-
-button:focus {
-    border: 1px solid #333;
-}*/
-
-html, body {
-    height: 100%;
-    margin: 0px;
-}
-body > * {
-    padding:5px;
-}
-body {
-    background-color: #f4f4f4;
-    font-family: 'Lato';
+#top-banner {
+    background: var(--top-banner-color);
+    color: var(--white);
+    height: 50px;
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: center;
+    justify-content: center;
 }
-body #process {
- flex-grow: 1;
+#sub-banner {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+#error-message-state {
+    max-height: 100px;
+    overflow: auto;
+    padding: 5px;
+    border: 1px solid var(--top-banner-color); 
+    background-color:#fff;
+}
+#donate, #help {
+    display: flex;
+    align-items: center;
+    gap : 8px;
+    padding: 0.2rem 1.5rem;
+}
+#donate img, #help img{
+    width: 24px;
+    height: 24px;
+}
+#donate{
+    background: var(--green);
+    border: var(--green);
+    color: var(--white);
+}
+#help{
+    background: transparent;
+    border-color: var(--blue);
+    color: var(--blue);
+}
+/* </banner> */
+/* <header> */
+#process-ctn {
+    background: linear-gradient(to bottom, var(--top-background-color) 500px, transparent 500px);
+    padding-top: 250px;
+    position: relative;
+    width: 100%;
 }
 
-.step.active {
-    opacity : 1;
+.ready-to-install-e-os {
+    color : var(--info-color);
+    font-size: 28px;
+    display: none;
 }
-.step.inactive {
-    opacity : 0.5;
+
+#logo-ctn {
+    max-width: 780px;
+    margin:auto;
+    display: flex;
+    gap: 16px;
+    color : #F7F7F7;
+    align-items: center;
 }
-.step.done {
-    color : green;
+#logo {
+    max-width: 80px;
 }
+/* <header> */
+/* <card> */
+.card {
+    scroll-margin-top: 65px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    max-width: 780px;
+    border-radius: 6px;
+    background: var(--white);
+    margin: 25px auto 50px auto;
+    padding: 32px;
+}
+.card-header {
+    font-size: 24px;
+    font-family: 'Century Gothic';
+    font-weight: 600;
+}
+.card-body, .large-padding {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+.card-footer {
+    text-align : right;
+}
+#flashing.done progress {
+    -webkit-appearance: none;
+    height: 2px;
+}
+#flashing.done progress::-webkit-progress-bar {
+    -webkit-appearance: none;
+    background-color: var(--green);
+}
+/* </card> */
+.instruction-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+.normal-padding {
+    margin-bottom : 20px;
+    margin-top : 20px;
+}
+.enable-usb-file-transfer .instruction-img {
+    max-width: 225px;
+}
+.device-detection .instruction-img, .connect-your-phone .instruction-img {
+    max-width: 300px;
+}
+.activate-developer-options .instruction-img,
+.activate-usb-debugging .instruction-img,
+.connect-your-phone .instruction-img  {
+    max-width: 350px;
+}
+#overlay-background {
+    position: absolute;
+    background: #0000004f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+}
+progress {
+    height: 3px;
+    width: 50%;
+    min-width: 300px;
+}
+progress[value] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+}
+progress[value]::-webkit-progress-bar {
+    background-color: #d0d0d0;
+}
+progress[value]::-webkit-progress-value {
+    background-color: var(--downloading-color);
+}
+progress[value].success::-webkit-progress-value {
+    background-color: var(--green);
+}
+/* </CARD> */
+
+/* <let-s-get-started> */
+.let-s-get-started .instruction-ctn {
+    padding : 16px 0;
+    display : flex;
+    align-items: center;
+    gap : 24px;
+}
+.let-s-get-started .instruction-title {
+    padding-bottom: 8px;
+}
+/* </let-s-get-started> */
+.navigator-not-supported .instructions-ctn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    text-align:center;
+    font-size:14px;
+    padding: 16px 0;
+}
+/* <help-us-improve-the-tool> */
+.help-us-improve-the-tool .instructions-ctn {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+    text-align:center;
+    font-size:14px;
+}
+.help-us-improve-the-tool .instruction-ctn.very-dissatisfied {
+    color : #F35D47;
+    border-color : #F35D47;
+}
+.help-us-improve-the-tool .instruction-ctn.dissatisfied {
+    color : #F49138;
+    border-color : #F49138;
+}
+.help-us-improve-the-tool .instruction-ctn.neutral {
+    color : #f5be05;
+    border-color : #f5be05;
+}
+.help-us-improve-the-tool .instruction-ctn.satisfied {
+    color : #88d723;
+    border-color : #88d723;
+}
+.help-us-improve-the-tool .instruction-ctn.very-satisfied {
+    color : #00C95C;
+    border-color : #00C95C;
+}
+.help-us-improve-the-tool .instruction-ctn {
+    padding: 10px 12px ;
+    border-radius : 8px;
+    border-width : 1px;
+    border-style: solid;
+}
+.help-us-improve-the-tool  .instruction-ctn > img {
+    width : 28px;
+    height : 28px;
+    padding: 6px 8px ;
+}
+.help-us-improve-the-tool .thoughts {
+    width:100%;
+    height:150px;
+    resize: none;
+    border-color:#C6CBDD;
+}
+.help-us-improve-the-tool .thoughts:focus {
+    outline: none !important;
+    border-color:#C6CBDD;
+}
+/* </help-us-improve-the-tool> */

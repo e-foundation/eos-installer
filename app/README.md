@@ -19,7 +19,7 @@ Go to the `app` folder.
 `docker run -v "%cd%"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
 
 ## Linux
-`docker run -v "${pwd}"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
+`docker run -v "$(pwd)/src:/app/src" -p 127.0.0.1:3000:3000 eos-web-installer` 
 
 The project is available at `http://localhost:3000/`
 
@@ -118,6 +118,11 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
 #### Exemples
 ```  
 {
+  "android": 13,
+  "security_patch_level": "2024-04-05",
+  "steps": [
+    ...
+  ],
     "folder": [
       {
         "name": "recovery.img"
@@ -140,7 +145,9 @@ In case of unzip : the file is unzipped, and the retrieved files are stored in t
  }
   ```
 
-
+* android: Android version (optional) => Display warning if version mistach (this is the minimal current version than needs to be present in order to continue process see: Before following these instructions please ensure that the device is on the latest Android 13.0.0 firmware))
+* security_patch_level (optional) => Allow to load safe procedure descriptor file (postfixed with '-safe' eg: 'teracube2e.json vs teracube2e-safe.json') that contain a specific install process (eg does not lock the bootloader if current_security_path_level > new_security_path_level new_security_path_level is the one the json file)
+* folder: must be an array
 
 ## Vue
 

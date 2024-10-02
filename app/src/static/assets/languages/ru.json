@@ -1,0 +1,14 @@
+{
+    "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Вывод 1:</b> перед установкой /e/OS Android 12 необходимо обновить до последней стоковой версии Android 12",
+    "activate-developer-options-instructions-1": "1. Откройте меню настроек и введите \"build\" в строке поиска.",
+    "activate-usb-debugging-instructions-2": "2. В этот момент вы должны оказаться на экране \"Параметры разработчика\". Теперь нажмите на \"Отладка USB\", чтобы активировать ее (на некоторых устройствах она называется \"Отладка Android\").",
+    "Ex 3: similarly, if you're installing /e/OS Android 11, it should be the latest stock Android 10": "<b>Вывод 3:</b> Аналогично, если вы устанавливаете /e/OS Android 11, это должна быть последняя стоковая версия Android 10",
+    "activate-developer-options": "Активируйте Опции разработчика",
+    "activate-developer-options-instructions-2": "2. На следующем экране найдите \"Build number\" и нажмите на него 7 раз.",
+    "activate-usb-debugging": "Активируйте отладку по USB",
+    "activate-usb-debugging-instructions-1": "1. Вернитесь в меню настроек и введите в строке поиска \"Отладка USB\".",
+    "android-version-not-supported": "Устаревшая версия Android",
+    "android-version-not-supported-instructions": "Обновите свою систему до минимально необходимой версии <code>{{android-version-required}}</code>",
+    "android-version-not-supported-title": "Ваша версия Android <code>{{android-version}}</code> не поддерживается",
+    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Вывод 2:</b> или если вы устанавливаете /e/OS Android 11, обязательно обновитесь до последней стоковой версии Android 11"
+}

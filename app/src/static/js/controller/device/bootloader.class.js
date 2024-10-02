@@ -1,6 +1,7 @@
-import * as fastboot from "../../lib/fastboot/fastboot.mjs";
-import {TimeoutError} from "../../lib/fastboot/fastboot.mjs";
+import * as fastboot from "../../lib/fastboot/fastboot.js";
+import {TimeoutError} from "../../lib/fastboot/fastboot.js";
 import {Device} from "./device.class.js";
+import { WDebug } from "../../debug.js";
 
 /**
  * wrap fastboot interactions
@@ -39,25 +40,15 @@ export class Bootloader extends Device {
     }
 
     async connect() {
-        let _count = 0;
-        const MAX_COUNT = 25;
-        let connected = true;
-        while (true) {
-            try {
-                await this.device.connect();
-                break;
-            } catch (error) {
-                _count++;
-                if (_count > MAX_COUNT) {
-                    throw new Error(error);
-                    break;
-                }
-            }
-            await VUE.onWaiting();
-            //sleep before trying again
-            await new Promise(r => setTimeout(r, 500));
+        let connected = false;
+        try {
+            await this.device.connect();
+            connected = true;
+        } catch (e) {
+            throw new Error("Cannot connect Bootloader", `${e.message || e}`);
+        } finally {
+            return connected;
         }
-        return this.device.device;
     }
 
     getProductName() {
@@ -94,17 +85,21 @@ export class Bootloader extends Device {
                     onProgress(progress * blob.size, blob.size, partition);
                 }
             );
+            onProgress(blob.size, blob.size, partition);
             return true;
         } catch (e) {
             if (e instanceof TimeoutError) {
-                console.log(e)
+                WDebug.log("Timeout on flashblob >" + partition);
                 return await this.flashBlob(partition, blob, onProgress);
             } else {
-                console.log(e)
-                throw e;
+                console.log("flashBlob error", e);
+                throw new Error(`Bootloader error: ${e.message || e}`);
             }
-            return false;
         }
+    }
+    
+    bootBlob(blob) {
+        return this.device.bootBlob(blob);
     }
 
     async isUnlocked(variable) {
@@ -113,7 +108,7 @@ export class Bootloader extends Device {
                 const unlocked = await this.device.getVariable(variable);
                 return !(!unlocked || unlocked === 'no');
             } catch (e) {
-                console.error(e);
+                console.error(e); // K1ZFP TODO
                 throw e;
             }
         }
@@ -126,7 +121,7 @@ export class Bootloader extends Device {
                 const unlocked = await this.device.getVariable(variable);
                 return !unlocked || unlocked === 'no';
             } catch (e) {
-                console.error(e);
+                console.error(e); //K1ZFP TODO
                 throw e;
             }
         }
@@ -137,7 +132,7 @@ export class Bootloader extends Device {
         if (command) {
             const res = await this.device.runCommand(command);
         } else {
-            throw Error('no unlock command configured');
+            throw Error('no unlock command configured'); //K1ZFP TODO
         }
     }
 
@@ -150,7 +145,7 @@ export class Bootloader extends Device {
                 throw e;
             }
         } else {
-            throw Error('no lock command configured');
+            throw Error('no lock command configured'); //K1ZFP TODO
         }
     }
 

@@ -1,4 +1,5 @@
 import {Device} from "./device.class.js";
+import {WDebug} from "../../debug.js";
 
 export class ADB extends Device {
     constructor(device) {
@@ -22,34 +23,56 @@ export class ADB extends Device {
     }
 
     async connect(cb) {
+        let res = false;
         try {
-            this.webusb = await Adb.open("WebUSB");
-            if (this.webusb.isAdb()) {
-                this.device = await this.webusb.connectAdb("host::", cb);
-                return true;
+            let adbWebBackend = await AdbWebBackend.requestDevice();
+            if (adbWebBackend) {
+                let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js
+                await adbDevice.connect();
+                this.device = adbWebBackend._device;
+                this.webusb = adbDevice;
+
+                WDebug.log("----------------------------------");
+                WDebug.log("Model", adbDevice.model);
+                WDebug.log("product", adbDevice.product);
+                WDebug.log("Name", adbDevice.name);
+                WDebug.log(">Device (codename)", adbDevice.device); // codemane
+                WDebug.log("----------------------------------");
+
+                res = true;
             }
         } catch (e) {
             this.device = null;
-            throw Error(e);
+            throw new Error(`Cannot connect ADB ${e.message || e}`);
+        } finally {
+            return res;
         }
-        return false;
     }
 
     getProductName() {
-        return this.webusb.device.productName;
+        return this.webusb.name;
     }
 
+
     getSerialNumber() {
-        return this.webusb.device.serialNumber;
+        return this.device.serialNumber;
+    }
+
+    async getAndroidVersion() {
+        return this.webusb.getProp('ro.build.version.release');
     }
 
     async runCommand(cmd) {
-        let shell = await this.device.shell(cmd);
-        return await shell.receive();
+        WDebug.log("ADB Run command>", cmd);
+        return await this.webusb.exec(cmd);
     }
 
     async reboot(mode) {
-        return await this.device.shell(`reboot ${mode}`);
+        const res = await this.webusb.createStreamAndReadAll(`reboot:${mode}`);
+        return res;
+
     }
+
+
 
 }

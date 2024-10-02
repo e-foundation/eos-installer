@@ -1,41 +1,680 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <title>/e/Os web installer</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0"/>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="css/loader.css"/>
+    <title>/e/OS web installer</title>
     <script src="js/lib/zip/zip-no-worker-inflate.min.js"></script>
-    <script src="js/lib/webadb/webadb.js"></script>
-
-    <script src="js/vue.manager.js"></script>
+    <script src="js/lib/webadb/adb.bundle.js"></script>
+    <script src="js/viewManager.js"></script>
+    <script src="js/before-leave-app.js"></script>
+    <script>
+        window.onload = function() {
+            if ('usb' in navigator) {
+                // All is fine
+            } else {
+	            document.getElementById('overlay-background').classList.remove('inactive');
+                document.getElementById('compatibility-check').style.display = 'block';
+                document.getElementById('let-s-get-started-button').style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body id="body">
-    <header>
-        <h1 id="main-title">/e/Os web installer</h1>
-    </header>
-    <select id="translation">
-        <option data-translate="English" value="en">English</option>
-        <option data-translate="French" value="fr">French</option>
-    </select>
-
-    <h1 id="step-title"></h1>
-    <section id="process">
-    </section>
-    <div>
-        <button id="next" data-translate="Next" onclick="VUE.onNext()"></button>
+<div id="process-ctn">
+    <div id="compatibility-check">
+        <div class="popup-compatibility-check">
+            <h2 data-translate="_err_01"></h2>
+            <p data-translate="_err_02"></p>
+        </div>
     </div>
-    <footer>
-        <section id="log-ctn" style="background: black; height:400px;overflow:auto;">
-        <pre id="log"  style="color:white;">Log _</pre>
-        </section>
-    </footer>
+    <div id="banner">
+        <div id="top-banner">
+            <b>Installation</b>
+            <div><span id="current-step">1</span>/</span><span id="total-step">?</span></div>
+            <div>completed</div>
+        </div>
+        <div id="sub-banner">
+            <a href="https://e.foundation/donate/" target="_blank"  style="text-decoration: none;">
+                <button id="donate"><img src="assets/images/icons/donate.svg"><span data-translate="donate"></span></button>
+            </a>
+            <div id="error-message-state" hidden="display:none">
+                <div id="error-caption-state"></div>
+                <div id="error-text-state"></div>
+            </div>
+            <a href="https://doc.e.foundation/easy-installer-faq" target="_blank" style="text-decoration: none;">
+                <button id="help"><img src="assets/images/icons/help.svg"><span data-translate="help"></span></button>
+            </a>
+        </div>
+        
+    </div>
+    <div id="logo-ctn">
+        <img id="logo" src="assets/images/icons/logo.png">
+        <h1 class="title">/e/OS Easy Installer</h1>
+    </div>
+    <div id="let-s-get-started" class="let-s-get-started card">
+        <div class="card-header" data-translate="let-s-get-started"></div>
+        <div class="card-body">
+            <div class="instruction-ctn">
+                <img class="icon" src="assets/images/icons/free-up-some-time.svg">
+                <div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-1"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-1"></div>
+                </div>
+            </div>
+            <div class="instruction-ctn">
+                <img class="icon" src="assets/images/icons/free-up-some-disk-space.svg">
+                <div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-2"></div>
+                    <div class="instruction-text"  data-translate="let-s-get-started-instruction-2"></div>
+                </div>
+            </div>
+            <div class="instruction-ctn">
+                <img class="icon" src="assets/images/icons/charge-your-phone.svg">
+                <div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-3"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-3"></div>
+                </div>
+            </div>
+            <div class="instruction-ctn">
+                <img class="icon" src="assets/images/icons/back-up-your-data.svg">
+                <div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-4"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-4"></div>
+                </div>
+            </div>
+            <div class="instruction-ctn">
+                <img class="icon" src="assets/images/icons/grab-a-USB-data-cable.svg">
+                <div>
+                    <div class="instruction-title" data-translate="let-s-get-started-instruction-title-5"></div>
+                    <div class="instruction-text" data-translate="let-s-get-started-instruction-5"></div>
+                </div>
+            </div>
+            <div class="normal-padding">
+                <div class="warning">
+                    <div data-translate="check-update-android-version-caution"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer" id="let-s-get-started-button">
+            <button class="next" onclick="VIEW.executeStep(this, 'let-s-get-started')">
+                <span data-translate="i-m-ready"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+
+    <div id="connect-your-phone" class="connect-your-phone card inactive">
+        <div class="card-header" data-translate="connect-your-phone"></div>
+        <div class="card-body">
+            <div class="normal-padding flex align-items-center gap-4">
+                <img class="instruction-img" src="assets/images/illustrations/connect-your-phone.png">
+                <p data-translate="connect-your-phone-instructions"></p>
+            </div>
+            <p class="secondary" data-translate="connect-your-phone-instructions-notes"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'connect-your-phone')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+
+    <div id="activate-developer-options" class="activate-developer-options card inactive">
+        <div class="card-header" data-translate="activate-developer-options"></div>
+        <div class="card-body">
+            <p data-translate="activate-developer-options-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/activate-developer-options-1.png">
+            </div>
+            <p data-translate="activate-developer-options-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/activate-developer-options-2.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-developer-options')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="activate-oem-unlock" class="activate-oem-unlock card inactive">
+        <div class="card-header" data-translate="activate-oem-unlock"></div>
+        <div class="card-body">
+            <p data-translate="activate-oem-unlock-instruction"></p>
+            <div class="text-center" style="display: flex; justify-content: center; gap: 10px;">
+                <img class="instruction-img" src="assets/images/illustrations/enableOEMUnlocking.png">
+                <img class="instruction-img" src="assets/images/illustrations/allowOEMUnlocking.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-oem-unlock')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="activate-usb-debugging" class="activate-usb-debugging card inactive">
+        <div class="card-header" data-translate="activate-usb-debugging"></div>
+        <div class="card-body">
+            <p data-translate="activate-usb-debugging-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/activate-usb-debugging-1.png">
+            </div>
+            <p data-translate="activate-usb-debugging-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/activate-usb-debugging-2.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'activate-usb-debugging')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="enable-usb-file-transfer" class="enable-usb-file-transfer card inactive">
+        <div class="card-header" data-translate="enable-usb-file-transfer"></div>
+        <div class="card-body">
+            <p data-translate="enable-usb-file-transfer-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-1.png">
+            </div>
+            <p data-translate="enable-usb-file-transfer-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/enable-usb-file-transfer-2.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'enable-usb-file-transfer')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+
+    <div id="device-detection" class="device-detection card inactive">
+        <div class="card-header" data-translate="device-detection"></div>
+        <div class="card-body">
+            <div class="flex align-items-center gap-4">
+                <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-1.png">
+                <p data-translate="device-detection-instructions-1"></p>
+            </div>
+            <div class="flex align-items-center gap-4">
+                <img class="instruction-img" src="assets/images/illustrations/allow-usb-debugging-2.png">
+                <p data-translate="device-detection-instructions-2"></p>
+            </div>
+            <div class="text-center instruction-title">
+                <p data-translate="device-detection-instructions-3"></p>
+                <button class="connect" onclick="VIEW.executeStep(this, 'device-detection')">
+                    <span data-translate="connect"></span>
+                    <span class="btn-loader"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="device-model-not-supported" class="device-model-not-supported card inactive">
+        <div class="card-header" data-translate="device-model-not-supported"></div>
+        <div class="card-body  text-center">
+            <img class="error-img" src="assets/images/icons/error.svg">
+            <p class="instruction-title" data-subscribe="product-name" data-translate="device-model-not-supported-title"></p>
+            <p data-translate="device-model-not-supported-instructions"></p>
+        </div>
+    </div>
+    <div id="android-version-not-supported" class="android-version-not-supported card inactive">
+        <div class="card-header" data-translate="android-version-not-supported"></div>
+        <div class="card-body  text-center">
+            <img class="error-img" src="assets/images/icons/error.svg">
+            <p class="instruction-title" data-subscribe="android-version" data-translate="android-version-not-supported-title"></p>
+            <p data-subscribe="android-version-required" data-translate="android-version-not-supported-instructions"></p>
+        </div>
+    </div>
+    <div id="downloading" class="card inactive">
+        <div class="card-header" data-translate="Downloading /e/OS"></div>
+        <div class="card-body">
+            <p data-translate="this-might-take-some-time-please-be-patient"></p>
+            <div class="text-center large-padding">
+                <p class="downloading-progress"></p>
+                <progress class="downloading-progress-bar" max="100"></progress>
+                <p class="ready-to-install-e-os"  data-translate="ready-to-install-e-os" ></p>
+            </div>
+            <div class="loader"></div>
+            <div class="downloader"></div>
+        </div>
+    </div>
+
+    <div id="connect-bootloader" class="card inactive">
+        <div class="card-header" data-translate="connect-bootloader"></div>
+        <div class="card-body">
+            <p data-translate="connect-bootloader-instructions-1"></p>
+            <p data-translate="connect-bootloader-instructions-2"></p>
+            <div class="text-center">
+                <button class="connect" onclick="VIEW.executeStep(this, 'connect-bootloader')">
+                    <span data-translate="connect"></span>
+                    <span class="btn-loader"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Start UNLOCKING -->
+    <!-- GS290-->
+    <div id="unlocking-gs290" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1-b"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/gs290/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="unlocking-instructions-1-teracube-a"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-gs290')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- FP3-->
+    <div id="unlocking-fp3" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-fp3')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- FP4-->
+    <div id="unlocking-fp4" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-fp4')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- Teracube -->
+    <div id="unlocking-teracube-v1" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1-teracube"></p>
+            <p data-translate="unlocking-instructions-1-teracube-a"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/teracube-v1/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v1')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="unlocking-teracube-v2" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1-teracube"></p>
+            <p data-translate="unlocking-instructions-1-teracube-a"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/teracube-v2/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-teracube-v2')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- Pixel 4*, 5-->
+    <div id="unlocking-pixel" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <div class="flex align-items-center gap-4">
+                <img class="instruction-img" src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png">
+                <div>
+                    <p data-translate="unlocking-instructions-1"></p>
+                    <p data-translate="unlocking-instructions-1-a"></p>
+                    <p data-translate="unlocking-instructions-2"></p>
+                    <p data-translate="unlocking-instructions-2-a"></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-pixel')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- oneplus*-->
+    <div id="unlocking-oneplus" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <div class="flex align-items-center gap-4">
+                <img class="instruction-img" src="assets/images/illustrations/oneplus/Illustration - Accept warning-1.png">
+                <div>
+                    <p data-translate="unlocking-instructions-1"></p>
+                    <p data-translate="unlocking-instructions-1-a"></p>
+                    <p data-translate="unlocking-instructions-2"></p>
+                    <p data-translate="unlocking-instructions-2-a"></p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking-oneplus')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- All other-->
+    <div id="unlocking" class="card inactive">
+        <div class="card-header" data-translate="Unlocking"></div>
+        <div class="card-body">
+            <p data-translate="unlocking-instructions-1"></p>
+            <p data-translate="unlocking-instructions-1-a"></p>
+            <p data-translate="unlocking-instructions-2"></p>
+            <p data-translate="unlocking-instructions-3"></p>
+            <p data-translate="unlocking-instructions-4"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'unlocking')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- End UNLOCKING -->
+
+    <div id="flashing" class="card inactive">
+        <div class="card-header" data-translate="installing"></div>
+        <div class="card-body">
+            <p data-translate="this-might-take-some-time-please-be-patient"></p>
+            <div class="text-center large-padding">
+                <p class="installing-progress"></p>
+                <progress class="installing-progress-bar" max="100"></progress>
+            </div>
+        </div>
+    </div>
+    <!-- Start Recovery-->
+    <div id="bootloader-to-recovery-manually" class="card bootloader-to-recovery-manually inactive">
+        <div class="card-header" data-translate="bootloader-to-recovery-manually"></div>
+        <div class="card-body">
+            <p data-translate="bootloader-to-recovery-manually-instructions"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-1"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-2"></p>
+            <p data-translate="bootloader-to-recovery-manually-instructions-3"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'bootloader-to-recovery-manually')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- End Recovery-->
+    
+    <div id="format-device" class="card inactive">
+        <div class="card-header" data-translate="format-device"></div>
+        <div class="card-body">
+            <p data-translate="format-device-instructions-1"></p>
+            <p data-translate="format-device-instructions-2"></p>
+            <p data-translate="format-device-instructions-3"></p>
+            <p data-translate="format-device-instructions-4"></p>
+            <p data-translate="format-device-instructions-5"></p>
+            <p data-translate="format-device-instructions-6"></p>
+            <p data-translate="format-device-instructions-7"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'format-device')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="go-to-apply-update" class="card inactive">
+        <div class="card-header" data-translate="go-to-apply-update"></div>
+        <div class="card-body">
+            <p data-translate="go-to-apply-update-instructions-1"></p>
+            <p data-translate="go-to-apply-update-instructions-2"></p>
+            <p data-translate="go-to-apply-update-instructions-3"></p>
+            <p class="secondary" data-translate="go-to-apply-update-instructions-4"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'go-to-apply-update')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <div id="sideload" class="card inactive">
+        <div class="card-header" data-translate="sideload"></div>
+        <div class="card-body">
+            <p data-translate="this-might-take-some-time-please-be-patient"></p>
+            <div class="text-center large-padding">
+                <p class="installing-progress"></p>
+                <progress class="installing-progress-bar" max="100"></progress>
+            </div>
+            <p data-translate="sideload-instructions-3"></p>
+        </div>
+    </div>
+    <div id="sideload-ended" class="card inactive">
+        <div class="card-header" data-translate="recovery-to-bootloader"></div>
+        <div class="card-body">
+            <p data-translate="recovery-to-bootloader-instructions"></p>
+            <p data-translate="recovery-to-bootloader-instructions-1"></p>
+            <p data-translate="recovery-to-bootloader-instructions-2"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+        </div>
+    </div>
+    <!-- Start LOCKING -->
+    <!-- FP3-->
+    <div id="locking-fp3" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp3')"></button>
+        </div>
+    </div>
+    <!-- FP4 -->
+    <div id="locking-fp4" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp4')"></button>
+        </div>
+    </div>
+    <!-- Teracube -->
+    <div id="locking-teracube-v2" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1-teracube"></p>
+            <p data-translate="locking-instructions-1-teracube-a"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/teracube-v2/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="locking-instructions-3"></p>
+        </div>
+        <div class="card-footer">
+            <button class="next" onclick="VIEW.executeStep(this, 'locking-teracube-v2')">
+                <span data-translate="next"></span>
+                <span class="btn-loader"></span>
+            </button>
+        </div>
+    </div>
+    <!-- Pixel 5 -->
+    <div id="locking-pixel" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png">
+            </div>
+            <p data-translate="locking-instructions-4"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-pixel')"></button>
+        </div>
+    </div>
+    <!-- All other -->
+    <div id="locking" class="card inactive">
+        <div class="card-header" data-translate="locking"></div>
+        <div class="card-body">
+            <p data-translate="locking-instructions-1"></p>
+            <p data-translate="locking-instructions-2"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
+        </div>
+    </div>
+    <!-- End LOCKING -->
+    <div id="murena-cloud-account" class="card inactive">
+        <div class="card-header" data-translate="murena-cloud-account"></div>
+        <div class="card-body">
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
+            </div>
+            <p data-translate="murena-cloud-account-instructions"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
+        </div>
+    </div>
+    <div id="installation-complete" class="card inactive">
+        <div class="card-header" data-translate="installation-complete"></div>
+        <div class="card-body">
+            <p data-translate="installation-complete-instructions-1"></p>
+            <div class="text-center">
+                <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
+            </div>
+            <p class="info" data-translate="installation-complete-instructions-2"></p>
+        </div>
+        <div class="card-footer">
+            <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
+        </div>
+    </div>
+    <div id="help-us-improve-the-tool" class="help-us-improve-the-tool card inactive">
+        <div class="card-header" data-translate="help-us-improve-the-tool"></div>
+        <div class="card-body">
+            <form>
+                <p data-translate="help-us-improve-the-tool-instructions-1"></p>
+                <div class="instructions-ctn">
+                    <div class="instruction-ctn very-dissatisfied">
+                        <img src="assets/images/icons/survey-very-dissatisfied.svg">
+                        <div data-translate="very-dissatisfied"></div>
+                    </div>
+                    <div class="instruction-ctn dissatisfied">
+                        <img src="assets/images/icons/survey-dissatisfied.svg">
+                        <div data-translate="dissatisfied"></div>
+                    </div>
+                    <div class="instruction-ctn neutral">
+                        <img src="assets/images/icons/survey-neutral.svg">
+                        <div data-translate="neutral"></div>
+                    </div>
+                    <div class="instruction-ctn satisfied">
+                        <img src="assets/images/icons/survey-satisfied.svg">
+                        <div data-translate="satisfied"></div>
+                    </div>
+                    <div class="instruction-ctn very-satisfied">
+                        <img src="assets/images/icons/survey-very-satisfied.svg">
+                        <div data-translate="very-satisfied"></div>
+                    </div>
+                </div>
+                <p data-translate="help-us-improve-the-tool-instructions-2"></p>
+                <textarea class="thoughts"></textarea>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button data-translate="send-to-e-team" class="next"></button>
+        </div>
+    </div>
+</div>
+<div class="inactive" id="overlay-background">
+    <div class="card inactive"  id="error-dialogue">
+        <div class="card-body text-center">
+            <img class="error-img" src="assets/images/icons/critical-error.svg">
+            <p class="instruction-title" id="error-title"></p>
+            <p data-translate="navigator-not-supported-instructions" id="error-instruction"></p>
+        </div>
+    </div>
+    <div id="navigator-not-supported" class="navigator-not-supported card inactive">
+        <div class="card-header" data-translate="navigator-detection"></div>
+        <div class="card-body text-center">
+            <img class="error-img" src="assets/images/icons/critical-error.svg">
+            <p class="instruction-title" data-translate="navigator-not-supported"></p>
+            <p data-translate="navigator-not-supported-instructions"></p>
+            <div class="instructions-ctn">
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/edge.svg">
+                    <div>Microsoft Edge <b>125.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/opera.svg">
+                    <div>Opera <b>111.0.0</b></div>
+                </div>
+                <div class="instruction-ctn">
+                    <img class="icon" src="assets/images/icons/chrome.svg">
+                    <div>Chrome <b>126.0.0</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script>
-    var VUE = new VueManager();
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    var VIEW = new ViewManager();
     var exports = {};
-    document.addEventListener('DOMContentLoaded', async ()=>{
-        await VUE.init();
+    document.addEventListener('DOMContentLoaded', async () => {
+        await VIEW.init();
     });
+
+    
 </script>
 </html>
