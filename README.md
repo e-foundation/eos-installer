@@ -264,5 +264,5 @@ Translation are in `static/assets/languages`
 ### controller.manager.js
 
 
-CAUTION
+CAUTION 
 
