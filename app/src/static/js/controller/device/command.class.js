@@ -9,7 +9,9 @@ export class Command {
         lock: 'lock',
         connect: 'connect',
         reboot: 'reboot',
-        downloading: 'downloading',
+        download: 'download',
+        format: 'format',
+        delay: 'delay'
     };
 
     constructor(cmd) {
@@ -58,6 +60,14 @@ export class Command {
                 } else if (res[1].startsWith('lock')) {
                     this.type = Command.CMD_TYPE.lock;
                 }
+                break;
+            case 'delay' :
+                this.type = Command.CMD_TYPE.delay;
+                this.partition = parseInt(res[1], 10)*1000;
+                break;
+            case 'format':
+                this.partition = res[1];
+                this.type = Command.CMD_TYPE.format;
                 break;
         }
     }

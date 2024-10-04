@@ -1,0 +1,64 @@
+{
+  "UNUSED___security_patch_level": "2020-04-05",
+  "description" : "Teracube 2e (2021 emerald)",
+  "steps": [
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-teracube-v2",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",  
+      "command": [
+        
+        "erase userdata",
+        "format md_udc",
+        "flash boot_a boot.img",
+        "flash dtbo_a dtbo.img",
+        "flash vbmeta_a vbmeta.img",
+        "flash vbmeta_system_a vbmeta_system.img",
+        "flash vbmeta_vendor_a vbmeta_vendor.img",
+        "flash super super.img",
+        "flash lk lk.img",
+        "flash logo logo.bin",
+        "flash preloader_a preloader_emerald.bin",
+        "flash tee_a tee.img",
+        "flash gz_a gz.img",
+        "flash sspm_a sspm.img",
+        "flash scp_a scp.img",
+        "flash spmfw_a spmfw.img",
+        "flash md1img_a md1img.img --set-active=a",
+        "flashing lock unlocked"
+      ]
+    },
+    {
+      "id": "locking-teracube-v2",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "reboot"],
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-cloud-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+     "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.2-s-20240715417774-stable-emerald.zip",
+     "name": "Teracube 2e (2021 emerald) installer",
+     "unzip": true
+    }
+  ]
+}

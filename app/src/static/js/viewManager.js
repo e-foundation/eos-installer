@@ -8,7 +8,7 @@
 class ViewManager {
     
     constructor() {
-   
+
     }
 
     async init() {
@@ -16,13 +16,13 @@ class ViewManager {
         this.WDebug = wdebug.WDebug;
         const errorManager = await import ("./errorManager.js");
         this.ErrorManager = errorManager.ErrorManager;
-
         const cm = await import("./controller.manager.js");
         const tm = await import("./vue/translation.manager.js");
         this.controller = new cm.Controller();
         await this.controller.init();
         this.translationManager = new tm.TranslationManager();
         await this.translationManager.init();
+        window.scroll(0,0);
     }
 
     selectStep(currentIndex, step) {
@@ -38,7 +38,9 @@ class ViewManager {
             let $processCtn = document.getElementById('process-ctn');
             if($processCtn){
                 $processCtn.appendChild($copyStep);
-                $copyStep.scrollIntoView({ behavior: "smooth", block: "nearest"});
+                setTimeout(() => {
+                    $copyStep.scrollIntoView({ behavior: "smooth", block: "start"});
+                }, 100);
             }
         }
     }
@@ -54,19 +56,27 @@ class ViewManager {
         try {
             await this.controller.next();
         } catch (e) {
-            this.ErrorManager.displayError('next', `${e.message || e}`);
+            this.ErrorManager.displayError_state('Error on next', `${e.message || e}`);
             $button.disabled = false;
         } finally {
         }
     }
     async executeStep($button, stepName) {
         $button.disabled = true;
+        let loader = $button.querySelector('.btn-loader');
+        if(loader) {
+            loader.style.display = 'inline-block';
+        }
+
         try {
-            await this.controller.executeStep(stepName);
+            await this.controller.executeStep(stepName, loader);
         } catch (e) {
-            this.ErrorManager.displayError(stepName, `${e.message || e}`);
+            this.ErrorManager.displayError_state(`Error on step: ${stepName}`, `${e.message || e}`);
             $button.disabled = false;
         } finally {
+            if(loader) {
+                loader.style.display = 'none';
+            }
         }
 
     }

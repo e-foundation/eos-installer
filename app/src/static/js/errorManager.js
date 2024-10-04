@@ -17,28 +17,23 @@
 
 /*
 * Class to manage errors
+* The Error are NOT translated, as the may not be predicted in all the case
 */
 export class ErrorManager {
     constructor() {
     }
 
-    static displayError(caption, message) {
-        const errorCaption = document.getElementById('error-caption');
-        const errorText = document.getElementById('error-text');
-        errorCaption.textContent = caption;
-        errorText.textContent = message; 
+    // Display a message relative to when the installer is (Step)
+    static displayError_state(caption, message) {
+        document.getElementById('error-message-state').style.display = 'block';
+        console.log("-------------------DISPLAY ERROR ----------------");
+        console.log(caption);
+        console.log(message);
+        console.log("-------------------------------------------------");
+        const errorCaption = document.getElementById('error-caption-state');
+        const errorText = document.getElementById('error-text-state');
+        errorCaption.innerHTML = caption;
+        errorText.innerHTML = message;
     }
-
-    /*displayNavigatorError(){
-        const $errorBackground = document.getElementById('overlay-background');
-        const $errorCaption = document.getElementById('navigator-not-supported');
-        $errorCaption.style.display = 'block';
-        if ($errorCaption) {
-            $errorBackground.classList.add('active');
-            $errorBackground.classList.remove('inactive');
-            $errorCaption.classList.add('active');
-            $errorCaption.classList.remove('inactive');
-        }
-    }*/
 
 }

@@ -96,8 +96,12 @@ export class DeviceManager {
         }
     }
     async connect(mode) {
-        this.setMode(mode);
-        return await this.device.connect();
+        await this.setMode(mode);
+        try {
+            return await this.device.connect();
+        } catch(e) {
+            throw new Error(`Failed to connect: ${e.message || e}`); 
+        }
     }
 
     isConnected() {
@@ -126,6 +130,12 @@ export class DeviceManager {
         return this.bootloader.runCommand(`erase:${partition}`);
     }
 
+    format(argument) {
+        return true;
+//        return this.bootloader.runCommand(`format ${argument}`);
+//        the fastboot format md_udc is not supported evne by the official fastboot program
+    }
+
     unlock(command) {
         return this.bootloader.runCommand(command);
     }
@@ -137,9 +147,16 @@ export class DeviceManager {
     async flash(file, partition, onProgress) {
         let blob = await this.downloader.getFile(file);
         if (!blob) {
-            throw Error(`error getting blob file ${file}`);
+            throw new Error(`error getting blob file ${file}`);
         }
-        return await this.bootloader.flashBlob(partition, blob, onProgress);
+        let flashed = false;
+        try {
+            flashed = await this.bootloader.flashBlob(partition, blob, onProgress);
+        }
+        catch (e) {
+            throw new Error(`error flashing file ${file} ${e.message || e}`);
+        }
+        return flashed;
     }
 
 
@@ -164,8 +181,9 @@ export class DeviceManager {
     async sideload(file) {
         let blob = await this.downloader.getFile(file);
         if (!blob) {
-            throw Error(`error getting blob file ${file}`);
+            throw new Error(`error getting blob file ${file}`);
         }
+        
         return await this.device.sideload(blob);
     }
 
@@ -173,12 +191,15 @@ export class DeviceManager {
         try {
             return this.device.runCommand(command);
         } catch (e) {
-            console.error(e); //K1ZFP TODO
-            throw Error(`error ${command} failed`);
+            throw new Error(`error ${command} failed <br/> ${e.message || e}`);
         }
     }
 
     async downloadAll(onProgress, onUnzip) {
-        return await this.downloader.downloadAndUnzipFolder(this.files, this.folder, onProgress, onUnzip);
+        try {
+            await this.downloader.downloadAndUnzipFolder(this.files, this.folder, onProgress, onUnzip);
+        } catch (e) {
+            throw new Error(`downloadAll error ${e.message || e}`);
+        }
     }
 }

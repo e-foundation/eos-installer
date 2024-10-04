@@ -1,5 +1,18 @@
 @import "theme.css";
 
+
+#compatibility-check {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #ccc;
+    z-index: 1000;
+}
+
 button.connect {
     background: var(--success-color);
     color: var(--button-text-color);
@@ -16,9 +29,6 @@ button.next:disabled {
 }
 #error-message {
     color: red;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
 }
 /* <banner> */
 #banner {
@@ -41,6 +51,13 @@ button.next:disabled {
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
+}
+#error-message-state {
+    max-height: 100px;
+    overflow: auto;
+    padding: 5px;
+    border: 1px solid var(--top-banner-color); 
+    background-color:#fff;
 }
 #donate, #help {
     display: flex;
@@ -91,6 +108,7 @@ button.next:disabled {
 /* <header> */
 /* <card> */
 .card {
+    scroll-margin-top: 65px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     max-width: 780px;
     border-radius: 6px;
@@ -109,6 +127,14 @@ button.next:disabled {
 }
 .card-footer {
     text-align : right;
+}
+#flashing.done progress {
+    -webkit-appearance: none;
+    height: 2px;
+}
+#flashing.done progress::-webkit-progress-bar {
+    -webkit-appearance: none;
+    background-color: var(--green);
 }
 /* </card> */
 .instruction-title {

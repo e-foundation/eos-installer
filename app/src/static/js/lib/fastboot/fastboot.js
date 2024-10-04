@@ -9405,6 +9405,34 @@ class FastbootDevice {
             this._connectReject = reject;
         });
     }
+
+	handleUSBDisconnect = async  (event) => {
+		if (event.device === this.device) {
+			logDebug("USB device disconnected");
+			if (this._disconnectResolve !== null) {
+				this._disconnectResolve(undefined);
+				this._disconnectResolve = null;
+			}
+			await window.navigator.usb.removeEventListener("connect", this.handleUSBConnect);
+			await window.navigator.usb.removeEventListener("disconnect", this.handleUSBDisconnect);
+		}
+	};
+
+	handleUSBConnect = async (event) => {
+		logDebug("USB device connected");
+		this.device = event.device;
+		
+		let hasPromiseReject = this._connectReject !== null;
+	
+		try {
+			await this._validateAndConnectDevice();
+		} catch (error) {
+			if (!hasPromiseReject) {
+				throw error;
+			}
+		}
+	};
+
     /**
      * Request the user to select a USB device and connect to it using the
      * fastboot protocol.
@@ -9434,31 +9462,8 @@ class FastbootDevice {
         }
         logDebug("Using USB device:", this.device);
         if (!this._registeredUsbListeners) {
-            navigator.usb.addEventListener("disconnect", (event) => {
-                if (event.device === this.device) {
-                    logDebug("USB device disconnected");
-                    if (this._disconnectResolve !== null) {
-                        this._disconnectResolve(undefined);
-                        this._disconnectResolve = null;
-                    }
-                }
-            });
-            navigator.usb.addEventListener("connect", async (event) => {
-                logDebug("USB device connected");
-                this.device = event.device;
-                // Check whether waitForConnect() is pending and save it for later
-                let hasPromiseReject = this._connectReject !== null;
-                try {
-                    await this._validateAndConnectDevice();
-                }
-                catch (error) {
-                    // Only rethrow errors from the event handler if waitForConnect()
-                    // didn't already handle them
-                    if (!hasPromiseReject) {
-                        throw error;
-                    }
-                }
-            });
+            navigator.usb.addEventListener("disconnect", this.handleUSBDisconnect);
+            navigator.usb.addEventListener("connect", this.handleUSBConnect);
             this._registeredUsbListeners = true;
         }
         await this._validateAndConnectDevice();
@@ -9747,4 +9752,3 @@ class FastbootDevice {
 }
 
 export { FastbootDevice, FastbootError, TimeoutError, USER_ACTION_MAP, UsbError, configure as configureZip, setDebugLevel };
-//# sourceMappingURL=fastboot.mjs.map

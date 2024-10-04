@@ -1,8 +1,14 @@
+const PRODUCT = 'Web easy installer';
+const VERSION = '0.3';
+
 const express = require('express');
 const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname + '/static'));
+
+
+console.log(`Starting ${PRODUCT} ${VERSION}`);
 
 app.listen(3000, () => console.log('Listening on port 3000'));
 
