@@ -1,15 +1,9 @@
-version: '3.3'
 services:
   eos-web-installer:
-    image: eos-web-installer
-    container_name: eos-web-installer
-    restart: 'no'
+    image: registry.gitlab.e.foundation/e/devices/web-easy-installer:latest
+    build:
+      context: app/
     ports:
-      - '80:3000'
+      - '3000:3000'
     volumes:
       - ./app/src:/app/src
-    networks:
-      - eos-web-installer
-networks:
-  eos-web-installer:
-    driver: bridge
