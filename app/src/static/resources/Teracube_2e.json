@@ -48,7 +48,7 @@
   ],
   "folder": [
     {
-     "path": "https://images.ecloud.global/stable/2e/IMG-e-2.2-s-20240715417774-stable-zirconia.zip",
+     "path": "https://test.ota.ecloud.global/stable/2e/IMG-e-2.4.1-s-20241008439849-official-zirconia.zip",
      "name": "Teracube 2e (2020) installer",
      "unzip": true
     }
