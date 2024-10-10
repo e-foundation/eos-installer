@@ -17,8 +17,13 @@
     {
       "id": "flashing",
       "command": [
+<<<<<<< HEAD
         "flash dtbo dtbo-e-2.2-t-20240717417775-dev-flame.img",
         "flash boot recovery-e-2.2-t-20240717417775-dev-flame.img"
+=======
+        "flash dtbo dtbo-e-2.4.1-t-20241009439852-community-flame.img",
+        "flash boot recovery-e-2.4.1-t-20241009439852-community-flame.img"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       ]
     },
     {
@@ -64,12 +69,20 @@
   "folder": [
     {
       "name": "pixel-4-recovery.img",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/flame/recovery-IMG-e-2.2-t-20240717417775-dev-flame.zip",
+=======
+      "path": "https://test.ota.ecloud.global/dev/flame/recovery-IMG-e-2.4.1-t-20241009439852-community-flame.zip",
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       "unzip": true
     },
     {
       "name": "pixel-4-rom.zip",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/flame/e-2.2-t-20240717417775-dev-flame.zip"
+=======
+      "path": "https://test.ota.ecloud.global/dev/flame/e-2.4.1-t-20241009439852-community-flame.zip"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
     }
   ]
 }

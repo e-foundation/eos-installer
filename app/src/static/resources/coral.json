@@ -17,8 +17,13 @@
     {
       "id": "flashing",
       "command": [
+<<<<<<< HEAD
         "flash dtbo dtbo-e-2.2-t-20240717417775-dev-coral.img",
         "flash boot recovery-e-2.2-t-20240717417775-dev-coral.img"
+=======
+        "flash dtbo dtbo-e-2.4.1-t-20241009439852-community-coral.img",
+        "flash boot recovery-e-2.4.1-t-20241009439852-community-coral.img"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       ]
     },
     {
@@ -64,12 +69,20 @@
   "folder": [
     {
       "name": "pixel4-xl-recovery.img",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/coral/recovery-IMG-e-2.2-t-20240717417775-dev-coral.zip",
+=======
+      "path": "https://test.ota.ecloud.global/dev/coral/recovery-IMG-e-2.4.1-t-20241009439852-community-coral.zip",
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       "unzip": true
     },
     {
       "name": "pixel4-xl-rom.zip",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/coral/e-2.2-t-20240717417775-dev-coral.zip"
+=======
+      "path": "https://test.ota.ecloud.global/dev/coral/e-2.4.1-t-20241009439852-community-coral.zip"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
     }
   ]
 }

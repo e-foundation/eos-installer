@@ -38,9 +38,15 @@
     {
       "id": "flashing",
       "command": [
+<<<<<<< HEAD
         "flash dtbo dtbo-e-2.2-t-20240716417775-dev-guacamoleb.img",
         "flash vbmeta vbmeta-e-2.2-t-20240716417775-dev-guacamoleb.img",
         "flash recovery recovery-e-2.2-t-20240716417775-dev-guacamoleb.img"
+=======
+        "flash dtbo dtbo-e-2.4.1-t-20241009439852-community-guacamoleb.img",
+        "flash vbmeta vbmeta-e-2.4.1-t-20241009439852-community-guacamoleb.img",
+        "flash recovery recovery-e-2.4.1-t-20241009439852-community-guacamoleb.img"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       ]
     },
     {
@@ -86,12 +92,20 @@
   "folder": [
     {
       "name": "One+ 7 recovery installer",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/guacamoleb/recovery-IMG-e-2.2-t-20240716417775-dev-guacamoleb.zip",
+=======
+      "path": "https://test.ota.ecloud.global/dev/guacamoleb/recovery-IMG-e-2.4.1-t-20241009439852-community-guacamoleb.zip",
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
       "unzip": true
     },
     {
       "name": "oneplus-7-rom.zip",
+<<<<<<< HEAD
       "path": "https://images.ecloud.global/dev/guacamoleb/e-2.2-t-20240716417775-dev-guacamoleb.zip"
+=======
+      "path": "https://test.ota.ecloud.global/dev/guacamoleb/e-2.4.1-t-20241009439852-community-guacamoleb.zip"
+>>>>>>> 0c43fee (Changing URL from images.ecloud.global to test.ota.ecloud.global & updating file names to 2.4.1 builds : 2)
     }
   ]
 }
