@@ -77,7 +77,7 @@
     },
     {
       "name": "pkmd_pixel.bin",
-      "path": "https://images.ecloud.global/stable/pkmd_pixel.bin"
+      "path": "https://test.ota.ecloud.global/stable/pkmd_pixel.bin"
     }
   ]
 }
