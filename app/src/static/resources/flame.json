@@ -64,12 +64,12 @@
   "folder": [
     {
       "name": "pixel-4-recovery.img",
-      "path": "https://images.ecloud.global/dev/flame/recovery-IMG-e-2.4.1-t-20241009439852-community-flame.zip",
+      "path": "https://test.ota.ecloud.global/dev/flame/recovery-IMG-e-2.4.1-t-20241009439852-community-flame.zip",
       "unzip": true
     },
     {
       "name": "pixel-4-rom.zip",
-      "path": "https://images.ecloud.global/dev/flame/e-2.4.1-t-20241009439852-community-flame.zip"
+      "path": "https://test.ota.ecloud.global/dev/flame/e-2.4.1-t-20241009439852-community-flame.zip"
     }
   ]
 }
