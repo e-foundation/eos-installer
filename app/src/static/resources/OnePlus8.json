@@ -38,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-instantnoodle.img",
-        "flash vbmeta vbmeta-e-2.2-t-20240717417775-dev-instantnoodle.img",
-        "flash recovery recovery-e-2.2-t-20240717417775-dev-instantnoodle.img"
+        "flash dtbo dtbo-e-2.4.1-t-20241010439852-community-instantnoodle.img",
+        "flash vbmeta vbmeta-e-2.4.1-t-20241010439852-community-instantnoodle.img",
+        "flash recovery recovery-e-2.4.1-t-20241010439852-community-instantnoodle.img"
       ]
     },
     {
@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "https://images.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.2-t-20240717417775-dev-instantnoodle.zip",
+      "path": "https://images.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.4.1-t-20241010439852-community-instantnoodle.zip",
       "unzip": true
     },
     {
       "name": "oneplus-8-rom.zip",
-      "path": "https://images.ecloud.global/dev/instantnoodle/e-2.2-t-20240717417775-dev-instantnoodle.zip"
+      "path": "https://images.ecloud.global/dev/instantnoodle/e-2.4.1-t-20241010439852-community-instantnoodle.zip"
     }
   ]
 }
