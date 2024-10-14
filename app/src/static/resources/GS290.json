@@ -47,7 +47,7 @@
     {
       "name": "GS290 installer",
       "unzip": true,
-      "path": "https://test.ota.ecloud.global/stable/GS290/IMG-e-2.4.1-s-20241008439849-official-GS290.zip"
+      "path": "https://images.ecloud.global/stable/GS290/IMG-e-2.4.1-s-20241008439849-official-GS290.zip"
     }
   ]
 }

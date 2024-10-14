@@ -91,7 +91,7 @@
     {
       "name": "fp3.zip",
       "unzip": true,
-      "path": "https://test.ota.ecloud.global/stable/FP3/IMG-e-2.4.1-t-20241008439851-official-FP3.zip"
+      "path": "https://images.ecloud.global/stable/FP3/IMG-e-2.4.1-t-20241008439851-official-FP3.zip"
     }
   ]
 }

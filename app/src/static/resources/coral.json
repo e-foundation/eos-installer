@@ -64,12 +64,12 @@
   "folder": [
     {
       "name": "pixel4-xl-recovery.img",
-      "path": "https://test.ota.ecloud.global/dev/coral/recovery-IMG-e-2.4.1-t-20241009439852-community-coral.zip",
+      "path": "https://images.ecloud.global/dev/coral/recovery-IMG-e-2.4.1-t-20241009439852-community-coral.zip",
       "unzip": true
     },
     {
       "name": "pixel4-xl-rom.zip",
-      "path": "https://test.ota.ecloud.global/dev/coral/e-2.4.1-t-20241009439852-community-coral.zip"
+      "path": "https://images.ecloud.global/dev/coral/e-2.4.1-t-20241009439852-community-coral.zip"
     }
   ]
 }

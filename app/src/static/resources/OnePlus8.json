@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "https://test.ota.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.4.1-t-20241010439852-community-instantnoodle.zip",
+      "path": "https://images.ecloud.global/dev/instantnoodle/recovery-IMG-e-2.4.1-t-20241010439852-community-instantnoodle.zip",
       "unzip": true
     },
     {
       "name": "oneplus-8-rom.zip",
-      "path": "https://test.ota.ecloud.global/dev/instantnoodle/e-2.4.1-t-20241010439852-community-instantnoodle.zip"
+      "path": "https://images.ecloud.global/dev/instantnoodle/e-2.4.1-t-20241010439852-community-instantnoodle.zip"
     }
   ]
 }

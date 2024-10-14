@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 7 Pro recovery installer",
-      "path": "https://test.ota.ecloud.global/dev/guacamole/recovery-IMG-e-2.4.1-t-20241010439852-community-guacamole.zip",
+      "path": "https://images.ecloud.global/dev/guacamole/recovery-IMG-e-2.4.1-t-20241010439852-community-guacamole.zip",
       "unzip": true
     },
     {
       "name": "oneplus-7pro-rom.zip",
-      "path": "https://test.ota.ecloud.global/dev/guacamole/e-2.4.1-t-20241010439852-community-guacamole.zip"
+      "path": "https://images.ecloud.global/dev/guacamole/e-2.4.1-t-20241010439852-community-guacamole.zip"
     }
   ]
 }

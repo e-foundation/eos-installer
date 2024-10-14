@@ -68,16 +68,16 @@
   "folder": [
     {
       "name": "pixel-5-recovery.img",
-      "path": "https://test.ota.ecloud.global/stable/redfin/recovery-IMG-e-2.4.1-t-20241008439851-official-redfin.zip",
+      "path": "https://images.ecloud.global/stable/redfin/recovery-IMG-e-2.4.1-t-20241008439851-official-redfin.zip",
       "unzip": true
     },
     {
       "name": "pixel-5-rom.zip",
-      "path": "https://test.ota.ecloud.global/stable/redfin/e-2.4.1-t-20241008439851-official-redfin.zip"    
+      "path": "https://images.ecloud.global/stable/redfin/e-2.4.1-t-20241008439851-official-redfin.zip"    
     },
     {
       "name": "pkmd_pixel.bin",
-      "path": "https://test.ota.ecloud.global/stable/pkmd_pixel.bin"
+      "path": "https://images.ecloud.global/stable/pkmd_pixel.bin"
     }
   ]
 }

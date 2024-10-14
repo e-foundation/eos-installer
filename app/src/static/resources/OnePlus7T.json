@@ -86,12 +86,12 @@
   "folder": [
     {
       "name": "One+ 7T recovery installer",
-      "path": "https://test.ota.ecloud.global/dev/hotdogb/recovery-IMG-e-2.4.1-t-20241010439852-community-hotdogb.zip",
+      "path": "https://images.ecloud.global/dev/hotdogb/recovery-IMG-e-2.4.1-t-20241010439852-community-hotdogb.zip",
       "unzip": true
     },
     {
       "name": "oneplus-7t-rom.zip",
-      "path": "https://test.ota.ecloud.global/dev/hotdogb/e-2.4.1-t-20241010439852-community-hotdogb.zip"
+      "path": "https://images.ecloud.global/dev/hotdogb/e-2.4.1-t-20241010439852-community-hotdogb.zip"
     }
   ]
 }
