@@ -9,7 +9,7 @@ import {WDebug} from "./debug.js";
 export class Controller {
     constructor() {
         this.steps = [
-            new Step("let-s-get-started", undefined, true),
+            new Step("let-s-get-started",  undefined, true),
             new Step("connect-your-phone",  undefined, true),
             new Step("activate-developer-options", undefined, true),
             new Step("activate-oem-unlock", undefined, true),
@@ -156,11 +156,19 @@ export class Controller {
             case Command.CMD_TYPE.unlock:
                 //check if unlocked to avoid unnecessary command
                 let isUnlocked = false;
+                let gotoStep = "";
                 if (cmd.partition) {
                     try {
-                        isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
-                    } catch (e) {
-                    }
+                        console.log(">>>", cmd.partition);
+                        if (cmd.partition.startsWith("goto_")) {
+                            gotoStep = cmd.partition.substring(5);
+                            console.log(">>>>",gotoStep);
+                            isUnlocked = await this.deviceManager.getUnlocked('unlocked');
+                            console.log(">>>>>",isUnlocked);
+                        } else {
+                            isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
+                        }
+                    } catch (e) {}
                 }
                 WDebug.log("ControllerManager unlock: ", this.deviceManager.adb.getProductName() + " isUnlocked = " + isUnlocked);
                 if (!isUnlocked) {
@@ -176,7 +184,16 @@ export class Controller {
                     }
                 } else {
                     WDebug.log("The phone is not locked - bypass lock process");
-                    this.currentIndex++;
+                    if (gotoStep=="") { // Goto the next step.
+                        this.currentIndex++;
+                    } else { // Goto the maned step.
+                        do {
+                            this.currentIndex++;
+                            console.log(this.steps[this.currentIndex]);
+                            WDebug.log("Bypass step", this.steps[this.currentIndex].name);
+                        } while (this.steps[this.currentIndex].name == gotoStep);
+                    }
+                        
                 }
                 return true;
             case Command.CMD_TYPE.lock:
