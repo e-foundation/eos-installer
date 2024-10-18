@@ -159,12 +159,10 @@ export class Controller {
                 let gotoStep = "";
                 if (cmd.partition) {
                     try {
-                        console.log(">>>", cmd.partition);
                         if (cmd.partition.startsWith("goto_")) {
                             gotoStep = cmd.partition.substring(5);
-                            console.log(">>>>",gotoStep);
+                            WDebug.log("goto step", gotoStep);
                             isUnlocked = await this.deviceManager.getUnlocked('unlocked');
-                            console.log(">>>>>",isUnlocked);
                         } else {
                             isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
                         }
@@ -189,11 +187,10 @@ export class Controller {
                     } else { // Goto the maned step.
                         do {
                             this.currentIndex++;
-                            console.log(this.steps[this.currentIndex]);
-                            WDebug.log("Bypass step", this.steps[this.currentIndex].name);
-                        } while (this.steps[this.currentIndex].name == gotoStep);
+                            WDebug.log("Bypass step", this.steps[this.currentIndex].name + " " + (this.steps[this.currentIndex].name == gotoStep));
+                        } while ( !(this.steps[this.currentIndex].name == gotoStep) );
+                        this.currentIndex--;
                     }
-                        
                 }
                 return true;
             case Command.CMD_TYPE.lock:
