@@ -4,9 +4,10 @@
     <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="version" content="0.4.1"/>
     <link rel="stylesheet" href="css/styles.css"/>
     <link rel="stylesheet" href="css/loader.css"/>
-    <title>/e/OS Web installer</title>
+    <title>/e/OS web installer</title>
     <script src="js/lib/zip/zip-no-worker-inflate.min.js"></script>
     <script src="js/lib/webadb/adb.bundle.js"></script>
     <script src="js/viewManager.js"></script>
@@ -53,7 +54,7 @@
     </div>
     <div id="logo-ctn">
         <img id="logo" src="assets/images/icons/logo.png">
-        <h1 class="title">/e/OS Web Installer</h1>
+        <h1 class="title">/e/OS Easy Installer</h1>
     </div>
     <div id="let-s-get-started" class="let-s-get-started card">
         <div class="card-header" data-translate="let-s-get-started"></div>
@@ -571,16 +572,17 @@
         </div>
     </div>
     <!-- End LOCKING -->
-    <div id="murena-cloud-account" class="card inactive">
-        <div class="card-header" data-translate="murena-cloud-account"></div>
+    <div id="murena-workspace-account" class="card inactive">
+        <div class="card-header" data-translate="murena-workspace-account"></div>
         <div class="card-body">
             <div class="text-center">
-                <img class="instruction-img" src="assets/images/illustrations/murena-cloud-account.png">
+                <img class="instruction-img" src="assets/images/illustrations/murena-workspace-account.png">
             </div>
-            <p data-translate="murena-cloud-account-instructions"></p>
+            <p data-translate="murena-workspace-account-instructions"></p>
+            <a href="https://murena.io" target="_blank">murena.io</a>
         </div>
         <div class="card-footer">
-            <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
+            <button data-translate="next" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
     <div id="installation-complete" class="card inactive">
@@ -591,9 +593,6 @@
                 <img class="instruction-img" src="assets/images/illustrations/installation-complete.png">
             </div>
             <p class="info" data-translate="installation-complete-instructions-2"></p>
-        </div>
-        <div class="card-footer">
-            <button data-translate="skip" class="next" onclick="VIEW.onNext(this)"></button>
         </div>
     </div>
 </div>

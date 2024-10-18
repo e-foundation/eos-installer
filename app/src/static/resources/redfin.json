@@ -18,9 +18,9 @@
       "id": "flashing",
       "command": [
         
-        "flash dtbo dtbo-e-2.2-t-20240715417772-stable-redfin.img",
-	      "flash boot boot-e-2.2-t-20240715417772-stable-redfin.img",
-        "flash vendor_boot recovery-e-2.2-t-20240715417772-stable-redfin.img"
+        "flash dtbo dtbo-e-2.4.1-t-20241008439851-official-redfin.img",
+	      "flash boot boot-e-2.4.1-t-20241008439851-official-redfin.img",
+        "flash vendor_boot recovery-e-2.4.1-t-20241008439851-official-redfin.img"
       ]
     },
     {
@@ -58,7 +58,7 @@
       "needUserGesture": true
     },
     {
-      "id": "murena-cloud-account",
+      "id": "murena-workspace-account",
       "needUserGesture": true
     },
     {
@@ -68,12 +68,12 @@
   "folder": [
     {
       "name": "pixel-5-recovery.img",
-      "path": "https://images.ecloud.global/stable/redfin/recovery-IMG-e-2.2-t-20240715417772-stable-redfin.zip",
+      "path": "https://images.ecloud.global/stable/redfin/recovery-IMG-e-2.4.1-t-20241008439851-official-redfin.zip",
       "unzip": true
     },
     {
       "name": "pixel-5-rom.zip",
-      "path": "https://images.ecloud.global/stable/redfin/e-2.2-t-20240715417772-stable-redfin.zip"    
+      "path": "https://images.ecloud.global/stable/redfin/e-2.4.1-t-20241008439851-official-redfin.zip"    
     },
     {
       "name": "pkmd_pixel.bin",

@@ -36,7 +36,7 @@
       ]
     },
     {
-      "id": "murena-cloud-account",
+      "id": "murena-workspace-account",
       "needUserGesture": true
     },
     {
@@ -47,7 +47,7 @@
     {
       "name": "GS290 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/stable/GS290/IMG-e-2.2-s-20240715417774-stable-GS290.zip"
+      "path": "https://images.ecloud.global/stable/GS290/IMG-e-2.4.1-s-20241008439849-official-GS290.zip"
     }
   ]
 }

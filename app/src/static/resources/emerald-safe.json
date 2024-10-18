@@ -41,7 +41,7 @@
       "needUserGesture": true
     },
     {
-      "id": "murena-cloud-account",
+      "id": "murena-workspace-account",
       "needUserGesture": true
     },
     {
@@ -50,7 +50,7 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.2-s-20240715417774-stable-emerald.zip",
+      "path": "https://images.ecloud.global/stable/emerald/IMG-e-2.4.1-s-20241008439849-official-emerald.zip",
       "name": "Teracube 2e (2021 emerald) safe installer",
       "unzip": true
     }

@@ -38,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.2-t-20240717417775-dev-guacamole.img",
-        "flash vbmeta vbmeta-e-2.2-t-20240717417775-dev-guacamole.img",
-        "flash recovery recovery-e-2.2-t-20240717417775-dev-guacamole.img"
+        "flash dtbo dtbo-e-2.4.1-t-20241010439852-community-guacamole.img",
+        "flash vbmeta vbmeta-e-2.4.1-t-20241010439852-community-guacamole.img",
+        "flash recovery recovery-e-2.4.1-t-20241010439852-community-guacamole.img"
       ]
     },
     {
@@ -72,7 +72,7 @@
       "needUserGesture": true
     },
     {
-      "id": "murena-cloud-account",
+      "id": "murena-workspace-account",
       "needUserGesture": true
     },
     {
@@ -82,12 +82,12 @@
   "folder": [
     {
       "name": "One+ 7 Pro recovery installer",
-      "path": "https://images.ecloud.global/dev/guacamole/recovery-IMG-e-2.2-t-20240717417775-dev-guacamole.zip",
+      "path": "https://images.ecloud.global/dev/guacamole/recovery-IMG-e-2.4.1-t-20241010439852-community-guacamole.zip",
       "unzip": true
     },
     {
       "name": "oneplus-7pro-rom.zip",
-      "path": "https://images.ecloud.global/dev/guacamole/e-2.2-t-20240717417775-dev-guacamole.zip"
+      "path": "https://images.ecloud.global/dev/guacamole/e-2.4.1-t-20241010439852-community-guacamole.zip"
     }
   ]
 }

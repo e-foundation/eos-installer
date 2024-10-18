@@ -38,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.2-t-20240716417775-dev-guacamoleb.img",
-        "flash vbmeta vbmeta-e-2.2-t-20240716417775-dev-guacamoleb.img",
-        "flash recovery recovery-e-2.2-t-20240716417775-dev-guacamoleb.img"
+        "flash dtbo dtbo-e-2.4.1-t-20241009439852-community-guacamoleb.img",
+        "flash vbmeta vbmeta-e-2.4.1-t-20241009439852-community-guacamoleb.img",
+        "flash recovery recovery-e-2.4.1-t-20241009439852-community-guacamoleb.img"
       ]
     },
     {
@@ -72,7 +72,7 @@
       "needUserGesture": true
     },
     {
-      "id": "murena-cloud-account",
+      "id": "murena-workspace-account",
       "needUserGesture": true
     },
     {
@@ -82,12 +82,12 @@
   "folder": [
     {
       "name": "One+ 7 recovery installer",
-      "path": "https://images.ecloud.global/dev/guacamoleb/recovery-IMG-e-2.2-t-20240716417775-dev-guacamoleb.zip",
+      "path": "https://images.ecloud.global/dev/guacamoleb/recovery-IMG-e-2.4.1-t-20241009439852-community-guacamoleb.zip",
       "unzip": true
     },
     {
       "name": "oneplus-7-rom.zip",
-      "path": "https://images.ecloud.global/dev/guacamoleb/e-2.2-t-20240716417775-dev-guacamoleb.zip"
+      "path": "https://images.ecloud.global/dev/guacamoleb/e-2.4.1-t-20241009439852-community-guacamoleb.zip"
     }
   ]
 }

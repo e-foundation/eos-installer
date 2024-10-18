@@ -114,13 +114,17 @@
     },
     {
       "id": "installation-complete"
+    },
+    {
+      "id": "murena-workspace-account",
+      "needUserGesture": true
     }
   ],
   "folder": [
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/stable/FP4/IMG-e-2.2-t-20240715417772-stable-FP4.zip"
+      "path": "https://images.ecloud.global/stable/FP4/IMG-e-2.4.1-t-20241009439851-official-FP4.zip"
     }
   ]
 }
