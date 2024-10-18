@@ -114,10 +114,6 @@
     },
     {
       "id": "installation-complete"
-    },
-    {
-      "id": "murena-cloud-account",
-      "needUserGesture": true
     }
   ],
   "folder": [

@@ -80,11 +80,7 @@
         "needUserGesture": true
       },
       {
-        "id": "installation-complete",
-        "needUserGesture": true
-      },
-      {
-        "id": "help-us-improve-the-tool"
+        "id": "installation-complete"
       }
     ],
     "folder": [
