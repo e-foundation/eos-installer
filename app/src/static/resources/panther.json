@@ -1,0 +1,83 @@
+{
+  "android": 13,
+  "steps": [
+    {
+      "command": ["reboot bootloader", "delay 5"]
+    },
+    {
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-pixel",
+      "needUserGesture": true,
+      "command": ["delay 15", "connect bootloader"]
+    },
+    {
+      "id": "flashing",
+      "command": [
+        "flash dtbo dtbo-e-2.4.1-t-20241009439851-official-panther.img",
+        "flash boot boot-e-2.4.1-t-20241009439851-official-panther.img",
+        "flash vendor_boot recovery-e-2.4.1-t-20241009439851-official-panther.img",
+        "flash vendor_kernel_boot vendor_kernel_boot-e-2.4.1-t-20241009439851-official-panther.img"
+      ]
+    },
+    {
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
+      "command": "sideload pixel-7-rom.zip"
+    },
+    {
+      "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "erase avb_custom_key",
+        "flash avb_custom_key pkmd_pixel.bin",
+        "flashing lock unlocked"
+      ],
+      "needUserGesture": true
+    },
+    {
+      "id": "locking-pixel",
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-workspace-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+      "name": "pixel-7-recovery.img",
+      "path": "https://images.ecloud.global/official/panther/recovery-IMG-e-2.4.1-t-20241009439851-official-panther.zip",
+      "unzip": true
+    },
+    {
+      "name": "pixel-7-rom.zip",
+      "path": "https://images.ecloud.global/official/panther/e-2.4.1-t-20241009439851-official-panther.zip"
+    },
+    {
+      "name": "pkmd_pixel.bin",
+      "path": "https://images.ecloud.global/stable/pkmd_pixel.bin"
+    }
+  ]
+}
