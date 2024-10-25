@@ -296,34 +296,33 @@ export class Controller {
             }
 
             let this_model = this.deviceManager.adb.webusb.device;
-            // K1ZFP Manage here model override see https://gitlab.e.foundation/e/os/backlog/-/issues/2475
-            if (this.deviceManager.adb.webusb.model == "Teracube 2e") { // Official ROM
-                if (this.deviceManager.adb.webusb.product == "Teracube_2e") { //emerald
-                    this_model = "emerald";
-                } else if (this.deviceManager.adb.webusb.product == "Teracube_2e_EEA") { // zirconia
-                    this_model = "Teracube_2e";
-                } else {
+            //    https://gitlab.e.foundation/e/os/backlog/-/issues/2604#note_609234
+            const model = this.deviceManager.adb.webusb.model;
+            if (model.includes("Teracube") && model.includes("2e")) {
+                try {
+                    const serial = await this.deviceManager.adb.getSerialNumber();
+                     WDebug.log("serial numer:", serial);
+                    if (serial.startsWith("2020")) {
+                        this_model = "emerald";
+                    } else if (serial.startsWith("2021")) {
+                        this_model = "Teracube_2e";
+                    } else {
+                        const id = 
+                        "model "+this.deviceManager.adb.webusb.model + " " + 
+                        "product "+this.deviceManager.adb.webusb.product + " " +
+                        "name "+this.deviceManager.adb.webusb.name + " " +
+                        "device "+this.deviceManager.adb.webusb.device;
+                        throw new Error("Cannot find device resource", id);
+                    }
+                } catch (e) {
                     const id = 
-                    "model "+this.deviceManager.adb.webusb.model + " " + 
-                    "product "+this.deviceManager.adb.webusb.product + " " +
-                    "name "+this.deviceManager.adb.webusb.name + " " +
-                    "device "+this.deviceManager.adb.webusb.device;
-                    throw new Error("Cannot find device resource", id);
-                }              
-            } 
-            else if (this.deviceManager.adb.webusb.model == "Teracube_2e") { // under e/OS/
-                if (this.deviceManager.adb.webusb.device == "emerald") { //emerald
-                    this_model = "emerald";
-                } else if (this.deviceManager.adb.webusb.device == "zirconia") {
-                    this_model = "Teracube_2e";
-                } else {
-                    const id = 
-                    "model "+this.deviceManager.adb.webusb.model + " " + 
-                    "product "+this.deviceManager.adb.webusb.product + " " +
-                    "name "+this.deviceManager.adb.webusb.name + " " +
-                    "device "+this.deviceManager.adb.webusb.device;
-                    throw new Error("Cannot find device resource", id);
+                        "model "+this.deviceManager.adb.webusb.model + " " + 
+                        "product "+this.deviceManager.adb.webusb.product + " " +
+                        "name "+this.deviceManager.adb.webusb.name + " " +
+                        "device "+this.deviceManager.adb.webusb.device;
+                        throw new Error("Error on getting devcice resource", id);
                 }
+                
             }
 
             resources = await (await fetch(`resources/${this_model}.json`)).json();

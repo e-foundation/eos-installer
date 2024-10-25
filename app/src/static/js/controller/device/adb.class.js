@@ -62,6 +62,10 @@ export class ADB extends Device {
         return this.webusb.getProp('ro.build.version.release');
     }
 
+    async getSerialNumber() {
+        return this.webusb.getProp("ro.boot.serialno");
+    }
+
     async runCommand(cmd) {
         WDebug.log("ADB Run command>", cmd);
         return await this.webusb.exec(cmd);
