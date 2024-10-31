@@ -247,9 +247,8 @@ export class Controller {
 
     async onDeviceConnected() {
 
-        const serialNumber = this.deviceManager.getSerialNumber();
         const productName = this.deviceManager.getProductName();
-        const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected(serialNumber);
+        const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected();
         if (!wasAlreadyConnected) {
             VIEW.updateData('product-name', productName);
             this.model = productName;

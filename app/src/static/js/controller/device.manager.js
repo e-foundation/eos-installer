@@ -24,6 +24,7 @@ export class DeviceManager {
         this.recovery = new Recovery();
         this.adb = new ADB();
         this.downloader = new Downloader();
+        this.wasConnected = false;
     }
 
     async init() {
@@ -33,20 +34,13 @@ export class DeviceManager {
         await this.downloader.init();
     }
 
-    /**
-     * @param serialNumber
-     * @returns {boolean}
-     *
-     * We check if the serialNumber is the same as our connected device
-     *  Because productName may not be the same between adb/fastboot driver
-     *
-     */
-    wasAlreadyConnected(serialNumber) {
-        if (this.serialNumber) {
-            return this.serialNumber === serialNumber;
+
+    wasAlreadyConnected() {
+        if (this.wasConnected == false) {
+            this.wasConnected = true;
+            return false;
         }
-        this.serialNumber = serialNumber;
-        return false;
+        return true;
     }
 
     setResources(folder, steps ) {
