@@ -302,9 +302,9 @@ export class Controller {
                 try {
                     const serial = await this.deviceManager.adb.getSerialNumber();
                      WDebug.log("serial numer:", serial);
-                    if (serial.startsWith("2020")) {
+                    if (serial.startsWith("2021")) {
                         this_model = "emerald";
-                    } else if (serial.startsWith("2021")) {
+                    } else if (serial.startsWith("2020")) {
                         this_model = "Teracube_2e";
                     } else {
                         const id = 
