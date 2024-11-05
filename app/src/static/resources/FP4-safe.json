@@ -113,11 +113,11 @@
         "reboot"]
     },
     {
-      "id": "installation-complete"
-    },
-    {
       "id": "murena-workspace-account",
       "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
     }
   ],
   "folder": [
