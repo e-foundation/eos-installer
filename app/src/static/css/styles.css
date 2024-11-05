@@ -128,11 +128,11 @@ button.next:disabled {
 .card-footer {
     text-align : right;
 }
-#flashing.done progress {
+.flashing.done progress {
     -webkit-appearance: none;
     height: 2px;
 }
-#flashing.done progress::-webkit-progress-bar {
+.flashing.done progress::-webkit-progress-bar {
     -webkit-appearance: none;
     background-color: var(--green);
 }
