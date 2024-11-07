@@ -1,5 +1,5 @@
 const PRODUCT = '/e/OS Web Installer';
-const VERSION = '0.6';
+const VERSION = '0.6.1';
 
 const express = require('express');
 const app = express();
