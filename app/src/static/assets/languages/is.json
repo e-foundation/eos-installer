@@ -71,5 +71,12 @@
     "recovery-to-bootloader-instructions-2": "2. Veldu að <code>enduræsa inn í ræsistjórann</code>",
     "sideload-instructions-1": "Skjárinn mun sýna framvinduna... ",
     "sideload-instructions-2": "Þetta gæti tekið nokkrar mínútur, sýndu þolinmæði.",
-    "sideload-instructions-4": "Aðeins þá geturðu smellt á <code>Næsta</code>."
+    "sideload-instructions-4": "Aðeins þá geturðu smellt á <code>Næsta</code>.",
+    "unlocking-instructions-1-a": "Notaðu <kbd>aflrofann</kbd> til að staðfesta.",
+    "unlocking-instructions-2-a": "Tækið þitt mun endurræsa. <b>Bíddu þangað til bootloader-ræsistjóraskjárinn birtist aftur</b> áður en þú heldur áfram á næsta þrep",
+    "android-version-not-supported": "Android-útgáfa úrelt",
+    "unlocking-instructions-3": "Þar sem tækið <b>frumstillist alveg</b>, þarft þú að <b>endurvirkja USB-aflúsunarham</b>.",
+    "bootloader-to-recovery-manually-instructions-3": "3. Bíddu eftir að síminn ræsist í recovery-endurheimtuham",
+    "installing": "Uppsetning",
+    "unlocking-instructions-2": "Ef tækið endurræsist ekki sjálfkrafa, skaltu endurræsa það."
 }
