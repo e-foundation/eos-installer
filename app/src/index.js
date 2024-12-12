@@ -1,4 +1,4 @@
-const PRODUCT = '/e/OS Web Installer';
+const PRODUCT = '/e/OS Installer';
 const VERSION = '0.6.1';
 
 const express = require('express');
