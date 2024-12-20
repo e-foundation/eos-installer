@@ -2,6 +2,7 @@
 
 Install /e/OS from a chromium-based browser
 
+- **Online instance**: [https://e.foundation/installer](https://e.foundation/installer)
 - **Documentation**: [https://doc.e.foundation/eos-installer](https://doc.e.foundation/eos-installer)
 - **Source code**: [https://gitlab.e.foundation/e/devices/eos-installer](https://gitlab.e.foundation/e/devices/eos-installer)
 
