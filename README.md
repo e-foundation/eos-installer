@@ -158,7 +158,7 @@ Please respect ♥
 
 ## License
 
-GPLv3
+[GPLv3](https://gitlab.e.foundation/e/devices/web-easy-installer/-/blob/main/LICENSE)
 
 ## Acknowledgments
 
