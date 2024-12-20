@@ -1,6 +1,6 @@
 services:
   eos-web-installer:
-    image: registry.gitlab.e.foundation/e/devices/eos-installer:latest
+    image: registry.gitlab.e.foundation/e/devices/web-easy-installer:latest
     build:
       context: app/
     ports:
