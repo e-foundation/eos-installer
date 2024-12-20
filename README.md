@@ -162,10 +162,14 @@ GPLv3
 
 ## Acknowledgments
 
+Using:
+- vanilla Javascript, CSS and HTML
+- Docker for packaging
+
 Libraries:
-- fastboot.js: https://github.com/kdrag0n/fastboot.js/
-- webadb:
-- zip:
+- fastboot.js (License: MIT): https://github.com/kdrag0n/fastboot.js/ 
+- ya-webadb (License: MIT): https://github.com/yume-chan/ya-webadb
+- zip-no-worker-inflate.js (License: BSD3): https://github.com/gildas-lormeau/zip.js/blob/master/lib/zip-no-worker-inflate.js
 
 Contributors:
-- Frank and Paula from ESPRI Digital
+- Frank Preel (frank.preel@espridigital.fr) and Paula Grente (paula.grente@8espridigtal.fr) from [ESPRI Digital](https://espridigital.fr/)
