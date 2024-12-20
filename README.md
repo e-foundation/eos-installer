@@ -1,39 +1,150 @@
-[last updated : 2024-08-12 ]
+# /e/OS Installer
 
-`app` folder contains the source of the application.
+Install /e/OS from a chromium-based browser
 
-`extern` folder contains dependencies that are *not* embedded from package.json
-    This is the case for fastboot.js the `fastboot.js/dist` folder if modified must be copied into `app\src\static\js\fastboot` folder
+- **Documentation**: [https://doc.e.foundation/eos-installer](https://doc.e.foundation/eos-installer)
+- **Source code**: [https://gitlab.e.foundation/e/devices/eos-installer](https://gitlab.e.foundation/e/devices/eos-installer)
 
-# Build the image
+[[_TOC_]]
 
-Go to the `app` folder.
+## Features
 
-`docker build -t eos-web-installer .`
+- detect the device
+- guide the user to unlock the bootloader
+- guide the user to flash /e/OS
+- when possible, guide the user to lock the bootloader
 
-# Run the project
+## Run the project
 
-## Windows
-`docker run -v "%cd%"\src:/app/src -p 127.0.0.1:3000:3000 eos-web-installer`
+1. Get the docker image
+    - build it: `git clone https://gitlab.e.foundation/e/devices/eos-installer.git && docker build -t eos-installer app/.`
+    - download from our package registry: `docker pull registry.gitlab.e.foundation/e/devices/eos-installer:latest`
+2. Run a docker container
+    - Windows: `docker run -v "%cd%"\src:/app/src -p 127.0.0.1:3000:3000 eos-installer`
+    - Linux: `docker run -v "$(pwd)/src:/app/src" -p 127.0.0.1:3000:3000 eos-installer`
+3. The app is available at `http://localhost:3000/`
 
-## Linux
-`docker run -v "$(pwd)/src:/app/src" -p 127.0.0.1:3000:3000 eos-web-installer`
+## Usage
 
-The project is available at `http://localhost:3000/`
+## Contributing
 
-# Installation
+### Add a new device
 
-Drop the files used to flash the device in the corresponding folder in  `static/assets/sources`
-And **overwrite the .json** file in `static/js/resources` of your device with the correct file name
+1. Get the device code from the stock ROM
+    - We link device and its resources with deviceName.toLowerCase().replace(/ /g, ''); ex: One Plus Nord -> oneplusnord.json
+    - Since the deviceName may not be the same in fastboot (Android), we need at least a first connexion in adb to retrieve the deviceName
+2. Understand how does the flash process works
+3. Configure the flash process
+    - Define the steps in an array of objects describing the process
+        - template: 
+            ```json 
+            "steps": [
+                {
+                  "mode": string?,
+                  "command" : string?,
+                  "instruction": string?,
+                  "needUser": boolean?
+                }
+              ]
+            ```
+        - Options
+    
+            | key           | exemple                         | description                                                                 |
+            |---------------|---------------------------------|-----------------------------------------------------------------------------|
+            | `mode`        | `[fastboot\| adb\| bootloader]` | It's a shortcut for a reboot and a reconnect before the command is executed |
+            | `needUser`    | `[true\| false]`                | The user needs to click on continue before the command is executed          |
+            | `instruction` | `Please select unlock`          | String displayed to the user at this step. Command is used if not defined   |
+            | `command`     | `flashing unlock unlocked`      | Command as defined in the next chapter                                      |
+        - Available commands
+    
+            | command                                | exemple                    | description     |
+            |----------------------------------------|----------------------------|-----------------|
+            | `[flashing\| oem] unlock [varName?]`   | `flashing unlock unlocked` | --------------  |
+            | `[flashing\|oem] lock [varName?]`      | `flashing lock`            | --------------  |
+            | `flash [partitionName] [fileName.img]` | `flashing unlock unlocked` | --------------  |
+            | `sideload [fileName.zip]`              | `sideload romFile.zip`     | --------------  |
+            | `erase [partitionName]`                | `erase userdata`           | --------------  |
+            | `reboot [fastboot\| adb\| bootloader]` | `reboot bootloader`        | --------------  |
+            | `connect [adb\| bootloader]`           | `connect device`           | --------------  |
 
-# Development information
+        > For oem, recovery, rom and key, we parse these command and execute them. The others commands are not analyzed and executed arbitrarily in the device.
+      
+    - Define the folder, an array describing the files involved in the flash process
+        - template: 
+            ```json
+            "folder": [
+              { 
+                name : fileName used for the command ,
+                path: path used to download the file,
+                unzip: optional boolean in case we have a zip we want to parse
+              }
+            ]
+            ```
 
-## Model
+            > In case of unzip : the file is unzipped, and the retrieved files are stored in the "folder" like the other file
+        - example:
+    
+            ```json
+            {
+                "folder": [
+                  {
+                    "name": "recovery.img"
+                    "path" : "assets/sources/coral/recovery-e-1.14-s-20230818321663-dev-coral.img"
+                  },
+                  {
+                    "name": "rom.zip",
+                    "path" : "assets/sources/coral/e-1.14-s-20230818321663-dev-coral.zip"
+                  },
+                  {
+                    "name": "pkmd_pixel.bin",
+                    "path" : "assets/sources/coral/pkmd_pixel.bin"
+                  },
+                  {
+                    "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip", 
+                    "name": "Teracube_2e installer",
+                    "unzip": true 
+                  },
+                ]
+            }
+            ```
+4. Adding images
+    - Add the images files within `app/src/static/assets/images/illustrations/fp5`
+    - declare the image in the html, at `app/src/static/index.html`
+        - example:
+            ```html
+            <!-- FP5 -->
+            <div id="locking-fp5" class="card inactive">
+                <div class="card-header" data-translate="locking"></div>
+                <div class="card-body">
+                    <p data-translate="locking-instructions-1"></p>
+                    <p data-translate="locking-instructions-2"></p>
+                    <div class="text-center">
+                        <img class="instruction-img" src="assets/images/illustrations/fp5/Illustration - Accept warning-1.png">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp5')"></button>
+                </div>
+            </div>
+            ```
 
-We link device and its resources with deviceName.toLowerCase().replace(/ /g, ''); ex: One Plus Nord -> oneplusnord.json
-Since the deviceName may not be the same in fastboot (Android), we need at least a first connexion in adb to retrieve the deviceName.
+### Other
 
-## Doctrine
+- Vues
+    - `vue.manager.js`
+        - Need log.manager.js and translation.manager.js
+        - Need a div with id "process"
+    - `log.manager.js`
+        - Need a div with id "log-ctn" to scroll on log added
+        - Need a select with id "log" to add log
+    - `translation.manager.js`
+        - Need a select with id "translation" to listen to.
+        - On select change : download the translation file and render the DOM
+    - Translation are in `static/assets/languages`
+- Controller
+    - `controller.manager.js`
+
+### Doctrine
 
 - my-class are for css class
 - camelCase are for variable
@@ -42,119 +153,18 @@ Since the deviceName may not be the same in fastboot (Android), we need at least
 - object.manager.js are for class directing subClass or vue. It's just my arbitrary concept to mark a class as "directive" in the process
 - object.class.js are for class used by object.manager.js where functions should have a single responsibility
 
-Please respect ♥ 
+Please respect ♥
 
+## License
 
-## Defining a process
+GPLv3
 
-A process is in  2 parts : steps and folder
+## Acknowledgments
 
-### Steps
+Libraries:
+- fastboot.js: https://github.com/kdrag0n/fastboot.js/
+- webadb:
+- zip:
 
-#### Description
-
-Steps is an array on objects describing the process
-
-```
-"steps": [
-    {
-      "mode": string?,
-      "command" : string?,
-      "instruction": string?,
-      "needUser": boolean?
-    }
-  ]
-```
-#### Options
-
-| key           | exemple                         | description                                                                 |
-|---------------|---------------------------------|-----------------------------------------------------------------------------|
-| `mode`        | `[fastboot\| adb\| bootloader]` | It's a shortcut for a reboot and a reconnect before the command is executed |
-| `needUser`    | `[true\| false]`                | The user needs to click on continue before the command is executed          |
-| `instruction` | `Please select unlock`          | String displayed to the user at this step. Command is used if not defined   |
-| `command`     | `flashing unlock unlocked`      | Command as defined in the next chapter                                      |
-
-#### Available commands
-
-| command                                | exemple                    | description     |
-|----------------------------------------|----------------------------|-----------------|
-| `[flashing\| oem] unlock [varName?]`   | `flashing unlock unlocked` | --------------  |
-| `[flashing\|oem] lock [varName?]`      | `flashing lock`            | --------------  |
-| `flash [partitionName] [fileName.img]` | `flashing unlock unlocked` | --------------  |
-| `sideload [fileName.zip]`              | `sideload romFile.zip`     | --------------  |
-| `erase [partitionName]`                | `erase userdata`           | --------------  |
-| `reboot [fastboot\| adb\| bootloader]` | `reboot bootloader`        | --------------  |
-| `connect [adb\| bootloader]`           | `connect device`           | --------------  |
-
-
-For oem, recovery, rom and key, we parse these command and execute them. The others commands are not analyzed and executed arbitrarily in the device.
-
-#### Exemples
-
-
-### Folder
-
-#### Description
-
-You need to add a variable folder to define the files needed in the installation.
-Folder is an array of file :
-```
-{ 
-    name : fileName used for the command ,
-    path: path used to download the file,
-    unzip: optional boolean in case we have a zip we want to parse
-}
-```
-In case of unzip : the file is unzipped, and the retrieved files are stored in the "folder" like the other file
-
-
-#### Exemples
-```  
-{
-    "folder": [
-      {
-        "name": "recovery.img"
-        "path" : "assets/sources/coral/recovery-e-1.14-s-20230818321663-dev-coral.img"
-      },
-      {
-        "name": "rom.zip",
-        "path" : "assets/sources/coral/e-1.14-s-20230818321663-dev-coral.zip"
-      },
-      {
-        "name": "pkmd_pixel.bin",
-        "path" : "assets/sources/coral/pkmd_pixel.bin"
-      },
-      {
-        "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip", 
-        "name": "Teracube_2e installer",
-        "unzip": true 
-      },
-    ]
- }
-  ```
-
-
-
-## Vue
-
-### vue.manager.js
-Need log.manager.js and translation.manager.js
-Need a div with id "process"
-
-### log.manager.js
-Need a div with id "log-ctn" to scroll on log added
-Need a select with id "log" to add log
-
-### translation.manager.js
-Need a select with id "translation" to listen to.
-On select change : download the translation file and render the DOM
-
-Translation are in `static/assets/languages`
-
-## Controller
-
-### controller.manager.js
-
-
-CAUTION 
-
+Contributors:
+- Frank and Paula from ESPRI Digital
