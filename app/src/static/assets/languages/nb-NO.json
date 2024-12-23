@@ -6,8 +6,8 @@
     "activate-usb-debugging": "Aktiver USB-feilsøking",
     "activate-developer-options-instructions-1": "1. Åpne menyen Innstillinger, og skriv \"bygg\" i søkefeltet.",
     "activate-developer-options-instructions-2": "2. På neste skjermbilde finner du \"Byggnummer\" og trykker 7 ganger på det.",
-    "activate-usb-debugging-instructions-1": "Gå tilbake til menyen Innstillinger og skriv \"USB-feilsøking\" i søkefeltet.",
-    "activate-usb-debugging-instructions-2": "På dette tidspunktet bør du være i skjermbildet \"Utvikleralternativer\". Trykk nå på \"USB-feilsøking\" for å aktivere den (på noen enheter kalles den \"Android-feilsøking\").",
+    "activate-usb-debugging-instructions-1": "1. Gå tilbake til menyen Innstillinger og skriv \"USB-feilsøking\" i søkefeltet.",
+    "activate-usb-debugging-instructions-2": "2. På dette tidspunktet bør du være i skjermbildet \"Utvikleralternativer\". Trykk nå på \"USB-feilsøking\" for å aktivere den (på noen enheter kalles den \"Android-feilsøking\").",
     "check-update-android-version-caution": "<b>Advarsel</b>: Før du fortsetter med installasjonen, må du kontrollere at den nyeste Android-versjonen er tilgjengelig for enheten din.",
     "enable-usb-file-transfer-instructions-1": "Fortsatt inne i \"Utvikleralternativer\", bla nedover for å finne \"Standard USB-konfigurasjon\" og trykk på den.",
     "connect-bootloader-instructions-2": "Når telefonen er på, kan du aktivere <code>bootloader</code>-modus ved å klikke på knappen nedenfor",
@@ -15,7 +15,7 @@
     "format-device-instructions-3": "3. Neste skjermbilde viser en advarsel om at denne handlingen ikke kan angres",
     "bootloader-to-recovery-manually": "Bootloader til gjenoppretting",
     "bootloader-to-recovery-manually-instructions": "Nå starter vi enheten på nytt i gjenopprettingsmodus. Vennligst følg trinnene nedenfor:",
-    "bootloader-to-recovery-manually-instructions-1": "1. I bootloader, velger du gjenoppretting ved å bruke <kbd>Volum opp</kbd> og <kbd>Volum ned</kbd> for å navigere",
+    "bootloader-to-recovery-manually-instructions-1": "1. I bootloader, velger du <code>Gjenoppretting</code> ved å bruke <kbd>Volum opp</kbd> og <kbd>Volum ned</kbd> for å navigere",
     "bootloader-to-recovery-manually-instructions-3": "3. Hvis du gikk glipp av dette trinnet, kan du slå av enheten og starte den på nytt i gjenopprettingsmodus ved å trykke på og holde inne <kbd>Av/På-knappen</kbd> og <kbd>Volum opp</kbd> samtidig, til enheten slås på.",
     "bootloader-to-recovery-manually-instructions-2": "2. Trykk på <kbd>Av/På-knappen</kbd> for å bekrefte",
     "check-update-android-version": "Sjekk og oppdater Android-versjonen",
@@ -40,5 +40,8 @@
     "format-device-instructions-1": "1. Velg Fabrikkinnstillinger",
     "format-device-instructions-2": "2. Velg alternativet Formater data / Tilbakestill til fabrikkinnstillinger",
     "format-device-instructions-4": "4. Velg Formater data for å fortsette eller Avbryt hvis du vil gå tilbake",
-    "format-device-instructions-5": "5. Hvis du har valgt Formater data, fullføres formateringsprosessen"
+    "format-device-instructions-5": "5. Hvis du har valgt Formater data, fullføres formateringsprosessen",
+    "android-version-not-supported": "Android-versjon utdatert",
+    "android-version-not-supported-instructions": "Oppdater systemet til minimumsversjonen som kreves <code>{{android-version-required}}</code>",
+    "android-version-not-supported-title": "Din Android-versjon <code>{{android-version}}</code> støttes ikke"
 }
