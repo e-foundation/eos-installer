@@ -1,5 +1,5 @@
 const PRODUCT = '/e/OS Installer';
-const VERSION = '0.7';
+const VERSION = '0.7.1';
 
 const express = require('express');
 const app = express();
