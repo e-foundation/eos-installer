@@ -325,6 +325,20 @@ export class Controller {
                 
             }
 
+            if (model.includes("A015")) {
+                try {
+                    this_model = "tetris";
+                } catch (e) {
+                    const id = 
+                        "model "+this.deviceManager.adb.webusb.model + " " + 
+                        "product "+this.deviceManager.adb.webusb.product + " " +
+                        "name "+this.deviceManager.adb.webusb.name + " " +
+                        "device "+this.deviceManager.adb.webusb.device;
+                        throw new Error("Error on getting devcice resource", id);
+                }
+                
+            }
+
             resources = await (await fetch(`resources/${this_model}.json`)).json();
             if (current_security_path_level != null && typeof resources.security_patch_level != 'undefined') {
                 WDebug.log("EOS Rom has security patch ");
