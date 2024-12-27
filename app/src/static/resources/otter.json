@@ -1,0 +1,166 @@
+{
+  "security_patch_level": "2024-10-05",
+  "steps": [
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock goto_flashing"],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock_critical"],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
+      "command": [
+          "flash bluetooth_a bluetooth.img",
+          "flash bluetooth_b bluetooth.img",
+          "flash devcfg_a devcfg.img",
+          "flash devcfg_b devcfg.img",
+          "flash dsp_a dsp.img",
+          "flash dsp_b dsp.img",
+          "flash modem_a modem.img",
+          "flash modem_b modem.img",
+          "flash xbl_a xbl.img",
+          "flash xbl_b xbl.img",
+          "flash tz_a tz.img",
+          "flash tz_b tz.img",
+          "flash hyp_a hyp.img",
+          "flash hyp_b hyp.img",
+          "flash keymaster_a keymaster.img",
+          "flash keymaster_b keymaster.img",
+          "flash abl_a abl.img",
+          "flash abl_b abl.img",
+          "flash boot_a boot.img",
+          "flash boot_b boot.img",
+          "flash dtbo_a dtbo.img",
+          "flash dtbo_b dtbo.img",
+          "flash vendor_boot_a vendor_boot.img",
+          "flash vendor_boot_b vendor_boot.img",
+          "flash vbmeta_system_a vbmeta_system.img",
+          "flash vbmeta_system_b vbmeta_system.img",
+          "flash vbmeta_a vbmeta.img",
+          "flash vbmeta_b vbmeta.img",
+          "flash super super.img",
+          "flash aop_a aop.img",
+          "flash aop_b aop.img",
+          "flash featenabler_a featenabler.img",
+          "flash featenabler_b featenabler.img",
+          "flash imagefv_a imagefv.img",
+          "flash imagefv_b imagefv.img",
+          "flash multiimgoem_a multiimgoem.img",
+          "flash multiimgoem_b multiimgoem.img",
+          "flash qupfw_a qupfw.img",
+          "flash qupfw_b qupfw.img",
+          "flash qweslicstore_a qweslicstore.img",
+          "flash qweslicstore_b qweslicstore.img",
+          "flash uefisecapp_a uefisecapp.img",
+          "flash uefisecapp_b uefisecapp.img",
+          "flash xbl_config_a xbl_config.img",
+          "flash xbl_config_b xbl_config.img",
+          "flash cpucp_a cpucp.img",
+          "flash cpucp_b cpucp.img",
+          "flash shrm_b shrm.img",
+          "flash shrm_a shrm.img --set-active=a",
+          "erase userdata",
+          "erase metadata",
+          "flashing lock"]
+    },
+    {
+      "id": "locking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-developer-options",
+      "needUserGesture": true
+    },
+    {
+      "id": "activate-usb-debugging",
+      "needUserGesture": true
+    },
+    {
+      "id": "enable-usb-file-transfer",
+      "needUserGesture": true
+    },
+    {
+      "id": "device-detection",
+      "command": "connect adb",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing lock_critical"],
+      "needUserGesture": true
+    },
+    {
+      "id": "locking-fp4",
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-workspace-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+      "name": "otter installer",
+      "unzip": true,
+      "path": "https://images.ecloud.global/community/otter/IMG-e-2.6.3-u-20241219455571-community-otter.zip"
+    }
+  ]
+}
