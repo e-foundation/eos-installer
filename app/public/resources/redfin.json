@@ -19,7 +19,7 @@
       "command": [
         
         "flash dtbo dtbo-e-2.6.3-t-20241217455358-official-redfin.img",
-	"flash boot boot-e-2.6.3-t-20241217455358-official-redfin.img",
+        "flash boot boot-e-2.6.3-t-20241217455358-official-redfin.img",
         "flash vendor_boot recovery-e-2.6.3-t-20241217455358-official-redfin.img"
       ]
     },

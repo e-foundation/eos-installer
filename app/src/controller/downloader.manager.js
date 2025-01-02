@@ -187,12 +187,13 @@ export class Downloader {
         return result;
     }
 
+
     getContentLength(url) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open("HEAD", url);
             xhr.send();
-    
+
             xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     const contentLength = xhr.getResponseHeader("Content-Length");
@@ -205,16 +206,17 @@ export class Downloader {
                     reject(new Error(`Request error : ${xhr.status} ${xhr.statusText}`));
                 }
             };
-    
+
             xhr.onerror = function () {
                 reject(new Error("Connetion issue"));
             };
-    
+
             xhr.ontimeout = function () {
                 reject(new Error("Timeout issue"));
             };
         });
     }
+
 
     async fetch({url, chunkSize}, onProgress) {
         try {

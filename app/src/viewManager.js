@@ -1,3 +1,7 @@
+import {WDebug} from './debug.js'
+import {ErrorManager} from './errorManager.js'
+import {Controller} from './controller.manager.js';
+import {TranslationManager} from './vue/translation.manager.js';
 
 /*
 * Class to manage events
@@ -5,22 +9,18 @@
 * it's just log for now, but maybe it will be more usefull for dynamic display
 */
 
-class ViewManager {
+export default class ViewManager {
     
     constructor() {
 
     }
 
     async init() {
-        const wdebug = await import ("./debug.js");
-        this.WDebug = wdebug.WDebug;
-        const errorManager = await import ("./errorManager.js");
-        this.ErrorManager = errorManager.ErrorManager;
-        const cm = await import("./controller.manager.js");
-        const tm = await import("./vue/translation.manager.js");
-        this.controller = new cm.Controller();
-        await this.controller.init();
-        this.translationManager = new tm.TranslationManager();
+        this.WDebug = WDebug;
+        this.ErrorManager = ErrorManager;
+        this.controller = new Controller();
+        await this.controller.init(this);
+        this.translationManager = new TranslationManager();
         await this.translationManager.init();
         window.scroll(0,0);
     }
@@ -35,6 +35,9 @@ class ViewManager {
             $copyStep.id = step.id;
             $copyStep.classList.add('active');
             $copyStep.classList.remove('inactive');
+            $copyStep.addEventListener('click', async () => {
+                this.executeStep($copyStep, step.name);
+            });
             let $processCtn = document.getElementById('process-ctn');
             if($processCtn){
                 $processCtn.appendChild($copyStep);
@@ -188,3 +191,19 @@ class ViewManager {
 
     // /CONTROLLER EVENTS
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+    var VIEW = new ViewManager();
+    await VIEW.init();
+
+    let elts = document.querySelectorAll(".card button")
+    for(let elt of elts) {
+        if (elt.parentElement.parentElement.className.includes("inactive")) {
+            continue;
+        }
+        elt.addEventListener('click', async () => {
+            VIEW.executeStep(elt, elt.parentElement.parentElement.id);
+        })
+    }
+
+});

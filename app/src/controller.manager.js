@@ -21,9 +21,10 @@ export class Controller {
     }
 
 
-    async init() {
+    async init(view) {
         this.deviceManager = new DeviceManager();
         await this.deviceManager.init();
+        this.view = view;
     }
 
     async next() {
@@ -46,7 +47,7 @@ export class Controller {
             }
             this.currentIndex++;
             current = this.steps[this.currentIndex];
-            VIEW.onStepStarted(this.currentIndex, current);
+            this.view.onStepStarted(this.currentIndex, current);
             if (!current.needUserGesture) {
                 await this.executeStep(current.name);
             }
@@ -72,11 +73,11 @@ export class Controller {
                 let previous = this.steps[this.currentIndex - 1];
                 if (res) {
                     if (next) {
-                        VIEW.onStepFinished(current, next);
+                        this.view.onStepFinished(current, next);
                         await this.next();
                     }
                 } else {
-                    VIEW.onStepFailed(current, previous);
+                    this.view.onStepFailed(current, previous);
                     if (!current.needUserGesture) {
                         this.currentIndex--;
                     }
@@ -86,7 +87,7 @@ export class Controller {
                 throw new Error(`Cannot execute command ${this_command.command} <br/> ${e.message || e}`);
             }
         } else {
-            throw new Error('this is not the current step')
+            throw new Error('this is not the current step ' + current.name + ' is not equals to ' + stepName)
         }
     }
 
@@ -112,11 +113,11 @@ export class Controller {
                 let res = false;
                 try {
                     await this.deviceManager.downloadAll((loaded, total, name) => {
-                        VIEW.onDownloading(name, loaded, total);
+                        this.view.onDownloading(name, loaded, total);
                     }, (loaded, total, name) => {
-                        VIEW.onUnzip(name, loaded, total);
+                        this.view.onUnzip(name, loaded, total);
                     });
-                    VIEW.onDownloadingEnd();
+                    this.view.onDownloadingEnd();
                     return true;
                 } catch (e) {
                     const proposal = "Proposal: Retry by refreshing this page.";
@@ -151,7 +152,7 @@ export class Controller {
                 return this.deviceManager.erase(cmd.partition);
             case Command.CMD_TYPE.flash:
                 return this.deviceManager.flash(cmd.file, cmd.partition, (done, total) => {
-                    VIEW.onInstalling(cmd.file, done, total);
+                    this.view.onInstalling(cmd.file, done, total);
                 });
             case Command.CMD_TYPE.unlock:
                 //check if unlocked to avoid unnecessary command
@@ -250,20 +251,20 @@ export class Controller {
         const productName = this.deviceManager.getProductName();
         const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected();
         if (!wasAlreadyConnected) {
-            VIEW.updateData('product-name', productName);
+            this.view.updateData('product-name', productName);
             this.model = productName;
             WDebug.log("ControllerManager Model:", this.model);
             try {
                 const resources = await this.getResources();
                 
                 if(resources.android){
-                    VIEW.updateData('android-version-required', resources.android);
+                    this.view.updateData('android-version-required', resources.android);
                     await this.checkAndroidVersion(resources.android);
                 }
                 this.setResources(resources);
             } catch(e) {
                 this.steps.push(new Step(e.message));
-                VIEW.updateTotalStep(this.steps.length);
+                this.view.updateTotalStep(this.steps.length);
                 // Don not throw this error, as it is handled by the UI directly.
             }
         }
@@ -272,7 +273,7 @@ export class Controller {
         const android = await this.deviceManager.getAndroidVersion();
         WDebug.log("current android version:", android);
         if( android) {
-            VIEW.updateData('android-version', android);
+            this.view.updateData('android-version', android);
             if(android < versionRequired){
                 throw Error('android-version-not-supported');
             }
@@ -349,7 +350,7 @@ export class Controller {
             this.steps.push(...this.resources.steps.map((step) => {
                 return new Step(step.id, step.command, step.needUserGesture ?? false, step.mode);
             }));
-            VIEW.updateTotalStep(this.steps.length);
+            this.view.updateTotalStep(this.steps.length);
         }
         this.deviceManager.setResources(this.resources.folder, this.steps);
     }

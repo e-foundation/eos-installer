@@ -1,5 +1,6 @@
 import {Device} from "./device.class.js";
 import {WDebug} from "../../debug.js";
+import {AdbWebBackend, Adb2} from "../../lib/webadb/adb.bundle.js";
 
 export class ADB extends Device {
     constructor(device) {
@@ -25,6 +26,7 @@ export class ADB extends Device {
     async connect(cb) {
         let res = false;
         try {
+            console.log("debug adb connect")
             let adbWebBackend = await AdbWebBackend.requestDevice();
             if (adbWebBackend) {
                 let adbDevice = new Adb2(adbWebBackend, null); //adb.bundle.js

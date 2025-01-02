@@ -2,6 +2,7 @@ import {MessageClass} from "../../lib/webadb/message.class.js";
 import {MessageHeader} from "../../lib/webadb/message-header.class.js";
 import {Device} from "./device.class.js";
 import {WDebug} from "../../debug.js";
+import {AdbWebBackend3, Adb3} from "../../lib/webadb/adb.bundle.js";
 
 export class Recovery extends Device {
     constructor(device) {
@@ -31,7 +32,7 @@ export class Recovery extends Device {
         try {
             if (this.device && this.device.isConnected) {
                 WDebug.log("Connect recovery the device is connected");
-            } else {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+            } else {
                 const adbWebBackend = await AdbWebBackend3.requestDevice();
                 WDebug.log("adbWebBackend = ", adbWebBackend);
                 const adbDevice = new Adb3(adbWebBackend, null); //adb.bundle.js

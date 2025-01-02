@@ -2244,7 +2244,7 @@ function decodeUtf8(buffer) {
     return Utf8Decoder.decode(buffer);
 }
 
-class AdbWebBackend {
+export class AdbWebBackend {
     constructor(device) {
         this.disconnectEvent = new EventEmitter();
         this.onDisconnected = this.disconnectEvent.event;
@@ -2378,7 +2378,7 @@ var AdbPropKey;
     AdbPropKey["Device"] = "ro.product.device";
     AdbPropKey["Features"] = "features";
 })(AdbPropKey || (AdbPropKey = {}));
-class Adb2 {
+export class Adb2 {
     constructor(backend, logger) {
         this._connected = false;
         this.packetDispatcher = new AdbPacketDispatcher(backend, logger);
@@ -2555,7 +2555,7 @@ class Adb2 {
     }
 }
 
-class AdbWebBackend3 {
+export class AdbWebBackend3 {
     constructor(device) {
         this.disconnectEvent = new EventEmitter();
         this.onDisconnected = this.disconnectEvent.event;
@@ -2673,7 +2673,7 @@ class AdbWebBackend3 {
     }
 }
 
-class Adb3 { 
+export class Adb3 {
     // This one is dedicated for adb sidelaod
     constructor(backend) {
         this._connected = false;
