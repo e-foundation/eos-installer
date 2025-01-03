@@ -17,9 +17,7 @@ Install /e/OS from a chromium-based browser
 
 ## Run the project
 
-1. Get the docker image
-    - build it: `docker build -t eos-installer app/.`
-    - or download from our package registry: `docker pull registry.gitlab.e.foundation/e/devices/eos-installer:latest`
+1. Get the docker image: `docker pull registry.gitlab.e.foundation/e/devices/eos-installer:latest`
 2. Run a docker container
     - Windows: `docker run -v "%cd%"\src:/app/src -p 127.0.0.1:3000:3000 eos-installer`
     - Linux: `docker run -v "$(pwd)/src:/app/src" -p 127.0.0.1:3000:3000 eos-installer`
@@ -28,6 +26,12 @@ Install /e/OS from a chromium-based browser
 ## Usage
 
 ## Contributing
+
+### Build
+
+```shell
+docker build -t eos-installer app/.
+```
 
 ### Add a new device
 
