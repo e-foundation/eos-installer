@@ -74,18 +74,18 @@ Open chrome base browser and go to http://localhost:5173/.
                 "folder": [
                   {
                     "name": "recovery.img"
-                    "path" : "assets/sources/coral/recovery-e-1.14-s-20230818321663-dev-coral.img"
+                    "path" : "assets/sources/coral/recovery-e-latest-s-community-coral.img"
                   },
                   {
                     "name": "rom.zip",
-                    "path" : "assets/sources/coral/e-1.14-s-20230818321663-dev-coral.zip"
+                    "path" : "assets/sources/coral/e-latest-s-community-coral.zip"
                   },
                   {
                     "name": "pkmd_pixel.bin",
                     "path" : "assets/sources/coral/pkmd_pixel.bin"
                   },
                   {
-                    "path" : "assets/sources/emerald/IMG-e-1.14.2-s-20230825321006-stable-emerald.zip", 
+                    "path" : "assets/sources/emerald/IMG-e-latest-s-official-emerald.zip",
                     "name": "Teracube_2e installer",
                     "unzip": true 
                   },
@@ -108,7 +108,7 @@ Open chrome base browser and go to http://localhost:5173/.
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button data-translate="next" class="next" onclick="VIEW.onNext(this, 'locking-fp5')"></button>
+                    <button data-translate="next" class="next"></button>
                 </div>
             </div>
             ```

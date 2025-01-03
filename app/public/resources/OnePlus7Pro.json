@@ -1,5 +1,5 @@
 {
-  "android": 12,
+  "android": 14,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -38,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.6.3-u-20241218455570-community-guacamole.img",
-        "flash vbmeta vbmeta-e-2.6.3-u-20241218455570-community-guacamole.img",
-        "flash recovery recovery-e-2.6.3-u-20241218455570-community-guacamole.img"
+        "flash dtbo dtbo.img",
+        "flash vbmeta vbmeta.img",
+        "flash recovery recovery.img"
       ]
     },
     {
@@ -82,12 +82,17 @@
   "folder": [
     {
       "name": "One+ 7 Pro recovery installer",
-      "path": "https://images.ecloud.global/community/guacamole/recovery-IMG-e-2.6.3-u-20241218455570-community-guacamole.zip",
-      "unzip": true
+      "path": "https://images.ecloud.global/community/guacamole/recovery-IMG-e-latest-u-community-guacamole.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^vbmeta.*img$": "vbmeta.img",
+        "^recovery.*img$": "recovery.img"
+      }
     },
     {
       "name": "oneplus-7pro-rom.zip",
-      "path": "https://images.ecloud.global/community/guacamole/e-2.6.3-u-20241218455570-community-guacamole.zip"
+      "path": "https://images.ecloud.global/community/guacamole/e-latest-u-community-guacamole.zip"
     }
   ]
 }

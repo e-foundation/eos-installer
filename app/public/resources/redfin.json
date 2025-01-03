@@ -17,10 +17,9 @@
     {
       "id": "flashing",
       "command": [
-        
-        "flash dtbo dtbo-e-2.6.3-t-20241217455358-official-redfin.img",
-        "flash boot boot-e-2.6.3-t-20241217455358-official-redfin.img",
-        "flash vendor_boot recovery-e-2.6.3-t-20241217455358-official-redfin.img"
+        "flash dtbo dtbo.img",
+        "flash boot boot.img",
+        "flash vendor_boot recovery.img"
       ]
     },
     {
@@ -68,12 +67,17 @@
   "folder": [
     {
       "name": "pixel-5-recovery.img",
-      "path": "https://images.ecloud.global/official/redfin/recovery-IMG-e-2.6.3-t-20241217455358-official-redfin.zip",
-      "unzip": true
+      "path": "https://images.ecloud.global/official/redfin/recovery-IMG-e-latest-t-official-redfin.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^boot.*img$": "boot.img",
+        "^recovery.*img$": "recovery.img"
+      }
     },
     {
       "name": "pixel-5-rom.zip",
-      "path": "https://images.ecloud.global/official/redfin/e-2.6.3-t-20241217455358-official-redfin.zip"    
+      "path": "https://images.ecloud.global/official/redfin/e-latest-t-official-redfin.zip"
     },
     {
       "name": "pkmd_pixel.bin",

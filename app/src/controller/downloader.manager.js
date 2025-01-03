@@ -1,6 +1,7 @@
 const DB_NAME = "MurenaBlobStore";
 const DB_VERSION = 1;
 
+import ky from 'ky';
 import { WDebug } from "../debug.js";
 
 /**
@@ -39,12 +40,13 @@ export class Downloader {
                         const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
                         const filesEntries = await zipReader.getEntries();
                         for(let i= 0 ; i < filesEntries.length; i++) {
-                            if(filesRequired.includes(filesEntries[i].filename)){
-                                const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
+                            const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
                                     onUnzipProgress(value, total, filesEntries[i].filename);
-                                });
-                                await this.setInDBStore(unzippedEntry.blob, filesEntries[i].filename);
-                                this.stored[filesEntries[i].filename] = true;
+                            });
+                            let filename = this.getMappedName(filesEntries[i].filename, file.mapping);
+                            if(filesRequired.includes(filename)){
+                                await this.setInDBStore(unzippedEntry.blob, filename);
+                                this.stored[filename] = true;
                             }
                         }
                         await zipReader.close();
@@ -72,6 +74,21 @@ export class Downloader {
             name,
             blob
         }
+    }
+
+    getMappedName(filename, map) {
+        if (!map) {
+            return filename;
+        }
+
+        console.log(map);
+        for (const [regex, newFilename] of Object.entries(map)) {
+            let re = new RegExp(regex);
+            if (filename.match(re)) {
+                return newFilename;
+            }
+        }
+        return filename;
     }
 
 
@@ -187,36 +204,11 @@ export class Downloader {
         return result;
     }
 
-
-    getContentLength(url) {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.open("HEAD", url);
-            xhr.send();
-
-            xhr.onload = function () {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    const contentLength = xhr.getResponseHeader("Content-Length");
-                    if (contentLength) {
-                        resolve(parseInt(contentLength, 10));
-                    } else {
-                        reject(new Error("Cannot get Content-Length"));
-                    }
-                } else {
-                    reject(new Error(`Request error : ${xhr.status} ${xhr.statusText}`));
-                }
-            };
-
-            xhr.onerror = function () {
-                reject(new Error("Connetion issue"));
-            };
-
-            xhr.ontimeout = function () {
-                reject(new Error("Timeout issue"));
-            };
-        });
+    async getContentLength(url) {
+        const response = await ky.head(url)
+        const contentLength = response.headers.get("content-length");
+        return parseInt(contentLength, 10);
     }
-
 
     async fetch({url, chunkSize}, onProgress) {
         try {
@@ -228,7 +220,7 @@ export class Downloader {
                 const start = i * chunkSize;
                 const end = Math.min(start + chunkSize - 1, contentLength - 1);
                 try {
-                    const response = await fetch(url, {
+                    const response = await ky.get(url, {
                         headers: {
                             'Range': `bytes=${start}-${end}`
                         }

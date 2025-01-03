@@ -47,7 +47,7 @@
     {
       "name": "GS290 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/GS290/IMG-e-2.6.3-s-20241217455357-official-GS290.zip"
+      "path": "https://images.ecloud.global/official/GS290/IMG-e-latest-s-official-GS290.zip"
     }
   ]
 }

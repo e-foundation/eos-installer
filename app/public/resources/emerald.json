@@ -56,7 +56,7 @@
   ],
   "folder": [
     {
-     "path": "https://images.ecloud.global/official/emerald/IMG-e-2.6.3-s-20241217455357-official-emerald.zip",
+     "path": "https://images.ecloud.global/official/emerald/IMG-e-latest-s-official-emerald.zip",
      "name": "Teracube 2e (2021 emerald) installer",
      "unzip": true
     }

@@ -17,10 +17,10 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.6.3-t-20241217455358-official-panther.img",
-        "flash boot boot-e-2.6.3-t-20241217455358-official-panther.img",
-        "flash vendor_boot recovery-e-2.6.3-t-20241217455358-official-panther.img",
-        "flash vendor_kernel_boot vendor_kernel_boot-e-2.6.3-t-20241217455358-official-panther.img"
+        "flash dtbo dtbo.img",
+        "flash boot boot.img",
+        "flash vendor_boot recovery.img",
+        "flash vendor_kernel_boot vendor_kernel_boot.img"
       ]
     },
     {
@@ -68,12 +68,18 @@
   "folder": [
     {
       "name": "pixel-7-recovery.img",
-      "path": "https://images.ecloud.global/official/panther/recovery-IMG-e-2.6.3-t-20241217455358-official-panther.zip",
-      "unzip": true
+      "path": "https://images.ecloud.global/official/panther/recovery-IMG-e-latest-t-official-panther.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^boot.*img$": "boot.img",
+        "^recovery.*img$": "recovery.img",
+        "^vendor_kernel_boot.*img$": "vendor_kernel_boot.img"
+      }
     },
     {
       "name": "pixel-7-rom.zip",
-      "path": "https://images.ecloud.global/official/panther/e-2.6.3-t-20241217455358-official-panther.zip"
+      "path": "https://images.ecloud.global/official/panther/e-latest-t-official-panther.zip"
     },
     {
       "name": "pkmd_pixel.bin",

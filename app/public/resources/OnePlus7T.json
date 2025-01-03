@@ -1,5 +1,5 @@
 {
-  "android": 12,
+  "android": 14,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -38,9 +38,9 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.6.3-u-20241217455391-community-hotdogb.img",
-        "flash vbmeta vbmeta-e-2.6.3-u-20241217455391-community-hotdogb.img",
-        "flash recovery recovery-e-2.6.3-u-20241217455391-community-hotdogb.img"
+        "flash dtbo dtbo.img",
+        "flash vbmeta vbmeta.img",
+        "flash recovery recovery.img"
       ]
     },
     {
@@ -82,12 +82,17 @@
   "folder": [
     {
       "name": "One+ 7T recovery installer",
-      "path": "https://images.ecloud.global/community/hotdogb/recovery-IMG-e-2.6.3-u-20241217455391-community-hotdogb.zip",
-      "unzip": true
+      "path": "https://images.ecloud.global/community/hotdogb/recovery-IMG-e-latest-u-community-hotdogb.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^vbmeta.*img$": "vbmeta.img",
+        "^recovery.*img$": "recovery.img"
+      }
     },
     {
       "name": "oneplus-7t-rom.zip",
-      "path": "https://images.ecloud.global/community/hotdogb/e-2.6.3-u-20241217455391-community-hotdogb.zip"
+      "path": "https://images.ecloud.global/community/hotdogb/e-latest-u-community-hotdogb.zip"
     }
   ]
 }

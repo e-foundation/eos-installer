@@ -1,5 +1,5 @@
 {
-  "android": 13,
+  "android": 14,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -17,8 +17,8 @@
     {
       "id": "flashing",
       "command": [
-        "flash dtbo dtbo-e-2.4.1-t-20241011439852-community-sunfish.img",
-        "flash boot recovery-e-2.4.1-t-20241011439852-community-sunfish.img"
+        "flash dtbo dtbo.img",
+        "flash boot recovery.img"
       ]
     },
     {
@@ -60,12 +60,16 @@
   "folder": [
     {
       "name": "pixel-4a-recovery.img",
-      "path": "https://images.ecloud.global/community/sunfish/recovery-IMG-e-2.6.3-u-20241217455391-community-sunfish.zip",
-      "unzip": true
+      "path": "https://images.ecloud.global/community/sunfish/recovery-IMG-e-latest-u-community-sunfish.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^recovery.*img$": "recovery.img"
+      }
     },
     {
       "name": "pixel-4a-rom.zip",
-      "path": "https://images.ecloud.global/community/sunfish/e-2.6.3-u-20241217455391-community-sunfish.zip"
+      "path": "https://images.ecloud.global/community/sunfish/e-latest-u-community-sunfish.zip"
     }
   ]
 }
