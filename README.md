@@ -44,4 +44,3 @@ Using:
 Libraries:
 - fastboot.js (License: MIT): https://github.com/kdrag0n/fastboot.js/ 
 - ya-webadb (License: MIT): https://github.com/yume-chan/ya-webadb
-- zip-no-worker-inflate.js (License: BSD3): https://github.com/gildas-lormeau/zip.js/blob/master/lib/zip-no-worker-inflate.js

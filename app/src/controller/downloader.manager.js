@@ -2,12 +2,13 @@ const DB_NAME = "MurenaBlobStore";
 const DB_VERSION = 1;
 
 import ky from 'ky';
+import {ZipReader, BlobReader, BlobWriter} from "@zip.js/zip.js";
 import { WDebug } from "../debug.js";
 
 /**
  * Download Manager
  * Download files from the device folder of [modelname].json
- * Download with DBStore and unizip if necessary
+ * Download with DBStore and unzip if necessary
  * Blobs are in this.files[filename]
  */
 export class Downloader {
@@ -37,7 +38,7 @@ export class Downloader {
                         onDownloadProgress(value, total, file.name);
                     });
                     if(file.unzip){
-                        const zipReader = new zip.ZipReader(new zip.BlobReader(blob));
+                        const zipReader = new ZipReader(new BlobReader(blob));
                         const filesEntries = await zipReader.getEntries();
                         for(let i= 0 ; i < filesEntries.length; i++) {
                             const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
@@ -64,7 +65,7 @@ export class Downloader {
 
     async getFileFromZip(file, onProgress) {
         const name = file.filename;
-        const blob = await file.getData(new zip.BlobWriter(), {
+        const blob = await file.getData(new BlobWriter(), {
             onprogress: (value, total) => {
                 onProgress(value, total, name);
             },
@@ -110,7 +111,7 @@ export class Downloader {
     * getData from a zip file
     * */
     async getData(dbFile, fileEntry, onProgress) {
-        const _zip = new zip.BlobWriter();
+        const _zip = new BlobWriter();
         const blob = await fileEntry.getData(_zip, {
             onprogress: (value, total) => {
                 onProgress(value, total, dbFile);
