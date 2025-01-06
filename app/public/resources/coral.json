@@ -1,0 +1,75 @@
+{
+  "android": 14,
+  "steps": [
+    {
+      "command": "reboot bootloader"
+    },
+    {
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "needUserGesture": true
+    },
+    {
+      "id": "unlocking-pixel",
+      "needUserGesture": true,
+      "command": "delay 15"
+    },
+    {
+      "id": "flashing",
+      "command": [
+        "flash dtbo dtbo.img",
+        "flash boot recovery.img"
+      ]
+    },
+    {
+      "id": "bootloader-to-recovery-manually",
+      "needUserGesture": true
+    },
+    {
+      "id": "format-device",
+      "needUserGesture": true
+    },
+    {
+      "id": "go-to-apply-update",
+      "needUserGesture": true
+    },
+    {
+      "id": "sideload",
+      "command": "sideload pixel4-xl-rom.zip"
+    },
+    {
+      "id": "sideload-ended",
+      "needUserGesture": true
+    },
+    {
+      "id": "connect-bootloader",
+      "command": [
+        "connect bootloader",
+        "reboot"
+      ],
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-workspace-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+      "name": "pixel4-xl-recovery.img",
+      "path": "https://images.ecloud.global/community/coral/recovery-IMG-e-latest-u-community-coral.zip",
+      "unzip": true,
+      "mapping": {
+        "^dtbo.*img$": "dtbo.img",
+        "^recovery.*img$": "recovery.img"
+      }
+    },
+    {
+      "name": "pixel4-xl-rom.zip",
+      "path": "https://images.ecloud.global/community/coral/e-latest-u-community-coral.zip"
+    }
+  ]
+}

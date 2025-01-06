@@ -1,8 +1,8 @@
-# syntax=docker/dockerfile:1
-   
-FROM node:22-alpine
+FROM node:23-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN yarn install --production
-CMD ["node", "src/index.js"]
-EXPOSE 3000
+RUN npm install && npm run build
+
+FROM nginx:1.27.3
+
+COPY --from=builder /app/dist /usr/share/nginx/html
