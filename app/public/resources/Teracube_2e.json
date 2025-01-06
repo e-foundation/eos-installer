@@ -1,6 +1,6 @@
 {
   "UNUSED___security_patch_level": "2020-04-05",
-  "description" : "Teracube 2e (2020)",
+  "description": "Teracube 2e (2020)",
   "steps": [
     {
       "mode": "bootloader",
@@ -13,10 +13,10 @@
       "needUserGesture": true
     },
     {
-      "id": "flashing",  
+      "id": "flashing",
       "command": [
         "erase userdata",
-        
+
         "flash preloader preloader_zirconia.bin",
         "flash lk lk.img",
         "flash md1img md1img.img",
@@ -48,9 +48,9 @@
   ],
   "folder": [
     {
-     "path": "https://images.ecloud.global/official/zirconia/IMG-e-latest-s-official-zirconia.zip",
-     "name": "Teracube 2e (2020) installer",
-     "unzip": true
+      "path": "https://images.ecloud.global/official/zirconia/IMG-e-latest-s-official-zirconia.zip",
+      "name": "Teracube 2e (2020) installer",
+      "unzip": true
     }
   ]
 }

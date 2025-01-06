@@ -1,20 +1,20 @@
 {
   "android": 14,
   "steps": [
-    {  
+    {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader","flashing unlock"],
+      "command": ["connect bootloader", "flashing unlock"],
       "needUserGesture": true
     },
     {
       "id": "unlocking-gs290",
       "needUserGesture": true
     },
-    {  
+    {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader","flashing unlock_critical"],
+      "command": ["connect bootloader", "flashing unlock_critical"],
       "needUserGesture": true
     },
     {

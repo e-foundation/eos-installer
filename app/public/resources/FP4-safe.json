@@ -110,7 +110,8 @@
         "flash core_nhlos_a core_nhlos.img --set-active=a",
         "erase userdata",
         "erase metadata",
-        "reboot"]
+        "reboot"
+      ]
     },
     {
       "id": "murena-workspace-account",

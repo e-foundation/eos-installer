@@ -1,6 +1,6 @@
 {
   "UNUSED___security_patch_level": "2020-04-05",
-  "description" : "Teracube 2e (2021 emerald)",
+  "description": "Teracube 2e (2021 emerald)",
   "steps": [
     {
       "mode": "bootloader",
@@ -13,9 +13,8 @@
       "needUserGesture": true
     },
     {
-      "id": "flashing",  
+      "id": "flashing",
       "command": [
-        
         "erase userdata",
         "format md_udc",
         "flash boot_a boot.img",
@@ -56,9 +55,9 @@
   ],
   "folder": [
     {
-     "path": "https://images.ecloud.global/official/emerald/IMG-e-latest-s-official-emerald.zip",
-     "name": "Teracube 2e (2021 emerald) installer",
-     "unzip": true
+      "path": "https://images.ecloud.global/official/emerald/IMG-e-latest-s-official-emerald.zip",
+      "name": "Teracube 2e (2021 emerald) installer",
+      "unzip": true
     }
   ]
 }

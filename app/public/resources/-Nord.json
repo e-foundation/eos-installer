@@ -6,10 +6,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": [
-        "connect bootloader",
-        "oem unlock"
-      ],
+      "command": ["connect bootloader", "oem unlock"],
       "needUserGesture": true
     },
     {
@@ -69,10 +66,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": [
-        "connect bootloader",
-        "reboot"
-      ],
+      "command": ["connect bootloader", "reboot"],
       "needUserGesture": true
     },
     {

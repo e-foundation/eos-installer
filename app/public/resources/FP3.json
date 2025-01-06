@@ -3,7 +3,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader","oem unlock unlocked"],
+      "command": ["connect bootloader", "oem unlock unlocked"],
       "needUserGesture": true
     },
     {
@@ -31,7 +31,7 @@
     },
     {
       "id": "flashing",
-      "command" : [
+      "command": [
         "flash modem_a modem.img",
         "flash modem_a modem.img",
         "flash modem_b modem.img",

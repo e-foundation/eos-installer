@@ -1,5 +1,5 @@
 {
-  "description" : "Teracube 2e (2021 emerald) Safe",
+  "description": "Teracube 2e (2021 emerald) Safe",
   "steps": [
     {
       "mode": "bootloader",
@@ -12,9 +12,8 @@
       "needUserGesture": true
     },
     {
-      "id": "flashing",  
+      "id": "flashing",
       "command": [
-        
         "erase userdata",
         "format md_udc",
         "flash boot_a boot.img",

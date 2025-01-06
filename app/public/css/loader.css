@@ -1,21 +1,25 @@
 button.next {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-loader {
-    border: 2px solid #d4d4d4;
-    border-top: 2px solid white;
-    border-radius: 50%;
-    width: 12px;
-    height: 12px;
-    margin-left: 10px;
-    animation: spin 1s linear infinite;
-    display: none;
+  border: 2px solid #d4d4d4;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: 10px;
+  animation: spin 1s linear infinite;
+  display: none;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

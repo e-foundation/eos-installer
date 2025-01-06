@@ -6,7 +6,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked" ],
+      "command": ["connect bootloader", "flashing unlock unlocked"],
       "needUserGesture": true
     },
     {
@@ -16,10 +16,7 @@
     },
     {
       "id": "flashing",
-      "command": [
-        "flash dtbo dtbo.img",
-        "flash boot recovery.img"
-      ]
+      "command": ["flash dtbo dtbo.img", "flash boot recovery.img"]
     },
     {
       "id": "bootloader-to-recovery-manually",
@@ -43,10 +40,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": [
-        "connect bootloader",
-        "reboot"
-      ],
+      "command": ["connect bootloader", "reboot"],
       "needUserGesture": true
     },
     {
