@@ -39,14 +39,10 @@ export class Bootloader extends Device {
   }
 
   async connect() {
-    let connected = false;
     try {
       await this.device.connect();
-      connected = true;
     } catch (e) {
       throw new Error("Cannot connect Bootloader", `${e.message || e}`);
-    } finally {
-      return connected;
     }
   }
 
@@ -59,20 +55,16 @@ export class Bootloader extends Device {
   }
 
   async flashFactoryZip(blob, onProgress, onReconnect) {
-    try {
-      await this.device.flashFactoryZip(
-        blob,
-        false,
-        onReconnect,
-        // Progress callback
-        (action, item, progress) => {
-          let userAction = fastboot.USER_ACTION_MAP[action];
-          onProgress(userAction, item, progress);
-        },
-      );
-    } catch (e) {
-      throw e;
-    }
+    await this.device.flashFactoryZip(
+      blob,
+      false,
+      onReconnect,
+      // Progress callback
+      (action, item, progress) => {
+        let userAction = fastboot.USER_ACTION_MAP[action];
+        onProgress(userAction, item, progress);
+      },
+    );
   }
 
   async flashBlob(partition, blob, onProgress) {
@@ -125,7 +117,7 @@ export class Bootloader extends Device {
 
   async unlock(command) {
     if (command) {
-      const res = await this.device.runCommand(command);
+      await this.device.runCommand(command);
     } else {
       throw Error("no unlock command configured"); //K1ZFP TODO
     }
@@ -133,12 +125,8 @@ export class Bootloader extends Device {
 
   async lock(command) {
     if (command) {
-      try {
-        const res = await this.device.runCommand(command);
-        return !(await this.isUnlocked());
-      } catch (e) {
-        throw e;
-      }
+      await this.device.runCommand(command);
+      return !(await this.isUnlocked());
     } else {
       throw Error("no lock command configured"); //K1ZFP TODO
     }

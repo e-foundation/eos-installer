@@ -5,9 +5,7 @@ export class Device {
 
   async init() {}
 
-  async connect() {
-    return false;
-  }
+  async connect() {}
 
   isConnected() {
     return false;
@@ -29,11 +27,11 @@ export class Device {
     return false;
   }
 
-  async flashBlob(partition, blob, onProgress) {
+  async flashBlob() {
     return false;
   }
 
-  async runCommand(cmd) {
+  async runCommand() {
     return false;
   }
 
@@ -48,11 +46,11 @@ export class Device {
     return undefined;
   }
 
-  reboot(mode) {
+  reboot() {
     return undefined;
   }
 
-  async bootBlob(blob) {
+  async bootBlob() {
     return false;
   }
 }

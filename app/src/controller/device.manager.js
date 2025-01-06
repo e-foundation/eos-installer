@@ -124,7 +124,7 @@ export class DeviceManager {
     return this.bootloader.runCommand(`erase:${partition}`);
   }
 
-  format(argument) {
+  format() {
     return true;
     //        return this.bootloader.runCommand(`format ${argument}`);
     //        the fastboot format md_udc is not supported evne by the official fastboot program

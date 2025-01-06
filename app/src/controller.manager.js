@@ -115,7 +115,6 @@ export class Controller {
     WDebug.log("ControllerManager run command:", cmd);
     switch (cmd.type) {
       case Command.CMD_TYPE.download:
-        let res = false;
         try {
           await this.deviceManager.downloadAll(
             (loaded, total, name) => {
@@ -133,7 +132,6 @@ export class Controller {
             `Cannot download <br/> ${e.message || e} <br/> ${proposal}`,
           );
         }
-        return false;
       case Command.CMD_TYPE.reboot:
         try {
           await this.deviceManager.reboot(cmd.mode);
@@ -143,24 +141,22 @@ export class Controller {
           return false;
         }
         return true;
-      case Command.CMD_TYPE.connect:
+      case Command.CMD_TYPE.connect: {
         const proposal =
           "Proposal: Check connection and that no other program is using the phone and retry.";
         try {
-          const res = await this.deviceManager.connect(cmd.mode);
-          if (res) {
-            await this.onDeviceConnected();
-            if (loader) {
-              loader.style.display = "none";
-            }
-            return true;
+          await this.deviceManager.connect(cmd.mode);
+          await this.onDeviceConnected();
+          if (loader) {
+            loader.style.display = "none";
           }
+          return true;
         } catch (e) {
           throw new Error(
             `The device is not connected ${e.message || e} <br/> ${proposal}`,
           );
         }
-        throw new Error(`Cannot connect the device <br/> ${proposal}`);
+      }
       case Command.CMD_TYPE.erase:
         return this.deviceManager.erase(cmd.partition);
       case Command.CMD_TYPE.flash:
@@ -171,20 +167,18 @@ export class Controller {
             this.view.onInstalling(cmd.file, done, total);
           },
         );
-      case Command.CMD_TYPE.unlock:
+      case Command.CMD_TYPE.unlock: {
         //check if unlocked to avoid unnecessary command
         let isUnlocked = false;
         let gotoStep = "";
         if (cmd.partition) {
-          try {
-            if (cmd.partition.startsWith("goto_")) {
-              gotoStep = cmd.partition.substring(5);
-              WDebug.log("goto step", gotoStep);
-              isUnlocked = await this.deviceManager.getUnlocked("unlocked");
-            } else {
-              isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
-            }
-          } catch (e) {}
+          if (cmd.partition.startsWith("goto_")) {
+            gotoStep = cmd.partition.substring(5);
+            WDebug.log("goto step", gotoStep);
+            isUnlocked = await this.deviceManager.getUnlocked("unlocked");
+          } else {
+            isUnlocked = await this.deviceManager.getUnlocked(cmd.partition);
+          }
         }
         WDebug.log(
           "ControllerManager unlock: ",
@@ -198,8 +192,9 @@ export class Controller {
           } catch (e) {
             //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
             if (e.bootloaderMessage?.includes("already")) {
+              WDebug.log("device already unlocked");
             } else if (e.bootloaderMessage?.includes("not allowed")) {
-              //K1ZFP TODO
+              WDebug.log("device  unlock is not allowed");
             }
           }
         } else {
@@ -222,12 +217,11 @@ export class Controller {
           }
         }
         return true;
-      case Command.CMD_TYPE.lock:
+      }
+      case Command.CMD_TYPE.lock: {
         let isLocked = false;
         if (cmd.partition) {
-          try {
-            isLocked = !(await this.deviceManager.getUnlocked(cmd.partition));
-          } catch (e) {}
+          isLocked = !(await this.deviceManager.getUnlocked(cmd.partition));
         }
         if (!isLocked) {
           try {
@@ -242,6 +236,7 @@ export class Controller {
           }
         }
         return true;
+      }
       case Command.CMD_TYPE.sideload:
         try {
           await this.deviceManager.connect("recovery");
@@ -264,11 +259,7 @@ export class Controller {
 
       default:
         WDebug.log(`try unknown command ${cmd.command}`);
-        try {
-          await this.deviceManager.runCommand(cmd.command);
-        } catch (e) {
-          // K1ZFP TODO...
-        }
+        await this.deviceManager.runCommand(cmd.command);
         return true;
     }
   }
@@ -319,7 +310,7 @@ export class Controller {
           10,
         );
         WDebug.log("current_security_path_level", current_security_path_level);
-      } catch (ee) {
+      } catch {
         WDebug.log("Security patch Error");
         current_security_path_level = null;
       }
@@ -350,7 +341,7 @@ export class Controller {
               this.deviceManager.adb.webusb.device;
             throw new Error("Cannot find device resource", id);
           }
-        } catch (e) {
+        } catch {
           const id =
             "model " +
             this.deviceManager.adb.webusb.model +
@@ -363,14 +354,14 @@ export class Controller {
             " " +
             "device " +
             this.deviceManager.adb.webusb.device;
-          throw new Error("Error on getting devcice resource", id);
+          throw new Error("Error on getting device resource", id);
         }
       }
 
       if (model.includes("A015")) {
         try {
           this_model = "tetris";
-        } catch (e) {
+        } catch {
           const id =
             "model " +
             this.deviceManager.adb.webusb.model +
@@ -409,7 +400,7 @@ export class Controller {
       }
     } catch (e) {
       resources = null;
-      WDebug.log("getRessources Error");
+      WDebug.log("getResources Error: " + e);
       throw Error("device-model-not-supported");
     }
 

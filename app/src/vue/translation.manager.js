@@ -33,7 +33,7 @@ export class TranslationManager {
     try {
       this.translation =
         await TranslationManager.fetchTranslation(shortLanguage);
-    } catch (e) {
+    } catch {
       //if language not found, fallback to next language
       if (this.languageIndex < this.languages.length) {
         this.languageIndex++;
@@ -118,7 +118,7 @@ export class TranslationManager {
     if (response.ok) {
       try {
         return await response.json();
-      } catch (e) {
+      } catch {
         WDebug.error("translation file is not a valid JSON: ", language);
         throw Error(`${language} translation file is not a valid JSON`);
       }

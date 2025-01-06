@@ -6,7 +6,7 @@ import { TranslationManager } from "./vue/translation.manager.js";
 /*
  * Class to manage events
  * from the buttons events to the event of the controller and fastboot
- * it's just log for now, but maybe it will be more usefull for dynamic display
+ * it's just log for now, but maybe it will be more useful for dynamic display
  */
 
 export default class ViewManager {
@@ -64,7 +64,6 @@ export default class ViewManager {
         `${e.message || e}`,
       );
       $button.disabled = false;
-    } finally {
     }
   }
   async executeStep($button, stepName) {
@@ -112,7 +111,7 @@ export default class ViewManager {
             $next.disabled = !nextStep.needUser;*/
     }
   }
-  onStepFailed(step) {}
+  onStepFailed() {}
 
   // /BUTTON EVENTS
 

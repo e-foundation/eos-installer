@@ -14,7 +14,7 @@ export class ADB extends Device {
     }
     try {
       return this.device.getDevice();
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -23,8 +23,7 @@ export class ADB extends Device {
     return true;
   }
 
-  async connect(cb) {
-    let res = false;
+  async connect() {
     try {
       console.log("debug adb connect");
       let adbWebBackend = await AdbWebBackend.requestDevice();
@@ -40,14 +39,10 @@ export class ADB extends Device {
         WDebug.log("Name", adbDevice.name);
         WDebug.log(">Device (codename)", adbDevice.device); // codemane
         WDebug.log("----------------------------------");
-
-        res = true;
       }
     } catch (e) {
       this.device = null;
       throw new Error(`Cannot connect ADB ${e.message || e}`);
-    } finally {
-      return res;
     }
   }
 

@@ -3,7 +3,6 @@ const DB_VERSION = 1;
 
 import ky from "ky";
 import { ZipReader, BlobReader, BlobWriter } from "@zip.js/zip.js";
-import { WDebug } from "../debug.js";
 
 /**
  * Download Manager
