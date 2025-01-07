@@ -1,3 +1,3 @@
-window.addEventListener('beforeunload', function (event) {
-    event.preventDefault();
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
 });

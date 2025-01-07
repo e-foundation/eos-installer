@@ -1,94 +1,98 @@
 @font-face {
-    font-family: "Century Gothic";
-    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
+  font-family: "Century Gothic";
+  src: url("../assets/fonts/century-gothic/Century-Gothic.ttf")
+    format("truetype");
 }
 @font-face {
-    font-family: "Century Gothic Bold";
-    src: url("../assets/fonts/century-gothic/Century-Gothic.ttf") format("truetype");
+  font-family: "Century Gothic Bold";
+  src: url("../assets/fonts/century-gothic/Century-Gothic.ttf")
+    format("truetype");
 }
 :root {
-    --top-banner-color: #191823;
-    --top-background-color: #0f0f0f;
-    --background-color: #f7f7f7;
-    --text-color: #111111;
-    --info-color: #027ffe;
-    --base-color: #dedee5;
-    --secondary-color: #898989;
-    --base-color-alt: #f5f5f7;
-    --blue: #2a7ae2;
-    --white: white;
-    --green: #00b13c;
-    --success-color: #61CE70;
-    --downloading-color: #027ffe;
-    --button-color: #027ffe;
-    --button-text-color: white;
-    --warning-background-color: #fff1c9;
-    --warning-text-color: #795917;
-    --info-background-color: #cbe9ee;
-    --info-text-color: #104a55;
+  --top-banner-color: #191823;
+  --top-background-color: #0f0f0f;
+  --background-color: #f7f7f7;
+  --text-color: #111111;
+  --info-color: #027ffe;
+  --base-color: #dedee5;
+  --secondary-color: #898989;
+  --base-color-alt: #f5f5f7;
+  --blue: #2a7ae2;
+  --white: white;
+  --green: #00b13c;
+  --success-color: #61ce70;
+  --downloading-color: #027ffe;
+  --button-color: #027ffe;
+  --button-text-color: white;
+  --warning-background-color: #fff1c9;
+  --warning-text-color: #795917;
+  --info-background-color: #cbe9ee;
+  --info-text-color: #104a55;
 }
-html, body {
-    margin: 0px;
-    background: var(--background-color);
-    font-family: 'Century Gothic', 'Lato';
-    font-size : 14px;
+html,
+body {
+  margin: 0px;
+  background: var(--background-color);
+  font-family: "Century Gothic", "Lato";
+  font-size: 14px;
 }
 button {
-    border-radius: 100px;
-    padding: 0.4rem 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.25s ease-in-out;
+  border-radius: 100px;
+  padding: 0.4rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
 }
 kbd {
-    padding: .2rem .4rem;
-    font-size: 87.5%;
-    color: #fff;
-    background-color: #212529;
-    border-radius: .2rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 87.5%;
+  color: #fff;
+  background-color: #212529;
+  border-radius: 0.2rem;
 }
 code {
-    border: 1px solid #e8e8e8;
-    border-radius: 3px;
-    background-color: #eef;
-    font-size: 87.5%;
-    color: #e83e8c;
-    word-wrap: break-word;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  background-color: #eef;
+  font-size: 87.5%;
+  color: #e83e8c;
+  word-wrap: break-word;
 }
 .warning {
-    background: var(--warning-background-color);
-    color: var(--warning-text-color);
+  background: var(--warning-background-color);
+  color: var(--warning-text-color);
 }
 .info {
-    background: var(--info-background-color);
-    color: var(--info-text-color);
+  background: var(--info-background-color);
+  color: var(--info-text-color);
 }
-.warning, .info {
-    padding: 0.625rem;
-    border-radius: 4px;
+.warning,
+.info {
+  padding: 0.625rem;
+  border-radius: 4px;
 }
 .secondary {
-    color : var(--secondary-color);
+  color: var(--secondary-color);
 }
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 .inactive {
-    display: none !important;
+  display: none !important;
 }
 
 .active {
-    display: block !important;
+  display: block !important;
 }
 .icon {
-    width: 2.5rem;
-    height: 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 .gap-4 {
-    gap: 1.5rem !important;
+  gap: 1.5rem !important;
 }
 .flex {
-    display: flex;
+  display: flex;
 }
 .align-items-center {
-    align-items: center;
+  align-items: center;
 }

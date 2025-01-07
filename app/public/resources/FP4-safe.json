@@ -110,7 +110,8 @@
         "flash core_nhlos_a core_nhlos.img --set-active=a",
         "erase userdata",
         "erase metadata",
-        "reboot"]
+        "reboot"
+      ]
     },
     {
       "id": "murena-workspace-account",
@@ -124,7 +125,7 @@
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/FP4/IMG-e-latest-u-official-FP4.zip"
+      "path": "https://images.ecloud.global/official/FP4/IMG-e-latest-t-official-FP4.zip"
     }
   ]
 }

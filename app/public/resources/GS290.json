@@ -1,9 +1,9 @@
 {
   "steps": [
-    {  
+    {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader","flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock unlocked"],
       "needUserGesture": true
     },
     {
