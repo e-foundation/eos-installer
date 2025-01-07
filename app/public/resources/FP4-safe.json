@@ -125,7 +125,7 @@
     {
       "name": "FP4 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/FP4/IMG-e-latest-u-official-FP4.zip"
+      "path": "https://images.ecloud.global/official/FP4/IMG-e-latest-t-official-FP4.zip"
     }
   ]
 }
