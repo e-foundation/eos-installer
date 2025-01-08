@@ -57,6 +57,11 @@ code {
   color: #e83e8c;
   word-wrap: break-word;
 }
+
+li {
+  padding: 0.5rem;
+}
+
 .warning {
   background: var(--warning-background-color);
   color: var(--warning-text-color);
