@@ -219,3 +219,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
+window.onload = function () {
+  if (!("usb" in navigator)) {
+    document.getElementById("overlay-background").classList.remove("inactive");
+    document
+      .getElementById("navigator-not-supported")
+      .classList.remove("inactive");
+    document
+      .getElementById("let-s-get-started-button")
+      .classList.add("inactive");
+  }
+};

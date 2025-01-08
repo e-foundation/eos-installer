@@ -13,30 +13,9 @@
     <script type="module" src="/src/lib/webadb/adb.bundle.js"></script>
     <script type="module" src="/src/viewManager.js"></script>
     <script type="module" src="/src/before-leave-app.js"></script>
-    <script>
-      window.onload = function () {
-        if ("usb" in navigator) {
-          // All is fine
-        } else {
-          document
-            .getElementById("overlay-background")
-            .classList.remove("inactive");
-          document.getElementById("compatibility-check").style.display =
-            "block";
-          document.getElementById("let-s-get-started-button").style.display =
-            "none";
-        }
-      };
-    </script>
   </head>
   <body id="body">
     <div id="process-ctn">
-      <div id="compatibility-check">
-        <div class="popup-compatibility-check">
-          <h2 data-translate="_err_01"></h2>
-          <p data-translate="_err_02"></p>
-        </div>
-      </div>
       <div id="banner">
         <div id="top-banner">
           <b>Installation</b>
@@ -199,20 +178,24 @@
         ></div>
         <div class="card-body">
           <ol>
-          <li data-translate="activate-developer-options-instructions-1"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/activate-developer-options-1.png"
-            />
-          </div>
-          <li data-translate="activate-developer-options-instructions-2"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/activate-developer-options-2.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/activate-developer-options-1.png"
+              />
+              <li
+                data-translate="activate-developer-options-instructions-1"
+              ></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/activate-developer-options-2.png"
+              />
+              <li
+                data-translate="activate-developer-options-instructions-2"
+              ></li>
+            </div>
           </ol>
         </div>
         <div class="card-footer">
@@ -225,19 +208,21 @@
       <div id="activate-oem-unlock" class="activate-oem-unlock card inactive">
         <div class="card-header" data-translate="activate-oem-unlock"></div>
         <div class="card-body">
-          <p data-translate="activate-oem-unlock-instruction"></p>
-          <div
-            class="text-center"
-            style="display: flex; justify-content: center; gap: 10px"
-          >
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/enableOEMUnlocking.png"
-            />
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/allowOEMUnlocking.png"
-            />
+          <div class="normal-padding flex align-items-center gap-4">
+            <div
+              class="text-center"
+              style="display: flex; justify-content: center; gap: 10px"
+            >
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/enableOEMUnlocking.png"
+              />
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/allowOEMUnlocking.png"
+              />
+            </div>
+            <p data-translate="activate-oem-unlock-instruction"></p>
           </div>
         </div>
         <div class="card-footer">
@@ -254,20 +239,21 @@
         <div class="card-header" data-translate="activate-usb-debugging"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="activate-usb-debugging-instructions-1"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/activate-usb-debugging-1.png"
-            />
-          </div>
-          <li data-translate="activate-usb-debugging-instructions-2"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/activate-usb-debugging-2.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/activate-usb-debugging-1.png"
+              />
+              <li data-translate="activate-usb-debugging-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/activate-usb-debugging-2.png"
+              />
+
+              <li data-translate="activate-usb-debugging-instructions-2"></li>
+            </div>
           </ol>
         </div>
         <div class="card-footer">
@@ -287,20 +273,20 @@
         ></div>
         <div class="card-body">
           <ol>
-          <li data-translate="enable-usb-file-transfer-instructions-1"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/enable-usb-file-transfer-1.png"
-            />
-          </div>
-          <li data-translate="enable-usb-file-transfer-instructions-2"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/enable-usb-file-transfer-2.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/enable-usb-file-transfer-1.png"
+              />
+              <li data-translate="enable-usb-file-transfer-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/enable-usb-file-transfer-2.png"
+              />
+              <li data-translate="enable-usb-file-transfer-instructions-2"></li>
+            </div>
           </ol>
         </div>
         <div class="card-footer">
@@ -314,23 +300,24 @@
       <div id="device-detection" class="device-detection card inactive">
         <div class="card-header" data-translate="device-detection"></div>
         <div class="card-body">
-          <div class="flex align-items-center gap-4">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/allow-usb-debugging-1.png"
-            />
-            <p data-translate="device-detection-instructions-1"></p>
-          </div>
-          <div class="flex align-items-center gap-4">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/allow-usb-debugging-2.png"
-            />
-            <p data-translate="device-detection-instructions-2"></p>
-          </div>
+          <ol>
+            <div class="flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/allow-usb-debugging-1.png"
+              />
+              <li data-translate="device-detection-instructions-1"></li>
+            </div>
+            <div class="flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/allow-usb-debugging-2.png"
+              />
+              <li data-translate="device-detection-instructions-2"></li>
+            </div>
+          </ol>
         </div>
         <div class="card-footer">
-          <p data-translate="device-detection-instructions-3"></p>
           <button class="connect">
             <span data-translate="connect"></span>
             <span class="btn-loader"></span>
@@ -412,12 +399,12 @@
       <div id="unlocking-gs290" class="card inactive">
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
-          <p data-translate="unlocking-instructions-1-b"></p>
-          <div class="text-center">
+          <div class="normal-padding flex align-items-center gap-4">
             <img
               class="instruction-img"
               src="assets/images/illustrations/gs290/Illustration - Accept warning-1.png"
             />
+            <p data-translate="unlocking-instructions-1-b"></p>
           </div>
         </div>
         <div class="card-footer">
@@ -432,17 +419,23 @@
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="unlocking-instructions-1"></li>
-          <li data-translate="unlocking-instructions-1-a"></li>
-          <li data-translate="unlocking-instructions-2"></li>
-          <li data-translate="unlocking-instructions-3"></li>
-          <li data-translate="unlocking-instructions-4"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp3/accept-warning-1.png"
+              />
+              <li data-translate="unlocking-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp3/accept-warning-2.png"
+              />
+              <li data-translate="unlocking-instructions-1-a"></li>
+            </div>
+            <li data-translate="unlocking-instructions-2"></li>
+            <li data-translate="unlocking-instructions-3"></li>
+            <li data-translate="unlocking-instructions-4"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -457,17 +450,23 @@
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="unlocking-instructions-1"></li>
-          <li data-translate="unlocking-instructions-1-a"></li>
-          <li data-translate="unlocking-instructions-2"></li>
-          <li data-translate="unlocking-instructions-3"></li>
-          <li data-translate="unlocking-instructions-4"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp4/accept-warning-1.png"
+              />
+              <li data-translate="unlocking-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp4/accept-warning-2.png"
+              />
+              <li data-translate="unlocking-instructions-1-a"></li>
+            </div>
+            <li data-translate="unlocking-instructions-2"></li>
+            <li data-translate="unlocking-instructions-3"></li>
+            <li data-translate="unlocking-instructions-4"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -481,12 +480,12 @@
       <div id="unlocking-teracube-v1" class="card inactive">
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
-          <p data-translate="unlocking-instructions-1-teracube"></p>
-          <div class="text-center">
+          <div class="normal-padding flex align-items-center gap-4">
             <img
               class="instruction-img"
               src="assets/images/illustrations/teracube-v1/Illustration - Accept warning-1.png"
             />
+            <p data-translate="unlocking-instructions-1-teracube"></p>
           </div>
         </div>
         <div class="card-footer">
@@ -499,12 +498,12 @@
       <div id="unlocking-teracube-v2" class="card inactive">
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
-          <p data-translate="unlocking-instructions-1-teracube"></p>
-          <div class="text-center">
+          <div class="normal-padding flex align-items-center gap-4">
             <img
               class="instruction-img"
               src="assets/images/illustrations/teracube-v2/Illustration - Accept warning-1.png"
             />
+            <p data-translate="unlocking-instructions-1-teracube"></p>
           </div>
         </div>
         <div class="card-footer">
@@ -525,10 +524,10 @@
             />
             <div>
               <ol>
-              <li data-translate="unlocking-instructions-1"></li>
-              <li data-translate="unlocking-instructions-1-a"></li>
-              <li data-translate="unlocking-instructions-2"></li>
-              <li data-translate="unlocking-instructions-2-a"></li>
+                <li data-translate="unlocking-instructions-1"></li>
+                <li data-translate="unlocking-instructions-1-a"></li>
+                <li data-translate="unlocking-instructions-2"></li>
+                <li data-translate="unlocking-instructions-2-a"></li>
               </ol>
             </div>
           </div>
@@ -551,10 +550,10 @@
             />
             <div>
               <ol>
-              <li data-translate="unlocking-instructions-1"></li>
-              <li data-translate="unlocking-instructions-1-a"></li>
-              <li data-translate="unlocking-instructions-2"></li>
-              <li data-translate="unlocking-instructions-2-a"></li>
+                <li data-translate="unlocking-instructions-1"></li>
+                <li data-translate="unlocking-instructions-1-a"></li>
+                <li data-translate="unlocking-instructions-2"></li>
+                <li data-translate="unlocking-instructions-2-a"></li>
               </ol>
             </div>
           </div>
@@ -571,11 +570,11 @@
         <div class="card-header" data-translate="unlocking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="unlocking-instructions-1"></li>
-          <li data-translate="unlocking-instructions-1-a"></li>
-          <li data-translate="unlocking-instructions-2"></li>
-          <li data-translate="unlocking-instructions-3"></li>
-          <li data-translate="unlocking-instructions-4"></li>
+            <li data-translate="unlocking-instructions-1"></li>
+            <li data-translate="unlocking-instructions-1-a"></li>
+            <li data-translate="unlocking-instructions-2"></li>
+            <li data-translate="unlocking-instructions-3"></li>
+            <li data-translate="unlocking-instructions-4"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -610,15 +609,15 @@
         <div class="card-body">
           <p data-translate="bootloader-to-recovery-manually-instructions"></p>
           <ol>
-          <li
-            data-translate="bootloader-to-recovery-manually-instructions-1"
+            <li
+              data-translate="bootloader-to-recovery-manually-instructions-1"
             ></li>
-          <li
-            data-translate="bootloader-to-recovery-manually-instructions-2"
-          ></li>
-          <li
-            data-translate="bootloader-to-recovery-manually-instructions-3"
-          ></li>
+            <li
+              data-translate="bootloader-to-recovery-manually-instructions-2"
+            ></li>
+            <li
+              data-translate="bootloader-to-recovery-manually-instructions-3"
+            ></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -634,13 +633,13 @@
         <div class="card-header" data-translate="format-device"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="format-device-instructions-1"></li>
-          <li data-translate="format-device-instructions-2"></li>
-          <li data-translate="format-device-instructions-3"></li>
-          <li data-translate="format-device-instructions-4"></li>
-          <li data-translate="format-device-instructions-5"></li>
-          <li data-translate="format-device-instructions-6"></li>
-          <li data-translate="format-device-instructions-7"></li>
+            <li data-translate="format-device-instructions-1"></li>
+            <li data-translate="format-device-instructions-2"></li>
+            <li data-translate="format-device-instructions-3"></li>
+            <li data-translate="format-device-instructions-4"></li>
+            <li data-translate="format-device-instructions-5"></li>
+            <li data-translate="format-device-instructions-6"></li>
+            <li data-translate="format-device-instructions-7"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -654,9 +653,9 @@
         <div class="card-header" data-translate="go-to-apply-update"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="go-to-apply-update-instructions-1"></li>
-          <li data-translate="go-to-apply-update-instructions-2"></li>
-          <li data-translate="go-to-apply-update-instructions-3"></li>
+            <li data-translate="go-to-apply-update-instructions-1"></li>
+            <li data-translate="go-to-apply-update-instructions-2"></li>
+            <li data-translate="go-to-apply-update-instructions-3"></li>
           </ol>
           <p
             class="info"
@@ -686,8 +685,8 @@
         <div class="card-body">
           <p data-translate="recovery-to-bootloader-instructions"></p>
           <ol>
-          <li data-translate="recovery-to-bootloader-instructions-1"></li>
-          <li data-translate="recovery-to-bootloader-instructions-2"></li>
+            <li data-translate="recovery-to-bootloader-instructions-1"></li>
+            <li data-translate="recovery-to-bootloader-instructions-2"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -700,14 +699,20 @@
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="locking-instructions-1"></li>
-          <li data-translate="locking-instructions-2"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/fp3/Illustration - Accept warning-1.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp3/accept-warning-1.png"
+              />
+              <li data-translate="locking-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp3/accept-warning-2.png"
+              />
+              <li data-translate="locking-instructions-2"></li>
+            </div>
           </ol>
         </div>
         <div class="card-footer">
@@ -719,14 +724,20 @@
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="locking-instructions-1"></li>
-          <li data-translate="locking-instructions-2"></li>
-          <div class="text-center">
-            <img
-              class="instruction-img"
-              src="assets/images/illustrations/fp4/Illustration - Accept warning-1.png"
-            />
-          </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp4/accept-warning-1.png"
+              />
+              <li data-translate="locking-instructions-1"></li>
+            </div>
+            <div class="normal-padding flex align-items-center gap-4">
+              <img
+                class="instruction-img"
+                src="assets/images/illustrations/fp4/accept-warning-2.png"
+              />
+              <li data-translate="locking-instructions-2"></li>
+            </div>
           </ol>
         </div>
         <div class="card-footer">
@@ -737,12 +748,12 @@
       <div id="locking-teracube-v2" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
-          <p data-translate="locking-instructions-1-teracube"></p>
-          <div class="text-center">
+          <div class="normal-padding flex align-items-center gap-4">
             <img
               class="instruction-img"
               src="assets/images/illustrations/teracube-v2/Illustration - Accept warning-1.png"
             />
+            <p data-translate="locking-instructions-1-teracube"></p>
           </div>
         </div>
         <div class="card-footer">
@@ -756,16 +767,16 @@
       <div id="locking-pixel" class="card inactive">
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
-          <ol>
-          <li data-translate="locking-instructions-1"></li>
-          <div class="text-center">
+          <div class="normal-padding flex align-items-center gap-4">
             <img
               class="instruction-img"
               src="assets/images/illustrations/pixel/Illustration - Accept warning-1.png"
             />
+            <ol>
+              <li data-translate="locking-instructions-1"></li>
+              <li data-translate="locking-instructions-4"></li>
+            </ol>
           </div>
-          <li data-translate="locking-instructions-4"></li>
-          </ol>
         </div>
         <div class="card-footer">
           <button data-translate="next" class="next"></button>
@@ -776,8 +787,8 @@
         <div class="card-header" data-translate="locking"></div>
         <div class="card-body">
           <ol>
-          <li data-translate="locking-instructions-1"></li>
-          <li data-translate="locking-instructions-2"></li>
+            <li data-translate="locking-instructions-1"></li>
+            <li data-translate="locking-instructions-2"></li>
           </ol>
         </div>
         <div class="card-footer">
@@ -826,10 +837,7 @@
         <div class="card-body text-center">
           <img class="error-img" src="assets/images/icons/critical-error.svg" />
           <p class="instruction-title" id="error-title"></p>
-          <p
-            data-translate="navigator-not-supported-instructions"
-            id="error-instruction"
-          ></p>
+          <p id="error-instruction"></p>
         </div>
       </div>
       <div
@@ -847,15 +855,15 @@
           <div class="instructions-ctn">
             <div class="instruction-ctn">
               <img class="icon" src="assets/images/icons/edge.svg" />
-              <div>Microsoft Edge <b>125.0.0</b></div>
+              <div>Microsoft Edge</div>
             </div>
             <div class="instruction-ctn">
               <img class="icon" src="assets/images/icons/opera.svg" />
-              <div>Opera <b>111.0.0</b></div>
+              <div>Opera</div>
             </div>
             <div class="instruction-ctn">
               <img class="icon" src="assets/images/icons/chrome.svg" />
-              <div>Chrome <b>126.0.0</b></div>
+              <div>Chrome</div>
             </div>
           </div>
         </div>
