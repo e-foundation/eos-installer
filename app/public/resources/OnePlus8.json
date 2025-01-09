@@ -76,7 +76,7 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "https://images.ecloud.global/community/instantnoodle/recovery-IMG-e-latest-u-community-instantnoodle.zip",
+      "path": "https://images.ecloud.global/community/instantnoodle/recovery-IMG-e-latest-t-community-instantnoodle.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -86,7 +86,7 @@
     },
     {
       "name": "oneplus-8-rom.zip",
-      "path": "https://images.ecloud.global/community/instantnoodle/e-latest-u-community-instantnoodle.zip"
+      "path": "https://images.ecloud.global/community/instantnoodle/e-latest-t-community-instantnoodle.zip"
     }
   ]
 }

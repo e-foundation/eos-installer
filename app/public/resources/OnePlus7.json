@@ -76,7 +76,7 @@
   "folder": [
     {
       "name": "One+ 7 recovery installer",
-      "path": "https://images.ecloud.global/community/guacamoleb/recovery-IMG-e-latest-u-community-guacamoleb.zip",
+      "path": "https://images.ecloud.global/community/guacamoleb/recovery-IMG-e-latest-t-community-guacamoleb.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -86,7 +86,7 @@
     },
     {
       "name": "oneplus-7-rom.zip",
-      "path": "https://images.ecloud.global/community/guacamoleb/e-latest-u-community-guacamoleb.zip"
+      "path": "https://images.ecloud.global/community/guacamoleb/e-latest-t-community-guacamoleb.zip"
     }
   ]
 }
