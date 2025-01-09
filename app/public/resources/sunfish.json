@@ -54,7 +54,7 @@
   "folder": [
     {
       "name": "pixel-4a-recovery.img",
-      "path": "https://images.ecloud.global/community/sunfish/recovery-IMG-e-latest-u-community-sunfish.zip",
+      "path": "https://images.ecloud.global/community/sunfish/recovery-IMG-e-latest-t-community-sunfish.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -63,7 +63,7 @@
     },
     {
       "name": "pixel-4a-rom.zip",
-      "path": "https://images.ecloud.global/community/sunfish/e-latest-u-community-sunfish.zip"
+      "path": "https://images.ecloud.global/community/sunfish/e-latest-t-community-sunfish.zip"
     }
   ]
 }

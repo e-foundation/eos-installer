@@ -211,9 +211,10 @@ progress[value].success::-webkit-progress-value {
 /* </let-s-get-started> */
 .navigator-not-supported .instructions-ctn {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   text-align: center;
+  gap: 24px;
   font-size: 14px;
   padding: 16px 0;
 }

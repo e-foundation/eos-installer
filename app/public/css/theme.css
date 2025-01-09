@@ -57,6 +57,11 @@ code {
   color: #e83e8c;
   word-wrap: break-word;
 }
+
+li {
+  padding: 0.5rem;
+}
+
 .warning {
   background: var(--warning-background-color);
   color: var(--warning-text-color);
@@ -67,9 +72,24 @@ code {
 }
 .warning,
 .info {
+  display: flex;
   padding: 0.625rem;
   border-radius: 4px;
 }
+
+.alert-icon {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.warning .alert-icon::before {
+  content: "⚠️";
+}
+
+.info .alert-icon::before {
+  content: "ℹ️";
+}
+
 .secondary {
   color: var(--secondary-color);
 }
