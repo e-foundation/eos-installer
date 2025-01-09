@@ -1,6 +1,5 @@
 {
-  "UNUSED___security_patch_level": "2020-04-05",
-  "description" : "Murena One",
+  "description": "Murena One",
   "steps": [
     {
       "mode": "bootloader",
@@ -9,13 +8,12 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking-murena-two",
+      "id": "unlocking",
       "needUserGesture": true
     },
     {
-      "id": "flashing",  
+      "id": "flashing",
       "command": [
-        
         "flash boot_a boot.img",
         "flash boot_b boot.img",
         "flash dtbo_a dtbo.img",
@@ -54,7 +52,18 @@
         "flash vbmeta_b vbmeta.img",
         "erase userdata",
         "format md_udc",
-        "reboot"]
+        "reboot"
+      ]
+    },
+    {
+      "id": "locking",
+      "needUserGesture": true
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "reboot"],
+      "needUserGesture": true
     },
     {
       "id": "murena-workspace-account",
@@ -66,7 +75,7 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/stable/two/IMG-e-2.4.1-t-20241008439851-official-two.zip",
+      "path": "https://images.ecloud.global/official/two/IMG-e-latest-t-official-two.zip",
       "name": "Murena Two installer",
       "unzip": true
     }
