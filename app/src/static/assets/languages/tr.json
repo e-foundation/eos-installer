@@ -18,5 +18,12 @@
     "check-update-android-version": "Android sürümünüzü kontrol edin ve güncelleyin",
     "connect": "Bağlan",
     "connect-bootloader": "Önyükleyici bağlantısı",
-    "bootloader-to-recovery-manually-instructions-1": "1. Önyükleyicide, <kbd>Ses Açma</kbd> ve <kbd>Ses Kısma</kbd> düğmelerini kullanarak <code>kurtarma modunu</code> seçin"
+    "bootloader-to-recovery-manually-instructions-1": "1. Önyükleyicide, <kbd>Ses Açma</kbd> ve <kbd>Ses Kısma</kbd> düğmelerini kullanarak <code>kurtarma modunu</code> seçin",
+    "sideload-instructions-3": "Yükleme tamamlandığında, telefon ana ekrana döner.",
+    "sideload-instructions-4": "Ancak o zaman <code>Sonraki</code> tuşuna tıklayabilirsiniz.",
+    "sign-up-free": "ÜCRETSİZ kaydolun",
+    "skip": "Geç",
+    "start": "Başlat",
+    "this-might-take-some-time-please-be-patient": "Bu biraz zaman alabilir, lütfen sabırlı olun",
+    "very-satisfied": "Çok Memnun"
 }
