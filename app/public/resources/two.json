@@ -1,5 +1,5 @@
 {
-  "description": "Murena One",
+  "description": "Murena Two",
   "steps": [
     {
       "mode": "bootloader",
@@ -51,8 +51,9 @@
         "flash vbmeta_a vbmeta.img",
         "flash vbmeta_b vbmeta.img",
         "erase userdata",
-        "format md_udc",
-        "reboot"
+        "erase metadata",
+        "flash userdata userdata.img",
+        "flashing lock"
       ]
     },
     {
