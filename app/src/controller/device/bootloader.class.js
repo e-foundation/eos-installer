@@ -1,5 +1,5 @@
-import * as fastboot from "../../lib/fastboot/fastboot.js";
-import { TimeoutError } from "../../lib/fastboot/fastboot.js";
+import * as fastboot from "@e/fastboot";
+import { TimeoutError } from "@e/fastboot";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 
