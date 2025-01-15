@@ -39,6 +39,6 @@ Using:
 - docker for packaging
 
 Libraries:
-- fastboot.js (License: MIT): https://github.com/kdrag0n/fastboot.js/ 
+- fastboot.js (License: MIT): https://gitlab.e.foundation/e/tools/fastboot.js
 - ya-webadb (License: MIT): https://github.com/yume-chan/ya-webadb
 - and more see [package.json](https://gitlab.e.foundation/e/devices/eos-installer/-/blob/main/app/package.json)
