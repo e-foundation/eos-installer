@@ -3,7 +3,7 @@ import {
   FastbootDevice,
   setDebugLevel,
   TimeoutError,
-  USER_ACTION_MAP
+  USER_ACTION_MAP,
 } from "@e/fastboot";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
@@ -20,7 +20,7 @@ export class Bootloader extends Device {
     //await this.blobStore.init();
     configureZip({
       workerScripts: {
-        inflate: ["../dist/vendor/z-worker-pako.js", "pako_inflate.min.js"],
+        inflate: ["/vendor/z-worker-pako.js", "pako_inflate.min.js"],
       },
     });
     // Enable verbose debug logging
