@@ -66,7 +66,7 @@ export class ADB extends Device {
   }
 
   getProductName() {
-    return this.webusb.name;
+    return this.device.name;
   }
 
   async getAndroidVersion() {
@@ -74,7 +74,7 @@ export class ADB extends Device {
   }
 
   async getSerialNumber() {
-    return this.webusb.getProp("ro.boot.serialno");
+    return this.webusb.getProp("ro.boot.serialno"); 
   }
 
   async runCommand(cmd) {
