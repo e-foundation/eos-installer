@@ -2,7 +2,7 @@ import { MessageClass } from "../../lib/webadb/message.class.js";
 import { MessageHeader } from "../../lib/webadb/message-header.class.js";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
-import { AdbWebBackend3, Adb3 } from "../../lib/webadb/adb.bundle.js";
+//import { AdbWebBackend3, Adb3 } from "../../lib/webadb/adb.bundle.js";
 
 export class Recovery extends Device {
   constructor(device) {
