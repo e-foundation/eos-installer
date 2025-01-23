@@ -2,7 +2,9 @@ import { MessageClass } from "../../lib/webadb/message.class.js";
 import { MessageHeader } from "../../lib/webadb/message-header.class.js";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
-//import { AdbWebBackend3, Adb3 } from "../../lib/webadb/adb.bundle.js";
+import { AdbDaemonWebUsbDeviceManager } from "@yume-chan/adb-daemon-webusb";
+import { Adb, AdbDaemonTransport } from "@yume-chan/adb";
+import AdbWebCredentialStore from "@yume-chan/adb-credential-web";
 
 export class Recovery extends Device {
   constructor(device) {
@@ -32,15 +34,22 @@ export class Recovery extends Device {
       if (this.device && this.device.isConnected) {
         WDebug.log("Connect recovery the device is connected");
       } else {
-        const adbWebBackend = await AdbWebBackend3.requestDevice();
-        WDebug.log("adbWebBackend = ", adbWebBackend);
-        const adbDevice = new Adb3(adbWebBackend, null); //adb.bundle.js
-        WDebug.log("adbDevice = ", adbDevice);
-        await adbDevice.connect();
-        WDebug.log("adbDevice connected");
-        this.device = adbWebBackend._device;
-        this.webusb = adbDevice;
-        this.adbWebBackend = adbWebBackend;
+
+        const Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
+
+        const adbDaemonWebUsbDevice = await Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
+        const connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/  
+        const credentialStore = new AdbWebCredentialStore();
+        const transport = await AdbDaemonTransport.authenticate({
+          serial: connection.deserial,
+          connection,
+          credentialStore: credentialStore
+        });
+        const adb = new Adb(transport);
+        this.device = adbDaemonWebUsbDevice; 
+        this.webusb = adb; /*Adb*/
+
+        res = true;
       }
     } catch (e) {
       this.device = null;
