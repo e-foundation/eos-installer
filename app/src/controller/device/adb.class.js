@@ -83,7 +83,7 @@ export class ADB extends Device {
   }
 
   async reboot(mode) {
-    const res = await this.webusb.createStreamAndReadAll(`reboot:${mode}`);
+    const res = await this.webusb.power.reboot(mode);
     return res;
   }
 }
