@@ -1,5 +1,10 @@
-import * as fastboot from "../../lib/fastboot/fastboot.js";
-import { TimeoutError } from "../../lib/fastboot/fastboot.js";
+import {
+  configureZip,
+  FastbootDevice,
+  setDebugLevel,
+  TimeoutError,
+  USER_ACTION_MAP,
+} from "@e/fastboot";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 
@@ -8,18 +13,18 @@ import { WDebug } from "../../debug.js";
  * */
 export class Bootloader extends Device {
   constructor() {
-    super(new fastboot.FastbootDevice());
+    super(new FastbootDevice());
   }
 
   async init() {
     //await this.blobStore.init();
-    fastboot.configureZip({
+    configureZip({
       workerScripts: {
-        inflate: ["../dist/vendor/z-worker-pako.js", "pako_inflate.min.js"],
+        inflate: ["/vendor/z-worker-pako.js", "pako_inflate.min.js"],
       },
     });
     // Enable verbose debug logging
-    fastboot.setDebugLevel(2);
+    setDebugLevel(2);
   }
 
   reboot(mode) {
@@ -61,7 +66,7 @@ export class Bootloader extends Device {
       onReconnect,
       // Progress callback
       (action, item, progress) => {
-        let userAction = fastboot.USER_ACTION_MAP[action];
+        let userAction = USER_ACTION_MAP[action];
         onProgress(userAction, item, progress);
       },
     );

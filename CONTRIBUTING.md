@@ -2,6 +2,8 @@
 
 ## Install
 
+If you're developing under MSWindows. You need to work from WSL.
+
 [nodeJS](https://nodejs.org/en/download)
 
 ## Launch the app
