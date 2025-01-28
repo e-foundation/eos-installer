@@ -7,7 +7,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking-fp5",
+      "id": "unlocking-fp4",
       "needUserGesture": true
     },
     {
@@ -34,7 +34,7 @@
       "needUserGesture": true
     },
     {
-      "id": "unlocking-fp5",
+      "id": "unlocking-fp4",
       "needUserGesture": true
     },
     {
@@ -147,7 +147,7 @@
       "needUserGesture": true
     },
     {
-      "id": "locking-fp5",
+      "id": "locking-fp4",
       "needUserGesture": true
     },
     {
@@ -174,7 +174,7 @@
       "needUserGesture": true
     },
     {
-      "id": "locking-fp5",
+      "id": "locking-fp4",
       "needUserGesture": true
     },
     {
@@ -189,7 +189,7 @@
     {
       "name": "fp5 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/stable/FP5/IMG-e-2.5-t-20241108446629-official-FP5.zip"
+      "path": "https://images.ecloud.global/official/FP5/IMG-e-latest-t-official-FP5.zip"
     }
   ]
 }
