@@ -13,6 +13,7 @@
     },
     {
       "id": "flashing",
+      "mode": "bootloader",
       "command": [
         "flash boot_a boot.img",
         "flash boot_b boot.img",
