@@ -142,9 +142,11 @@ export class Recovery extends Device {
           receivedData = await this.webusb.backend.read(8);
           message = new MessageClass(header, receivedData);
         } else {
+          console.error("Error sideload (A)", v);
           throw new Error(`WRTE Failed ${block}`);
         }
       } else {
+        console.error("Error sideload (B)", v);
         throw new Error(`OKAY Failed ${block}`);
       }
     }
