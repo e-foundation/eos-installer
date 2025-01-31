@@ -1,10 +1,8 @@
-import { MessageClass } from "../../lib/webadb/message.class.js";
-import { MessageHeader } from "../../lib/webadb/message-header.class.js";
+import { ADB } from "./adb.class.js";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
-import { AdbDaemonWebUsbDeviceManager } from "@yume-chan/adb-daemon-webusb";
-import { Adb, AdbDaemonTransport } from "@yume-chan/adb";
-import AdbWebCredentialStore from "@yume-chan/adb-credential-web";
+
+import { AdbSideload, MessageClass, MessageHeader } from "../adb-sideload.js"
 
 export class Recovery extends Device {
   constructor(device) {
@@ -34,22 +32,13 @@ export class Recovery extends Device {
       if (this.device && this.device.isConnected) {
         WDebug.log("Connect recovery the device is connected");
       } else {
+        const adbDaemonWebUsbDevice = await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
+        const adbDevice = new AdbSideload(adbDaemonWebUsbDevice.raw, null);
+        WDebug.log("adbDevice = ", adbDevice);
+        await adbDevice.connect();  
 
-        const Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
-
-        const adbDaemonWebUsbDevice = await Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
-        const connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/  
-        const credentialStore = new AdbWebCredentialStore();
-        const transport = await AdbDaemonTransport.authenticate({
-          serial: connection.deserial,
-          connection,
-          credentialStore: credentialStore
-        });
-        const adb = new Adb(transport);
         this.device = adbDaemonWebUsbDevice; 
-        this.webusb = adb; /*Adb*/
-
-        res = true;
+        this.webusb = adbDevice; 
       }
     } catch (e) {
       this.device = null;
@@ -59,7 +48,7 @@ export class Recovery extends Device {
 
   async sideload(blob) {
     try {
-      await this.adbOpen(blob, true);
+      await this.adbOpen(blob);
     } catch (e) {
       throw new Error(`Sideload fails ${e.message || e}`);
     }
@@ -77,9 +66,7 @@ export class Recovery extends Device {
     return this.webusb.product;
   }
 
-  async adbOpen(blob, useChecksum) {
-    // This one is used by the adb.bundle.js
-
+  async adbOpen(blob) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
@@ -90,22 +77,21 @@ export class Recovery extends Device {
     let data = new DataView(encoder.encode("" + service + "\0").buffer);
     this.stream = await this.webusb.createStream(service); // Send Open message and receive OKAY.
 
-    let checksum = 0;
-    if (useChecksum) {
-      checksum = MessageClass.checksum(data);
-    }
+    let checksum = MessageClass.checksum(data);
+
     const localId = this.stream.localId;
     const remoteId = this.stream.remoteId;
+    
 
     let header = new MessageHeader("OKAY", localId, remoteId, 0, checksum);
     let receivedData, message;
-    await this.adbWebBackend.write(header.toDataView().buffer);
-    let r = await this.adbWebBackend.read(24);
+    await this.webusb.backend.write(header.toDataView().buffer);
+    let r = await this.webusb.backend.read(24);
     let v = Array.from(new Uint8Array(r))
       .map((byte) => String.fromCharCode(byte))
       .join("");
     if (v[0] == "W" && v[1] == "R" && v[2] == "T" && v[3] == "E") {
-      receivedData = await this.adbWebBackend.read(8);
+      receivedData = await this.webusb.backend.read(8);
       message = new MessageClass(header, receivedData);
     } else {
       throw new Error("Write OKAY Failed (init)");
@@ -137,23 +123,23 @@ export class Recovery extends Device {
       header = new MessageHeader("WRTE", localId, remoteId, to_write, checksum);
       let buff = await slice.arrayBuffer();
 
-      await this.adbWebBackend.write(header.toDataView().buffer);
-      await this.adbWebBackend.write(buff);
-      r = await this.adbWebBackend.read(24);
+      await this.webusb.backend.write(header.toDataView().buffer);
+      await this.webusb.backend.write(buff);
+      r = await this.webusb.backend.read(24);
       v = Array.from(new Uint8Array(r))
         .map((byte) => String.fromCharCode(byte))
         .join("");
       //test OKAY
       if (v[0] == "O" && v[1] == "K" && v[2] == "A" && v[3] == "Y") {
         header = new MessageHeader("OKAY", localId, remoteId, 0, checksum);
-        await this.adbWebBackend.write(header.toDataView().buffer);
-        r = await this.adbWebBackend.read(24);
+        await this.webusb.backend.write(header.toDataView().buffer);
+        r = await this.webusb.backend.read(24);
         v = Array.from(new Uint8Array(r))
           .map((byte) => String.fromCharCode(byte))
           .join("");
         //Test WRTE
         if (v[0] == "W" && v[1] == "R" && v[2] == "T" && v[3] == "E") {
-          receivedData = await this.adbWebBackend.read(8);
+          receivedData = await this.webusb.backend.read(8);
           message = new MessageClass(header, receivedData);
         } else {
           throw new Error(`WRTE Failed ${block}`);

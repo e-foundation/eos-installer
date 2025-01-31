@@ -1,11 +1,14 @@
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 
-import { AdbDaemonWebUsbDeviceManager, AdbDaemonWebUsbDevice } from "@yume-chan/adb-daemon-webusb";
+import { AdbDaemonWebUsbDeviceManager } from "@yume-chan/adb-daemon-webusb";
 import { Adb, AdbDaemonTransport } from "@yume-chan/adb";
 import AdbWebCredentialStore from "@yume-chan/adb-credential-web";
 
 export class ADB extends Device {
+
+  static Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
+
   constructor(device) {
     super(device);
     this.webusb = null;
@@ -29,15 +32,23 @@ export class ADB extends Device {
   async connect() {
     try {
       console.log("debug adb connect");
-
-      const Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
-      const devices = await Manager.getDevices();
-      if (!devices.length) {
-        throw new Error("No device connected");
+        
+      const adbDaemonWebUsbDevice = await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
+      if (typeof adbDaemonWebUsbDevice == "undefined") {
+        throw new Error("No device connected (1)");
       }
-      
-      const adbDaemonWebUsbDevice = devices[0]; /*AdbDaemonWebUsbDevice*/
-      const connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/  
+
+      let connection;
+      try {
+        connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/  
+      } catch ( err ) {
+        const devices = await Manager.getDevices();
+        if (!devices.length) {
+          throw new Error("No device connected (2)");
+        }
+        adbDaemonWebUsbDevice = devices[0]; /*AdbDaemonWebUsbDevice*/
+      }
+
       const credentialStore = new AdbWebCredentialStore();
       const transport = await AdbDaemonTransport.authenticate({
         serial: connection.deserial,
@@ -46,7 +57,7 @@ export class ADB extends Device {
       });
       const adb = new Adb(transport);
       
-      const version = await adb.getProp("ro.build.version.release");
+      //const version = await adb.getProp("ro.build.version.release");
 
       this.device = adbDaemonWebUsbDevice; 
       this.webusb = adb; /*Adb*/
@@ -57,8 +68,7 @@ export class ADB extends Device {
       WDebug.log("Name", adbDaemonWebUsbDevice.name);
       WDebug.log(">Device (codename)", adb.transport.banner.device); // codemane
       WDebug.log("----------------------------------");
-
-
+    
       } catch (e) {
         this.device = null;
         throw new Error(`Cannot connect ADB ${e.message || e}`);
@@ -87,3 +97,4 @@ export class ADB extends Device {
     return res;
   }
 }
+

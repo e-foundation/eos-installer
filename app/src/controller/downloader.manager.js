@@ -20,7 +20,7 @@ export class Downloader {
     if (this.db) return; // Already initialized
 
     this.db = await this.openDBStore();
-    await this.clearDBStore();
+    //await this.clearDBStore();
     this.quota = await navigator.storage.estimate();
   }
 
@@ -32,6 +32,7 @@ export class Downloader {
     onDownloadProgress,
     onUnzipProgress,
   ) {
+    return;
     let current_file;
     try {
       for (let i = 0; i < folder.length; i++) {
@@ -111,9 +112,9 @@ export class Downloader {
    */
   async getFile(name) {
     const file = this.stored[name];
-    if (!file) {
+    /*if (!file) {
       throw new Error(`File ${name} was not previously downloaded`);
-    }
+    }*/
     return await this.getFromDBStore(name);
   }
 
