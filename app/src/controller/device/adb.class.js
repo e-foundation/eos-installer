@@ -6,7 +6,6 @@ import { Adb, AdbDaemonTransport } from "@yume-chan/adb";
 import AdbWebCredentialStore from "@yume-chan/adb-credential-web";
 
 export class ADB extends Device {
-
   static Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
 
   constructor(device) {
@@ -32,16 +31,18 @@ export class ADB extends Device {
   async connect() {
     try {
       console.log("debug adb connect");
-        
-      const adbDaemonWebUsbDevice = await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
+
+      const adbDaemonWebUsbDevice =
+        await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
       if (typeof adbDaemonWebUsbDevice == "undefined") {
         throw new Error("No device connected (1)");
       }
 
       let connection;
       try {
-        connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/  
-      } catch ( err ) {
+        connection =
+          await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
+      } catch (err) {
         const devices = await Manager.getDevices();
         if (!devices.length) {
           throw new Error("No device connected (2)");
@@ -53,13 +54,13 @@ export class ADB extends Device {
       const transport = await AdbDaemonTransport.authenticate({
         serial: connection.deserial,
         connection,
-        credentialStore: credentialStore
+        credentialStore: credentialStore,
       });
       const adb = new Adb(transport);
-      
+
       //const version = await adb.getProp("ro.build.version.release");
 
-      this.device = adbDaemonWebUsbDevice; 
+      this.device = adbDaemonWebUsbDevice;
       this.webusb = adb; /*Adb*/
 
       WDebug.log("----------------------------------");
@@ -68,11 +69,10 @@ export class ADB extends Device {
       WDebug.log("Name", adbDaemonWebUsbDevice.name);
       WDebug.log(">Device (codename)", adb.transport.banner.device); // codemane
       WDebug.log("----------------------------------");
-    
-      } catch (e) {
-        this.device = null;
-        throw new Error(`Cannot connect ADB ${e.message || e}`);
-      }
+    } catch (e) {
+      this.device = null;
+      throw new Error(`Cannot connect ADB ${e.message || e}`);
+    }
   }
 
   getProductName() {
@@ -84,7 +84,7 @@ export class ADB extends Device {
   }
 
   async getSerialNumber() {
-    return this.webusb.getProp("ro.boot.serialno"); 
+    return this.webusb.getProp("ro.boot.serialno");
   }
 
   async runCommand(cmd) {
@@ -97,4 +97,3 @@ export class ADB extends Device {
     return res;
   }
 }
-

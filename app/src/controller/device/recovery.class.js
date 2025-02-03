@@ -2,7 +2,7 @@ import { ADB } from "./adb.class.js";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 
-import { AdbSideload, MessageClass, MessageHeader } from "../adb-sideload.js"
+import { AdbSideload, MessageClass, MessageHeader } from "../adb-sideload.js";
 
 export class Recovery extends Device {
   constructor(device) {
@@ -32,13 +32,14 @@ export class Recovery extends Device {
       if (this.device && this.device.isConnected) {
         WDebug.log("Connect recovery the device is connected");
       } else {
-        const adbDaemonWebUsbDevice = await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
+        const adbDaemonWebUsbDevice =
+          await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
         const adbDevice = new AdbSideload(adbDaemonWebUsbDevice.raw, null);
         WDebug.log("adbDevice = ", adbDevice);
-        await adbDevice.connect();  
+        await adbDevice.connect();
 
-        this.device = adbDaemonWebUsbDevice; 
-        this.webusb = adbDevice; 
+        this.device = adbDaemonWebUsbDevice;
+        this.webusb = adbDevice;
       }
     } catch (e) {
       this.device = null;
@@ -81,7 +82,6 @@ export class Recovery extends Device {
 
     const localId = this.stream.localId;
     const remoteId = this.stream.remoteId;
-    
 
     let header = new MessageHeader("OKAY", localId, remoteId, 0, checksum);
     let receivedData, message;
