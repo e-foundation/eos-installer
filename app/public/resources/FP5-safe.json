@@ -112,7 +112,6 @@
         "flash shrm_a shrm.img --set-active=a",
         "erase userdata",
         "erase metadata",
-        "flashing lock"
       ]
     },
     {
