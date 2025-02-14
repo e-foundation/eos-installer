@@ -40,9 +40,11 @@ export class ADB extends Device {
 
       let connection;
       try {
-        connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
+        connection =
+          await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
       } catch (err) {
-        const devices = await Manager.getDevices();
+        console.error(err);
+        const devices = await ADB.Manager.getDevices();
         if (!devices.length) {
           throw new Error("No device connected (2)");
         }

@@ -1,8 +1,8 @@
-import { AdbCommand, calculateChecksum } from '@yume-chan/adb';
+import { AdbCommand, calculateChecksum } from "@yume-chan/adb";
 import { Consumable } from "@yume-chan/stream-extra";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
-import { ADB } from './adb.class.js';
+import { ADB } from "./adb.class.js";
 
 export class Recovery extends Device {
   constructor(device) {
@@ -31,8 +31,7 @@ export class Recovery extends Device {
     try {
       if (this.device && this.device.isConnected) {
         WDebug.log("Connect recovery the device is connected");
-      }
-      else {
+      } else {
         let adbDaemonWebUsbDevice = await ADB.Manager.requestDevice();
         if (typeof adbDaemonWebUsbDevice == "undefined") {
           throw new Error("No device connected (1)");
@@ -40,8 +39,8 @@ export class Recovery extends Device {
 
         try {
           this.connection = await adbDaemonWebUsbDevice.connect();
-        }
-        catch (err) {
+        } catch (err) {
+          console.error(err);
           const devices = await ADB.Manager.getDevices();
           if (!devices.length) {
             throw new Error("No device connected (2)");
@@ -59,26 +58,31 @@ export class Recovery extends Device {
         };
 
         // Need this code here to have a _inEndpointNumber & _outEndpointNumber defined
-        outerLoop:
-        for (const configuration of this.adbDaemonWebUsbDevice.configurations) {
+        outerLoop: for (const configuration of this.adbDaemonWebUsbDevice
+          .configurations) {
           for (const interface_ of configuration.interfaces) {
             for (const alternate of interface_.alternates) {
               if (
-                alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode &&
+                alternate.interfaceSubclass ===
+                  WebUsbDeviceFilter.subclassCode &&
                 alternate.interfaceClass === WebUsbDeviceFilter.classCode &&
                 alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode
               ) {
                 if (
-                  ((_a = this.adbDaemonWebUsbDevice.configuration) === null || _a === void 0
+                  ((_a = this.adbDaemonWebUsbDevice.configuration) === null ||
+                  _a === void 0
                     ? void 0
-                    : _a.configurationValue) !== configuration.configurationValue
+                    : _a.configurationValue) !==
+                  configuration.configurationValue
                 ) {
                   await this.adbDaemonWebUsbDevice.selectConfiguration(
                     configuration.configurationValue,
                   );
                 }
                 if (!interface_.claimed) {
-                  await this.adbDaemonWebUsbDevice.claimInterface(interface_.interfaceNumber);
+                  await this.adbDaemonWebUsbDevice.claimInterface(
+                    interface_.interfaceNumber,
+                  );
                 }
                 if (
                   interface_.alternate.alternateSetting !==
@@ -122,8 +126,7 @@ export class Recovery extends Device {
 
         if (r.value.command == AdbCommand.Connect) {
           //All is fine
-        }
-        else {
+        } else {
           throw new Error("Adb sideload connection error");
         }
       }
@@ -143,7 +146,7 @@ export class Recovery extends Device {
 
   async readOnDevice() {
     const reader = await this.connection?.readable?.getReader();
-    if(!reader) {
+    if (!reader) {
       throw new Error("readOnDevice() : Unable to read on device");
     }
     const r = await reader.read();
@@ -153,15 +156,12 @@ export class Recovery extends Device {
 
   async sendPacket(init) {
     const writer = this.connection?.writable?.getWriter();
-    if(!writer) {
+    if (!writer) {
       throw new Error("sendPacket() : Unable to write on device");
     }
     init.checksum = calculateChecksum(init.payload);
     init.magic = init.command ^ 0xffffffff;
-    await Consumable.WritableStream.write(
-        writer,
-        init,
-    );
+    await Consumable.WritableStream.write(writer, init);
     writer.releaseLock();
   }
 
@@ -179,8 +179,7 @@ export class Recovery extends Device {
     if (r.value.command == AdbCommand.Okay) {
       remoteId = r.value.arg0;
       return { localId: localId, remoteId: remoteId };
-    }
-    else {
+    } else {
       throw new Error("Adb sideload create stream error");
     }
   }
@@ -230,8 +229,7 @@ export class Recovery extends Device {
       message = {
         data: r.value.payload,
       };
-    }
-    else {
+    } else {
       throw new Error("Write OKAY Failed (init)");
     }
 
@@ -242,8 +240,7 @@ export class Recovery extends Device {
       if (isNaN(block) && res === "DONEDONE") {
         WDebug.log("DONEDONE");
         break;
-      }
-      else {
+      } else {
         if (block % 10 == 0) {
           WDebug.log("Sideloading " + block);
         }
@@ -283,13 +280,11 @@ export class Recovery extends Device {
           message = {
             data: r.value.payload,
           };
-        }
-        else {
+        } else {
           console.error("Error sideload (A)", r);
           throw new Error(`WRTE Failed ${block}`);
         }
-      }
-      else {
+      } else {
         console.error("Error sideload (B)", r);
         throw new Error("Write OKAY Failed (init)");
       }
