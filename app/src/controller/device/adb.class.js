@@ -59,8 +59,6 @@ export class ADB extends Device {
       });
       const adb = new Adb(transport);
 
-      //const version = await adb.getProp("ro.build.version.release");
-
       this.device = adbDaemonWebUsbDevice;
       this.webusb = adb; /*Adb*/
 
