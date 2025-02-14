@@ -32,7 +32,7 @@ export class ADB extends Device {
     try {
       console.log("debug adb connect");
 
-      const adbDaemonWebUsbDevice =
+      let adbDaemonWebUsbDevice =
         await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
       if (typeof adbDaemonWebUsbDevice == "undefined") {
         throw new Error("No device connected (1)");
@@ -40,8 +40,7 @@ export class ADB extends Device {
 
       let connection;
       try {
-        connection =
-          await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
+        connection = await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
       } catch (err) {
         const devices = await Manager.getDevices();
         if (!devices.length) {
@@ -70,6 +69,7 @@ export class ADB extends Device {
       WDebug.log(">Device (codename)", adb.transport.banner.device); // codemane
       WDebug.log("----------------------------------");
     } catch (e) {
+      console.error(e);
       this.device = null;
       throw new Error(`Cannot connect ADB ${e.message || e}`);
     }
