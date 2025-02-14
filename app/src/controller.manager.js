@@ -382,11 +382,12 @@ export class Controller {
         current_security_path_level != null &&
         typeof resources.security_patch_level != "undefined"
       ) {
-        WDebug.log("EOS Rom has security patch ");
+        WDebug.log(`EOS Rom has security patch ${current_security_path_level}`);
         const new_security_path_level = parseInt(
           resources.security_patch_level.replace(/-/g, ""),
           10,
         );
+        WDebug.log(`New security patch ${new_security_path_level}`);
         if (current_security_path_level > new_security_path_level) {
           WDebug.log(
             "Bypass lock procedure",
