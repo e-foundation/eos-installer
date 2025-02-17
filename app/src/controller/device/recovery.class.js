@@ -50,69 +50,14 @@ export class Recovery extends Device {
 
         this.adbDaemonWebUsbDevice = adbDaemonWebUsbDevice.raw;
 
-        var _a;
+        // Filter to identify Android device in adb mode.
         const WebUsbDeviceFilter = {
           classCode: 0xff,
           subclassCode: 0x42,
           protocolCode: 1,
         };
 
-        // Need this code here to have a _inEndpointNumber & _outEndpointNumber defined
-        outerLoop: for (const configuration of this.adbDaemonWebUsbDevice
-          .configurations) {
-          for (const interface_ of configuration.interfaces) {
-            for (const alternate of interface_.alternates) {
-              if (
-                alternate.interfaceSubclass ===
-                  WebUsbDeviceFilter.subclassCode &&
-                alternate.interfaceClass === WebUsbDeviceFilter.classCode &&
-                alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode
-              ) {
-                if (
-                  ((_a = this.adbDaemonWebUsbDevice.configuration) === null ||
-                  _a === void 0
-                    ? void 0
-                    : _a.configurationValue) !==
-                  configuration.configurationValue
-                ) {
-                  await this.adbDaemonWebUsbDevice.selectConfiguration(
-                    configuration.configurationValue,
-                  );
-                }
-                if (!interface_.claimed) {
-                  await this.adbDaemonWebUsbDevice.claimInterface(
-                    interface_.interfaceNumber,
-                  );
-                }
-                if (
-                  interface_.alternate.alternateSetting !==
-                  alternate.alternateSetting
-                ) {
-                  await this.adbDaemonWebUsbDevice.selectAlternateInterface(
-                    interface_.interfaceNumber,
-                    alternate.alternateSetting,
-                  );
-                }
-                for (const endpoint of alternate.endpoints) {
-                  switch (endpoint.direction) {
-                    case "in":
-                      this._inEndpointNumber = endpoint.endpointNumber;
-                      if (this._outEndpointNumber !== undefined) {
-                        break outerLoop;
-                      }
-                      break;
-                    case "out":
-                      this._outEndpointNumber = endpoint.endpointNumber;
-                      if (this._inEndpointNumber !== undefined) {
-                        break outerLoop;
-                      }
-                      break;
-                  }
-                }
-              }
-            }
-          }
-        }
+        await this.getInOutEndpoints(WebUsbDeviceFilter);
 
         const version = 0x01000001;
         const maxPayloadSize = 0x100000;
@@ -133,6 +78,75 @@ export class Recovery extends Device {
     } catch (e) {
       this.device = null;
       throw new Error(`Cannot connect Recovery ${e.message || e}`);
+    }
+  }
+
+  /**
+   * Finds and selects the input and output endpoints of a USB device matching a given filter.
+   *
+   * @async
+   * @param {Object} WebUsbDeviceFilter - Filter defining the criteria for selecting USB interfaces.
+   * @returns void.
+   *
+   * @description
+   * This function iterates through the configurations of the attached USB device (`adbDaemonWebUsbDevice`)
+   * to identify an interface that matches the `WebUsbDeviceFilter` criteria and exits
+   * as soon as both endpoints are found (in & out).
+   */
+  async getInOutEndpoints(WebUsbDeviceFilter) {
+    let _a;
+    outerLoop: for (const configuration of this.adbDaemonWebUsbDevice
+      .configurations) {
+      for (const interface_ of configuration.interfaces) {
+        for (const alternate of interface_.alternates) {
+          if (
+            alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode &&
+            alternate.interfaceClass === WebUsbDeviceFilter.classCode &&
+            alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode
+          ) {
+            if (
+              ((_a = this.adbDaemonWebUsbDevice.configuration) === null ||
+              _a === void 0
+                ? void 0
+                : _a.configurationValue) !== configuration.configurationValue
+            ) {
+              await this.adbDaemonWebUsbDevice.selectConfiguration(
+                configuration.configurationValue,
+              );
+            }
+            if (!interface_.claimed) {
+              await this.adbDaemonWebUsbDevice.claimInterface(
+                interface_.interfaceNumber,
+              );
+            }
+            if (
+              interface_.alternate.alternateSetting !==
+              alternate.alternateSetting
+            ) {
+              await this.adbDaemonWebUsbDevice.selectAlternateInterface(
+                interface_.interfaceNumber,
+                alternate.alternateSetting,
+              );
+            }
+            for (const endpoint of alternate.endpoints) {
+              switch (endpoint.direction) {
+                case "in":
+                  this._inEndpointNumber = endpoint.endpointNumber;
+                  if (this._outEndpointNumber !== undefined) {
+                    break outerLoop;
+                  }
+                  break;
+                case "out":
+                  this._outEndpointNumber = endpoint.endpointNumber;
+                  if (this._inEndpointNumber !== undefined) {
+                    break outerLoop;
+                  }
+                  break;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
