@@ -74,7 +74,7 @@ export class Recovery extends Device {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
-    const MAX_PAYLOAD = 0x40000;
+    const MAX_PAYLOAD = 0x10000;
     const fileSize = blob.size;
     const service = `sideload-host:${fileSize}:${MAX_PAYLOAD}`; //sideload-host:1381604186:262144
 
