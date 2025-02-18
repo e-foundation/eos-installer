@@ -314,10 +314,9 @@ export class Controller {
         WDebug.log("Security patch Error");
         current_security_path_level = null;
       }
-
-      let this_model = this.deviceManager.adb.webusb.device;
+      let this_model = this.deviceManager.adb.webusb.transport.banner.device;
       //    https://gitlab.e.foundation/e/os/backlog/-/issues/2604#note_609234
-      const model = this.deviceManager.adb.webusb.model;
+      const model = this.deviceManager.adb.webusb.transport.banner.model;
       if (model.includes("Teracube") && model.includes("2e")) {
         try {
           const serial = await this.deviceManager.adb.getSerialNumber();
@@ -329,31 +328,31 @@ export class Controller {
           } else {
             const id =
               "model " +
-              this.deviceManager.adb.webusb.model +
+              this.deviceManager.adb.webusb.transport.banner.model +
               " " +
               "product " +
-              this.deviceManager.adb.webusb.product +
+              this.deviceManager.adb.webusb.transport.banner.product +
               " " +
               "name " +
-              this.deviceManager.adb.webusb.name +
+              this.deviceManager.adb.device.name +
               " " +
               "device " +
-              this.deviceManager.adb.webusb.device;
+              this.deviceManager.adb.webusb.transport.banner.device;
             throw new Error("Cannot find device resource", id);
           }
         } catch {
           const id =
             "model " +
-            this.deviceManager.adb.webusb.model +
+            this.deviceManager.adb.webusb.transport.banner.model +
             " " +
             "product " +
-            this.deviceManager.adb.webusb.product +
+            this.deviceManager.adb.webusb.transport.banner.product +
             " " +
             "name " +
-            this.deviceManager.adb.webusb.name +
+            this.deviceManager.adb.device.name +
             " " +
             "device " +
-            this.deviceManager.adb.webusb.device;
+            this.deviceManager.adb.webusb.transport.banner.device;
           throw new Error("Error on getting device resource", id);
         }
       }
@@ -364,16 +363,16 @@ export class Controller {
         } catch {
           const id =
             "model " +
-            this.deviceManager.adb.webusb.model +
+            this.deviceManager.adb.webusb.transport.banner.model +
             " " +
             "product " +
-            this.deviceManager.adb.webusb.product +
+            this.deviceManager.adb.webusb.transport.banner.product +
             " " +
             "name " +
-            this.deviceManager.adb.webusb.name +
+            this.deviceManager.adb.device.name +
             " " +
             "device " +
-            this.deviceManager.adb.webusb.device;
+            this.deviceManager.adb.webusb.transport.banner.device;
           throw new Error("Error on getting devcice resource", id);
         }
       }
