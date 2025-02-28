@@ -62,7 +62,12 @@ export class Recovery extends Device {
 
         const version = 0x01000001;
         const maxPayloadSize = 0x100000;
-        await this.sendPacket(AdbCommand.Connect, version, maxPayloadSize, "host::\0");
+        await this.sendPacket(
+          AdbCommand.Connect,
+          version,
+          maxPayloadSize,
+          "host::\0",
+        );
         const r = await this.readOnDevice();
 
         if (r.value.command == AdbCommand.Connect) {
@@ -261,11 +266,21 @@ export class Recovery extends Device {
       let slice = blob.slice(offset, offset + to_write);
       let buff = await slice.arrayBuffer();
 
-      await this.sendPacket(AdbCommand.Write, localId, remoteId, new Uint8Array(buff));
+      await this.sendPacket(
+        AdbCommand.Write,
+        localId,
+        remoteId,
+        new Uint8Array(buff),
+      );
       const r = await this.readOnDevice();
 
       if (r.value.command == AdbCommand.Okay) {
-        await this.sendPacket(AdbCommand.Okay, localId, remoteId, EmptyUint8Array);
+        await this.sendPacket(
+          AdbCommand.Okay,
+          localId,
+          remoteId,
+          EmptyUint8Array,
+        );
         const r = await this.readOnDevice();
 
         if (r.value.command == AdbCommand.Write) {
