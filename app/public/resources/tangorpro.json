@@ -68,7 +68,7 @@
   "folder": [
     {
       "name": "pixel-tablet-recovery.img",
-      "path": "https://images.ecloud.global/official/tangorpro/recovery-IMG-e-latest-u-official-tangorpro.zip",
+      "path": "https://images.ecloud.global/official/tangorpro/recovery-IMG-e-latest-a14-official-tangorpro.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -79,7 +79,7 @@
     },
     {
       "name": "pixel-tablet-rom.zip",
-      "path": "https://images.ecloud.global/official/tangorpro/e-latest-u-official-tangorpro.zip"
+      "path": "https://images.ecloud.global/official/tangorpro/e-latest-a14-official-tangorpro.zip"
     },
     {
       "name": "pkmd_pixel.bin",
