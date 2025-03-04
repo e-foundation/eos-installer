@@ -1,5 +1,6 @@
 import { AdbCommand, calculateChecksum } from "@yume-chan/adb";
 import { Consumable } from "@yume-chan/stream-extra";
+import { EmptyUint8Array, decodeUtf8, encodeUtf8 } from "@yume-chan/struct";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 import { ADB } from "./adb.class.js";
@@ -61,12 +62,12 @@ export class Recovery extends Device {
 
         const version = 0x01000001;
         const maxPayloadSize = 0x100000;
-        await this.sendPacket({
-          command: AdbCommand.Connect,
-          arg0: version,
-          arg1: maxPayloadSize,
-          payload: this.encodeUtf8("host::\0"),
-        });
+        await this.sendPacket(
+          AdbCommand.Connect,
+          version,
+          maxPayloadSize,
+          "host::\0",
+        );
         const r = await this.readOnDevice();
 
         if (r.value.command == AdbCommand.Connect) {
@@ -150,14 +151,6 @@ export class Recovery extends Device {
     }
   }
 
-  encodeUtf8(input) {
-    return new TextEncoder().encode(input);
-  }
-
-  decodeUtf8(buffer) {
-    return new TextDecoder().decode(buffer);
-  }
-
   async readOnDevice() {
     const reader = await this.connection?.readable?.getReader();
     if (!reader) {
@@ -168,14 +161,26 @@ export class Recovery extends Device {
     return r;
   }
 
-  async sendPacket(init) {
+  async sendPacket(command, arg0, arg1, payload) {
     const writer = this.connection?.writable?.getWriter();
     if (!writer) {
       throw new Error("sendPacket() : Unable to write on device");
     }
-    init.checksum = calculateChecksum(init.payload);
-    init.magic = init.command ^ 0xffffffff;
-    await Consumable.WritableStream.write(writer, init);
+
+    if (typeof payload === "string") {
+      payload = encodeUtf8(payload);
+    }
+
+    const checksum = payload ? calculateChecksum(payload) : 0;
+    const magic = command ^ 0xffffffff;
+    await Consumable.WritableStream.write(writer, {
+      command: command,
+      arg0: arg0,
+      arg1: arg1,
+      payload: payload,
+      checksum: checksum,
+      magic: magic,
+    });
     writer.releaseLock();
   }
 
@@ -183,12 +188,7 @@ export class Recovery extends Device {
     const localId = 1; // Assume one device is connected
     service += "\0";
     let remoteId;
-    await this.sendPacket({
-      command: AdbCommand.Open,
-      arg0: localId,
-      arg1: 0,
-      payload: this.encodeUtf8(service),
-    });
+    await this.sendPacket(AdbCommand.Open, localId, 0, service);
     const r = await this.readOnDevice();
     if (r.value.command == AdbCommand.Okay) {
       remoteId = r.value.arg0;
@@ -219,8 +219,6 @@ export class Recovery extends Device {
   }
 
   async adbOpen(blob) {
-    const decoder = new TextDecoder();
-
     const MAX_PAYLOAD = 0x10000;
     const fileSize = blob.size;
     const service = `sideload-host:${fileSize}:${MAX_PAYLOAD}`; //sideload-host:1381604186:262144
@@ -231,12 +229,7 @@ export class Recovery extends Device {
     const remoteId = this.stream.remoteId;
 
     let message;
-    await this.sendPacket({
-      command: AdbCommand.Okay,
-      arg0: localId,
-      arg1: remoteId,
-      payload: this.encodeUtf8(service),
-    });
+    await this.sendPacket(AdbCommand.Okay, localId, remoteId, EmptyUint8Array);
     const r = await this.readOnDevice();
 
     if (r.value.command == AdbCommand.Write) {
@@ -248,7 +241,7 @@ export class Recovery extends Device {
     }
 
     while (true) {
-      const res = decoder.decode(message.data);
+      const res = decodeUtf8(message.data);
       const block = Number(res);
 
       if (isNaN(block) && res === "DONEDONE") {
@@ -273,21 +266,21 @@ export class Recovery extends Device {
       let slice = blob.slice(offset, offset + to_write);
       let buff = await slice.arrayBuffer();
 
-      await this.sendPacket({
-        command: AdbCommand.Write,
-        arg0: localId,
-        arg1: remoteId,
-        payload: new Uint8Array(buff),
-      });
+      await this.sendPacket(
+        AdbCommand.Write,
+        localId,
+        remoteId,
+        new Uint8Array(buff),
+      );
       const r = await this.readOnDevice();
 
       if (r.value.command == AdbCommand.Okay) {
-        await this.sendPacket({
-          command: AdbCommand.Okay,
-          arg0: localId,
-          arg1: remoteId,
-          payload: this.encodeUtf8(service),
-        });
+        await this.sendPacket(
+          AdbCommand.Okay,
+          localId,
+          remoteId,
+          EmptyUint8Array,
+        );
         const r = await this.readOnDevice();
 
         if (r.value.command == AdbCommand.Write) {

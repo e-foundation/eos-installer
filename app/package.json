@@ -24,6 +24,7 @@
     "@yume-chan/adb-daemon-webusb": "1.1.0",
     "@yume-chan/adb-credential-web": "1.1.0",
     "@yume-chan/stream-extra": "1.0.0",
+    "@yume-chan/struct": "1.0.0",
     "@zip.js/zip.js": "^2.7.54",
     "ky": "^1.7.4"
   }
