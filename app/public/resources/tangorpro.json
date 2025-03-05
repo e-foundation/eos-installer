@@ -37,7 +37,7 @@
     },
     {
       "id": "sideload",
-      "command": "sideload pixel-8-rom.zip"
+      "command": "sideload pixel-tablet-rom.zip"
     },
     {
       "id": "sideload-ended",
@@ -67,8 +67,8 @@
   ],
   "folder": [
     {
-      "name": "pixel-8-recovery.img",
-      "path": "https://images.ecloud.global/official/shiba/recovery-IMG-e-latest-a14-official-shiba.zip",
+      "name": "pixel-tablet-recovery.img",
+      "path": "https://images.ecloud.global/official/tangorpro/recovery-IMG-e-latest-a14-official-tangorpro.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -78,8 +78,8 @@
       }
     },
     {
-      "name": "pixel-8-rom.zip",
-      "path": "https://images.ecloud.global/official/shiba/e-latest-a14-official-shiba.zip"
+      "name": "pixel-tablet-rom.zip",
+      "path": "https://images.ecloud.global/official/tangorpro/e-latest-a14-official-tangorpro.zip"
     },
     {
       "name": "pkmd_pixel.bin",
