@@ -75,7 +75,7 @@
   "murena-workspace-account-instructions": "Mantén tus datos seguros y sincroniza este dispositivo con tu cuenta personal de Murena Workspace. 1GB gratuito y planes de pago disponibles para más almacenamiento.",
   "navigator-detection": "Detección de navegador",
   "navigator-not-supported": "Tu navegador no es compatible.",
-  "navigator-not-supported-instructions": "Puedes usar los siguientes navegadores:",
+  "navigator-not-supported-instructions": "Se requiere soporte para WebUSB, puede usar los siguientes navegadores:",
   "next": "Siguiente",
   "ready-to-install-e-os": "Ahora estás listo para instalar /e/OS.",
   "recovery-to-bootloader": "Recovery a Bootloader",

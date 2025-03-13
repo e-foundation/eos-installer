@@ -75,7 +75,7 @@
   "murena-workspace-account-instructions": "Håll dina data säkra och synkronisera denna enhet med ditt personliga Murena Workspace-konto. 1 GB gratis och betalda planer tillgängliga för mer lagringsutrymme.",
   "navigator-detection": "Webbläsardetektering",
   "navigator-not-supported": "Din webbläsare stöds inte.",
-  "navigator-not-supported-instructions": "Du kan använda följande webbläsare:",
+  "navigator-not-supported-instructions": "WebUSB-stöd krävs, du kan använda följande webbläsare:",
   "next": "Nästa",
   "ready-to-install-e-os": "Du är nu redo att installera /e/OS.",
   "recovery-to-bootloader": "Återställning till bootloader",

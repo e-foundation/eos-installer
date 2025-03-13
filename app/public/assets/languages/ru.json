@@ -75,7 +75,7 @@
   "murena-workspace-account-instructions": "Обеспечьте безопасность данных и синхронизируйте это устройство с вашей персональной учетной записью Murena Workspace. Бесплатный 1 ГБ и платные тарифы для дополнительного места доступны.",
   "navigator-detection": "Обнаружение браузера",
   "navigator-not-supported": "Ваш браузер не поддерживается.",
-  "navigator-not-supported-instructions": "Вы можете использовать следующие браузеры:",
+  "navigator-not-supported-instructions": "Требуется поддержка WebUSB, вы можете использовать следующие браузеры:",
   "next": "Далее",
   "ready-to-install-e-os": "Теперь вы готовы установить /e/OS.",
   "recovery-to-bootloader": "Режим восстановления в загрузчик",

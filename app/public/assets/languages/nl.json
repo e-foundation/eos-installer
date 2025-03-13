@@ -75,7 +75,7 @@
   "murena-workspace-account-instructions": "Houd uw gegevens veilig en synchroniseer dit apparaat met uw persoonlijke Murena Workspace-account. 1 GB gratis en betaalde plannen beschikbaar voor meer opslagruimte.",
   "navigator-detection": "Browserdetectie",
   "navigator-not-supported": "Uw browser wordt niet ondersteund.",
-  "navigator-not-supported-instructions": "U kunt de volgende browsers gebruiken:",
+  "navigator-not-supported-instructions": "WebUSB-ondersteuning is vereist, u kunt de volgende browsers gebruiken:",
   "next": "Volgende",
   "ready-to-install-e-os": "U bent nu klaar om /e/OS te installeren.",
   "recovery-to-bootloader": "Herstelmodus naar bootloader",
