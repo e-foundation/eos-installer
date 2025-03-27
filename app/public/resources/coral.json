@@ -1,5 +1,5 @@
 {
-  "android": 14,
+  "android": 13,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -54,7 +54,7 @@
   "folder": [
     {
       "name": "pixel4-xl-recovery.img",
-      "path": "https://images.ecloud.global/community/coral/recovery-IMG-e-latest-t-community-coral.zip",
+      "path": "https://images.ecloud.global/community/coral/recovery-IMG-e-latest-a14-community-coral.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -63,7 +63,7 @@
     },
     {
       "name": "pixel4-xl-rom.zip",
-      "path": "https://images.ecloud.global/community/coral/e-latest-t-community-coral.zip"
+      "path": "https://images.ecloud.global/community/coral/e-latest-a14-community-coral.zip"
     }
   ]
 }

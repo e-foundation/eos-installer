@@ -76,7 +76,7 @@
   "folder": [
     {
       "name": "One+ 8 pro recovery installer",
-      "path": "https://images.ecloud.global/community/instantnoodlep/recovery-IMG-e-latest-t-community-instantnoodlep.zip",
+      "path": "https://images.ecloud.global/community/instantnoodlep/recovery-IMG-e-latest-a14-community-instantnoodlep.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -86,7 +86,7 @@
     },
     {
       "name": "oneplus-8-pro-rom.zip",
-      "path": "https://images.ecloud.global/community/instantnoodlep/e-latest-t-community-instantnoodlep.zip"
+      "path": "https://images.ecloud.global/community/instantnoodlep/e-latest-a14-community-instantnoodlep.zip"
     }
   ]
 }

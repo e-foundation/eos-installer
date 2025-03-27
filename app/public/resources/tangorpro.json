@@ -1,5 +1,5 @@
 {
-  "android": 14,
+  "android": 13,
   "steps": [
     {
       "command": ["reboot bootloader", "delay 5"]
