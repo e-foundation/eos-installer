@@ -1,5 +1,5 @@
 {
-  "android": 14,
+  "android": 12,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -76,7 +76,7 @@
   "folder": [
     {
       "name": "One+ 7 Pro recovery installer",
-      "path": "https://images.ecloud.global/community/guacamole/recovery-IMG-e-latest-t-community-guacamole.zip",
+      "path": "https://images.ecloud.global/community/guacamole/recovery-IMG-e-latest-a14-community-guacamole.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -86,7 +86,7 @@
     },
     {
       "name": "oneplus-7pro-rom.zip",
-      "path": "https://images.ecloud.global/community/guacamole/e-latest-t-community-guacamole.zip"
+      "path": "https://images.ecloud.global/community/guacamole/e-latest-a14-community-guacamole.zip"
     }
   ]
 }

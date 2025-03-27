@@ -1,5 +1,5 @@
 {
-  "android": 14,
+  "android": 13,
   "steps": [
     {
       "command": "reboot bootloader"
@@ -76,7 +76,7 @@
   "folder": [
     {
       "name": "One+ 8 recovery installer",
-      "path": "https://images.ecloud.global/community/instantnoodle/recovery-IMG-e-latest-t-community-instantnoodle.zip",
+      "path": "https://images.ecloud.global/community/instantnoodle/recovery-IMG-e-latest-a14-community-instantnoodle.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -86,7 +86,7 @@
     },
     {
       "name": "oneplus-8-rom.zip",
-      "path": "https://images.ecloud.global/community/instantnoodle/e-latest-t-community-instantnoodle.zip"
+      "path": "https://images.ecloud.global/community/instantnoodle/e-latest-a14-community-instantnoodle.zip"
     }
   ]
 }
