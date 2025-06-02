@@ -1,0 +1,54 @@
+{
+  "description": "Teracube 2s (2025 sapphire)",
+  "steps": [
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
+      "command": [
+        "erase userdata",
+        "format md_udc",
+        "flash boot_a boot.img",
+        "flash dtbo_a dtbo.img",
+        "flash vbmeta_a vbmeta.img",
+        "flash vbmeta_system_a vbmeta_system.img",
+        "flash vbmeta_vendor_a vbmeta_vendor.img",
+        "flash super super.img",
+        "flash lk lk.img",
+        "flash logo logo.bin",
+        "flash preloader_a preloader_sapphire.bin",
+        "flash tee_a tee.img",
+        "flash gz_a gz.img",
+        "flash sspm_a sspm.img",
+        "flash scp_a scp.img",
+        "flash spmfw_a spmfw.img",
+        "flash md1img_a md1img.img --set-active=a",
+        "flashing lock unlocked"
+      ]
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "reboot"],
+      "needUserGesture": true
+    },
+    {
+      "id": "murena-workspace-account",
+      "needUserGesture": true
+    },
+    {
+      "id": "installation-complete"
+    }
+  ],
+  "folder": [
+    {
+      "path": "https://images.ecloud.global/official/sapphire/IMG-e-latest-a14-official-sapphire.zip",
+      "name": "Teracube 2s (2025 sapphire) installer",
+      "unzip": true
+    }
+  ]
+}
