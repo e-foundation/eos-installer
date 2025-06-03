@@ -127,7 +127,7 @@
     {
       "name": "fp5 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/FP5/IMG-e-latest-t-official-FP5.zip"
+      "path": "https://images.ecloud.global/official/FP5/IMG-e-latest-a14-official-FP5.zip"
     }
   ]
 }
