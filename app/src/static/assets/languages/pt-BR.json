@@ -13,5 +13,9 @@
     "device-detection-detected": "Um dispositivo foi detectado.",
     "device-detection": "Detecção de dispositivos",
     "next": "Próximo",
-    "skip": "Pular"
+    "skip": "Pular",
+    "let-s-get-started-instruction-title-3": "3. Carregue seu celular",
+    "let-s-get-started-instruction-title-1": "1. Libere algum tempo",
+    "let-s-get-started-instruction-title-2": "2. Libere algum espaço no disco rígido",
+    "let-s-get-started-instruction-title-4": "4. Faça backup dos seus dados"
 }
