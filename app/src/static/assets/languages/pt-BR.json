@@ -17,5 +17,9 @@
     "let-s-get-started-instruction-title-3": "3. Carregue seu celular",
     "let-s-get-started-instruction-title-1": "1. Libere algum tempo",
     "let-s-get-started-instruction-title-2": "2. Libere algum espaço no disco rígido",
-    "let-s-get-started-instruction-title-4": "4. Faça backup dos seus dados"
+    "let-s-get-started-instruction-title-4": "4. Faça backup dos seus dados",
+    "installing": "Instalando",
+    "go-to-apply-update": "Quase chegando!",
+    "enable-usb-file-transfer": "Ativar a transferência de arquivos via USB",
+    "let-s-get-started-instruction-title-5": "5. Pegue um cabo de dados USB"
 }
