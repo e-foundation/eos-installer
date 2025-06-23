@@ -5,5 +5,7 @@
     "android-version-not-supported": "Versão do Android desatualizada",
     "android-version-not-supported-title": "Sua versão <code>{{android-version}}</code> do Android não é suportada",
     "bootloader-to-recovery-manually-instructions": "Agora, reiniciaremos seu dispositivo no modo de Recuperação. Siga as etapas abaixo:",
-    "connect": "Conectar"
+    "connect": "Conectar",
+    "device-model-not-supported-instructions": "não é possível instalar o /e/OS usando esta ferramenta",
+    "device-model-not-supported-title": "Seu celular {{product-name}} não e compatível"
 }
