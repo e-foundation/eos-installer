@@ -7,5 +7,11 @@
     "bootloader-to-recovery-manually-instructions": "Agora, reiniciaremos seu dispositivo no modo de Recuperação. Siga as etapas abaixo:",
     "connect": "Conectar",
     "device-model-not-supported-instructions": "não é possível instalar o /e/OS usando esta ferramenta",
-    "device-model-not-supported-title": "Seu celular {{product-name}} não e compatível"
+    "device-model-not-supported-title": "Seu celular {{product-name}} não e compatível",
+    "sideload": "Instalação em andamento",
+    "device-model-not-supported": "Modelo de dispositivo não suportado",
+    "device-detection-detected": "Um dispositivo foi detectado.",
+    "device-detection": "Detecção de dispositivos",
+    "next": "Próximo",
+    "skip": "Pular"
 }
