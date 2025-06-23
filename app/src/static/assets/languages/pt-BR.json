@@ -3,5 +3,7 @@
     "activate-developer-options": "Ativar Opções de Desenvolvedor",
     "activate-usb-debugging": "Ativar a Depuração USB",
     "android-version-not-supported": "Versão do Android desatualizada",
-    "android-version-not-supported-title": "Sua versão <code>{{android-version}}</code> do Android não é suportada"
+    "android-version-not-supported-title": "Sua versão <code>{{android-version}}</code> do Android não é suportada",
+    "bootloader-to-recovery-manually-instructions": "Agora, reiniciaremos seu dispositivo no modo de Recuperação. Siga as etapas abaixo:",
+    "connect": "Conectar"
 }
