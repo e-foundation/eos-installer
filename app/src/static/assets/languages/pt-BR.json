@@ -21,5 +21,13 @@
     "installing": "Instalando",
     "go-to-apply-update": "Quase chegando!",
     "enable-usb-file-transfer": "Ativar a transferência de arquivos via USB",
-    "let-s-get-started-instruction-title-5": "5. Pegue um cabo de dados USB"
+    "let-s-get-started-instruction-title-5": "5. Pegue um cabo de dados USB",
+    "bootloader-to-recovery-manually-instructions-3": "3. Aguarde até que o telefone inicie em modo de recuperação",
+    "check-update-android-version": "Verifique & atualize sua versão do Android",
+    "check-update-android-version-caution": "<b>Cuidado</b>: antes de prosseguir com a instalação, verifique se o firmware mais recente do Android está disponível para seu dispositivo.",
+    "connect-bootloader-instructions-1": "Seu telefone será iniciado no modo <code>bootloader</code>",
+    "connect-your-phone": "Conecte seu telefone",
+    "connect-your-phone-instructions": "Conecte o telefone ao computador com um cabo USB. Detectaremos automaticamente seu telefone para instalar o /e/OS.",
+    "device-detection-instructions-1": "Agora vamos conectar seu telefone ao navegador. Quando esta janela pop-up for exibida, selecione seu telefone na lista.",
+    "device-detection-instructions-3": "Clique no botão abaixo para iniciar a conexão"
 }
