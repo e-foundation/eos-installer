@@ -27,7 +27,7 @@
     "check-update-android-version-caution": "<b>Cuidado</b>: antes de prosseguir com a instalação, verifique se o firmware mais recente do Android está disponível para seu dispositivo.",
     "connect-bootloader-instructions-1": "Seu telefone será iniciado no modo <code>bootloader</code>",
     "connect-your-phone": "Conecte seu telefone",
-    "connect-your-phone-instructions": "Conecte o telefone ao computador com um cabo USB. Detectaremos automaticamente seu telefone para instalar o /e/OS.",
+    "connect-your-phone-instructions": "Conecte seu telefone ao computador com um cabo USB. Detectaremos automaticamente seu telefone para instalar o /e/OS.",
     "device-detection-instructions-1": "Agora vamos conectar seu telefone ao navegador. Quando esta janela pop-up for exibida, selecione seu telefone na lista.",
     "device-detection-instructions-3": "Clique no botão abaixo para iniciar a conexão",
     "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Ex 1:</b> antes de instalar o /e/OS Android 12, você deve atualizar para o Android 12 padrão mais recente",
@@ -69,5 +69,14 @@
     "very-dissatisfied": "Muito Insatisfeito",
     "let-s-get-started-instruction-4": "Todos os dados serão apagados de seu smartphone durante a instalação,\nportanto, recomendamos que você faça backup de seus dados.",
     "installation-complete-instructions-2": "<b>Dica</b>: siga as instruções em seu telefone para configurar seu dispositivo. Agora você pode adicionar seus arquivos de volta ao telefone.",
-    "murena-cloud-account-instructions": "Mantenha seus dados seguros e sincronize este dispositivo com sua conta pessoal da Murena Cloud. 1 GB gratuito e planos pagos disponíveis para mais armazenamento."
+    "murena-cloud-account-instructions": "Mantenha seus dados seguros e sincronize este dispositivo com sua conta pessoal da Murena Cloud. 1 GB gratuito e planos pagos disponíveis para mais armazenamento.",
+    "activate-developer-options-instructions-1": "1. Abra o menu de configurações e digite ‘número da versão’ na barra de pesquisa.",
+    "activate-developer-options-instructions-2": "2. Na tela seguinte, localize ‘Número da versão’ e toque 7 vezes nele.",
+    "activate-usb-debugging-instructions-1": "1. Volte ao menu de configurações e digite ‘Depuração USB’ na barra de pesquisa.",
+    "activate-usb-debugging-instructions-2": "2. Nesse ponto, você deverá estar na tela ‘Opções do desenvolvedor’. Agora, toque em ‘Depuração USB’ para ativá-la (em alguns dispositivos, ela é chamada de ‘Depuração do Android’).",
+    "connect-your-phone-instructions-notes": "<b>Observação</b>: A ‘Depuração USB’ é necessária para que a detecção automática de dispositivos funcione. Se você ainda não a ativou, nós ajudaremos você nas próximas etapas.",
+    "enable-usb-file-transfer-instructions-1": "Ainda dentro das ‘Opções do desenvolvedor’, role para baixo até encontrar ‘Configuração USB padrão’ e toque nela.",
+    "enable-usb-file-transfer-instructions-2": "Agora, selecione a opção ‘Transferência de arquivo’ (em alguns dispositivos, ela é chamada de ‘Modo MTP (media transfer protocol)’).",
+    "navigator-detection": "Detecção de navegador",
+    "unlocking-instructions-3": "Como o dispositivo é <b>totalmente redefinido</b>, você precisará <b>reativar a depuração USB</b>."
 }
