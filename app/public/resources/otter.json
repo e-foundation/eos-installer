@@ -161,7 +161,7 @@
     {
       "name": "otter installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/otter/IMG-e-3.0.1-a14-20250607498722-official-otter.zip"
+      "path": "https://images.ecloud.global/official/otter/IMG-e-latest-a14-official-otter.zip"
     }
   ]
 }
