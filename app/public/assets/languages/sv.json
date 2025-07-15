@@ -71,6 +71,7 @@
   "locking-instructions-2": "Enheten startar om automatiskt.",
   "locking-instructions-4": "Tryck på startknappen på telefonen.",
   "locking-instructions-1-teracube": "Telefonen ber om att låsa bootloader. Välj <code>lock bootloader</code> med hjälp av <kbd>Volume Up</kbd>-knappen.",
+  "locking-instructions-1-mimir": "Telefonen ber om att låsa bootloader. Välj <code>Lock bootloader</code> med hjälp av <kbd>Volume Down</kbd>-knappen.",
   "murena-workspace-account": "Murena Workspace-konto",
   "murena-workspace-account-instructions": "Håll dina data säkra och synkronisera denna enhet med ditt personliga Murena Workspace-konto. 1 GB gratis och betalda planer tillgängliga för mer lagringsutrymme.",
   "navigator-detection": "Webbläsardetektering",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Vänta tills bootloader-skärmen är synlig igen</b> innan du går till nästa steg.",
   "unlocking-instructions-3": "Eftersom enheten <b>återställs helt</b>, måste du <b>aktivera USB-felsökning igen</b>.",
   "unlocking-instructions-4": "Hoppa över konfigurationen på telefonen.",
-  "unlocking-instructions-1-teracube": "Telefonen ber om att låsa upp bootloader. Välj <code>unlock bootloader</code> med hjälp av <kbd>Volume Up</kbd>-knappen."
+  "unlocking-instructions-1-teracube": "Telefonen ber om att låsa upp bootloader. Välj <code>unlock bootloader</code> med hjälp av <kbd>Volume Up</kbd>-knappen.",
+  "unlocking-instructions-1-mimir": "Telefonen ber om att låsa upp bootloader. Välj <code>unlock bootloader</code> med hjälp av <kbd>Volume Down</kbd>-knappen."
 }

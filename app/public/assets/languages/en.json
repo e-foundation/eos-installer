@@ -71,6 +71,7 @@
   "locking-instructions-2": "The device will automatically reboot.",
   "locking-instructions-4": "On the phone, press the start button.",
   "locking-instructions-1-teracube": "The phone is asking for the bootloader to be locked. Select <code>lock bootloader</code> by using <kbd>Volume Up</kbd> button.",
+  "locking-instructions-1-mimir": "The phone is asking for the bootloader to be locked. Select <code>Lock bootloader</code> by using <kbd>Volume Down</kbd> button.",
   "murena-workspace-account": "Murena Workspace account",
   "murena-workspace-account-instructions": "Keep your data safe and sync this device with your personal Murena Workspace account. 1GB free and paid plans available for more storage.",
   "navigator-detection": "Navigator detection",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Wait until the bootloader screen is visible again</b> before going to the next step.",
   "unlocking-instructions-3": "Since the device <b>resets completely</b>, you will need to <b>re-enable USB debugging</b>.",
   "unlocking-instructions-4": "Pass the setup on the phone.",
-  "unlocking-instructions-1-teracube": "The phone is asking for the bootloader to be unlocked. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> button."
+  "unlocking-instructions-1-teracube": "The phone is asking for the bootloader to be unlocked. Select <code>unlock bootloader</code> by using <kbd>Volume Up</kbd> button.",
+  "unlocking-instructions-1-mimir": "The phone is asking for the bootloader to be unlocked. Select <code>unlock bootloader</code> by using <kbd>Volume Down</kbd> button."
 }

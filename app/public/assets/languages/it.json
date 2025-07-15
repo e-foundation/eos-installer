@@ -71,6 +71,7 @@
   "locking-instructions-2": "Il dispositivo si riavvierà automaticamente.",
   "locking-instructions-4": "Premi il pulsante di avvio sul telefono.",
   "locking-instructions-1-teracube": "Il telefono richiede di bloccare il bootloader. Seleziona <code>lock bootloader</code> utilizzando il pulsante <kbd>Volume Up</kbd>.",
+  "locking-instructions-1-mimir": "Il telefono richiede di bloccare il bootloader. Seleziona <code>Lock bootloader</code> utilizzando il pulsante <kbd>Volume Down</kbd>.",
   "murena-workspace-account": "Account Murena Workspace",
   "murena-workspace-account-instructions": "Proteggi i tuoi dati e sincronizza questo dispositivo con il tuo account personale Murena Workspace. 1 GB gratuito e piani a pagamento disponibili per più spazio di archiviazione.",
   "navigator-detection": "Rilevamento del browser",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Attendi che la schermata del bootloader sia di nuovo visibile</b> prima di passare al passaggio successivo.",
   "unlocking-instructions-3": "Poiché il dispositivo <b>viene completamente resettato</b>, dovrai <b>riabilitare il debug USB</b>.",
   "unlocking-instructions-4": "Salta la configurazione sul telefono.",
-  "unlocking-instructions-1-teracube": "Il telefono richiede di sbloccare il bootloader. Seleziona <code>unlock bootloader</code> utilizzando il pulsante <kbd>Volume Up</kbd>."
+  "unlocking-instructions-1-teracube": "Il telefono richiede di sbloccare il bootloader. Seleziona <code>unlock bootloader</code> utilizzando il pulsante <kbd>Volume Up</kbd>.",
+  "unlocking-instructions-1-mimir": "Il telefono richiede di sbloccare il bootloader. Seleziona <code>unlock bootloader</code> utilizzando il pulsante <kbd>Volume Down</kbd>."
 }

@@ -71,6 +71,7 @@
   "locking-instructions-2": "Das Gerät startet automatisch neu.",
   "locking-instructions-4": "Drücken Sie die Starttaste auf dem Telefon.",
   "locking-instructions-1-teracube": "Das Telefon fordert dazu auf, den Bootloader zu sperren. Wählen Sie <code>lock bootloader</code> mit der <kbd>Volume Up</kbd>-Taste aus.",
+  "locking-instructions-1-mimir": "Das Telefon fordert dazu auf, den Bootloader zu sperren. Wählen Sie <code>Lock bootloader</code> mit der <kbd>Volume Down</kbd>-Taste aus.",
   "murena-workspace-account": "Murena Workspace-Konto",
   "murena-workspace-account-instructions": "Schützen Sie Ihre Daten und synchronisieren Sie dieses Gerät mit Ihrem persönlichen Murena Workspace-Konto. 1 GB kostenlos und kostenpflichtige Tarife für mehr Speicherplatz verfügbar.",
   "navigator-detection": "Navigator-Erkennung",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Warten Sie, bis der Bootloader-Bildschirm wieder sichtbar ist</b>, bevor Sie zum nächsten Schritt übergehen.",
   "unlocking-instructions-3": "Da das Gerät <b>vollständig zurückgesetzt</b> wird, müssen Sie <b>USB-Debugging erneut aktivieren</b>.",
   "unlocking-instructions-4": "Überspringen Sie die Einrichtung auf dem Telefon.",
-  "unlocking-instructions-1-teracube": "Das Telefon fordert dazu auf, den Bootloader zu entsperren. Wählen Sie <code>unlock bootloader</code> mit der <kbd>Volume Up</kbd>-Taste aus."
+  "unlocking-instructions-1-teracube": "Das Telefon fordert dazu auf, den Bootloader zu entsperren. Wählen Sie <code>unlock bootloader</code> mit der <kbd>Volume Up</kbd>-Taste aus.",
+  "unlocking-instructions-1-mimir": "Das Telefon fordert dazu auf, den Bootloader zu entsperren. Wählen Sie <code>unlock bootloader</code> mit der <kbd>Volume Down</kbd>-Taste aus."
 }
