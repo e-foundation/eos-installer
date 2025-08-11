@@ -71,6 +71,7 @@
   "locking-instructions-2": "Het apparaat wordt automatisch opnieuw opgestart.",
   "locking-instructions-4": "Druk op de startknop op de telefoon.",
   "locking-instructions-1-teracube": "De telefoon vraagt om de bootloader te vergrendelen. Selecteer <code>lock bootloader</code> met de <kbd>Volume Up</kbd>-toets.",
+  "locking-instructions-1-mimir": "De telefoon vraagt om de bootloader te vergrendelen. Selecteer <code>Lock bootloader</code> met de <kbd>Volume Down</kbd>-toets.",
   "murena-workspace-account": "Murena Workspace-account",
   "murena-workspace-account-instructions": "Houd uw gegevens veilig en synchroniseer dit apparaat met uw persoonlijke Murena Workspace-account. 1 GB gratis en betaalde plannen beschikbaar voor meer opslagruimte.",
   "navigator-detection": "Browserdetectie",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Wacht tot het bootloader-scherm weer zichtbaar is</b> voordat u naar de volgende stap gaat.",
   "unlocking-instructions-3": "Omdat het apparaat <b>volledig wordt gereset</b>, moet u <b>USB-debugging opnieuw inschakelen</b>.",
   "unlocking-instructions-4": "Sla de configuratie op de telefoon over.",
-  "unlocking-instructions-1-teracube": "De telefoon vraagt om de bootloader te ontgrendelen. Selecteer <code>unlock bootloader</code> met de <kbd>Volume Up</kbd>-toets."
+  "unlocking-instructions-1-teracube": "De telefoon vraagt om de bootloader te ontgrendelen. Selecteer <code>unlock bootloader</code> met de <kbd>Volume Up</kbd>-toets.",
+  "unlocking-instructions-1-mimir": "De telefoon vraagt om de bootloader te ontgrendelen. Selecteer <code>unlock bootloader</code> met de <kbd>Volume Down</kbd>-toets."
 }

@@ -71,6 +71,7 @@
   "locking-instructions-2": "Устройство автоматически перезагрузится.",
   "locking-instructions-4": "Нажмите кнопку запуска на телефоне.",
   "locking-instructions-1-teracube": "Телефон запрашивает блокировку загрузчика. Выберите <code>lock bootloader</code>, используя кнопку <kbd>Volume Up</kbd>.",
+  "locking-instructions-1-mimir": "Телефон запрашивает блокировку загрузчика. Выберите <code>Lock bootloader</code>, используя кнопку <kbd>Volume Down</kbd>.",
   "murena-workspace-account": "Аккаунт Murena Workspace",
   "murena-workspace-account-instructions": "Обеспечьте безопасность данных и синхронизируйте это устройство с вашей персональной учетной записью Murena Workspace. Бесплатный 1 ГБ и платные тарифы для дополнительного места доступны.",
   "navigator-detection": "Обнаружение браузера",
@@ -94,5 +95,6 @@
   "unlocking-instructions-2-a": "<b>Дождитесь, пока экран загрузчика снова станет видимым</b>, прежде чем переходить к следующему шагу.",
   "unlocking-instructions-3": "Так как устройство <b>полностью сбрасывается</b>, вам нужно будет <b>повторно включить отладку USB</b>.",
   "unlocking-instructions-4": "Пропустите настройку на телефоне.",
-  "unlocking-instructions-1-teracube": "Телефон запрашивает разблокировку загрузчика. Выберите <code>unlock bootloader</code>, используя кнопку <kbd>Volume Up</kbd>."
+  "unlocking-instructions-1-teracube": "Телефон запрашивает разблокировку загрузчика. Выберите <code>unlock bootloader</code>, используя кнопку <kbd>Volume Up</kbd>.",
+  "unlocking-instructions-1-mimir": "Телефон запрашивает разблокировку загрузчика. Выберите <code>unlock bootloader</code>, используя кнопку <kbd>Volume Down</kbd>."
 }
