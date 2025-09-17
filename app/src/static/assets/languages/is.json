@@ -78,5 +78,17 @@
     "unlocking-instructions-3": "Þar sem tækið <b>frumstillist alveg</b>, þarft þú að <b>endurvirkja USB-aflúsunarham</b>.",
     "bootloader-to-recovery-manually-instructions-3": "3. Bíddu eftir að síminn ræsist í recovery-endurheimtuham",
     "installing": "Uppsetning",
-    "unlocking-instructions-2": "Ef tækið endurræsist ekki sjálfkrafa, skaltu endurræsa það."
+    "unlocking-instructions-2": "Ef tækið endurræsist ekki sjálfkrafa, skaltu endurræsa það.",
+    "murena-cloud-account-instructions": "Haltu gögnunum þínum öruggum og samstilltu þetta tæki við þinn eiginn Murena Cloud skýjaaðgang. 1GB eru ókeypis og greiddar áskriftarleiðir eru í boði fyrir meira geymslurými.",
+    "android-version-not-supported-instructions": "Uppfærðu kerfið þitt í nauðsynlegu lágmarksútgáfuna <code>{{android-version-required}}</code>",
+    "android-version-not-supported-title": "Ekki er stuðningur við Android <code>{{android-version}}</code> útgáfuna þína",
+    "locking-instructions-2": "Ef tækið endurræsist ekki sjálfkrafa, skaltu endurræsa það",
+    "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Dæmi 1:</b> áður en þú setur upp /e/OS Android 12, ættirðu að uppfæra í nýjustu framleiðsluútgáfuna af Android 12",
+    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Dæmi 2:</b> eða ef þú setur upp /e/OS Android 11, ættirðu að uppfæra í nýjustu framleiðsluútgáfuna af Android 11",
+    "Ex 3: similarly, if you're installing /e/OS Android 11, it should be the latest stock Android 10": "<b>Dæmi 3:</b> og eins ef þú setur upp /e/OS Android 11, þá ætti það að vera í nýjasta framleiðsluútgáfan af Android 10",
+    "bootloader-to-recovery-manually": "Bootloader-ræsistjóri yfir í recovery-endurheimtu",
+    "bootloader-to-recovery-manually-instructions": "Núna verður tækið þitt endurræst í recovery-endurheimtuham. Farðu eftir skrefunum hér fyrir neðan:",
+    "connect-bootloader": "Tenging bootloader-ræsistjóra",
+    "connect-bootloader-instructions-2": "Með kveikt á símanum þínum, skaltu tengja hann í <code>bootloader</code>-ræsistjóraham með því að smella á hnappinn hér fyrir neðan",
+    "recovery-to-bootloader": "Recovery-endurheimta yfir í bootloader-ræsistjóra"
 }
