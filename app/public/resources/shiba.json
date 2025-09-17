@@ -68,7 +68,7 @@
   "folder": [
     {
       "name": "pixel-8-recovery.img",
-      "path": "https://images.ecloud.global/official/shiba/recovery-IMG-e-latest-a14-official-shiba.zip",
+      "path": "https://images.ecloud.global/official/shiba/recovery-IMG-e-latest-a15-official-shiba.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -79,7 +79,7 @@
     },
     {
       "name": "pixel-8-rom.zip",
-      "path": "https://images.ecloud.global/official/shiba/e-latest-a14-official-shiba.zip"
+      "path": "https://images.ecloud.global/official/shiba/e-latest-a15-official-shiba.zip"
     },
     {
       "name": "pkmd_pixel.bin",
