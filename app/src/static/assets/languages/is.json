@@ -90,5 +90,10 @@
     "bootloader-to-recovery-manually-instructions": "Núna verður tækið þitt endurræst í recovery-endurheimtuham. Farðu eftir skrefunum hér fyrir neðan:",
     "connect-bootloader": "Tenging bootloader-ræsistjóra",
     "connect-bootloader-instructions-2": "Með kveikt á símanum þínum, skaltu tengja hann í <code>bootloader</code>-ræsistjóraham með því að smella á hnappinn hér fyrir neðan",
-    "recovery-to-bootloader": "Recovery-endurheimta yfir í bootloader-ræsistjóra"
+    "recovery-to-bootloader": "Recovery-endurheimta yfir í bootloader-ræsistjóra",
+    "let-s-get-started-instruction-2": "Þú þarft að minnsta kosti 6GB af lausu plássi á tölvunni til að\n  sækja og setja upp /e/OS. Gakktu úr skugga um að þú hafir nægilegt diskapláss.",
+    "let-s-get-started-instruction-3": "Áður en þú setur upp /e/OS, skaltu ganga úr skugga um að síminn sé með a.m.k. 50% rafhlöðuhleðslu",
+    "let-s-get-started-instruction-5": "Heill USB-gagnakapall er nauðsynlegur. Sumar snúrur eru fyrir orkuflutning\n og munu ekki virka fyrir gögn! Við mælum með USB 3.x eða nýrri.",
+    "format-device-instructions-7": "7. Ýttu á <code>Til baka</code> örina og smelltu síðan á <code>Næsta</code>",
+    "format-device-instructions-6": "6. Skjárinn mun núna fara aftur á 'Núllstilla á verksmiðjustillingar' gluggann"
 }
