@@ -1,9 +1,9 @@
 {
     "Ex 1: before installing /e/OS Android 12, you should update to the latest stock Android 12": "<b>Esimerkki 1:</b> ennen /e/OS Android 12:n asentamista sinun tulee päivittää uusimpaan vakio-Android 12:een",
     "Ex 3: similarly, if you're installing /e/OS Android 11, it should be the latest stock Android 10": "<b>Esimerkki 3:</b> vastaavasti ennen /e/OS Android 10:n asentamista, päivitä uusimpaan vakio-Android 10:een",
-    "activate-developer-options": "Ota käyttöön Kehittäjäasetukset",
+    "activate-developer-options": "Näytä Kehittäjäasetukset",
     "activate-developer-options-instructions-1": "1. Avaa asetusvalikko ja kirjoita hakupalkkiin ”ohjelmistoversio” (build).",
-    "activate-usb-debugging": "Ota käyttöön USB-vianetsintä",
+    "activate-usb-debugging": "Salli USB-vianetsintä",
     "activate-usb-debugging-instructions-1": "1. Palaa asetusvalikkoon ja kirjoita hakupalkkiin ”USB-vianetsintä” (USB debugging).",
     "android-version-not-supported": "Androidin versio on liian vanha",
     "android-version-not-supported-instructions": "Päivitä järjestelmäsi vaadittuun vähimmäisversioon <code>{{android-version-required}}</code>",
@@ -28,7 +28,7 @@
     "device-model-not-supported-instructions": "et voi asentaa /e/OS:ää tällä työkalulla",
     "dissatisfied": "Tyytymätön",
     "donate": "Lahjoita",
-    "enable-usb-file-transfer": "Ota USB-tiedostonsiirto käyttöön",
+    "enable-usb-file-transfer": "Salli USB-tiedostonsiirto",
     "enable-usb-file-transfer-instructions-2": "Valitse vaihtoehto ”Tiedostonsiirto” (File Transfer, joissakin laitteissa ”MTP-tila (media transfer protocol)”).",
     "format-device": "Alusta laite",
     "format-device-instructions-1": "1. Valitse <code>Tehdasasetusten palautus</code> (Factory reset)",
@@ -104,7 +104,7 @@
     "very-satisfied": "Erittäin tyytyväinen",
     "murena-cloud-account-instructions": "Pidä tietosi turvassa ja synkronoi tämä laite henkilökohtaisen Murena Cloud -tilisi kanssa. Saatavilla on 1 Gt:n ilmainen tallennustila, ja lisätilaa maksusta.",
     "sideload-instructions-2": "Tämä voi kestää useita minuutteja, odota hetki.",
-    "locking-instructions-1": "Puhelimesi pyytää lukitusta. Valitse <code>lock bootloader</code> (lukitse käynnistyslatain)",
+    "locking-instructions-1": "Puhelimesi pyytää lukituksen avaamista. Valitse <code>lock bootloader</code> (lukitse käynnistyslatain)",
     "this-might-take-some-time-please-be-patient": "Tämä voi kestää jonkin aikaa, ole hyvä ja odota",
     "unlocking-instructions-1": "Puhelimesi pyytää lukituksen avaamista. Valitse <code>unlock bootloader</code> (avaa käynnistyslataimen lukitus) käyttämällä <kbd>Lisää äänenvoimakkuutta</kbd> ja <kbd>Vähennä äänenvoimakkuutta</kbd> -näppäimiä."
 }
