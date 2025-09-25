@@ -68,7 +68,7 @@
   "folder": [
     {
       "name": "pixel-7-recovery.img",
-      "path": "https://images.ecloud.global/official/panther/recovery-IMG-e-latest-t-official-panther.zip",
+      "path": "https://images.ecloud.global/official/panther/recovery-IMG-e-latest-a15-official-panther.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -79,7 +79,7 @@
     },
     {
       "name": "pixel-7-rom.zip",
-      "path": "https://images.ecloud.global/official/panther/e-latest-t-official-panther.zip"
+      "path": "https://images.ecloud.global/official/panther/e-latest-a15-official-panther.zip"
     },
     {
       "name": "pkmd_pixel.bin",
