@@ -17,7 +17,7 @@
     "connect-bootloader": "Käynnistyslataimen yhdistäminen",
     "connect-bootloader-instructions-1": "Puhelimesi käynnistyy nyt uudelleen <code>käynnistyslatain</code> (bootloader) -tilassa",
     "bootloader-to-recovery-manually-instructions-2": "2. Vahvista painamalla <kbd>Virta</kbd> -näppäintä",
-    "connect-bootloader-instructions-2": "Kun puhelimesi on päällä, kytke se <code>käynnistyslatain</code> (bootloader) -tilaan alla olevasta napista",
+    "connect-bootloader-instructions-2": "Kun puhelimesi on päällä, liitä se <code>käynnistyslatain</code> (bootloader) -tilassa alla olevasta napista",
     "connect-your-phone": "Liitä puhelimesi",
     "connect-your-phone-instructions-notes": "<b>Huomautus</b>: USB-vianetsintä tarvitaan laitteen automaattiseen tunnistamiseen. Ellet ole vielä ottanut sitä käyttöön, autamme sinua seuraavissa vaiheissa.",
     "device-detection": "Laitteen tunnistus",
