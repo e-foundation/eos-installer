@@ -95,5 +95,17 @@
     "let-s-get-started-instruction-3": "Áður en þú setur upp /e/OS, skaltu ganga úr skugga um að síminn sé með a.m.k. 50% rafhlöðuhleðslu",
     "let-s-get-started-instruction-5": "Heill USB-gagnakapall er nauðsynlegur. Sumar snúrur eru fyrir orkuflutning\n og munu ekki virka fyrir gögn! Við mælum með USB 3.x eða nýrri.",
     "format-device-instructions-7": "7. Ýttu á <code>Til baka</code> örina og smelltu síðan á <code>Næsta</code>",
-    "format-device-instructions-6": "6. Skjárinn mun núna fara aftur á 'Núllstilla á verksmiðjustillingar' gluggann"
+    "format-device-instructions-6": "6. Skjárinn mun núna fara aftur á 'Núllstilla á verksmiðjustillingar' gluggann",
+    "device-detection-instructions-2": "Sprettgluggi ætti að hafa birst á símanum þinum. Þú þarft að merkja við <code>alltaf leyfa frá þessari tölvu</code> áður en þú ýtir á 'Í lagi'.",
+    "device-detection-instructions-1": "Við munum núna tengja símann þinn við vafrann. Þegar þessi sprettgluggi birtist, skaltu velja símann þinn úr listanum.",
+    "go-to-apply-update-instructions-4": "<b>Note: </b>Fyrir næsta skref gæti vafrinn þurft að tengja símann þinn aftur. Ef sprettgluggi birtist, skaltu velja símann þinn úr listanum.",
+    "installation-complete-instructions-2": "<b>Ábending</b>: farðu eftir leiðbeiningunum fyrir símann þinn til að setja upp tækið. Þú getur núna bætt skránum þínum aftur á símann.",
+    "locking-instructions-1": "Síminn þinn er að biðja um aflæsingu. Veldu <code>læsa bootloader-ræsistjóra</code>",
+    "activate-usb-debugging-instructions-2": "2. Núna ættir þú að vera á skjánum 'Stillingar fyrir forritara'. Ýttu á 'USB-aflúsun' til að virkja það (á sumum tækjum er þetta kallað 'Android-aflúsun / Debugging').",
+    "bootloader-to-recovery-manually-instructions-1": "1. Í bootloader-ræsistjóranum skaltu velja <code>Endurheimtuhamur</code> með því að nota <kbd>Hækka hljóðstyrk</kbd> og <kbd>Lækka hljóðstyrk</kbd> til að flakka á milli valkosta",
+    "check-update-android-version-caution": "<b>Aðvörun</b>: áður en haldið er áfram með uppsetninguna skaltu athuga hvort nýjasti grunnhugbúnaður Android (firmware) sé fáanlegur fyrir tækið þitt.",
+    "connect-your-phone-instructions-notes": "<b>Athugaðu</b>: ’USB-villuleit (debugging) er nauðsynleg til þess að tæki finnist sjálfvirkt. Ef þú hefur ekki ennþá virkjað hana munum við hjálpa þér við það í næstu skrefum.",
+    "go-to-apply-update-instructions-3": "3. Tækið er núna í ham til að setja upp pakka af kerfinu (sideload), þá er allt tilbúið fyrir næsta skref.",
+    "unlocking-instructions-1": "Síminn þinn er að biðja um aflæsingu. Veldu <code> aflæsa bootloader-ræsistjóra</code> með því að nota <kbd>Hækka hljóðstyrk</kbd> og <kbd>Lækka hljóðstyrk</kbd> til að flakka á milli valkosta.",
+    "sideload-instructions-3": "Þegar uppsetningu er lokið, fer síminn aftur á aðalskjáinn."
 }
