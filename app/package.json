@@ -1,7 +1,7 @@
 {
   "name": "eOS-installer",
   "license": "GPLv3",
-  "version": "0.12.9",
+  "version": "0.13",
   "type": "module",
   "scripts": {
     "dev": "vite",
