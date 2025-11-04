@@ -1,5 +1,5 @@
 {
-  "security_patch_level": "2024-12-05",
+  "security_patch_level": "2025-10-01",
   "steps": [
     {
       "mode": "bootloader",
@@ -159,7 +159,7 @@
     {
       "name": "fp5 installer",
       "unzip": true,
-      "path": "https://images.ecloud.global/official/FP5/IMG-e-latest-a14-official-FP5.zip"
+      "path": "https://images.ecloud.global/official/FP5/IMG-e-latest-a15-official-FP5.zip"
     }
   ]
 }
