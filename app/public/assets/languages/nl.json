@@ -4,6 +4,7 @@
   "activate-developer-options-instructions-2": "Op het volgende scherm vindt u <code>Build number</code> en tikt u er 7 keer op.",
   "activate-oem-unlock": "OEM ontgrendelen",
   "activate-oem-unlock-instruction": "Als u dit nog niet heeft gedaan, activeer de OEM-functie.",
+  "activate-oem-unlock-instruction-fairphone": "Voor Fairphone-apparaten, klik hier voor instructies om deze stap uit te voeren.",
   "activate-usb-debugging": "USB-foutopsporing activeren",
   "activate-usb-debugging-instructions-1": "Ga terug naar het instellingenmenu en typ <code>USB debugging</code> in de zoekbalk.",
   "activate-usb-debugging-instructions-2": "Op dit punt zou u op het scherm <code>Ontwikkelaarsopties</code> moeten zijn. Tik nu op <code>USB debugging</code> om het te activeren (op sommige apparaten wordt het <code>Android Debugging</code> genoemd).",

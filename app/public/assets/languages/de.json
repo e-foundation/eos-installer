@@ -4,6 +4,7 @@
   "activate-developer-options-instructions-2": "Auf dem nächsten Bildschirm finden Sie <code>Build number</code> und tippen Sie 7 Mal darauf.",
   "activate-oem-unlock": "OEM-Entsperrung",
   "activate-oem-unlock-instruction": "Wenn Sie dies noch nicht getan haben, aktivieren Sie die OEM-Funktion.",
+  "activate-oem-unlock-instruction-fairphone": "Für Fairphone-Geräte klicken Sie hier, um Anweisungen für diesen Schritt zu erhalten.",
   "activate-usb-debugging": "USB-Debugging aktivieren",
   "activate-usb-debugging-instructions-1": "Gehen Sie zurück ins Einstellungsmenü und geben Sie <code>USB debugging</code> in die Suchleiste ein.",
   "activate-usb-debugging-instructions-2": "An dieser Stelle sollten Sie sich im Bildschirm der <code>Entwickleroptionen</code> befinden. Tippen Sie jetzt auf <code>USB debugging</code>, um es zu aktivieren (bei einigen Geräten heißt es <code>Android Debugging</code>).",

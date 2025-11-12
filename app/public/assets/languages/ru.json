@@ -4,6 +4,7 @@
   "activate-developer-options-instructions-2": "На следующем экране найдите <code>Build number</code> и нажмите на него 7 раз.",
   "activate-oem-unlock": "OEM-разблокировка",
   "activate-oem-unlock-instruction": "Если вы еще этого не сделали, активируйте функцию OEM.",
+  "activate-oem-unlock-instruction-fairphone": "Для устройств Fairphone нажмите здесь, чтобы получить инструкции по выполнению этого шага.",
   "activate-usb-debugging": "Активировать отладку по USB",
   "activate-usb-debugging-instructions-1": "Вернитесь в меню настроек и введите <code>USB debugging</code> в строку поиска.",
   "activate-usb-debugging-instructions-2": "На этом этапе вы должны находиться на экране <code>Параметры разработчика</code>. Теперь нажмите на <code>USB debugging</code>, чтобы активировать его (на некоторых устройствах он называется <code>Android Debugging</code>).",
