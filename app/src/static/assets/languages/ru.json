@@ -10,5 +10,6 @@
     "android-version-not-supported": "Устаревшая версия Android",
     "android-version-not-supported-instructions": "Обновите свою систему до минимально необходимой версии <code>{{android-version-required}}</code>",
     "android-version-not-supported-title": "Ваша версия Android <code>{{android-version}}</code> не поддерживается",
-    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Вывод 2:</b> или если вы устанавливаете /e/OS Android 11, обязательно обновитесь до последней стоковой версии Android 11"
+    "Ex 2: or if you're installing /e/OS Android 11, make sure to update to the latest stock Android 11": "<b>Вывод 2:</b> или если вы устанавливаете /e/OS Android 11, обязательно обновитесь до последней стоковой версии Android 11",
+    "installing": "Установка"
 }
