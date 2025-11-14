@@ -53,13 +53,8 @@
         "flash vbmeta_b vbmeta.img",
         "erase userdata",
         "erase metadata",
-        "flash userdata userdata.img",
-        "flashing lock"
+        "flash userdata userdata.img"
       ]
-    },
-    {
-      "id": "locking",
-      "needUserGesture": true
     },
     {
       "mode": "bootloader",

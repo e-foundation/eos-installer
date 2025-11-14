@@ -45,11 +45,6 @@
       "needUserGesture": true
     },
     {
-      "id": "locking-mimir",
-      "needUserGesture": true,
-      "command": ["flashing lock", "delay 5"]
-    },
-    {
       "id": "murena-workspace-account",
       "needUserGesture": true
     },

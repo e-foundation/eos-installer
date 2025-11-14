@@ -47,13 +47,8 @@
       "command": [
         "connect bootloader",
         "erase avb_custom_key",
-        "flash avb_custom_key pkmd_pixel.bin",
-        "flashing lock unlocked"
+        "flash avb_custom_key pkmd_pixel.bin"
       ],
-      "needUserGesture": true
-    },
-    {
-      "id": "locking-pixel",
       "needUserGesture": true
     },
     {

@@ -67,13 +67,8 @@
         "flash cmnlib64_b cmnlib64.img",
         "flash keymaster_a keymaster.img",
         "flash keymaster_b keymaster.img",
-        "flash userdata userdata.img",
-        "oem lock unlocked"
+        "flash userdata userdata.img"
       ]
-    },
-    {
-      "id": "locking-fp3",
-      "needUserGesture": true
     },
     {
       "id": "murena-workspace-account",

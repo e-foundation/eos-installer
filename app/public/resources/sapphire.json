@@ -26,8 +26,7 @@
         "flash sspm_a sspm.img",
         "flash scp_a scp.img",
         "flash spmfw_a spmfw.img",
-        "flash md1img_a md1img.img --set-active=a",
-        "flashing lock unlocked"
+        "flash md1img_a md1img.img --set-active=a"
       ]
     },
     {
