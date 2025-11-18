@@ -48,7 +48,8 @@
       "command": [
         "connect bootloader",
         "erase avb_custom_key",
-        "flash avb_custom_key pkmd_pixel.bin"
+        "flash avb_custom_key pkmd_pixel.bin",
+        "reboot"
       ],
       "needUserGesture": true
     },

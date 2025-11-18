@@ -67,7 +67,8 @@
         "flash cmnlib64_b cmnlib64.img",
         "flash keymaster_a keymaster.img",
         "flash keymaster_b keymaster.img",
-        "flash userdata userdata.img"
+        "flash userdata userdata.img",
+        "reboot"
       ]
     },
     {
