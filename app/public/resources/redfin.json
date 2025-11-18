@@ -52,6 +52,12 @@
       "needUserGesture": true
     },
     {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": ["connect bootloader", "reboot"],
+      "needUserGesture": true
+    },
+    {
       "id": "murena-workspace-account",
       "needUserGesture": true
     },
