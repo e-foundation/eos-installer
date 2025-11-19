@@ -5,7 +5,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock"],
       "needUserGesture": true
     },
     {
@@ -32,7 +32,7 @@
         "flash scp_a scp.img",
         "flash spmfw_a spmfw.img",
         "flash md1img_a md1img.img --set-active=a",
-        "flashing lock unlocked"
+        "flashing lock"
       ]
     },
     {
@@ -55,7 +55,7 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/official/emerald/IMG-e-latest-s-official-emerald.zip",
+      "path": "https://images.ecloud.global/official/emerald/IMG-e-latest-a15-official-emerald.zip",
       "name": "Teracube 2e (2021 emerald) installer",
       "unzip": true
     }

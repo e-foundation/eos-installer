@@ -5,7 +5,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock"],
       "needUserGesture": true
     },
     {
@@ -48,7 +48,7 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/official/zirconia/IMG-e-latest-s-official-zirconia.zip",
+      "path": "https://images.ecloud.global/official/zirconia/IMG-e-latest-a15-official-zirconia.zip",
       "name": "Teracube 2e (2020) installer",
       "unzip": true
     }
