@@ -78,5 +78,11 @@
     "enable-usb-file-transfer-instructions-1": "Ainda dentro das ‘Opções do desenvolvedor’, role para baixo até encontrar ‘Configuração USB padrão’ e toque nela.",
     "enable-usb-file-transfer-instructions-2": "Agora, selecione a opção ‘Transferência de arquivo’ (em alguns dispositivos, ela é chamada de ‘Modo MTP (media transfer protocol)’).",
     "navigator-detection": "Detecção de navegador",
-    "unlocking-instructions-3": "Como o dispositivo é <b>totalmente redefinido</b>, você precisará <b>reativar a depuração USB</b>."
+    "unlocking-instructions-3": "Como o dispositivo é <b>totalmente redefinido</b>, você precisará <b>reativar a depuração USB</b>.",
+    "connect-bootloader-instructions-2": "Quando o telefone estiver ligado, conecte-o no modo <code>carregador de inicialização</code> clicando no botão abaixo",
+    "format-device-instructions-3": "3. A próxima tela exibirá um aviso informando que esta ação não pode ser desfeita",
+    "format-device-instructions-5": "5. Aguarde até que o processo de formatação seja concluído",
+    "go-to-apply-update-instructions-3": "3. O dispositivo está agora no modo sideload, você está pronto para a próxima etapa.",
+    "go-to-apply-update-instructions-4": "<b>Observação:</b> Para a próxima etapa, talvez seja necessário reconectar seu telefone ao navegador. Se uma janela pop-up aparecer, selecione seu telefone na lista.",
+    "unlocking-instructions-2-a": "Seu dispositivo será reiniciado. <b>Aguarde até que a tela do carregador de inicialização seja exibida novamente</b> antes de prosseguir para a próxima etapa"
 }
