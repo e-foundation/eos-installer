@@ -3,7 +3,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "oem unlock unlocked"],
+      "command": ["connect bootloader", "oem unlock goto_flashing"],
       "needUserGesture": true
     },
     {

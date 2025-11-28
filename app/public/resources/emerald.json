@@ -5,7 +5,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock goto_flashing"],
       "needUserGesture": true
     },
     {
