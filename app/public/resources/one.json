@@ -43,14 +43,9 @@
         "flash vbmeta vbmeta.img",
         "erase userdata",
         "erase metadata",
-        "flash userdata userdata.img"
+        "flash userdata userdata.img",
+        "reboot"
       ]
-    },
-    {
-      "mode": "bootloader",
-      "id": "connect-bootloader",
-      "command": ["connect bootloader", "reboot"],
-      "needUserGesture": true
     },
     {
       "id": "murena-workspace-account",
