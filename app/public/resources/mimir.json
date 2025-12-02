@@ -41,7 +41,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader"],
+      "command": ["connect bootloader", "reboot"],
       "needUserGesture": true
     },
     {
@@ -50,9 +50,6 @@
     },
     {
       "id": "installation-complete"
-    },
-    {
-      "command": ["reboot"]
     }
   ],
   "folder": [
