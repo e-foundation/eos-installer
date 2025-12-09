@@ -41,6 +41,22 @@ export class Downloader {
           const blob = await this.download(file.path, (value, total) => {
             onDownloadProgress(value, total, file.name);
           });
+
+          // Simple zip integrity check: fetch "<path>.sha256sum" and compare.
+          try {
+            const expected = await this.fetchChecksum(`${file.path}.sha256sum`);
+            const actual = await this.computeSha256(blob);
+            if (expected && actual !== expected) {
+              throw new Error(
+                `Checksum mismatch for ${file.name}: expected ${expected} got ${actual}`,
+              );
+            }
+          } catch (checksumError) {
+            throw new Error(
+              `Checksum verification failed for ${file.name}: ${checksumError.message || checksumError}`,
+            );
+          }
+
           if (file.unzip) {
             const zipReader = new ZipReader(new BlobReader(blob));
             const filesEntries = await zipReader.getEntries();
@@ -101,6 +117,26 @@ export class Downloader {
       }
     }
     return filename;
+  }
+
+  async fetchChecksum(url) {
+    const res = await ky.get(url);
+    if (!res.ok) {
+      throw new Error(`Cannot fetch checksum (${res.status})`);
+    }
+    const body = (await res.text()).trim();
+    const match = body.match(/[a-fA-F0-9]{64}/);
+    if (!match) {
+      throw new Error("Invalid checksum content");
+    }
+    return match[0].toLowerCase();
+  }
+
+  async computeSha256(blob) {
+    const buffer = await blob.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
   /**
