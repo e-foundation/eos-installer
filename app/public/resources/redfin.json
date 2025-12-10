@@ -6,7 +6,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock goto_flashing"],
       "needUserGesture": true
     },
     {
@@ -48,12 +48,8 @@
         "connect bootloader",
         "erase avb_custom_key",
         "flash avb_custom_key pkmd_pixel.bin",
-        "flashing lock unlocked"
+        "reboot"
       ],
-      "needUserGesture": true
-    },
-    {
-      "id": "locking-pixel",
       "needUserGesture": true
     },
     {

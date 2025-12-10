@@ -41,13 +41,8 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader"],
+      "command": ["connect bootloader", "reboot"],
       "needUserGesture": true
-    },
-    {
-      "id": "locking-mimir",
-      "needUserGesture": true,
-      "command": ["flashing lock", "delay 5"]
     },
     {
       "id": "murena-workspace-account",
@@ -55,9 +50,6 @@
     },
     {
       "id": "installation-complete"
-    },
-    {
-      "command": ["reboot"]
     }
   ],
   "folder": [

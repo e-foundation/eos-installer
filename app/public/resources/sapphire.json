@@ -4,7 +4,7 @@
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock goto_flashing"],
       "needUserGesture": true
     },
     {
@@ -27,14 +27,8 @@
         "flash scp_a scp.img",
         "flash spmfw_a spmfw.img",
         "flash md1img_a md1img.img --set-active=a",
-        "flashing lock unlocked"
+        "reboot"
       ]
-    },
-    {
-      "mode": "bootloader",
-      "id": "connect-bootloader",
-      "command": ["connect bootloader", "reboot"],
-      "needUserGesture": true
     },
     {
       "id": "murena-workspace-account",

@@ -1,11 +1,11 @@
 {
-  "UNUSED___security_patch_level": "2020-04-05",
+  "security_patch_level": "2018-01-05",
   "description": "Teracube 2e (2021 emerald)",
   "steps": [
     {
       "mode": "bootloader",
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "flashing unlock unlocked"],
+      "command": ["connect bootloader", "flashing unlock goto_flashing"],
       "needUserGesture": true
     },
     {
