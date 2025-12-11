@@ -32,9 +32,13 @@ export default class ViewManager {
       $copyStep.id = step.id;
       $copyStep.classList.add("active");
       $copyStep.classList.remove("inactive");
-      $copyStep.addEventListener("click", async () => {
-        this.executeStep($copyStep, step.name);
-      });
+      const $button = $copyStep.querySelector("button");
+      if ($button) {
+        $button.addEventListener("click", async (event) => {
+          event.stopPropagation();
+          await this.executeStep($button, step.name);
+        });
+      }
       let $processCtn = document.getElementById("process-ctn");
       if ($processCtn) {
         $processCtn.appendChild($copyStep);
