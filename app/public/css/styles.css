@@ -123,6 +123,10 @@ button.next:disabled {
   margin: 25px auto 50px auto;
   padding: 32px;
 }
+.card.done {
+  background: var(--card-disabled-bg);
+  pointer-events: none;
+}
 .card-header {
   font-size: 24px;
   font-family: "Century Gothic";
