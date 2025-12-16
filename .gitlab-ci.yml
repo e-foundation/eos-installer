@@ -1,8 +1,8 @@
 .docker:
   stage: build
-  image: docker:git
+  image: docker:26
   services:
-    - docker:dind
+    - docker:26-dind
   tags:
     - generic_privileged
   before_script:
@@ -55,8 +55,10 @@ deploy_staging:
     project: e/online-services/infra/web/eos-installer
     branch: main
     strategy: depend
+    forward:
+      pipeline_variables: true
   variables:
-    IMAGE_TAG: latest
+    DOCKER_TAG: latest
   when: manual
 
 deploy_production:
@@ -70,5 +72,7 @@ deploy_production:
     project: e/online-services/infra/web/eos-installer
     branch: main
     strategy: depend
+    forward:
+      pipeline_variables: true
   variables:
-    IMAGE_TAG: ${CI_COMMIT_TAG/v/}
+    DOCKER_TAG: ${CI_COMMIT_TAG/v/}
