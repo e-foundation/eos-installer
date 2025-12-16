@@ -1,7 +1,3 @@
-stages:
-  - build
-  - deploy-staging
-  - deploy-production
 .docker:
   stage: build
   image: docker:git
@@ -48,32 +44,31 @@ check:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 deploy_staging:
-  stage: deploy-staging
+  stage: deploy
   needs: ["docker-build-image-latest"]
   rules:
     - if: '$CI_COMMIT_REF_NAME == "main" && $CI_PIPELINE_SOURCE != "schedule"'
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   trigger:
+    inputs:
+      environment: staging
     project: e/online-services/infra/web/eos-installer
     branch: main
     strategy: depend
-  when: manual
   variables:
-      TRIGGER_STAGING: true
-      TRIGGER_PRODUCTION: false
-      IMAGE_TAG: latest
+    IMAGE_TAG: latest
+  when: manual
 
 deploy_production:
-  stage: deploy-production
+  stage: deploy
   needs: ["docker-build-image-tag"]
   rules:
     - if: '$CI_COMMIT_TAG'
   trigger:
+    inputs:
+      environment: production
     project: e/online-services/infra/web/eos-installer
     branch: main
     strategy: depend
-  when: manual
   variables:
-      TRIGGER_STAGING: false
-      TRIGGER_PRODUCTION: true
-      IMAGE_TAG: ${CI_COMMIT_TAG/v/}
+    IMAGE_TAG: ${CI_COMMIT_TAG/v/}
