@@ -1,3 +1,6 @@
+variables:
+  TRUC: 0.13
+
 .docker:
   stage: build
   image: docker:26
@@ -58,7 +61,7 @@ deploy_staging:
     forward:
       pipeline_variables: true
   variables:
-    DOCKER_TAG: latest
+    DOCKER_TAG: $TRUC
   when: manual
 
 deploy_production:
@@ -75,4 +78,4 @@ deploy_production:
     forward:
       pipeline_variables: true
   variables:
-    DOCKER_TAG: ${CI_COMMIT_TAG/v/}
+    DOCKER_TAG: $CI_COMMIT_TAG
