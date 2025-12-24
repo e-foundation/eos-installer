@@ -75,6 +75,8 @@ export class Downloader {
               if (filesRequired.includes(filename)) {
                 await this.setInDBStore(unzippedEntry.blob, filename);
                 this.stored[filename] = true;
+                const fileSHA = await this.computeSha256(unzippedEntry.blob);
+                console.log(`File: ${unzippedEntry.name} SHA256: ${fileSHA}`);
               }
             }
             await zipReader.close();
