@@ -3,6 +3,7 @@ const DB_VERSION = 1;
 
 import ky from "ky";
 import { ZipReader, BlobReader, BlobWriter } from "@zip.js/zip.js";
+import { createSHA256 } from "hash-wasm";
 
 /**
  * Download Manager
@@ -132,11 +133,24 @@ export class Downloader {
     return match[0].toLowerCase();
   }
 
+  /**
+   * Streaming SHA-256 computation for large files.
+   * Processes blob in 16MB chunks to avoid memory limits on low-memory devices.
+   */
   async computeSha256(blob) {
-    const buffer = await blob.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+    const CHUNK_SIZE = 16 * 1024 * 1024; // 16MB chunks
+    const hasher = await createSHA256();
+    hasher.init();
+
+    let offset = 0;
+    while (offset < blob.size) {
+      const chunk = blob.slice(offset, offset + CHUNK_SIZE);
+      const buffer = await chunk.arrayBuffer();
+      hasher.update(new Uint8Array(buffer));
+      offset += CHUNK_SIZE;
+    }
+
+    return hasher.digest("hex");
   }
 
   /**
