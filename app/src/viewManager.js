@@ -145,6 +145,21 @@ export default class ViewManager {
     this.WDebug.log(`Downloading ${name}: ${v}/${100}`, `downloading-${name}`);
   }
 
+  onVerify(name, loaded, total) {
+    const v = Math.round((loaded / total) * 100);
+    let $progressBar = document.querySelector(
+      `.active .downloading-progress-bar`,
+    );
+    let $progress = document.querySelector(`.active .downloading-progress`);
+    if ($progressBar) {
+      $progressBar.value = v;
+    }
+    if ($progress) {
+      $progress.innerText = `Verifying ${name}: ${v}/${100}`;
+    }
+    this.WDebug.log(`Verifying ${name}: ${v}/${100}`, `verifying-${name}`);
+  }
+
   onUnzip(name, loaded, total) {
     const v = Math.round((loaded / total) * 100);
     let $progressBar = document.querySelector(

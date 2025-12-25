@@ -32,6 +32,7 @@ export class Downloader {
     folder,
     onDownloadProgress,
     onUnzipProgress,
+    onVerifyProgress,
   ) {
     let current_file;
     try {
@@ -55,7 +56,9 @@ export class Downloader {
               const expected = await this.fetchChecksum(
                 `${file.path}.sha256sum`,
               );
-              const actual = await this.computeSha256(blob);
+              const actual = await this.computeSha256(blob, (loaded, total) => {
+                onVerifyProgress(loaded, total, file.name)
+              });
               if (expected && actual !== expected) {
                 throw new Error(
                   `Checksum mismatch for ${file.name}: expected ${expected} got ${actual}`,
@@ -91,7 +94,9 @@ export class Downloader {
               if (filesRequired.includes(filename)) {
                 await this.setInDBStore(unzippedEntry.blob, filename);
                 this.stored[filename] = true;
-                const fileSHA = await this.computeSha256(unzippedEntry.blob);
+                const fileSHA = await this.computeSha256(unzippedEntry.blob, (loaded, total) => {
+                  onVerifyProgress(loaded, total, filename)
+                });
                 console.log(`File: ${unzippedEntry.name} SHA256: ${fileSHA}`);
               }
             }
@@ -155,16 +160,18 @@ export class Downloader {
    * Streaming SHA-256 computation for large files.
    * Processes blob in 16MB chunks to avoid memory limits on low-memory devices.
    */
-  async computeSha256(blob) {
+  async computeSha256(blob, onVerifyProgress) {
     const CHUNK_SIZE = 16 * 1024 * 1024; // 16MB chunks
     const hasher = await createSHA256();
+    const blobSize = blob.size;
     hasher.init();
 
     let offset = 0;
-    while (offset < blob.size) {
+    while (offset < blobSize) {
       const chunk = blob.slice(offset, offset + CHUNK_SIZE);
       const buffer = await chunk.arrayBuffer();
       hasher.update(new Uint8Array(buffer));
+      onVerifyProgress(offset, blobSize);
       offset += CHUNK_SIZE;
     }
 

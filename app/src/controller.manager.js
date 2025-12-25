@@ -123,6 +123,9 @@ export class Controller {
             (loaded, total, name) => {
               this.view.onUnzip(name, loaded, total);
             },
+            (loaded, total, name) => {
+              this.view.onVerify(name, loaded, total);
+            },
           );
           this.view.onDownloadingEnd();
           return true;
