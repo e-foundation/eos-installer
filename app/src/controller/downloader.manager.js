@@ -57,7 +57,7 @@ export class Downloader {
                 `${file.path}.sha256sum`,
               );
               const actual = await this.computeSha256(blob, (loaded, total) => {
-                onVerifyProgress(loaded, total, file.name)
+                onVerifyProgress(loaded, total, file.name);
               });
               if (expected && actual !== expected) {
                 throw new Error(
@@ -94,9 +94,12 @@ export class Downloader {
               if (filesRequired.includes(filename)) {
                 await this.setInDBStore(unzippedEntry.blob, filename);
                 this.stored[filename] = true;
-                const fileSHA = await this.computeSha256(unzippedEntry.blob, (loaded, total) => {
-                  onVerifyProgress(loaded, total, filename)
-                });
+                const fileSHA = await this.computeSha256(
+                  unzippedEntry.blob,
+                  (loaded, total) => {
+                    onVerifyProgress(loaded, total, filename);
+                  },
+                );
                 console.log(`File: ${unzippedEntry.name} SHA256: ${fileSHA}`);
               }
             }
@@ -201,7 +204,7 @@ export class Downloader {
       onprogress: (value, total) => {
         onProgress(value, total, dbFile);
       },
-      onend: () => { },
+      onend: () => {},
       useWebWorkers: true,
     });
     return blob;
