@@ -1,5 +1,5 @@
 {
-  "security_patch_level": "2018-01-05",
+  "security_patch_level": "2025-12-05",
   "steps": [
     {
       "mode": "bootloader",
