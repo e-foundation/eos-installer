@@ -185,13 +185,14 @@ export class DeviceManager {
     }
   }
 
-  async downloadAll(onProgress, onUnzip) {
+  async downloadAll(onProgress, onUnzip, onVerify) {
     try {
       await this.downloader.downloadAndUnzipFolder(
         this.files,
         this.folder,
         onProgress,
         onUnzip,
+        onVerify,
       );
     } catch (e) {
       throw new Error(`downloadAll error ${e.message || e}`);

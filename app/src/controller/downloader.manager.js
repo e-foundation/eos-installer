@@ -3,6 +3,7 @@ const DB_VERSION = 1;
 
 import ky from "ky";
 import { ZipReader, BlobReader, BlobWriter } from "@zip.js/zip.js";
+import { createSHA256 } from "hash-wasm";
 
 /**
  * Download Manager
@@ -31,6 +32,7 @@ export class Downloader {
     folder,
     onDownloadProgress,
     onUnzipProgress,
+    onVerifyProgress,
   ) {
     let current_file;
     try {
@@ -38,9 +40,43 @@ export class Downloader {
         const file = folder[i];
         current_file = file.path;
         if (filesRequired.includes(file.name) || file.unzip) {
-          const blob = await this.download(file.path, (value, total) => {
-            onDownloadProgress(value, total, file.name);
-          });
+          const MAX_RETRIES = 3;
+          let attempt = 0;
+          let blob;
+          let checksumSuccess = false;
+
+          while (attempt < MAX_RETRIES && !checksumSuccess) {
+            attempt++;
+            try {
+              blob = await this.download(file.path, (value, total) => {
+                onDownloadProgress(value, total, file.name);
+              });
+
+              // Simple zip integrity check: fetch "<path>.sha256sum" and compare.
+              const expected = await this.fetchChecksum(
+                `${file.path}.sha256sum`,
+              );
+              const actual = await this.computeSha256(blob, (loaded, total) => {
+                onVerifyProgress(loaded, total, file.name);
+              });
+              if (expected && actual !== expected) {
+                throw new Error(
+                  `Checksum mismatch for ${file.name}: expected ${expected} got ${actual}`,
+                );
+              }
+              checksumSuccess = true;
+            } catch (err) {
+              console.warn(
+                `Attempt ${attempt}/${MAX_RETRIES} failed for ${file.name}: ${err.message}`,
+              );
+              if (attempt >= MAX_RETRIES) {
+                throw new Error(
+                  `Failed to download and verify ${file.name} after ${MAX_RETRIES} attempts: ${err.message}`,
+                );
+              }
+            }
+          }
+
           if (file.unzip) {
             const zipReader = new ZipReader(new BlobReader(blob));
             const filesEntries = await zipReader.getEntries();
@@ -58,6 +94,13 @@ export class Downloader {
               if (filesRequired.includes(filename)) {
                 await this.setInDBStore(unzippedEntry.blob, filename);
                 this.stored[filename] = true;
+                const fileSHA = await this.computeSha256(
+                  unzippedEntry.blob,
+                  (loaded, total) => {
+                    onVerifyProgress(loaded, total, filename);
+                  },
+                );
+                console.log(`File: ${unzippedEntry.name} SHA256: ${fileSHA}`);
               }
             }
             await zipReader.close();
@@ -101,6 +144,41 @@ export class Downloader {
       }
     }
     return filename;
+  }
+
+  async fetchChecksum(url) {
+    const res = await ky.get(url);
+    if (!res.ok) {
+      throw new Error(`Cannot fetch checksum (${res.status})`);
+    }
+    const body = (await res.text()).trim();
+    const match = body.match(/[a-fA-F0-9]{64}/);
+    if (!match) {
+      throw new Error("Invalid checksum content");
+    }
+    return match[0].toLowerCase();
+  }
+
+  /**
+   * Streaming SHA-256 computation for large files.
+   * Processes blob in 16MB chunks to avoid memory limits on low-memory devices.
+   */
+  async computeSha256(blob, onVerifyProgress) {
+    const CHUNK_SIZE = 16 * 1024 * 1024; // 16MB chunks
+    const hasher = await createSHA256();
+    const blobSize = blob.size;
+    hasher.init();
+
+    let offset = 0;
+    while (offset < blobSize) {
+      const chunk = blob.slice(offset, offset + CHUNK_SIZE);
+      const buffer = await chunk.arrayBuffer();
+      hasher.update(new Uint8Array(buffer));
+      onVerifyProgress(offset, blobSize);
+      offset += CHUNK_SIZE;
+    }
+
+    return hasher.digest("hex");
   }
 
   /**
