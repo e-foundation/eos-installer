@@ -74,7 +74,7 @@ export class Bootloader extends Device {
 
   async flashBlob(partition, blob, onProgress, retryCount = 0) {
     const MAX_RETRIES = 3;
-    const RETRY_DELAY_MS = 1000; // Wait before retry to let device stabilize
+    const RETRY_DELAY_MS = 3000; // Wait before retry to let device stabilize
 
     // Pre-flash check: ensure device is still connected
     if (!this.device.isConnected) {

@@ -160,7 +160,7 @@ export class Controller {
       case Command.CMD_TYPE.erase:
         return this.deviceManager.erase(cmd.partition);
       case Command.CMD_TYPE.flash: {
-        const FLASH_COOLDOWN_MS = 500; // Brief pause after flash to let device stabilize
+        const FLASH_COOLDOWN_MS = 5000; // Pause after flash to let device stabilize
         const result = await this.deviceManager.flash(
           cmd.file,
           cmd.partition,
