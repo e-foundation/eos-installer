@@ -8,9 +8,8 @@ import { ADB } from "./adb.class.js";
 export class Recovery extends Device {
   constructor(device) {
     super(device);
-    this.webusb = null;
     this.count = 0;
-    this.adbWebBackend = null;
+    this.adbDaemonWebUsbDevice = null;
   }
 
   async isConnected() {
@@ -211,11 +210,11 @@ export class Recovery extends Device {
   }
 
   getProductName() {
-    return this.webusb.name;
+    return this.adbDaemonWebUsbDevice?.productName;
   }
 
   getSerialNumber() {
-    return this.webusb.product;
+    return this.adbDaemonWebUsbDevice?.serialNumber;
   }
 
   async adbOpen(blob) {
