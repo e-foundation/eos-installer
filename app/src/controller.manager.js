@@ -33,7 +33,6 @@ export class Controller {
     WDebug.log("Controller Manager Next", next);
 
     if (next) {
-      //K1ZFP check this
       if (next.mode) {
         //if next step require another mode [adb|fastboot|bootloader]
         if (this.deviceManager.isConnected() && !this.inInMode(next.mode)) {
@@ -138,12 +137,10 @@ export class Controller {
       case Command.CMD_TYPE.reboot:
         try {
           await this.deviceManager.reboot(cmd.mode);
+          return true;
         } catch (e) {
-          console.error(e);
-          //K1ZFP TODO
-          return false;
+          throw new Error(`Reboot to ${cmd.mode} failed: ${e.message || e}`);
         }
-        return true;
       case Command.CMD_TYPE.connect: {
         const proposal =
           "Proposal: Check connection and that no other program is using the phone and retry.";
@@ -251,8 +248,7 @@ export class Controller {
           await this.deviceManager.sideload(cmd.file);
           return true;
         } catch (e) {
-          console.error(e); // K1ZFP TODO
-          return false;
+          throw new Error(`Sideload ${cmd.file} failed: ${e.message || e}`);
         }
       case Command.CMD_TYPE.format:
         try {
