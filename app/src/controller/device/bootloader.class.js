@@ -72,7 +72,8 @@ export class Bootloader extends Device {
     );
   }
 
-  async flashBlob(partition, blob, onProgress) {
+  async flashBlob(partition, blob, onProgress, retryCount = 0) {
+    const MAX_RETRIES = 3;
     try {
       await this.device.flashBlob(partition, blob, (progress) => {
         onProgress(progress * blob.size, blob.size, partition);
@@ -81,8 +82,11 @@ export class Bootloader extends Device {
       return true;
     } catch (e) {
       if (e instanceof TimeoutError) {
-        WDebug.log("Timeout on flashblob >" + partition);
-        return await this.flashBlob(partition, blob, onProgress);
+        WDebug.log(`Timeout on flashblob > ${partition} (attempt ${retryCount + 1}/${MAX_RETRIES})`);
+        if (retryCount < MAX_RETRIES) {
+          return await this.flashBlob(partition, blob, onProgress, retryCount + 1);
+        }
+        throw new Error(`Bootloader timeout: flashing ${partition} failed after ${MAX_RETRIES} retries`);
       } else {
         console.log("flashBlob error", e);
         throw new Error(`Bootloader error: ${e.message || e}`);
