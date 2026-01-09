@@ -191,13 +191,16 @@ export class Controller {
         );
         if (!isUnlocked) {
           try {
-            this.deviceManager.unlock(cmd.command); // Do not await thus display unlocking screen
+            await this.deviceManager.unlock(cmd.command);
           } catch (e) {
             //on some device, check unlocked does not work but when we try the command, it throws an error with "already unlocked"
             if (e.bootloaderMessage?.includes("already")) {
               WDebug.log("device already unlocked");
             } else if (e.bootloaderMessage?.includes("not allowed")) {
-              WDebug.log("device  unlock is not allowed");
+              WDebug.log("device unlock is not allowed");
+              throw new Error(`Unlock not allowed: ${e.message || e}`);
+            } else {
+              throw e;
             }
           }
         } else {
@@ -228,13 +231,15 @@ export class Controller {
         }
         if (!isLocked) {
           try {
-            this.deviceManager.lock(cmd.command); // Do not await thus display unlocking screen
+            await this.deviceManager.lock(cmd.command);
+            isLocked = true;
           } catch (e) {
             //on some device, check unlocked does not work but when we try the command, it throws an error with "already locked"
             if (e.bootloaderMessage?.includes("already")) {
+              WDebug.log("device already locked");
               isLocked = true;
             } else {
-              console.error(e); //K1ZFP TODO
+              throw new Error(`Lock failed: ${e.message || e}`);
             }
           }
         }
