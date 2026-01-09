@@ -251,11 +251,10 @@ export class Controller {
         }
       case Command.CMD_TYPE.format:
         try {
-          this.deviceManager.format(cmd.partition);
+          return this.deviceManager.format(cmd.partition);
         } catch (e) {
-          console.error(e); // K1ZFP TODO
+          throw new Error(`Format ${cmd.partition} failed: ${e.message || e}`);
         }
-        return true;
       case Command.CMD_TYPE.delay:
         await new Promise((resolve) => setTimeout(resolve, cmd.partition));
         return true;
