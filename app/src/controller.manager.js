@@ -251,7 +251,7 @@ export class Controller {
         }
       case Command.CMD_TYPE.format:
         try {
-          this.deviceManager.for(cmd.partition);
+          this.deviceManager.format(cmd.partition);
         } catch (e) {
           console.error(e); // K1ZFP TODO
         }
