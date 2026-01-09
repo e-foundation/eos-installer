@@ -124,6 +124,12 @@ export class Bootloader extends Device {
           WDebug.log(`Waiting ${RETRY_DELAY_MS}ms before retry...`);
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
 
+          // Try to reset USB device to clear stale state
+          if (typeof this.device.resetDevice === 'function') {
+            WDebug.log("Attempting USB device reset...");
+            await this.device.resetDevice();
+          }
+
           // Check if device is still connected before retry
           if (!this.device.isConnected) {
             throw new Error(
