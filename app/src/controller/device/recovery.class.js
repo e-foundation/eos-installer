@@ -12,12 +12,12 @@ export class Recovery extends Device {
     this.adbDaemonWebUsbDevice = null;
   }
 
-  async isConnected() {
+  isConnected() {
     if (!this.device) {
       return false;
     }
     try {
-      return this.device.getDevice();
+      return !!this.device.getDevice();
     } catch {
       return false;
     }

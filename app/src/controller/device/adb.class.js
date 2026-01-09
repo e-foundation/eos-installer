@@ -13,12 +13,12 @@ export class ADB extends Device {
     this.webusb = null;
   }
 
-  async isConnected() {
+  isConnected() {
     if (!this.device) {
       return false;
     }
     try {
-      return this.device.getDevice();
+      return !!this.device.getDevice();
     } catch {
       return false;
     }
