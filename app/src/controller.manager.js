@@ -273,8 +273,8 @@ export class Controller {
 
   async onDeviceConnected() {
     const productName = this.deviceManager.getProductName();
-    const wasAlreadyConnected = this.deviceManager.wasAlreadyConnected();
-    if (!wasAlreadyConnected) {
+    if (this.deviceManager.isFirstConnection()) {
+      this.deviceManager.markAsConnected();
       this.view.updateData("product-name", productName);
       this.model = productName;
       WDebug.log("ControllerManager Model:", this.model);

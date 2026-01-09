@@ -34,12 +34,12 @@ export class DeviceManager {
     await this.downloader.init();
   }
 
-  wasAlreadyConnected() {
-    if (this.wasConnected == false) {
-      this.wasConnected = true;
-      return false;
-    }
-    return true;
+  isFirstConnection() {
+    return !this.wasConnected;
+  }
+
+  markAsConnected() {
+    this.wasConnected = true;
   }
 
   setResources(folder, steps) {
