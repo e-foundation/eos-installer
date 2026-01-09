@@ -4,6 +4,7 @@
   "version": "0.13.4",
   "type": "module",
   "scripts": {
+    "build-fastboot": "cd node_modules/@e/fastboot && npm install && npm run build",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -19,14 +20,14 @@
     "vite-plugin-static-copy": "^2.2.0"
   },
   "dependencies": {
-    "@e/fastboot": "1.1.4",
-    "hash-wasm": "^4.11.0",
+    "@e/fastboot": "https://gitlab.e.foundation/e/tools/fastboot.js/-/archive/1594devices_eos_installer-code-safety/fastboot.js-1594devices_eos_installer-code-safety.tar",
     "@yume-chan/adb": "1.1.0",
-    "@yume-chan/adb-daemon-webusb": "1.1.0",
     "@yume-chan/adb-credential-web": "1.1.0",
+    "@yume-chan/adb-daemon-webusb": "1.1.0",
     "@yume-chan/stream-extra": "1.0.0",
     "@yume-chan/struct": "1.0.0",
     "@zip.js/zip.js": "^2.7.54",
+    "hash-wasm": "^4.11.0",
     "ky": "^1.7.4"
   }
 }
