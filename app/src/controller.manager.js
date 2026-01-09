@@ -159,14 +159,19 @@ export class Controller {
       }
       case Command.CMD_TYPE.erase:
         return this.deviceManager.erase(cmd.partition);
-      case Command.CMD_TYPE.flash:
-        return this.deviceManager.flash(
+      case Command.CMD_TYPE.flash: {
+        const FLASH_COOLDOWN_MS = 500; // Brief pause after flash to let device stabilize
+        const result = await this.deviceManager.flash(
           cmd.file,
           cmd.partition,
           (done, total) => {
             this.view.onInstalling(cmd.file, done, total);
           },
         );
+        // Small delay between flash operations to prevent overwhelming the device
+        await new Promise(resolve => setTimeout(resolve, FLASH_COOLDOWN_MS));
+        return result;
+      }
       case Command.CMD_TYPE.unlock: {
         //check if unlocked to avoid unnecessary command
         let isUnlocked = false;
