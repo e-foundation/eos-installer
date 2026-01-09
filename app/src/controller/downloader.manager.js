@@ -22,7 +22,6 @@ export class Downloader {
 
     this.db = await this.openDBStore();
     await this.clearDBStore();
-    this.quota = await navigator.storage.estimate();
   }
 
   /*
