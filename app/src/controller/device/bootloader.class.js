@@ -104,7 +104,7 @@ export class Bootloader extends Device {
         const unlocked = await this.device.getVariable(variable);
         return !(!unlocked || unlocked === "no");
       } catch (e) {
-        console.error(e); // K1ZFP TODO
+        console.error("isUnlocked check failed:", e);
         throw e;
       }
     }
@@ -117,7 +117,7 @@ export class Bootloader extends Device {
         const unlocked = await this.device.getVariable(variable);
         return !unlocked || unlocked === "no";
       } catch (e) {
-        console.error(e); //K1ZFP TODO
+        console.error("isLocked check failed:", e);
         throw e;
       }
     }
@@ -128,7 +128,7 @@ export class Bootloader extends Device {
     if (command) {
       await this.device.runCommand(command);
     } else {
-      throw Error("no unlock command configured"); //K1ZFP TODO
+      throw new Error("No unlock command configured for this device");
     }
   }
 
@@ -137,7 +137,7 @@ export class Bootloader extends Device {
       await this.device.runCommand(command);
       return !(await this.isUnlocked());
     } else {
-      throw Error("no lock command configured"); //K1ZFP TODO
+      throw new Error("No lock command configured for this device");
     }
   }
 }
