@@ -100,9 +100,9 @@ export class Recovery extends Device {
       for (const interface_ of configuration.interfaces) {
         for (const alternate of interface_.alternates) {
           if (
-            alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode &&
             alternate.interfaceClass === WebUsbDeviceFilter.classCode &&
-            alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode
+            alternate.interfaceSubclass === WebUsbDeviceFilter.subclassCode &&
+            alternate.interfaceProtocol === WebUsbDeviceFilter.protocolCode
           ) {
             if (
               ((_a = this.adbDaemonWebUsbDevice.configuration) === null ||
