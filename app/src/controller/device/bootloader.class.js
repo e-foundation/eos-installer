@@ -82,7 +82,9 @@ export class Bootloader extends Device {
     }
 
     try {
-      WDebug.log(`Flashing ${partition} (${(blob.size / 1024 / 1024).toFixed(1)} MB)...`);
+      WDebug.log(
+        `Flashing ${partition} (${(blob.size / 1024 / 1024).toFixed(1)} MB)...`,
+      );
       await this.device.flashBlob(partition, blob, (progress) => {
         onProgress(progress * blob.size, blob.size, partition);
       });
@@ -90,22 +92,26 @@ export class Bootloader extends Device {
       return true;
     } catch (e) {
       if (e instanceof TimeoutError) {
-        WDebug.log(`Timeout on flashblob > ${partition} (attempt ${attempt}/${MAX_ATTEMPTS})`);
+        WDebug.log(
+          `Timeout on flashblob > ${partition} (attempt ${attempt}/${MAX_ATTEMPTS})`,
+        );
         if (attempt < MAX_ATTEMPTS) {
           // Wait before retry to allow device to recover
           WDebug.log(`Waiting ${RETRY_DELAY_MS}ms before retry...`);
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
 
           // Check if device is still connected before retry
           if (!this.device.isConnected) {
-            throw new Error(`Device disconnected during flash of ${partition}. Please reconnect and try again.`);
+            throw new Error(
+              `Device disconnected during flash of ${partition}. Please reconnect and try again.`,
+            );
           }
 
           return await this.flashBlob(partition, blob, onProgress, attempt + 1);
         }
         throw new Error(
           `Bootloader timeout: flashing ${partition} failed after ${MAX_ATTEMPTS} attempts. ` +
-          `Try using a different USB port or cable.`
+            `Try using a different USB port or cable.`,
         );
       } else {
         console.log("flashBlob error", e);
