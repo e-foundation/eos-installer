@@ -44,10 +44,34 @@ export class Bootloader extends Device {
   }
 
   async connect() {
-    try {
-      await this.device.connect();
-    } catch (e) {
-      throw new Error("Cannot connect Bootloader", `${e.message || e}`);
+    const MAX_CONNECT_ATTEMPTS = 3;
+    const CONNECT_RETRY_DELAY = 2000; // 2 seconds
+
+    for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
+      try {
+        WDebug.log(`Connecting to bootloader (attempt ${attempt}/${MAX_CONNECT_ATTEMPTS})...`);
+        await this.device.connect();
+        WDebug.log(`Successfully connected to bootloader on attempt ${attempt}`);
+        return;
+      } catch (e) {
+        const errorMsg = e.message || String(e);
+        WDebug.log(`Bootloader connection attempt ${attempt} failed: ${errorMsg}`);
+
+        // If this is the last attempt, throw the error
+        if (attempt === MAX_CONNECT_ATTEMPTS) {
+          throw new Error(
+            `Cannot connect to bootloader after ${MAX_CONNECT_ATTEMPTS} attempts. ` +
+            `The device may not be in bootloader mode yet. ` +
+            `Please ensure the device is in bootloader/fastboot mode and try again. ` +
+            `Error: ${errorMsg}`
+          );
+        }
+
+        // Wait before retry, with increasing delay
+        const delay = CONNECT_RETRY_DELAY * attempt;
+        WDebug.log(`Waiting ${delay}ms before retry...`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+      }
     }
   }
 
