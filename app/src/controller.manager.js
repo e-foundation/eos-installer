@@ -169,7 +169,7 @@ export class Controller {
           },
         );
         // Small delay between flash operations to prevent overwhelming the device
-        await new Promise(resolve => setTimeout(resolve, FLASH_COOLDOWN_MS));
+        await new Promise((resolve) => setTimeout(resolve, FLASH_COOLDOWN_MS));
         return result;
       }
       case Command.CMD_TYPE.unlock: {
