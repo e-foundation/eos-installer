@@ -7,10 +7,6 @@ export class Device {
 
   async connect() {}
 
-  isConnected() {
-    return false;
-  }
-
   isADB() {
     return false;
   }
