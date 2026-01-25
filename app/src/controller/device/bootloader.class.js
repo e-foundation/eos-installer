@@ -35,10 +35,6 @@ export class Bootloader extends Device {
     return this.device.runCommand(command);
   }
 
-  isConnected() {
-    return this.device.isConnected;
-  }
-
   isBootloader() {
     return true;
   }

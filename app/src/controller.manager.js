@@ -35,13 +35,11 @@ export class Controller {
     if (next) {
       if (next.mode) {
         //if next step require another mode [adb|fastboot|bootloader]
-        if (this.deviceManager.isConnected() && !this.inInMode(next.mode)) {
+        if (!this.inInMode(next.mode)) {
           //we need reboot
           await this.deviceManager.reboot(next.mode);
         }
-        if (!this.deviceManager.isConnected()) {
-          await this.deviceManager.connect(next.mode);
-        }
+        await this.deviceManager.connect(next.mode);
       }
       this.currentIndex++;
       current = this.steps[this.currentIndex];

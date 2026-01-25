@@ -98,24 +98,19 @@ export class DeviceManager {
     }
   }
 
-  isConnected() {
-    return this.device.isConnected();
-  }
   /**
    * @param mode
    * @returns {boolean}
    *
    */
   isInMode(mode) {
-    if (this.isConnected()) {
-      switch (mode) {
-        case "bootloader":
-          return this.device.isBootloader();
-        case "adb":
-          return this.device.isADB();
-        case "recovery":
-          return this.device.isRecovery();
-      }
+    switch (mode) {
+      case "bootloader":
+        return this.device.isBootloader();
+      case "adb":
+        return this.device.isADB();
+      case "recovery":
+        return this.device.isRecovery();
     }
     return false;
   }
