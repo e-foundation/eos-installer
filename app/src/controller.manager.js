@@ -167,6 +167,7 @@ export class Controller {
           },
         );
         // Small delay between flash operations to prevent overwhelming the device
+        WDebug.log(`Flash cooldown: waiting ${FLASH_COOLDOWN_MS}ms before next operation`);
         await new Promise((resolve) => setTimeout(resolve, FLASH_COOLDOWN_MS));
         return result;
       }
