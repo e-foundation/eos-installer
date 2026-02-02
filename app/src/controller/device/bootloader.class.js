@@ -130,9 +130,49 @@ export class Bootloader extends Device {
     );
   }
 
+  /**
+   * Close the USB device and re-establish a fresh connection.
+   * This is more thorough than resetDevice() and helps recover from
+   * degraded USB sessions (e.g., AMD Ryzen + Mediatek).
+   */
+  async reconnectDevice() {
+    const usbDevice = this.device.device;
+    if (!usbDevice) {
+      WDebug.log("reconnectDevice: no USB device reference, skipping");
+      return;
+    }
+
+    // Release interface and close the device
+    try {
+      if (usbDevice.opened) {
+        WDebug.log("reconnectDevice: releasing interface and closing device...");
+        await usbDevice.releaseInterface(0);
+        await usbDevice.close();
+        WDebug.log("reconnectDevice: device closed");
+      }
+    } catch (e) {
+      WDebug.log(`reconnectDevice: close failed: ${e.message || e}`);
+    }
+
+    // Wait for USB bus to stabilize after close
+    const RECONNECT_SETTLE_MS = 2000;
+    WDebug.log(
+      `reconnectDevice: waiting ${RECONNECT_SETTLE_MS}ms for USB bus to settle...`,
+    );
+    await new Promise((resolve) => setTimeout(resolve, RECONNECT_SETTLE_MS));
+
+    // Re-establish connection (will find paired device via getDevices())
+    WDebug.log("reconnectDevice: re-establishing connection...");
+    await this.device.connect();
+    WDebug.log(
+      `reconnectDevice: connection re-established, isConnected=${this.device.isConnected}`,
+    );
+  }
+
   async flashBlob(partition, blob, onProgress, attempt = 1) {
     const MAX_ATTEMPTS = 3;
-    const RETRY_DELAY_MS = 3000; // Wait before retry to let device stabilize
+    const RETRY_DELAY_MS = 5000; // Wait before retry to let device stabilize
+    const flashStart = Date.now();
 
     // Pre-flash check: ensure device is still connected
     if (!this.device.isConnected) {
@@ -141,27 +181,48 @@ export class Bootloader extends Device {
 
     try {
       WDebug.log(
-        `Flashing ${partition} (${(blob.size / 1024 / 1024).toFixed(1)} MB)...`,
+        `flashBlob: ${partition} (${(blob.size / 1024 / 1024).toFixed(1)} MB), ` +
+          `attempt ${attempt}/${MAX_ATTEMPTS}`,
       );
       await this.device.flashBlob(partition, blob, (progress) => {
         onProgress(progress * blob.size, blob.size, partition);
       });
       onProgress(blob.size, blob.size, partition);
+      const elapsed = Date.now() - flashStart;
+      WDebug.log(`flashBlob: ${partition} succeeded in ${elapsed}ms`);
       return true;
     } catch (e) {
       if (e instanceof TimeoutError) {
+        const elapsed = Date.now() - flashStart;
         WDebug.log(
-          `Timeout on flashblob > ${partition} (attempt ${attempt}/${MAX_ATTEMPTS})`,
+          `flashBlob: timeout on ${partition} after ${elapsed}ms ` +
+            `(attempt ${attempt}/${MAX_ATTEMPTS})`,
         );
         if (attempt < MAX_ATTEMPTS) {
-          // Wait before retry to allow device to recover
-          WDebug.log(`Waiting ${RETRY_DELAY_MS}ms before retry...`);
+          WDebug.log(`flashBlob: waiting ${RETRY_DELAY_MS}ms before retry...`);
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
 
           // Try to reset USB device to clear stale state
           if (typeof this.device.resetDevice === 'function') {
-            WDebug.log("Attempting USB device reset...");
-            await this.device.resetDevice();
+            WDebug.log("flashBlob: attempting USB device reset...");
+            try {
+              await this.device.resetDevice();
+              WDebug.log("flashBlob: USB device reset succeeded");
+            } catch (resetErr) {
+              WDebug.log(
+                `flashBlob: USB device reset failed: ${resetErr.message || resetErr}`,
+              );
+            }
+          }
+
+          // Reconnect for a fresh USB session
+          WDebug.log("flashBlob: reconnecting for fresh USB session...");
+          try {
+            await this.reconnectDevice();
+          } catch (reconnErr) {
+            WDebug.log(
+              `flashBlob: reconnect failed: ${reconnErr.message || reconnErr}`,
+            );
           }
 
           // Check if device is still connected before retry
