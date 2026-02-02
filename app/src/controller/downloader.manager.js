@@ -15,6 +15,7 @@ export class Downloader {
   constructor() {
     this.db = null;
     this.stored = {};
+    this.localZipFile = null;
   }
 
   async init() {
@@ -23,6 +24,18 @@ export class Downloader {
     this.db = await this.openDBStore();
     await this.clearDBStore();
     this.quota = await navigator.storage.estimate();
+  }
+
+  setLocalZip(file) {
+    this.localZipFile = file;
+  }
+
+  clearLocalZip() {
+    this.localZipFile = null;
+  }
+
+  hasLocalZip() {
+    return !!this.localZipFile;
   }
 
   /*
@@ -34,6 +47,8 @@ export class Downloader {
     onUnzipProgress,
     onVerifyProgress,
   ) {
+    await this.clearDBStore();
+    this.stored = {};
     let current_file;
     try {
       for (let i = 0; i < folder.length; i++) {
@@ -115,6 +130,54 @@ export class Downloader {
         `downloadAndUnzipFolder Error <br/>current_file ${current_file} <br/> ${e.message || e}`,
       );
     }
+  }
+
+  async ingestLocalZip(
+    filesRequired,
+    folder,
+    onDownloadProgress,
+    onUnzipProgress,
+    onVerifyProgress,
+  ) {
+    await this.clearDBStore();
+    this.stored = {};
+    if (!this.localZipFile) {
+      throw new Error("No local zip file selected");
+    }
+    const zipDescriptor = folder.find((f) => f.unzip) || folder[0];
+    if (!zipDescriptor) {
+      throw new Error("No zip resource found to map local file");
+    }
+
+    onDownloadProgress(
+      this.localZipFile.size,
+      this.localZipFile.size,
+      this.localZipFile.name || zipDescriptor.name || "local.zip",
+    );
+
+    const zipReader = new ZipReader(new BlobReader(this.localZipFile));
+    const filesEntries = await zipReader.getEntries();
+    for (let i = 0; i < filesEntries.length; i++) {
+      const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
+        onUnzipProgress(value, total, filesEntries[i].filename);
+      });
+      let filename = this.getMappedName(
+        filesEntries[i].filename,
+        zipDescriptor.mapping,
+      );
+      if (filesRequired.includes(filename)) {
+        await this.setInDBStore(unzippedEntry.blob, filename);
+        this.stored[filename] = true;
+        const fileSHA = await this.computeSha256(
+          unzippedEntry.blob,
+          (loaded, total) => {
+            onVerifyProgress(loaded, total, filename);
+          },
+        );
+        console.log(`File: ${unzippedEntry.name} SHA256: ${fileSHA}`);
+      }
+    }
+    await zipReader.close();
   }
 
   async getFileFromZip(file, onProgress) {

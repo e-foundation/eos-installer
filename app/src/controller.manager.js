@@ -413,7 +413,7 @@ export class Controller {
   setResources(resources) {
     this.resources = resources;
     if (this.resources.steps) {
-      this.steps.push(new Step("downloading", "download", false));
+      this.steps.push(new Step("downloading", "download", true));
       this.steps.push(
         ...this.resources.steps.map((step) => {
           return new Step(
@@ -427,5 +427,13 @@ export class Controller {
       this.view.updateTotalStep(this.steps.length);
     }
     this.deviceManager.setResources(this.resources.folder, this.steps);
+  }
+
+  setLocalZip(file) {
+    this.deviceManager.setLocalZipFile(file);
+  }
+
+  clearLocalZip() {
+    this.deviceManager.clearLocalZipFile();
   }
 }

@@ -32,12 +32,16 @@ export default class ViewManager {
       $copyStep.id = step.id;
       $copyStep.classList.add("active");
       $copyStep.classList.remove("inactive");
-      const $button = $copyStep.querySelector("button");
-      if ($button) {
-        $button.addEventListener("click", async (event) => {
-          event.stopPropagation();
-          await this.executeStep($button, step.name);
-        });
+      if (step.name === "downloading") {
+        this.bindDownloadChoice($copyStep, step);
+      } else {
+        const $button = $copyStep.querySelector("button");
+        if ($button) {
+          $button.addEventListener("click", async (event) => {
+            event.stopPropagation();
+            await this.executeStep($button, step.name);
+          });
+        }
       }
       let $processCtn = document.getElementById("process-ctn");
       if ($processCtn) {
@@ -222,6 +226,57 @@ export default class ViewManager {
   }
 
   // /CONTROLLER EVENTS
+  bindDownloadChoice($copyStep, step) {
+    const downloadBtn = $copyStep.querySelector(".download-build-button");
+    const localBtn = $copyStep.querySelector(".use-local-zip-button");
+    const fileInput = $copyStep.querySelector(".local-zip-input");
+    const errorEl = $copyStep.querySelector(".local-zip-error");
+
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", async (event) => {
+        event.stopPropagation();
+        if (errorEl) {
+          errorEl.style.display = "none";
+          errorEl.innerText = "";
+        }
+        this.controller.clearLocalZip();
+        await this.executeStep(downloadBtn, step.name);
+      });
+    }
+
+    if (localBtn && fileInput) {
+      localBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (errorEl) {
+          errorEl.style.display = "none";
+          errorEl.innerText = "";
+        }
+        fileInput.value = "";
+        fileInput.click();
+      });
+
+      fileInput.addEventListener("change", async (evt) => {
+        const file = evt.target.files[0];
+        if (!file) {
+          return;
+        }
+        if (!file.name.toLowerCase().endsWith(".zip")) {
+          if (errorEl) {
+            errorEl.innerText = "Please select a .zip file.";
+            errorEl.style.display = "block";
+          }
+          fileInput.value = "";
+          return;
+        }
+        if (errorEl) {
+          errorEl.style.display = "none";
+          errorEl.innerText = "";
+        }
+        this.controller.setLocalZip(file);
+        await this.executeStep(localBtn, step.name);
+      });
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -230,11 +285,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let elts = document.querySelectorAll(".card button");
   for (let elt of elts) {
-    if (elt.parentElement.parentElement.className.includes("inactive")) {
+    const card = elt.closest(".card");
+    if (!card || card.className.includes("inactive")) {
       continue;
     }
     elt.addEventListener("click", async () => {
-      VIEW.executeStep(elt, elt.parentElement.parentElement.id);
+      VIEW.executeStep(elt, card.id);
     });
   }
 });

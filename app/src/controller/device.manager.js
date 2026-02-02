@@ -27,6 +27,18 @@ export class DeviceManager {
     this.wasConnected = false;
   }
 
+  setLocalZipFile(file) {
+    this.downloader.setLocalZip(file);
+  }
+
+  clearLocalZipFile() {
+    this.downloader.clearLocalZip();
+  }
+
+  hasLocalZipFile() {
+    return this.downloader.hasLocalZip();
+  }
+
   async init() {
     await this.bootloader.init();
     await this.adb.init();
@@ -187,13 +199,23 @@ export class DeviceManager {
 
   async downloadAll(onProgress, onUnzip, onVerify) {
     try {
-      await this.downloader.downloadAndUnzipFolder(
-        this.files,
-        this.folder,
-        onProgress,
-        onUnzip,
-        onVerify,
-      );
+      if (this.downloader.hasLocalZip()) {
+        await this.downloader.ingestLocalZip(
+          this.files,
+          this.folder,
+          onProgress,
+          onUnzip,
+          onVerify,
+        );
+      } else {
+        await this.downloader.downloadAndUnzipFolder(
+          this.files,
+          this.folder,
+          onProgress,
+          onUnzip,
+          onVerify,
+        );
+      }
     } catch (e) {
       throw new Error(`downloadAll error ${e.message || e}`);
     }

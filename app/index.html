@@ -380,6 +380,25 @@
         <div class="card-header" data-translate="download-eos"></div>
         <div class="card-body">
           <p data-translate="this-might-take-some-time-please-be-patient"></p>
+          <div class="download-actions text-center">
+            <div class="download-buttons">
+              <button class="next download-build-button">
+                Download build
+                <span class="btn-loader"></span>
+              </button>
+              <button class="next use-local-zip-button">
+                Use local ZIP
+                <span class="btn-loader"></span>
+              </button>
+            </div>
+            <input
+              class="local-zip-input"
+              type="file"
+              accept=".zip"
+              hidden
+            />
+            <p class="local-zip-error" style="display: none; color: red"></p>
+          </div>
           <div class="text-center large-padding">
             <p class="downloading-progress"></p>
             <progress class="downloading-progress-bar" max="100"></progress>
