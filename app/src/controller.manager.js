@@ -34,20 +34,40 @@ export class Controller {
 
     if (next) {
       if (next.mode) {
+        const alreadyInMode = this.inInMode(next.mode);
+        WDebug.log(
+          `next() step="${next.name}" requires mode="${next.mode}", ` +
+            `alreadyInMode=${alreadyInMode}, needUserGesture=${next.needUserGesture}`,
+        );
         //if next step require another mode [adb|fastboot|bootloader]
-        if (!this.inInMode(next.mode)) {
+        if (!alreadyInMode) {
           //we need reboot
+          WDebug.log(`next() rebooting to ${next.mode}...`);
           await this.deviceManager.reboot(next.mode);
+          WDebug.log(`next() reboot to ${next.mode} completed`);
         }
-        // Skip connect if the step requires a user gesture, since WebUSB
-        // requestDevice() can only be called from a user-initiated event.
-        // The connect will happen via executeStep when the user clicks.
-        if (!next.needUserGesture) {
+        if (next.needUserGesture) {
+          // Wait for the device to appear on the USB bus before showing the
+          // step. Some host controllers (AMD Ryzen) are slow to re-enumerate
+          // devices after a mode switch. The actual connect happens via
+          // executeStep when the user clicks (WebUSB requestDevice() requires
+          // a user gesture).
+          WDebug.log(
+            `next() waiting for device on USB bus (needUserGesture=true, deferring connect)...`,
+          );
+          await this.deviceManager.waitForDeviceOnBus();
+          WDebug.log(`next() device wait complete, showing step to user`);
+        } else {
+          WDebug.log(`next() connecting to ${next.mode} automatically...`);
           await this.deviceManager.connect(next.mode);
+          WDebug.log(`next() auto-connect to ${next.mode} completed`);
         }
       }
       this.currentIndex++;
       current = this.steps[this.currentIndex];
+      WDebug.log(
+        `next() advancing to step="${current.name}", needUserGesture=${current.needUserGesture}`,
+      );
       this.view.onStepStarted(this.currentIndex, current);
       if (!current.needUserGesture) {
         await this.executeStep(current.name);
