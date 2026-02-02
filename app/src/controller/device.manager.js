@@ -3,6 +3,7 @@ import { Downloader } from "./downloader.manager.js";
 import { ADB } from "./device/adb.class.js";
 import { Recovery } from "./device/recovery.class.js";
 import { Device } from "./device/device.class.js";
+import { WDebug } from "../debug.js";
 const MODE = {
   adb: "adb",
   recovery: "recovery",
@@ -178,6 +179,60 @@ export class DeviceManager {
     } catch (e) {
       throw new Error(`error ${command} failed <br/> ${e.message || e}`);
     }
+  }
+
+  /**
+   * Wait for a USB device to appear on the bus.
+   * Some USB host controllers (e.g., AMD Ryzen) are slow to re-enumerate
+   * devices after a mode switch, especially Mediatek bootloader devices.
+   * Resolves when a device appears or after timeout (does not reject).
+   */
+  waitForDeviceOnBus(timeoutMs = 30000) {
+    const startTime = Date.now();
+    return new Promise((resolve) => {
+      const devices = navigator.usb.getDevices();
+      devices.then((list) => {
+        WDebug.log(
+          `waitForDeviceOnBus: getDevices() returned ${list.length} device(s)`,
+          list.map((d) => `${d.vendorId}:${d.productId} "${d.productName}"`),
+        );
+        if (list.length > 0) {
+          WDebug.log("waitForDeviceOnBus: device already visible, no wait needed");
+          resolve();
+          return;
+        }
+
+        WDebug.log(
+          `waitForDeviceOnBus: no devices found, listening for USB connect event (timeout=${timeoutMs}ms)...`,
+        );
+
+        const timeout = setTimeout(() => {
+          navigator.usb.removeEventListener("connect", onConnect);
+          const elapsed = Date.now() - startTime;
+          WDebug.log(
+            `waitForDeviceOnBus: timeout after ${elapsed}ms, no device appeared. Proceeding anyway.`,
+          );
+          resolve();
+        }, timeoutMs);
+
+        const onConnect = (event) => {
+          const elapsed = Date.now() - startTime;
+          const d = event.device;
+          WDebug.log(
+            `waitForDeviceOnBus: USB connect event after ${elapsed}ms - ` +
+              `vendorId=${d.vendorId} productId=${d.productId} ` +
+              `productName="${d.productName}" serialNumber="${d.serialNumber}"`,
+          );
+          clearTimeout(timeout);
+          navigator.usb.removeEventListener("connect", onConnect);
+          // Small delay to let the device fully initialize after enumeration
+          WDebug.log("waitForDeviceOnBus: waiting 1000ms for device to stabilize...");
+          setTimeout(resolve, 1000);
+        };
+
+        navigator.usb.addEventListener("connect", onConnect);
+      });
+    });
   }
 
   async downloadAll(onProgress, onUnzip, onVerify) {

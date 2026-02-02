@@ -42,21 +42,38 @@ export class Bootloader extends Device {
   async connect() {
     const MAX_CONNECT_ATTEMPTS = 3;
     const CONNECT_RETRY_DELAY = 2000; // 2 seconds
+    const connectStart = Date.now();
+
+    WDebug.log(
+      `Bootloader.connect() starting, maxAttempts=${MAX_CONNECT_ATTEMPTS}, ` +
+        `retryDelay=${CONNECT_RETRY_DELAY}ms, ` +
+        `device.isConnected=${this.device.isConnected}`,
+    );
 
     for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
       try {
+        // Log paired devices before each attempt for debugging
+        const pairedDevices = await navigator.usb.getDevices();
         WDebug.log(
-          `Connecting to bootloader (attempt ${attempt}/${MAX_CONNECT_ATTEMPTS})...`,
+          `Bootloader.connect() attempt ${attempt}/${MAX_CONNECT_ATTEMPTS}: ` +
+            `${pairedDevices.length} paired USB device(s)`,
+          pairedDevices.map(
+            (d) => `${d.vendorId}:${d.productId} "${d.productName}"`,
+          ),
         );
+
         await this.device.connect();
+
+        const elapsed = Date.now() - connectStart;
         WDebug.log(
-          `Successfully connected to bootloader on attempt ${attempt}`,
+          `Bootloader.connect() succeeded on attempt ${attempt} after ${elapsed}ms`,
         );
         return;
       } catch (e) {
         const errorMsg = e.message || String(e);
+        const elapsed = Date.now() - connectStart;
         WDebug.log(
-          `Bootloader connection attempt ${attempt} failed: ${errorMsg}`,
+          `Bootloader.connect() attempt ${attempt} failed after ${elapsed}ms: ${errorMsg}`,
         );
 
         // If this is the last attempt, throw the error
@@ -71,13 +88,22 @@ export class Bootloader extends Device {
 
         // Wait before retry, with increasing delay
         const delay = CONNECT_RETRY_DELAY * attempt;
-        WDebug.log(`Waiting ${delay}ms before retry...`);
+        WDebug.log(
+          `Bootloader.connect() waiting ${delay}ms before attempt ${attempt + 1}...`,
+        );
         await new Promise((resolve) => setTimeout(resolve, delay));
 
         // Try to reset USB device to clear stale state
         if (typeof this.device.resetDevice === 'function') {
-          WDebug.log("Attempting USB device reset before reconnect...");
-          await this.device.resetDevice();
+          WDebug.log("Bootloader.connect() attempting USB device reset...");
+          try {
+            await this.device.resetDevice();
+            WDebug.log("Bootloader.connect() USB device reset succeeded");
+          } catch (resetErr) {
+            WDebug.log(
+              `Bootloader.connect() USB device reset failed: ${resetErr.message || resetErr}`,
+            );
+          }
         }
       }
     }
