@@ -39,7 +39,12 @@ export class Controller {
           //we need reboot
           await this.deviceManager.reboot(next.mode);
         }
-        await this.deviceManager.connect(next.mode);
+        // Skip connect if the step requires a user gesture, since WebUSB
+        // requestDevice() can only be called from a user-initiated event.
+        // The connect will happen via executeStep when the user clicks.
+        if (!next.needUserGesture) {
+          await this.deviceManager.connect(next.mode);
+        }
       }
       this.currentIndex++;
       current = this.steps[this.currentIndex];
