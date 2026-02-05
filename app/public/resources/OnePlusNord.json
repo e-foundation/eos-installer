@@ -38,11 +38,20 @@
     },
     {
       "id": "flashing",
-      "command": [
-        "flash dtbo dtbo.img",
-        "flash vbmeta vbmeta.img",
-        "flash recovery recovery.img"
-      ]
+      "command": ["flash dtbo dtbo.img", "flash vbmeta vbmeta.img"]
+    },
+    {
+      "command": "reboot bootloader"
+    },
+    {
+      "mode": "bootloader",
+      "id": "connect-bootloader",
+      "command": "connect bootloader",
+      "needUserGesture": true
+    },
+    {
+      "id": "flashing",
+      "command": ["flash recovery recovery.img"]
     },
     {
       "id": "bootloader-to-recovery-manually",
