@@ -197,7 +197,9 @@ export class DeviceManager {
           list.map((d) => `${d.vendorId}:${d.productId} "${d.productName}"`),
         );
         if (list.length > 0) {
-          WDebug.log("waitForDeviceOnBus: device already visible, no wait needed");
+          WDebug.log(
+            "waitForDeviceOnBus: device already visible, no wait needed",
+          );
           resolve();
           return;
         }
@@ -226,7 +228,9 @@ export class DeviceManager {
           clearTimeout(timeout);
           navigator.usb.removeEventListener("connect", onConnect);
           // Small delay to let the device fully initialize after enumeration
-          WDebug.log("waitForDeviceOnBus: waiting 1000ms for device to stabilize...");
+          WDebug.log(
+            "waitForDeviceOnBus: waiting 1000ms for device to stabilize...",
+          );
           setTimeout(resolve, 1000);
         };
 
