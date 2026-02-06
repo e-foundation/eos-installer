@@ -116,8 +116,9 @@ export class DeviceManager {
     return false;
   }
 
-  erase(partition) {
-    return this.bootloader.runCommand(`erase:${partition}`);
+  async erase(partition) {
+    await this.bootloader.runCommand(`erase:${partition}`);
+    return true;
   }
 
   format() {
@@ -126,12 +127,14 @@ export class DeviceManager {
     //        the fastboot format md_udc is not supported evne by the official fastboot program
   }
 
-  unlock(command) {
-    return this.bootloader.runCommand(command);
+  async unlock(command) {
+    await this.bootloader.runCommand(command);
+    return true;
   }
 
-  lock(command) {
-    return this.bootloader.runCommand(command);
+  async lock(command) {
+    await this.bootloader.runCommand(command);
+    return true;
   }
 
   async flash(file, partition, onProgress) {
