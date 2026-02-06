@@ -1,16 +1,11 @@
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
-
-import { AdbDaemonWebUsbDeviceManager } from "@yume-chan/adb-daemon-webusb";
-import { Adb, AdbDaemonTransport } from "@yume-chan/adb";
-import AdbWebCredentialStore from "@yume-chan/adb-credential-web";
+import { AdbDevice } from "../../lib/index.ts";
 
 export class ADB extends Device {
-  static Manager = AdbDaemonWebUsbDeviceManager.BROWSER;
-
   constructor(device) {
     super(device);
-    this.webusb = null;
+    this._adbDevice = null;
   }
 
   isADB() {
@@ -21,41 +16,18 @@ export class ADB extends Device {
     try {
       console.log("debug adb connect");
 
-      let adbDaemonWebUsbDevice =
-        await ADB.Manager.requestDevice(); /*AdbDaemonWebUsbDevice*/
-      if (typeof adbDaemonWebUsbDevice == "undefined") {
-        throw new Error("No device connected (1)");
-      }
+      // Try to find a paired device first, then request if needed
+      this._adbDevice = await AdbDevice.requestDevice();
+      await this._adbDevice.connect();
 
-      let connection;
-      try {
-        connection =
-          await adbDaemonWebUsbDevice.connect(); /*AdbDaemonWebUsbConnection*/
-      } catch (err) {
-        console.error(err);
-        const devices = await ADB.Manager.getDevices();
-        if (!devices.length) {
-          throw new Error("No device connected (2)");
-        }
-        adbDaemonWebUsbDevice = devices[0]; /*AdbDaemonWebUsbDevice*/
-      }
+      this.device = { name: this._adbDevice.usbDevice.productName };
 
-      const credentialStore = new AdbWebCredentialStore();
-      const transport = await AdbDaemonTransport.authenticate({
-        serial: connection.deserial,
-        connection,
-        credentialStore: credentialStore,
-      });
-      const adb = new Adb(transport);
-
-      this.device = adbDaemonWebUsbDevice;
-      this.webusb = adb; /*Adb*/
-
+      const banner = this._adbDevice.banner;
       WDebug.log("----------------------------------");
-      WDebug.log("Model", adb.transport.banner.model);
-      WDebug.log("product", adb.transport.banner.product);
-      WDebug.log("Name", adbDaemonWebUsbDevice.name);
-      WDebug.log(">Device (codename)", adb.transport.banner.device); // codemane
+      WDebug.log("Model", banner.model);
+      WDebug.log("product", banner.product);
+      WDebug.log("Name", this._adbDevice.usbDevice.productName);
+      WDebug.log(">Device (codename)", banner.device);
       WDebug.log("----------------------------------");
     } catch (e) {
       console.error(e);
@@ -65,24 +37,31 @@ export class ADB extends Device {
   }
 
   getProductName() {
-    return this.device.name;
+    return this._adbDevice?.usbDevice?.productName;
+  }
+
+  get banner() {
+    return this._adbDevice?.banner || { device: "", model: "", product: "" };
+  }
+
+  async getProp(name) {
+    return this._adbDevice.getProp(name);
   }
 
   async getAndroidVersion() {
-    return this.webusb.getProp("ro.build.version.release");
+    return this._adbDevice.getProp("ro.build.version.release");
   }
 
   async getSerialNumber() {
-    return this.webusb.getProp("ro.boot.serialno");
+    return this._adbDevice.getProp("ro.boot.serialno");
   }
 
   async runCommand(cmd) {
     WDebug.log("ADB Run command>", cmd);
-    return await this.webusb.exec(cmd);
+    return await this._adbDevice.shell(cmd);
   }
 
   async reboot(mode) {
-    const res = await this.webusb.power.reboot(mode);
-    return res;
+    return await this._adbDevice.reboot(mode);
   }
 }

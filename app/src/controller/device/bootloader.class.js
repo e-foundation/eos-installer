@@ -1,10 +1,9 @@
 import {
-  configureZip,
   FastbootDevice,
-  setDebugLevel,
   TimeoutError,
-  USER_ACTION_MAP,
-} from "@e/fastboot";
+  setLogLevel,
+  LogLevel,
+} from "../../lib/index.ts";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 
@@ -13,26 +12,20 @@ import { WDebug } from "../../debug.js";
  * */
 export class Bootloader extends Device {
   constructor() {
-    super(new FastbootDevice());
+    super(null);
+    this.fastboot = null;
   }
 
   async init() {
-    //await this.blobStore.init();
-    configureZip({
-      workerScripts: {
-        inflate: ["/vendor/z-worker-pako.js", "pako_inflate.min.js"],
-      },
-    });
-    // Enable verbose debug logging
-    setDebugLevel(2);
+    setLogLevel(LogLevel.Debug);
   }
 
   reboot(mode) {
-    return this.device.reboot(mode);
+    return this.fastboot.reboot(mode);
   }
 
   runCommand(command) {
-    return this.device.runCommand(command);
+    return this.fastboot.runCommand(command);
   }
 
   isBootloader() {
@@ -46,8 +39,7 @@ export class Bootloader extends Device {
 
     WDebug.log(
       `Bootloader.connect() starting, maxAttempts=${MAX_CONNECT_ATTEMPTS}, ` +
-        `retryDelay=${CONNECT_RETRY_DELAY}ms, ` +
-        `device.isConnected=${this.device.isConnected}`,
+        `retryDelay=${CONNECT_RETRY_DELAY}ms`,
     );
 
     for (let attempt = 1; attempt <= MAX_CONNECT_ATTEMPTS; attempt++) {
@@ -62,7 +54,11 @@ export class Bootloader extends Device {
           ),
         );
 
-        await this.device.connect();
+        // On first attempt or after a failed reconnect, create a new device
+        if (!this.fastboot) {
+          this.fastboot = await FastbootDevice.requestDevice();
+        }
+        await this.fastboot.connect();
 
         const elapsed = Date.now() - connectStart;
         WDebug.log(
@@ -94,15 +90,16 @@ export class Bootloader extends Device {
         await new Promise((resolve) => setTimeout(resolve, delay));
 
         // Try to reset USB device to clear stale state
-        if (typeof this.device.resetDevice === 'function') {
+        if (this.fastboot) {
           WDebug.log("Bootloader.connect() attempting USB device reset...");
           try {
-            await this.device.resetDevice();
+            await this.fastboot.resetDevice();
             WDebug.log("Bootloader.connect() USB device reset succeeded");
           } catch (resetErr) {
             WDebug.log(
               `Bootloader.connect() USB device reset failed: ${resetErr.message || resetErr}`,
             );
+            this.fastboot = null; // Force new device on next attempt
           }
         }
       }
@@ -110,24 +107,11 @@ export class Bootloader extends Device {
   }
 
   getProductName() {
-    return this.device.device.productName;
+    return this.fastboot?.usbDevice?.productName;
   }
 
   getSerialNumber() {
-    return this.device.device.serialNumber;
-  }
-
-  async flashFactoryZip(blob, onProgress, onReconnect) {
-    await this.device.flashFactoryZip(
-      blob,
-      false,
-      onReconnect,
-      // Progress callback
-      (action, item, progress) => {
-        let userAction = USER_ACTION_MAP[action];
-        onProgress(userAction, item, progress);
-      },
-    );
+    return this.fastboot?.usbDevice?.serialNumber;
   }
 
   /**
@@ -136,37 +120,21 @@ export class Bootloader extends Device {
    * degraded USB sessions (e.g., AMD Ryzen + Mediatek).
    */
   async reconnectDevice() {
-    const usbDevice = this.device.device;
-    if (!usbDevice) {
-      WDebug.log("reconnectDevice: no USB device reference, skipping");
+    if (!this.fastboot) {
+      WDebug.log("reconnectDevice: no fastboot device reference, skipping");
       return;
     }
 
-    // Release interface and close the device
+    WDebug.log("reconnectDevice: reconnecting USB session...");
     try {
-      if (usbDevice.opened) {
-        WDebug.log("reconnectDevice: releasing interface and closing device...");
-        await usbDevice.releaseInterface(0);
-        await usbDevice.close();
-        WDebug.log("reconnectDevice: device closed");
-      }
+      await this.fastboot.reconnect();
+      WDebug.log(
+        `reconnectDevice: connection re-established, isConnected=${this.fastboot.isConnected}`,
+      );
     } catch (e) {
-      WDebug.log(`reconnectDevice: close failed: ${e.message || e}`);
+      WDebug.log(`reconnectDevice: reconnect failed: ${e.message || e}`);
+      throw e;
     }
-
-    // Wait for USB bus to stabilize after close
-    const RECONNECT_SETTLE_MS = 2000;
-    WDebug.log(
-      `reconnectDevice: waiting ${RECONNECT_SETTLE_MS}ms for USB bus to settle...`,
-    );
-    await new Promise((resolve) => setTimeout(resolve, RECONNECT_SETTLE_MS));
-
-    // Re-establish connection (will find paired device via getDevices())
-    WDebug.log("reconnectDevice: re-establishing connection...");
-    await this.device.connect();
-    WDebug.log(
-      `reconnectDevice: connection re-established, isConnected=${this.device.isConnected}`,
-    );
   }
 
   async flashBlob(partition, blob, onProgress, attempt = 1) {
@@ -175,7 +143,7 @@ export class Bootloader extends Device {
     const flashStart = Date.now();
 
     // Pre-flash check: ensure device is still connected
-    if (!this.device.isConnected) {
+    if (!this.fastboot?.isConnected) {
       throw new Error(`Device disconnected before flashing ${partition}`);
     }
 
@@ -184,8 +152,8 @@ export class Bootloader extends Device {
         `flashBlob: ${partition} (${(blob.size / 1024 / 1024).toFixed(1)} MB), ` +
           `attempt ${attempt}/${MAX_ATTEMPTS}`,
       );
-      await this.device.flashBlob(partition, blob, (progress) => {
-        onProgress(progress * blob.size, blob.size, partition);
+      await this.fastboot.flashBlob(partition, blob, (sent, total) => {
+        onProgress(sent, total, partition);
       });
       onProgress(blob.size, blob.size, partition);
       const elapsed = Date.now() - flashStart;
@@ -203,16 +171,14 @@ export class Bootloader extends Device {
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
 
           // Try to reset USB device to clear stale state
-          if (typeof this.device.resetDevice === 'function') {
-            WDebug.log("flashBlob: attempting USB device reset...");
-            try {
-              await this.device.resetDevice();
-              WDebug.log("flashBlob: USB device reset succeeded");
-            } catch (resetErr) {
-              WDebug.log(
-                `flashBlob: USB device reset failed: ${resetErr.message || resetErr}`,
-              );
-            }
+          WDebug.log("flashBlob: attempting USB device reset...");
+          try {
+            await this.fastboot.resetDevice();
+            WDebug.log("flashBlob: USB device reset succeeded");
+          } catch (resetErr) {
+            WDebug.log(
+              `flashBlob: USB device reset failed: ${resetErr.message || resetErr}`,
+            );
           }
 
           // Reconnect for a fresh USB session
@@ -226,7 +192,7 @@ export class Bootloader extends Device {
           }
 
           // Check if device is still connected before retry
-          if (!this.device.isConnected) {
+          if (!this.fastboot?.isConnected) {
             throw new Error(
               `Device disconnected during flash of ${partition}. Please reconnect and try again.`,
             );
@@ -246,13 +212,13 @@ export class Bootloader extends Device {
   }
 
   bootBlob(blob) {
-    return this.device.bootBlob(blob);
+    return this.fastboot.bootBlob(blob);
   }
 
   async isUnlocked(variable) {
-    if (this.device && this.device.isConnected) {
+    if (this.fastboot?.isConnected) {
       try {
-        const unlocked = await this.device.getVariable(variable);
+        const unlocked = await this.fastboot.getVariable(variable);
         return !(!unlocked || unlocked === "no");
       } catch (e) {
         console.error("isUnlocked check failed:", e);
@@ -263,9 +229,9 @@ export class Bootloader extends Device {
   }
 
   async isLocked(variable) {
-    if (this.device && this.device.isConnected) {
+    if (this.fastboot?.isConnected) {
       try {
-        const unlocked = await this.device.getVariable(variable);
+        const unlocked = await this.fastboot.getVariable(variable);
         return !unlocked || unlocked === "no";
       } catch (e) {
         console.error("isLocked check failed:", e);
@@ -277,7 +243,7 @@ export class Bootloader extends Device {
 
   async unlock(command) {
     if (command) {
-      await this.device.runCommand(command);
+      await this.fastboot.runCommand(command);
     } else {
       throw new Error("No unlock command configured for this device");
     }
@@ -285,7 +251,7 @@ export class Bootloader extends Device {
 
   async lock(command) {
     if (command) {
-      await this.device.runCommand(command);
+      await this.fastboot.runCommand(command);
       return !(await this.isUnlocked());
     } else {
       throw new Error("No lock command configured for this device");

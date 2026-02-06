@@ -192,7 +192,9 @@ export class Controller {
           },
         );
         // Small delay between flash operations to prevent overwhelming the device
-        WDebug.log(`Flash cooldown: waiting ${FLASH_COOLDOWN_MS}ms before next operation`);
+        WDebug.log(
+          `Flash cooldown: waiting ${FLASH_COOLDOWN_MS}ms before next operation`,
+        );
         await new Promise((resolve) => setTimeout(resolve, FLASH_COOLDOWN_MS));
         return result;
       }
@@ -333,7 +335,7 @@ export class Controller {
     try {
       let current_security_path_level = null;
       try {
-        const security_patch = await this.deviceManager.adb.webusb.getProp(
+        const security_patch = await this.deviceManager.adb.getProp(
           "ro.build.version.security_patch",
         );
         //WDebug.log('security_patch', security_patch)
@@ -346,9 +348,9 @@ export class Controller {
         WDebug.log("Security patch Error");
         current_security_path_level = null;
       }
-      let this_model = this.deviceManager.adb.webusb.transport.banner.device;
+      let this_model = this.deviceManager.adb.banner.device;
       //    https://gitlab.e.foundation/e/os/backlog/-/issues/2604#note_609234
-      const model = this.deviceManager.adb.webusb.transport.banner.model;
+      const model = this.deviceManager.adb.banner.model;
       if (model.includes("Teracube") && model.includes("2e")) {
         try {
           const serial = await this.deviceManager.adb.getSerialNumber();
@@ -360,31 +362,31 @@ export class Controller {
           } else {
             const id =
               "model " +
-              this.deviceManager.adb.webusb.transport.banner.model +
+              this.deviceManager.adb.banner.model +
               " " +
               "product " +
-              this.deviceManager.adb.webusb.transport.banner.product +
+              this.deviceManager.adb.banner.product +
               " " +
               "name " +
-              this.deviceManager.adb.device.name +
+              this.deviceManager.adb.getProductName() +
               " " +
               "device " +
-              this.deviceManager.adb.webusb.transport.banner.device;
+              this.deviceManager.adb.banner.device;
             throw new Error("Cannot find device resource", id);
           }
         } catch {
           const id =
             "model " +
-            this.deviceManager.adb.webusb.transport.banner.model +
+            this.deviceManager.adb.banner.model +
             " " +
             "product " +
-            this.deviceManager.adb.webusb.transport.banner.product +
+            this.deviceManager.adb.banner.product +
             " " +
             "name " +
-            this.deviceManager.adb.device.name +
+            this.deviceManager.adb.getProductName() +
             " " +
             "device " +
-            this.deviceManager.adb.webusb.transport.banner.device;
+            this.deviceManager.adb.banner.device;
           throw new Error("Error on getting device resource", id);
         }
       }
@@ -395,16 +397,16 @@ export class Controller {
         } catch {
           const id =
             "model " +
-            this.deviceManager.adb.webusb.transport.banner.model +
+            this.deviceManager.adb.banner.model +
             " " +
             "product " +
-            this.deviceManager.adb.webusb.transport.banner.product +
+            this.deviceManager.adb.banner.product +
             " " +
             "name " +
-            this.deviceManager.adb.device.name +
+            this.deviceManager.adb.getProductName() +
             " " +
             "device " +
-            this.deviceManager.adb.webusb.transport.banner.device;
+            this.deviceManager.adb.banner.device;
           throw new Error("Error on getting devcice resource", id);
         }
       }
