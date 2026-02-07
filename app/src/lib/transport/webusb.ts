@@ -183,9 +183,19 @@ export class WebUsbTransport {
    */
   async reconnect(settleMs = 2000): Promise<void> {
     log("Reconnecting USB session...");
+
+    // Reset first to abort any pending transferIn/transferOut calls.
+    // After a timeout, Promise.race leaves the underlying USB transfer
+    // still active, which blocks releaseInterface() during close().
+    try {
+      await this._device.reset();
+    } catch {
+      // Reset may fail if device is already disconnected — that's OK
+    }
+
     await this.close();
 
-    // Wait for USB bus to stabilize
+    // Wait for USB bus to stabilize after reset
     await new Promise((resolve) => setTimeout(resolve, settleMs));
 
     // Re-open the connection
@@ -214,6 +224,11 @@ export class WebUsbTransport {
     const result = await this._device.transferOut(this._outEndpoint, data as BufferSource);
     if (result.status !== "ok") {
       throw new UsbError(`USB transferOut failed: status=${result.status}`);
+    }
+    if (result.bytesWritten !== undefined && result.bytesWritten !== data.byteLength) {
+      throw new UsbError(
+        `USB transferOut incomplete: wrote ${result.bytesWritten}/${data.byteLength} bytes`,
+      );
     }
   }
 

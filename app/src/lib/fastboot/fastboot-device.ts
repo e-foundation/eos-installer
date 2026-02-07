@@ -210,13 +210,23 @@ export class FastbootDevice {
   /**
    * Get and cache the device's max-download-size.
    * Falls back to 512 MB if the variable is not available.
+   *
+   * Bootloaders vary in format:
+   *   - Qualcomm ABL: decimal string ("805306368" = 768 MB)
+   *   - MediaTek/Google: hex with 0x prefix ("0x30000000" = 768 MB)
+   * Matches AOSP fastboot's strtoll(str, NULL, 0) behavior: 0x prefix
+   * means hex, otherwise decimal.
    */
   private async getMaxDownloadSize(): Promise<number> {
     if (this._maxDownloadSize !== null) return this._maxDownloadSize;
 
     try {
       const value = await getVar(this._transport, "max-download-size");
-      this._maxDownloadSize = parseInt(value, 16) || parseInt(value, 10);
+      if (value.startsWith("0x") || value.startsWith("0X")) {
+        this._maxDownloadSize = parseInt(value, 16);
+      } else {
+        this._maxDownloadSize = parseInt(value, 10);
+      }
       if (isNaN(this._maxDownloadSize) || this._maxDownloadSize <= 0) {
         this._maxDownloadSize = 512 * 1024 * 1024;
       }
@@ -283,6 +293,7 @@ export class FastbootDevice {
     const data = new Uint8Array(await blob.arrayBuffer());
     await downloadData(this._transport, data, onProgress, FASTBOOT_FLASH_TIMEOUT_MS);
     await flashPartition(this._transport, partition, FASTBOOT_FLASH_TIMEOUT_MS);
+    await this.waitDeviceReady();
   }
 
   /**
@@ -325,6 +336,23 @@ export class FastbootDevice {
         `Sparse sub-image ${i + 1}/${subImages.length} flashed ` +
           `(${subImageSize} bytes)`,
       );
+    }
+
+    await this.waitDeviceReady();
+  }
+
+  /**
+   * Verify the device is responsive after a flash operation.
+   * Some bootloaders (Qualcomm ABL) continue internal processing after
+   * sending OKAY for a flash command. Starting the next download before
+   * this finishes can cause the device to hang without responding.
+   * A quick getvar round-trip acts as a synchronization barrier.
+   */
+  private async waitDeviceReady(): Promise<void> {
+    try {
+      await getVar(this._transport, "product", 5000);
+    } catch {
+      // FAIL or timeout — either way, the device had time to settle
     }
   }
 }
