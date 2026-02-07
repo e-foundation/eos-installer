@@ -94,6 +94,14 @@ export async function sendData(
     await transport.sendWithTimeout(chunk, timeoutMs);
     offset = end;
     onProgress?.(offset, total);
+
+    // Yield to the browser event loop between chunks so Chrome's USB
+    // stack can process completion events and hardware ACKs. Without
+    // this, back-to-back transferOut calls can starve the USB driver's
+    // completion handler, causing the device to miss data.
+    if (offset < total) {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
   }
 }
 
@@ -124,6 +132,13 @@ export async function downloadData(
 
   // Send the raw data
   await sendData(transport, data, onProgress, 512 * 1024, timeoutMs);
+
+  // Let the device fully process the received data before we issue a
+  // USB IN transfer for the OKAY response. Chrome's async transferOut
+  // resolves when the host controller accepts the data, but the device
+  // may still be DMA-ing the last packets. Issuing transferIn too early
+  // can cause some bootloaders (Qualcomm ABL) to miss the response.
+  await new Promise((resolve) => setTimeout(resolve, 250));
 
   // Read final OKAY
   await readResponse(transport, timeoutMs);
