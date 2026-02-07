@@ -131,7 +131,15 @@ function buildSparseHeader(
  *
  * This is needed when the device's max-download-size is smaller than the
  * sparse image. Each sub-image is a valid sparse image that can be downloaded
- * and flashed independently (the device will write each to the correct offsets).
+ * and flashed independently.
+ *
+ * Each sub-image after the first includes a DONT_CARE chunk at the start to
+ * skip the blocks already written by previous sub-images, so the device
+ * writes each sub-image's data at the correct partition offset.
+ *
+ * Each sub-image's header totalBlocks = blocksOffset + dataBlocks, so the
+ * chunk block sum matches the header (required by MediaTek LK and other
+ * bootloaders that validate this).
  */
 export async function splitSparseImage(
   blob: Blob,
@@ -171,11 +179,13 @@ export async function splitSparseImage(
     return [blob];
   }
 
-  // Group chunks into sub-images that fit within maxSize
+  // Group chunks into sub-images that fit within maxSize.
+  // Each sub-image after the first reserves space for a DONT_CARE prefix chunk.
   const subImages: Blob[] = [];
   let currentChunks: ChunkEntry[] = [];
   let currentSize = SPARSE_HEADER_SIZE;
   let currentBlocks = 0;
+  let blocksWrittenSoFar = 0;
 
   for (const chunk of chunks) {
     const dataSize = chunkDataSize(chunk.header, header.blockSize);
@@ -187,10 +197,12 @@ export async function splitSparseImage(
       currentSize + chunkTotalSize > maxSize
     ) {
       subImages.push(
-        buildSubImage(blob, header.blockSize, currentBlocks, currentChunks),
+        buildSubImage(blob, header.blockSize, header.totalBlocks, currentChunks, blocksWrittenSoFar),
       );
+      blocksWrittenSoFar += currentBlocks;
       currentChunks = [];
-      currentSize = SPARSE_HEADER_SIZE;
+      // Reserve space for the DONT_CARE prefix chunk in subsequent sub-images
+      currentSize = SPARSE_HEADER_SIZE + SPARSE_CHUNK_HEADER_SIZE;
       currentBlocks = 0;
     }
 
@@ -202,7 +214,7 @@ export async function splitSparseImage(
   // Finalize the last sub-image
   if (currentChunks.length > 0) {
     subImages.push(
-      buildSubImage(blob, header.blockSize, currentBlocks, currentChunks),
+      buildSubImage(blob, header.blockSize, header.totalBlocks, currentChunks, blocksWrittenSoFar),
     );
   }
 
@@ -211,18 +223,37 @@ export async function splitSparseImage(
 
 /**
  * Build a sub-image Blob from a subset of chunks.
+ *
+ * @param originalTotalBlocks  The ORIGINAL image's total block count.
+ * @param blocksOffset Blocks already written by previous sub-images.
+ *                     A DONT_CARE chunk is prepended to skip these blocks.
  */
 function buildSubImage(
   originalBlob: Blob,
   blockSize: number,
-  totalBlocks: number,
+  originalTotalBlocks: number,
   chunks: Array<{
     header: SparseChunkHeader;
     offset: number;
+    blocks: number;
   }>,
+  blocksOffset: number,
 ): Blob {
-  const newHeader = buildSparseHeader(blockSize, totalBlocks, chunks.length);
+  const hasDontCarePrefix = blocksOffset > 0;
+  const numChunks = chunks.length + (hasDontCarePrefix ? 1 : 0);
+
+  // totalBlocks for this sub-image = offset blocks + data blocks.
+  // The bootloader validates that chunk blocks sum to totalBlocks.
+  const dataBlocks = chunks.reduce((sum, c) => sum + c.blocks, 0);
+  const subImageTotalBlocks = blocksOffset + dataBlocks;
+
+  const newHeader = buildSparseHeader(blockSize, subImageTotalBlocks, numChunks);
   const parts: BlobPart[] = [newHeader as BlobPart];
+
+  // Prepend a DONT_CARE chunk to skip blocks written by previous sub-images
+  if (hasDontCarePrefix) {
+    parts.push(buildDontCareChunk(blocksOffset) as BlobPart);
+  }
 
   for (const chunk of chunks) {
     const dataSize = chunkDataSize(chunk.header, blockSize);
@@ -232,4 +263,18 @@ function buildSubImage(
   }
 
   return new Blob(parts);
+}
+
+/**
+ * Build a 12-byte DONT_CARE chunk header.
+ * Used to skip blocks already written by previous sub-images.
+ */
+function buildDontCareChunk(chunkBlocks: number): Uint8Array {
+  const buf = new ArrayBuffer(SPARSE_CHUNK_HEADER_SIZE);
+  const view = new DataView(buf);
+  view.setUint16(0, SparseChunkType.DontCare, true);
+  view.setUint16(2, 0, true); // reserved
+  view.setUint32(4, chunkBlocks, true);
+  view.setUint32(8, SPARSE_CHUNK_HEADER_SIZE, true); // total size = header only
+  return new Uint8Array(buf);
 }
