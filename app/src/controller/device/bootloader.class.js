@@ -57,6 +57,31 @@ export class Bootloader extends Device {
         // On first attempt or after a failed reconnect, create a new device
         if (!this.fastboot) {
           this.fastboot = await FastbootDevice.requestDevice();
+        } else if (this.fastboot.isConnected) {
+          // Existing connection — verify it's still alive (device may have
+          // rebooted after unlock). A stale session would short-circuit
+          // connect() but fail on the first real transfer.
+          try {
+            await this.fastboot.getVariable("version");
+            WDebug.log(
+              `Bootloader.connect() existing connection verified in ${Date.now() - connectStart}ms`,
+            );
+            return;
+          } catch {
+            WDebug.log(
+              "Bootloader.connect() existing connection stale, reconnecting...",
+            );
+            try {
+              await this.fastboot.disconnect();
+            } catch {
+              /* ignore */
+            }
+            this.fastboot = await FastbootDevice.findDevice();
+            if (!this.fastboot) {
+              // No paired device found — need user gesture
+              this.fastboot = await FastbootDevice.requestDevice();
+            }
+          }
         }
         await this.fastboot.connect();
 
