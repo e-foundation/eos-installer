@@ -70,7 +70,7 @@
   ],
   "folder": [
     {
-      "path": "https://images.ecloud.global/official/two/IMG-e-3.0.4-t-20250709507786-official-two.zip",
+      "path": "https://images.ecloud.global/official/two/IMG-e-latest-t-official-two.zip",
       "name": "Murena Two installer",
       "unzip": true
     }
