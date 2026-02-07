@@ -156,6 +156,15 @@ export class AdbDevice {
       while (true) {
         const packet = await this.receivePacket();
 
+        // Skip packets for other streams (stale CLSE acks, etc.)
+        if (packet.arg1 !== 0 && packet.arg1 !== stream.localId) {
+          log(
+            `Shell: skipping stale packet cmd=0x${packet.command.toString(16)} ` +
+              `for localId=${packet.arg1} (ours=${stream.localId})`,
+          );
+          continue;
+        }
+
         if (packet.command === AdbCommand.Write) {
           output += decodeUtf8(packet.payload);
           // Send OKAY to acknowledge

@@ -105,6 +105,16 @@ export class WebUsbTransport {
       // Claim the interface
       await this._device.claimInterface(this._interfaceNumber);
 
+      // Select the alternate setting that has the bulk endpoints.
+      // Some devices (e.g. Pixel 7) have alternate 0 with no endpoints
+      // and alternate 1 with the actual bulk IN/OUT endpoints.
+      if (endpoints.alternateSetting !== 0) {
+        await this._device.selectAlternateInterface(
+          this._interfaceNumber,
+          endpoints.alternateSetting,
+        );
+      }
+
       // Clear any stale halt condition on both endpoints.
       // Previous sessions that were interrupted (tab closed, USB unplugged)
       // can leave endpoints in a HALTED state, causing every subsequent
@@ -415,6 +425,7 @@ export class WebUsbTransport {
               inEndpoint,
               outEndpoint,
               interfaceNumber: iface.interfaceNumber,
+              alternateSetting: alt.alternateSetting,
             };
           }
         }

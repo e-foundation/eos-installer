@@ -59,26 +59,40 @@ export class AdbStream {
 
     log(`Stream OPEN: localId=${localId}, service="${service}"`);
 
-    // Read response — expect OKAY
-    const response = await receivePacket();
+    // Read response — expect OKAY.
+    // Skip stale packets from previously closed streams (e.g., a CLSE
+    // acknowledgment for a stream we already closed).
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const response = await receivePacket();
 
-    if (response.command === AdbCommand.Okay) {
-      const stream = new AdbStream(transport, localId, response.arg0);
-      log(
-        `Stream opened: localId=${localId}, remoteId=${stream.remoteId}`,
-      );
-      return stream;
-    }
+      // Packets for other streams have arg1 != our localId — skip them
+      if (response.arg1 !== 0 && response.arg1 !== localId) {
+        log(
+          `Stream OPEN: skipping stale packet cmd=0x${response.command.toString(16)} ` +
+            `for localId=${response.arg1} (ours=${localId})`,
+        );
+        continue;
+      }
 
-    if (response.command === AdbCommand.Close) {
+      if (response.command === AdbCommand.Okay) {
+        const stream = new AdbStream(transport, localId, response.arg0);
+        log(
+          `Stream opened: localId=${localId}, remoteId=${stream.remoteId}`,
+        );
+        return stream;
+      }
+
+      if (response.command === AdbCommand.Close) {
+        throw new ProtocolError(
+          `ADB service "${service}" rejected (CLSE received)`,
+        );
+      }
+
       throw new ProtocolError(
-        `ADB service "${service}" rejected (CLSE received)`,
+        `Unexpected response to OPEN: command=0x${response.command.toString(16)}`,
       );
     }
-
-    throw new ProtocolError(
-      `Unexpected response to OPEN: command=0x${response.command.toString(16)}`,
-    );
   }
 
   /**

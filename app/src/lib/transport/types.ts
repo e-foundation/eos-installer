@@ -26,4 +26,5 @@ export interface EndpointInfo {
   inEndpoint: number;
   outEndpoint: number;
   interfaceNumber: number;
+  alternateSetting: number;
 }
