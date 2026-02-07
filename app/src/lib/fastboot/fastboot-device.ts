@@ -27,6 +27,7 @@ export class FastbootDevice {
   private _transport: WebUsbTransport;
   private _connected = false;
   private _maxDownloadSize: number | null = null;
+  private _currentSlot: string | null = null;
 
   private constructor(transport: WebUsbTransport) {
     this._transport = transport;
@@ -83,6 +84,7 @@ export class FastbootDevice {
     await this._transport.close();
     this._connected = false;
     this._maxDownloadSize = null;
+    this._currentSlot = null;
   }
 
   // ---- Commands ----
@@ -110,6 +112,7 @@ export class FastbootDevice {
    *
    * Automatically detects sparse images and splits them if they exceed
    * the device's max-download-size. Reports progress via callback.
+   * Resolves A/B slot suffix automatically when needed.
    */
   async flashBlob(
     partition: string,
@@ -118,24 +121,28 @@ export class FastbootDevice {
   ): Promise<void> {
     this.ensureConnected();
 
+    const resolved = await this.resolvePartition(partition);
+
     // Read the first few bytes to check for sparse format
     const headerBytes = new Uint8Array(
       await blob.slice(0, 4).arrayBuffer(),
     );
 
     if (isSparseImage(headerBytes)) {
-      await this.flashSparseBlob(partition, blob, onProgress);
+      await this.flashSparseBlob(resolved, blob, onProgress);
     } else {
-      await this.flashRawBlob(partition, blob, onProgress);
+      await this.flashRawBlob(resolved, blob, onProgress);
     }
   }
 
   /**
    * Erase a partition.
+   * Resolves A/B slot suffix automatically when needed.
    */
   async erase(partition: string): Promise<void> {
     this.ensureConnected();
-    await erasePartition(this._transport, partition);
+    const resolved = await this.resolvePartition(partition);
+    await erasePartition(this._transport, resolved);
   }
 
   /**
@@ -177,6 +184,7 @@ export class FastbootDevice {
   async reconnect(): Promise<void> {
     this._connected = false;
     this._maxDownloadSize = null;
+    this._currentSlot = null;
     await this._transport.reconnect();
     this._connected = true;
   }
@@ -219,6 +227,49 @@ export class FastbootDevice {
 
     log(`Max download size: ${this._maxDownloadSize} bytes`);
     return this._maxDownloadSize;
+  }
+
+  /**
+   * Resolve a partition name by appending the current A/B slot suffix
+   * if the device reports the partition is slotted (getvar:has-slot).
+   * Partitions that already have a slot suffix (_a/_b) are returned as-is.
+   */
+  private async resolvePartition(partition: string): Promise<string> {
+    if (partition.endsWith("_a") || partition.endsWith("_b")) {
+      return partition;
+    }
+
+    try {
+      const hasSlot = await getVar(this._transport, `has-slot:${partition}`);
+      if (hasSlot === "yes") {
+        const slot = await this.getCurrentSlot();
+        const resolved = `${partition}_${slot}`;
+        log(`Partition ${partition} → ${resolved} (slot=${slot})`);
+        return resolved;
+      }
+    } catch {
+      // getvar:has-slot not supported — use partition name as-is
+    }
+
+    return partition;
+  }
+
+  /**
+   * Get and cache the device's current A/B slot.
+   */
+  private async getCurrentSlot(): Promise<string> {
+    if (this._currentSlot !== null) return this._currentSlot;
+
+    try {
+      this._currentSlot = await getVar(this._transport, "current-slot");
+      // Some bootloaders return "a" or "b", others return "_a" or "_b"
+      this._currentSlot = this._currentSlot.replace(/^_/, "");
+    } catch {
+      this._currentSlot = "a";
+    }
+
+    log(`Current slot: ${this._currentSlot}`);
+    return this._currentSlot;
   }
 
   /**
