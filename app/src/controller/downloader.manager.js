@@ -15,6 +15,7 @@ export class Downloader {
   constructor() {
     this.db = null;
     this.stored = {};
+    this.blobs = {};
   }
 
   async init() {
@@ -91,8 +92,15 @@ export class Downloader {
                 file.mapping,
               );
               if (filesRequired.includes(filename)) {
-                await this.setInDBStore(unzippedEntry.blob, filename);
+                this.blobs[filename] = unzippedEntry.blob;
                 this.stored[filename] = true;
+                try {
+                  await this.setInDBStore(unzippedEntry.blob, filename);
+                } catch (e) {
+                  console.warn(
+                    `IndexedDB write failed for ${filename}: ${e.message || e}`,
+                  );
+                }
                 const fileSHA = await this.computeSha256(
                   unzippedEntry.blob,
                   (loaded, total) => {
@@ -104,8 +112,15 @@ export class Downloader {
             }
             await zipReader.close();
           } else {
-            await this.setInDBStore(blob, file.name);
+            this.blobs[file.name] = blob;
             this.stored[file.name] = true;
+            try {
+              await this.setInDBStore(blob, file.name);
+            } catch (e) {
+              console.warn(
+                `IndexedDB write failed for ${file.name}: ${e.message || e}`,
+              );
+            }
           }
         }
       }
@@ -187,9 +202,13 @@ export class Downloader {
    * this function retrieve the promise linked to the fileName
    */
   async getFile(name) {
-    const file = this.stored[name];
-    if (!file) {
+    if (!this.stored[name]) {
       throw new Error(`File ${name} was not previously downloaded`);
+    }
+    // Prefer in-memory blob (always available in the current session)
+    // over IndexedDB (large blobs can silently fail to commit).
+    if (this.blobs[name]) {
+      return this.blobs[name];
     }
     return await this.getFromDBStore(name);
   }
@@ -239,15 +258,14 @@ export class Downloader {
     return new Promise((resolve, reject) => {
       const transaction = this.db.transaction(DB_NAME, "readwrite");
       const store = transaction.objectStore(DB_NAME);
-      const request = store.put(blob, key);
+      store.put(blob, key);
 
-      request.onsuccess = () => {
-        resolve();
-      };
-
-      request.onerror = (event) => {
-        reject(event.target.error);
-      };
+      // Wait for the transaction to fully commit — request.onsuccess fires
+      // before commit and can't detect QuotaExceededError on large blobs.
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = (event) => reject(event.target.error);
+      transaction.onabort = () =>
+        reject(new Error("IndexedDB transaction aborted (storage quota?)"));
     });
   }
 
