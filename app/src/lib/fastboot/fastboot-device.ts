@@ -101,9 +101,9 @@ export class FastbootDevice {
    * Run an arbitrary fastboot command and return the response message.
    * Used for commands like "flashing unlock", "oem unlock", "flashing lock", etc.
    */
-  async runCommand(command: string): Promise<string> {
+  async runCommand(command: string, timeoutMs?: number): Promise<string> {
     this.ensureConnected();
-    const result = await sendCommand(this._transport, command);
+    const result = await sendCommand(this._transport, command, timeoutMs);
     return result.message;
   }
 

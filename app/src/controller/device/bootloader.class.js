@@ -24,8 +24,8 @@ export class Bootloader extends Device {
     return this.fastboot.reboot(mode);
   }
 
-  runCommand(command) {
-    return this.fastboot.runCommand(command);
+  runCommand(command, timeoutMs) {
+    return this.fastboot.runCommand(command, timeoutMs);
   }
 
   isBootloader() {

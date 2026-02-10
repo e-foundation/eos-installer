@@ -128,12 +128,16 @@ export class DeviceManager {
   }
 
   async unlock(command) {
-    await this.bootloader.runCommand(command);
+    // Unlock requires physical confirmation on the device (volume keys +
+    // power button), so use a generous 5-minute timeout instead of the
+    // default 30 seconds.
+    await this.bootloader.runCommand(command, 300_000);
     return true;
   }
 
   async lock(command) {
-    await this.bootloader.runCommand(command);
+    // Lock may also require physical confirmation on the device.
+    await this.bootloader.runCommand(command, 300_000);
     return true;
   }
 
