@@ -115,6 +115,21 @@ export class WebUsbTransport {
         );
       }
 
+      // Clear any stale halt condition on both endpoints.
+      // Previous sessions that were interrupted (tab closed, USB unplugged)
+      // can leave endpoints in a HALTED state, causing every subsequent
+      // transferIn/transferOut to fail with "A transfer error has occurred".
+      try {
+        await this._device.clearHalt("in", this._inEndpoint);
+      } catch {
+        // clearHalt may fail if endpoint isn't halted — that's fine
+      }
+      try {
+        await this._device.clearHalt("out", this._outEndpoint);
+      } catch {
+        // clearHalt may fail if endpoint isn't halted — that's fine
+      }
+
       this._rxBuf = new Uint8Array(0);
       this._opened = true;
       log(
@@ -206,15 +221,7 @@ export class WebUsbTransport {
       throw new UsbError("Transport not open");
     }
 
-    let result = await this._device.transferOut(this._outEndpoint, data as BufferSource);
-
-    // Stalled endpoint from a previous interrupted session — clear and retry
-    if (result.status === "stall") {
-      log("OUT endpoint stalled, clearing halt and retrying...");
-      await this._device.clearHalt("out", this._outEndpoint);
-      result = await this._device.transferOut(this._outEndpoint, data as BufferSource);
-    }
-
+    const result = await this._device.transferOut(this._outEndpoint, data as BufferSource);
     if (result.status !== "ok") {
       throw new UsbError(`USB transferOut failed: status=${result.status}`);
     }
@@ -379,15 +386,7 @@ export class WebUsbTransport {
   private async doTransferIn(
     bufferSize: number = USB_RECEIVE_BUFFER_SIZE,
   ): Promise<Uint8Array> {
-    let result = await this._device.transferIn(this._inEndpoint, bufferSize);
-
-    // Stalled endpoint from a previous interrupted session — clear and retry
-    if (result.status === "stall") {
-      log("IN endpoint stalled, clearing halt and retrying...");
-      await this._device.clearHalt("in", this._inEndpoint);
-      result = await this._device.transferIn(this._inEndpoint, bufferSize);
-    }
-
+    const result = await this._device.transferIn(this._inEndpoint, bufferSize);
     if (result.status !== "ok") {
       throw new UsbError(`USB transferIn failed: status=${result.status}`);
     }
