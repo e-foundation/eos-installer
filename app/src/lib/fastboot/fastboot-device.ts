@@ -59,10 +59,10 @@ export class FastbootDevice {
   /**
    * Open the USB connection and verify the device speaks fastboot.
    */
-  async connect(): Promise<void> {
+  async connect(options?: { skipClearHalt?: boolean }): Promise<void> {
     if (this._connected) return;
 
-    await this._transport.open();
+    await this._transport.open(options);
 
     // Verify fastboot protocol with a handshake
     try {

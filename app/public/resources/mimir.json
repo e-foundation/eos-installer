@@ -1,5 +1,6 @@
 {
   "android": 14,
+  "skip_clear_halt": true,
   "steps": [
     {
       "command": ["reboot bootloader", "delay 15"]

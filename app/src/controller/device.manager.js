@@ -43,7 +43,7 @@ export class DeviceManager {
     this.wasConnected = true;
   }
 
-  setResources(folder, steps) {
+  setResources(folder, steps, options) {
     this.folder = folder;
     this.files = steps
       .map((s) => {
@@ -52,6 +52,9 @@ export class DeviceManager {
         });
       })
       .flat();
+    if (options?.skipClearHalt) {
+      this.bootloader.skipClearHalt = true;
+    }
   }
 
   async getUnlocked(variable) {

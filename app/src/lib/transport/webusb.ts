@@ -85,7 +85,7 @@ export class WebUsbTransport {
   /**
    * Open the device, select configuration, claim interface, and find endpoints.
    */
-  async open(): Promise<void> {
+  async open(options?: { skipClearHalt?: boolean }): Promise<void> {
     if (this._opened) return;
 
     try {
@@ -119,15 +119,19 @@ export class WebUsbTransport {
       // Previous sessions that were interrupted (tab closed, USB unplugged)
       // can leave endpoints in a HALTED state, causing every subsequent
       // transferIn/transferOut to fail with "A transfer error has occurred".
-      try {
-        await this._device.clearHalt("in", this._inEndpoint);
-      } catch {
-        // clearHalt may fail if endpoint isn't halted — that's fine
-      }
-      try {
-        await this._device.clearHalt("out", this._outEndpoint);
-      } catch {
-        // clearHalt may fail if endpoint isn't halted — that's fine
+      // Some bootloaders (e.g. Volla Tablet / MediaTek) break when clearHalt
+      // is sent to non-halted endpoints — use skip_clear_halt in device config.
+      if (!options?.skipClearHalt) {
+        try {
+          await this._device.clearHalt("in", this._inEndpoint);
+        } catch {
+          // clearHalt may fail if endpoint isn't halted — that's fine
+        }
+        try {
+          await this._device.clearHalt("out", this._outEndpoint);
+        } catch {
+          // clearHalt may fail if endpoint isn't halted — that's fine
+        }
       }
 
       this._rxBuf = new Uint8Array(0);

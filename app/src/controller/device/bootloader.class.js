@@ -14,6 +14,7 @@ export class Bootloader extends Device {
   constructor() {
     super(null);
     this.fastboot = null;
+    this.skipClearHalt = false;
   }
 
   async init() {
@@ -83,7 +84,9 @@ export class Bootloader extends Device {
             }
           }
         }
-        await this.fastboot.connect();
+        await this.fastboot.connect({
+          skipClearHalt: this.skipClearHalt,
+        });
 
         const elapsed = Date.now() - connectStart;
         WDebug.log(

@@ -457,6 +457,8 @@ export class Controller {
       );
       this.view.updateTotalStep(this.steps.length);
     }
-    this.deviceManager.setResources(this.resources.folder, this.steps);
+    this.deviceManager.setResources(this.resources.folder, this.steps, {
+      skipClearHalt: this.resources.skip_clear_halt,
+    });
   }
 }
