@@ -60,8 +60,9 @@ Open chrome base browser and go to http://localhost:5173/.
 
             | key                  | example | description                                                                                  |
             |----------------------|---------|----------------------------------------------------------------------------------------------|
-            | `flash_cooldown_ms`  | `3000`  | Delay in ms between flash operations. Defaults to 2500 if not set. Increase for slow devices |
-            | `security_patch_level` | `"2018-01-05"` | When the device's patch level is newer, the `-safe.json` variant is loaded instead  |
+            | `flash_cooldown_ms`    | `3000`          | Delay in ms between flash operations. Defaults to 2500 if not set. Increase for slow devices |
+            | `security_patch_level` | `"2018-01-05"` | When the device's patch level is newer, the `-safe.json` variant is loaded instead            |
+            | `skip_clear_halt`      | `true`          | Skip USB clearHalt on connect. Required for MediaTek bootloaders (e.g. Volla Tablet) where proactive clearHalt breaks flashing unlock |
 
     - Define the folder, an array describing the files involved in the flash process
         - template: 
