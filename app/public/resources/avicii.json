@@ -6,7 +6,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "oem unlock"],
+      "command": ["connect bootloader", "oem unlock goto_flashing"],
       "needUserGesture": true
     },
     {
@@ -38,20 +38,7 @@
     },
     {
       "id": "flashing",
-      "command": ["flash dtbo dtbo.img", "flash vbmeta vbmeta.img"]
-    },
-    {
-      "command": "reboot bootloader"
-    },
-    {
-      "mode": "bootloader",
-      "id": "connect-bootloader",
-      "command": "connect bootloader",
-      "needUserGesture": true
-    },
-    {
-      "id": "flashing",
-      "command": ["flash recovery recovery.img"]
+      "command": ["flash dtbo dtbo.img", "flash vbmeta vbmeta.img","flash recovery recovery.img"]
     },
     {
       "id": "bootloader-to-recovery-manually",
@@ -74,11 +61,6 @@
       "needUserGesture": true
     },
     {
-      "id": "connect-bootloader",
-      "command": ["connect bootloader", "reboot"],
-      "needUserGesture": true
-    },
-    {
       "id": "murena-workspace-account",
       "needUserGesture": true
     },
@@ -89,7 +71,7 @@
   "folder": [
     {
       "name": "One+ Nord recovery installer",
-      "path": "127.0.0.1:8000/recovery-IMG-e-3.5-a16-20260204577660-official-avicii.zip",
+      "path": "http://127.0.0.1:8000/recovery-IMG-e-3.5-a16-20260204577660-official-avicii.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -99,7 +81,7 @@
     },
     {
       "name": "oneplus-nord-rom.zip",
-      "path": "127.0.0.1:8000/e-3.5-a16-20260204577660-official-avicii.zip"
+      "path": "http://127.0.0.1:8000/e-3.5-a16-20260204577660-official-avicii.zip"
     }
   ]
 }
