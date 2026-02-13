@@ -3,7 +3,7 @@ import {
   TimeoutError,
   setLogLevel,
   LogLevel,
-} from "../../lib/index.ts";
+} from "@e/fastboot";
 import { Device } from "./device.class.js";
 import { WDebug } from "../../debug.js";
 

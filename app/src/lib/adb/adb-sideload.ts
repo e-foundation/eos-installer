@@ -12,12 +12,14 @@
  *   4. Repeat until "DONEDONE"
  */
 
-import { log } from "../types.js";
-import type { SideloadProgressCallback } from "../types.js";
+import {
+  log,
+  type SideloadProgressCallback,
+  type WebUsbTransport,
+} from "@e/fastboot";
 import { AdbCommand, SIDELOAD_MAX_PAYLOAD, type AdbPacket } from "./types.js";
 import { decodeUtf8 } from "./adb-packet.js";
 import { AdbStream } from "./adb-stream.js";
-import type { WebUsbTransport } from "../transport/webusb.js";
 
 /**
  * Perform an ADB sideload over an already-connected ADB transport.

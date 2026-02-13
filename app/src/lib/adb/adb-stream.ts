@@ -11,11 +11,14 @@
  *   4. Either side sends CLSE to close
  */
 
-import { ProtocolError, log } from "../types.js";
+import {
+  ProtocolError,
+  log,
+  DEFAULT_TIMEOUT_MS,
+  type WebUsbTransport,
+} from "@e/fastboot";
 import { AdbCommand, type AdbPacket } from "./types.js";
 import { writePacket, encodeUtf8 } from "./adb-packet.js";
-import type { WebUsbTransport } from "../transport/webusb.js";
-import { DEFAULT_TIMEOUT_MS } from "../transport/types.js";
 
 let nextLocalId = 1;
 

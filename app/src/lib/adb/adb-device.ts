@@ -13,10 +13,10 @@ import {
   type SideloadProgressCallback,
   log,
   logError,
-} from "../types.js";
-import { WebUsbTransport } from "../transport/webusb.js";
-import { ADB_USB_FILTER } from "../transport/types.js";
-import { DEFAULT_TIMEOUT_MS } from "../transport/types.js";
+  WebUsbTransport,
+  ADB_USB_FILTER,
+  DEFAULT_TIMEOUT_MS,
+} from "@e/fastboot";
 import {
   AdbCommand,
   ADB_VERSION,

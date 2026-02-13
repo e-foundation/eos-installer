@@ -15,6 +15,6 @@
     "noEmit": true,
     "types": ["w3c-web-usb"]
   },
-  "include": ["src/lib/**/*.ts"],
+  "include": ["src/lib/adb/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -9,7 +9,7 @@
  * Where magic = command ^ 0xFFFFFFFF.
  */
 
-import { ProtocolError } from "../types.js";
+import { ProtocolError } from "@e/fastboot";
 import { ADB_HEADER_SIZE, type AdbPacket, type AdbCommand } from "./types.js";
 
 const textEncoder = new TextEncoder();

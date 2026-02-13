@@ -15,7 +15,7 @@
  * The entire struct is base64-encoded with a trailing " user@host\0".
  */
 
-import { log, logError } from "../types.js";
+import { log, logError } from "@e/fastboot";
 import {
   ADB_CREDENTIAL_STORE_NAME,
   ADB_CREDENTIAL_DB_VERSION,
