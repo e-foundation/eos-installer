@@ -37,7 +37,7 @@ export class Controller {
         const alreadyInMode = this.inInMode(next.mode);
         WDebug.log(
           `next() step="${next.name}" requires mode="${next.mode}", ` +
-          `alreadyInMode=${alreadyInMode}, needUserGesture=${next.needUserGesture}`,
+            `alreadyInMode=${alreadyInMode}, needUserGesture=${next.needUserGesture}`,
         );
         //if next step require another mode [adb|fastboot|bootloader]
         if (!alreadyInMode) {
@@ -111,9 +111,9 @@ export class Controller {
     } else {
       throw new Error(
         "this is not the current step " +
-        current.name +
-        " is not equals to " +
-        stepName,
+          current.name +
+          " is not equals to " +
+          stepName,
       );
     }
   }
@@ -214,8 +214,8 @@ export class Controller {
         WDebug.log(
           "ControllerManager unlock: ",
           this.deviceManager.adb.getProductName() +
-          " isUnlocked = " +
-          isUnlocked,
+            " isUnlocked = " +
+            isUnlocked,
         );
         if (!isUnlocked) {
           try {
@@ -243,8 +243,8 @@ export class Controller {
               WDebug.log(
                 "Bypass step",
                 this.steps[this.currentIndex].name +
-                " " +
-                (this.steps[this.currentIndex].name == gotoStep),
+                  " " +
+                  (this.steps[this.currentIndex].name == gotoStep),
               );
             } while (!(this.steps[this.currentIndex].name == gotoStep));
             this.currentIndex--;
@@ -409,6 +409,14 @@ export class Controller {
             this.deviceManager.adb.banner.device;
           throw new Error("Error on getting devcice resource", id);
         }
+      }
+
+      if (
+        this_model === "Nord" ||
+        this_model === "OnePlusNord" ||
+        this_model === "avicii"
+      ) {
+        this_model = "avicii";
       }
 
       resources = await (await fetch(`resources/${this_model}.json`)).json();
