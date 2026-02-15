@@ -6,7 +6,7 @@
     },
     {
       "id": "connect-bootloader",
-      "command": ["connect bootloader", "oem unlock"],
+      "command": ["connect bootloader", "oem unlock goto_flashing"],
       "needUserGesture": true
     },
     {
@@ -80,7 +80,7 @@
   "folder": [
     {
       "name": "One+ Nord recovery installer",
-      "path": "https://images.ecloud.global/official/avicii/recovery-IMG-e-latest-s-official-avicii.zip",
+      "path": "https://images.ecloud.global/official/avicii/recovery-IMG-e-latest-a16-official-avicii.zip",
       "unzip": true,
       "mapping": {
         "^dtbo.*img$": "dtbo.img",
@@ -90,7 +90,7 @@
     },
     {
       "name": "oneplus-nord-rom.zip",
-      "path": "https://images.ecloud.global/stable/avicii/e-latest-s-official-avicii.zip"
+      "path": "https://images.ecloud.global/stable/avicii/e-latest-a16-official-avicii.zip"
     }
   ]
 }
