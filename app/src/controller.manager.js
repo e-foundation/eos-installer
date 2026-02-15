@@ -411,6 +411,10 @@ export class Controller {
         }
       }
 
+      if (this_model === "Nord" || this_model === "OnePlusNord") {
+        this_model = "avicii";
+      }
+
       resources = await (await fetch(`resources/${this_model}.json`)).json();
       if (
         current_security_path_level != null &&
