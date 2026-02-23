@@ -20,7 +20,7 @@
     "vite": "^6.0.5"
   },
   "dependencies": {
-    "@e/fastboot": "2.0.0",
+    "@e/fastboot": "git+https://gitlab.e.foundation/e/tools/fastboot.js.git#1594devices_eos_installer-code-safety",
     "@zip.js/zip.js": "^2.7.54",
     "hash-wasm": "^4.11.0",
     "ky": "^1.7.4"
