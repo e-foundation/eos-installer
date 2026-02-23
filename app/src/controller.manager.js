@@ -18,12 +18,17 @@ export class Controller {
       new Step("device-detection", "connect adb", true),
     ];
     this.currentIndex = 0;
+    this.downloadChoiceEnabled = false;
   }
 
   async init(view) {
     this.deviceManager = new DeviceManager();
     await this.deviceManager.init();
     this.view = view;
+  }
+
+  setDownloadChoiceEnabled(enabled) {
+    this.downloadChoiceEnabled = enabled;
   }
 
   async next() {
@@ -413,7 +418,8 @@ export class Controller {
   setResources(resources) {
     this.resources = resources;
     if (this.resources.steps) {
-      this.steps.push(new Step("downloading", "download", true));
+      const needsUserGesture = this.downloadChoiceEnabled;
+      this.steps.push(new Step("downloading", "download", needsUserGesture));
       this.steps.push(
         ...this.resources.steps.map((step) => {
           return new Step(

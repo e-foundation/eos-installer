@@ -16,6 +16,9 @@ export default class ViewManager {
     this.WDebug = WDebug;
     this.ErrorManager = ErrorManager;
     this.controller = new Controller();
+    this.downloadChoiceEnabled =
+      new URLSearchParams(window.location.search).get("download") === "0";
+    this.controller.setDownloadChoiceEnabled(this.downloadChoiceEnabled);
     await this.controller.init(this);
     this.translationManager = new TranslationManager();
     await this.translationManager.init();
@@ -32,8 +35,25 @@ export default class ViewManager {
       $copyStep.id = step.id;
       $copyStep.classList.add("active");
       $copyStep.classList.remove("inactive");
+      $copyStep.style.position = "relative";
       if (step.name === "downloading") {
-        this.bindDownloadChoice($copyStep, step);
+        const progressArea = $copyStep.querySelector(
+          ".download-progress-area",
+        );
+        const actions = $copyStep.querySelector(".download-actions");
+        if (this.downloadChoiceEnabled) {
+          if (progressArea) {
+            progressArea.style.display = "none";
+          }
+          this.bindDownloadChoice($copyStep, step);
+        } else {
+          if (actions) {
+            actions.style.display = "none";
+          }
+          if (progressArea) {
+            progressArea.style.display = "block";
+          }
+        }
       } else {
         const $button = $copyStep.querySelector("button");
         if ($button) {
