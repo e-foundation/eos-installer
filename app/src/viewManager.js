@@ -37,9 +37,7 @@ export default class ViewManager {
       $copyStep.classList.remove("inactive");
       $copyStep.style.position = "relative";
       if (step.name === "downloading") {
-        const progressArea = $copyStep.querySelector(
-          ".download-progress-area",
-        );
+        const progressArea = $copyStep.querySelector(".download-progress-area");
         const actions = $copyStep.querySelector(".download-actions");
         if (this.downloadChoiceEnabled) {
           if (progressArea) {
@@ -155,6 +153,7 @@ export default class ViewManager {
   }
 
   onDownloading(name, loaded, total) {
+    this.showProgressAreaIfHidden();
     const v = Math.round((loaded / total) * 100);
     let $progressBar = document.querySelector(
       `.active .downloading-progress-bar`,
@@ -166,10 +165,12 @@ export default class ViewManager {
     if ($progress) {
       $progress.innerText = `Downloading ${name}: ${v}/${100}`;
     }
+    this.lastProgressPhase = "download";
     this.WDebug.log(`Downloading ${name}: ${v}/${100}`, `downloading-${name}`);
   }
 
   onVerify(name, loaded, total) {
+    this.showProgressAreaIfHidden();
     const v = Math.round((loaded / total) * 100);
     let $progressBar = document.querySelector(
       `.active .downloading-progress-bar`,
@@ -181,10 +182,12 @@ export default class ViewManager {
     if ($progress) {
       $progress.innerText = `Verifying ${name}: ${v}/${100}`;
     }
+    this.lastProgressPhase = "verify";
     this.WDebug.log(`Verifying ${name}: ${v}/${100}`, `verifying-${name}`);
   }
 
   onUnzip(name, loaded, total) {
+    this.showProgressAreaIfHidden();
     const v = Math.round((loaded / total) * 100);
     let $progressBar = document.querySelector(
       `.active .downloading-progress-bar`,
@@ -196,6 +199,7 @@ export default class ViewManager {
     if ($progress) {
       $progress.innerText = `Extracting ${name}: ${v}/${100}`;
     }
+    this.lastProgressPhase = "unzip";
     this.WDebug.log(`Unzipping ${name}: ${v}/${100}`, `Unzipping-${name}`);
   }
   onDownloadingEnd() {
@@ -203,11 +207,23 @@ export default class ViewManager {
       `.active .downloading-progress-bar`,
     );
     if ($progressBar) {
+      $progressBar.value = $progressBar.max || 100;
       $progressBar.classList.add("success");
     }
     let $progress = document.querySelector(`.active .downloading-progress`);
     if ($progress) {
-      $progress.innerText = `Download is complete!`;
+      const usedLocal = this.controller?.deviceManager?.hasLocalZipFile();
+      let doneText = "Download is complete!";
+      if (usedLocal) {
+        if (this.lastProgressPhase === "verify") {
+          doneText = "Verification complete!";
+        } else if (this.lastProgressPhase === "unzip") {
+          doneText = "Extraction complete!";
+        } else {
+          doneText = "Local ZIP is ready!";
+        }
+      }
+      $progress.innerText = doneText;
     }
     let $ready = document.querySelector(`.active .ready-to-install-e-os `);
     if ($ready) {
@@ -251,6 +267,9 @@ export default class ViewManager {
     const localBtn = $copyStep.querySelector(".use-local-zip-button");
     const fileInput = $copyStep.querySelector(".local-zip-input");
     const errorEl = $copyStep.querySelector(".local-zip-error");
+    const progressArea = $copyStep.querySelector(".download-progress-area");
+    const progressBar = $copyStep.querySelector(".downloading-progress-bar");
+    const progressText = $copyStep.querySelector(".downloading-progress");
 
     if (downloadBtn) {
       downloadBtn.addEventListener("click", async (event) => {
@@ -260,6 +279,14 @@ export default class ViewManager {
           errorEl.innerText = "";
         }
         this.controller.clearLocalZip();
+        this.showProgressAreaIfHidden(progressArea);
+        if (progressBar) {
+          progressBar.value = 0;
+          progressBar.classList.remove("success");
+        }
+        if (progressText) {
+          progressText.innerText = "";
+        }
         await this.executeStep(downloadBtn, step.name);
       });
     }
@@ -292,9 +319,26 @@ export default class ViewManager {
           errorEl.style.display = "none";
           errorEl.innerText = "";
         }
+        this.showProgressAreaIfHidden(progressArea);
+        if (progressBar) {
+          progressBar.value = 0;
+          progressBar.classList.remove("success");
+        }
+        if (progressText) {
+          progressText.innerText = "";
+        }
         this.controller.setLocalZip(file);
         await this.executeStep(localBtn, step.name);
       });
+    }
+  }
+
+  showProgressAreaIfHidden(progressAreaOverride) {
+    const area =
+      progressAreaOverride ||
+      document.querySelector(".active .download-progress-area");
+    if (area && area.style.display === "none") {
+      area.style.display = "block";
     }
   }
 }

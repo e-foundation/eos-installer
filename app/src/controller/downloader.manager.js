@@ -158,9 +158,12 @@ export class Downloader {
     const zipReader = new ZipReader(new BlobReader(this.localZipFile));
     const filesEntries = await zipReader.getEntries();
     for (let i = 0; i < filesEntries.length; i++) {
-      const unzippedEntry = await this.getFileFromZip(filesEntries[i], (value, total) => {
-        onUnzipProgress(value, total, filesEntries[i].filename);
-      });
+      const unzippedEntry = await this.getFileFromZip(
+        filesEntries[i],
+        (value, total) => {
+          onUnzipProgress(value, total, filesEntries[i].filename);
+        },
+      );
       let filename = this.getMappedName(
         filesEntries[i].filename,
         zipDescriptor.mapping,
