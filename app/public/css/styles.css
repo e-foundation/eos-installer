@@ -35,7 +35,6 @@ button.next:disabled {
   position: fixed;
   width: 100%;
   z-index: 1200;
-  background: var(--white);
 }
 #top-banner {
   background: var(--top-banner-color);

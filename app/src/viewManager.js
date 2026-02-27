@@ -17,7 +17,7 @@ export default class ViewManager {
     this.ErrorManager = ErrorManager;
     this.controller = new Controller();
     this.downloadChoiceEnabled =
-      new URLSearchParams(window.location.search).get("download") === "0";
+      new URLSearchParams(window.location.search).get("debug") === "1";
     this.controller.setDownloadChoiceEnabled(this.downloadChoiceEnabled);
     await this.controller.init(this);
     this.translationManager = new TranslationManager();
