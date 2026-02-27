@@ -31,6 +31,18 @@ Install /e/OS on a device from a chromium-based browser.
     ```
 3. The app is available at http://localhost:3000
 
+## Local ZIP mode (debug)
+
+To test installation from a local ZIP file instead of direct download:
+
+1. Open the installer with `debug=1`, for example: `http://localhost:3000/?debug=1`
+2. Continue until the **Downloading /e/OS** step
+3. Choose one of:
+   - **Download build**: default online flow
+   - **Use local ZIP**: pick a local `.zip` file
+
+Without `debug=1`, the installer keeps the default auto-download behavior.
+
 ## Acknowledgments
 
 Using:
