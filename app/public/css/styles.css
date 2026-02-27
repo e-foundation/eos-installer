@@ -34,6 +34,8 @@ button.next:disabled {
   top: 0;
   position: fixed;
   width: 100%;
+  z-index: 1200;
+  background: var(--white);
 }
 #top-banner {
   background: var(--top-banner-color);
@@ -113,7 +115,7 @@ button.next:disabled {
 /* <header> */
 /* <card> */
 .card {
-  scroll-margin-top: 65px;
+  scroll-margin-top: 140px;
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1);

@@ -39,18 +39,22 @@ export default class ViewManager {
       if (step.name === "downloading") {
         const progressArea = $copyStep.querySelector(".download-progress-area");
         const actions = $copyStep.querySelector(".download-actions");
+        if (progressArea) {
+          progressArea.style.display = "none";
+        }
         if (this.downloadChoiceEnabled) {
-          if (progressArea) {
-            progressArea.style.display = "none";
-          }
           this.bindDownloadChoice($copyStep, step);
         } else {
           if (actions) {
             actions.style.display = "none";
           }
-          if (progressArea) {
-            progressArea.style.display = "block";
-          }
+        }
+      } else if ($copyStep.classList.contains("flashing")) {
+        const installProgressArea = $copyStep.querySelector(
+          ".install-progress-area",
+        );
+        if (installProgressArea) {
+          installProgressArea.style.display = "none";
         }
       } else {
         const $button = $copyStep.querySelector("button");
@@ -122,9 +126,10 @@ export default class ViewManager {
       const $currentStep = document.getElementById(currentStep.id);
       if ($currentStep) {
         const $button = $currentStep.getElementsByClassName("next");
-        const $check = document.createElement("IMG");
-        $check.src = "assets/images/icons/check.svg";
-        if ($button[0]) {
+        const shouldRenderCheck = !$currentStep.classList.contains("flashing");
+        if ($button[0] && shouldRenderCheck) {
+          const $check = document.createElement("IMG");
+          $check.src = "assets/images/icons/check.svg";
           $button[0].replaceWith($check);
         }
 
@@ -203,6 +208,7 @@ export default class ViewManager {
     this.WDebug.log(`Unzipping ${name}: ${v}/${100}`, `Unzipping-${name}`);
   }
   onDownloadingEnd() {
+    this.showProgressAreaIfHidden();
     let $progressBar = document.querySelector(
       `.active .downloading-progress-bar`,
     );
@@ -232,6 +238,7 @@ export default class ViewManager {
   }
 
   async onInstalling(name, loaded, total) {
+    this.showInstallProgressAreaIfHidden();
     const v = Math.round((loaded / total) * 100);
     let $progressBar = document.querySelector(
       `.active .installing-progress-bar`,
@@ -267,7 +274,6 @@ export default class ViewManager {
     const localBtn = $copyStep.querySelector(".use-local-zip-button");
     const fileInput = $copyStep.querySelector(".local-zip-input");
     const errorEl = $copyStep.querySelector(".local-zip-error");
-    const progressArea = $copyStep.querySelector(".download-progress-area");
     const progressBar = $copyStep.querySelector(".downloading-progress-bar");
     const progressText = $copyStep.querySelector(".downloading-progress");
 
@@ -279,7 +285,6 @@ export default class ViewManager {
           errorEl.innerText = "";
         }
         this.controller.clearLocalZip();
-        this.showProgressAreaIfHidden(progressArea);
         if (progressBar) {
           progressBar.value = 0;
           progressBar.classList.remove("success");
@@ -319,7 +324,6 @@ export default class ViewManager {
           errorEl.style.display = "none";
           errorEl.innerText = "";
         }
-        this.showProgressAreaIfHidden(progressArea);
         if (progressBar) {
           progressBar.value = 0;
           progressBar.classList.remove("success");
@@ -337,6 +341,15 @@ export default class ViewManager {
     const area =
       progressAreaOverride ||
       document.querySelector(".active .download-progress-area");
+    if (area && area.style.display === "none") {
+      area.style.display = "block";
+    }
+  }
+
+  showInstallProgressAreaIfHidden(progressAreaOverride) {
+    const area =
+      progressAreaOverride ||
+      document.querySelector(".active .install-progress-area");
     if (area && area.style.display === "none") {
       area.style.display = "block";
     }
